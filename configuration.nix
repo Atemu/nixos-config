@@ -15,6 +15,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # networking.hostName = "nixos"; # Define your hostname.
+  boot.supportedFilesystems = [ "zfs" ];
+  networking.hostId = "32ECBB16"; # crc32 of 'KYKLOPS'
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
