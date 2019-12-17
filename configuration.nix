@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "KYKLOPS";
   boot.supportedFilesystems = [ "zfs" ];
   networking.hostId = "32ECBB16"; # crc32 of 'KYKLOPS'
 
