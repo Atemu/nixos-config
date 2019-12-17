@@ -15,6 +15,28 @@
 
   swapDevices = [ ];
 
+  fileSystems."/" = {
+    device = "Kpool/KYKLOPS/root";
+    fsType = "zfs";
+  };
+  fileSystems."/nix/" = {
+    device = "Kpool/KYKLOPS/nix";
+    fsType = "zfs";
+  };
+  fileSystems."/home/" = {
+    device = "Kpool/KYKLOPS/home";
+    fsType = "zfs";
+  };
+  fileSystems."/var/" = {
+    device = "Kpool/KYKLOPS/var/";
+    fsType = "zfs";
+  };
+  fileSystems."/tmp/" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+    options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
+  };
+
   nix.maxJobs = lib.mkDefault 12;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
