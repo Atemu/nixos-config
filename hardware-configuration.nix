@@ -24,7 +24,7 @@
     fsType = "zfs";
   };
   fileSystems."/var/" = {
-    device = "Kpool/KYKLOPS/var/";
+    device = "Kpool/KYKLOPS/var";
     fsType = "zfs";
   };
   fileSystems."/tmp/" = {
