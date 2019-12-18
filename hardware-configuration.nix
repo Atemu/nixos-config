@@ -19,10 +19,6 @@
     device = "Kpool/KYKLOPS/root";
     fsType = "zfs";
   };
-  fileSystems."/nix/" = {
-    device = "Kpool/KYKLOPS/nix";
-    fsType = "zfs";
-  };
   fileSystems."/home/" = {
     device = "Kpool/KYKLOPS/home";
     fsType = "zfs";
