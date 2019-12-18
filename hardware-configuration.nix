@@ -32,6 +32,10 @@
     fsType = "tmpfs";
     options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
   };
+  fileSystems."/boot/" = {
+    device = "/dev/disk/by-uuid/237E-DD69";
+    fsType = "vfat";
+  };
 
   nix.maxJobs = lib.mkDefault 12;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
