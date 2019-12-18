@@ -35,6 +35,14 @@
       device = "/dev/disk/by-uuid/e9b4abff-8f8d-4bd1-a366-1938a89c12bf";
     };
   };
+  boot.initrd.network.enable = true;
+  boot.initrd.network.ssh.enable = true;
+  # # nix-shell -p dropbear --command "dropbearkey -t rsa -f /root/boot.initrd.network.ssh.hostRSAKey"
+  boot.initrd.network.ssh.hostRSAKey = "/root/boot.initrd.network.ssh.hostRSAKey";
+  # Required to make it a "different" machine from the ssh client's POV, see https://github.com/NixOS/nixpkgs/pull/10460#issuecomment-155433336
+  boot.initrd.network.ssh.port = 2222;
+  boot.initrd.network.ssh.authorizedKeys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEXcFOT69BeaMxLSYOpgHxbHVcPR0DYpSWZDGYpxJ/uFdG3S6ZXiCVUhSeRMaDGtcsEcx+3Uz3rQaRaqq5OQsBwjDLYI/5Dy1GpH8oFLgZUfhBEriCbePrASJoRVMcL1KT/w8hIHM1ZbWqw9rfxDp2WNYNQL0UcrV9zlpLEyddSg6YBNaekxKtRjoSmsKvdarGVu6ffO46LNlaktXOFDoVOHEnDoG86oZv7r7CSJv/RFf7OP4HOchQx7X+F+CEeZvzweqtrebFXj3Pda8hWM2rFkPgSAMA4S5oPivoRpuKuEht9MQSRiLh37zl/NFH8KaI19on+X5UDiV+sbNork2t atemu@PLATON" ];
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
