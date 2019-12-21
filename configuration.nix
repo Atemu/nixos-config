@@ -10,9 +10,7 @@
       ./hardware-configuration.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.devices = [ "/dev/disk/by-id/ata-OCZ-TRION100_95EB50GYKMFX" ];
 
   networking.hostName = "KYKLOPS";
   boot.supportedFilesystems = [ "zfs" ];
