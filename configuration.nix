@@ -15,6 +15,8 @@
   networking.hostName = "KYKLOPS";
   boot.supportedFilesystems = [ "zfs" ];
   networking.hostId = "32ECBB16"; # crc32 of 'KYKLOPS'
+  boot.zfs.forceImportAll = false;
+  boot.zfs.forceImportRoot = false;
 
   boot.initrd.luks.devices = {
     TRION100-crypt = {
