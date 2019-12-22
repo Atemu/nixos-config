@@ -61,6 +61,8 @@
   boot.initrd.network.postCommands = ''
     # Make initrd SSH use the host RSA key from the extraInitrd.
     cp /dropbear_rsa_host_key /etc/dropbear/
+    # Automatically ask for the password on SSH login
+    echo 'cryptsetup-askpass' >> /root/.profile
   '';
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
