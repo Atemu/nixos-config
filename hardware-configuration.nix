@@ -35,6 +35,7 @@
   fileSystems."/boot/" = {
     device = "/dev/disk/by-uuid/237E-DD69";
     fsType = "vfat";
+    options = [ "umask=077" ];
   };
 
   nix.maxJobs = lib.mkDefault 12;
