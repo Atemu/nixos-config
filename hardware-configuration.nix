@@ -16,15 +16,15 @@
   swapDevices = [ ];
 
   fileSystems."/" = {
-    device = "Kpool/KYKLOPS/root";
+    device = "Kpool/K/root";
     fsType = "zfs";
   };
   fileSystems."/home/" = {
-    device = "Kpool/KYKLOPS/home";
+    device = "Kpool/K/home";
     fsType = "zfs";
   };
   fileSystems."/var/" = {
-    device = "Kpool/KYKLOPS/var";
+    device = "Kpool/K/var";
     fsType = "zfs";
   };
   fileSystems."/tmp/" = {
