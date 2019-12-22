@@ -36,13 +36,32 @@
       device = "/dev/disk/by-uuid/e9b4abff-8f8d-4bd1-a366-1938a89c12bf";
     };
   };
+
   boot.initrd.network.enable = true;
   boot.initrd.network.ssh.enable = true;
-  # # nix-shell -p dropbear --command "dropbearkey -t rsa -f /root/boot.initrd.network.ssh.hostRSAKey"
-  boot.initrd.network.ssh.hostRSAKey = "/root/boot.initrd.network.ssh.hostRSAKey";
+
+  # This sets the hostRSAKey to be an empty file which later gets overwritten
+  # with the actual key from an initrd on /boot/.
+  # This way the actual key is kept out of the world-readable nix store
+  # and SSH gets configured to use the RSA key.
+  # Without this option set, ssh would try to use an (non-existent) ECDSA key
+  # eventhough the RSA key file exists.
+  # FIXME: Use native Nix secrets for this when they come out
+  boot.initrd.network.ssh.hostRSAKey = "${pkgs.writeTextFile {name = "empty"; text = "";}}";
+
+  # Keyfile initrd generation commands:
+  # # nix-shell -p dropbear --command "dropbearkey -t rsa -f /root/etc/dropbear/dropbear_rsa_host_key"
+  # # cd /root/ ; echo ./etc/dropbear/dropbear_rsa_host_key | cpio -o -H newc -R +0:+0 --reproducible | gzip -9 > /boot/extraInitrd.gz
+  boot.loader.grub.extraInitrd = "/boot/extraInitrd.gz";
+
   # Required to make it a "different" machine from the ssh client's POV, see https://github.com/NixOS/nixpkgs/pull/10460#issuecomment-155433336
   boot.initrd.network.ssh.port = 2222;
   boot.initrd.network.ssh.authorizedKeys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEXcFOT69BeaMxLSYOpgHxbHVcPR0DYpSWZDGYpxJ/uFdG3S6ZXiCVUhSeRMaDGtcsEcx+3Uz3rQaRaqq5OQsBwjDLYI/5Dy1GpH8oFLgZUfhBEriCbePrASJoRVMcL1KT/w8hIHM1ZbWqw9rfxDp2WNYNQL0UcrV9zlpLEyddSg6YBNaekxKtRjoSmsKvdarGVu6ffO46LNlaktXOFDoVOHEnDoG86oZv7r7CSJv/RFf7OP4HOchQx7X+F+CEeZvzweqtrebFXj3Pda8hWM2rFkPgSAMA4S5oPivoRpuKuEht9MQSRiLh37zl/NFH8KaI19on+X5UDiV+sbNork2t atemu@PLATON" ];
+
+  boot.initrd.network.postCommands = ''
+    # Make initrd SSH use the host RSA key from the extraInitrd.
+    cp /dropbear_rsa_host_key /etc/dropbear/
+  '';
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
