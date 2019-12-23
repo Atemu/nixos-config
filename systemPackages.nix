@@ -1,0 +1,103 @@
+pkgs: with pkgs;
+  {
+    # Packages to always install.
+    common = [
+      acpi
+      bash-completion
+      bc
+      bind
+      btrfs-progs
+      compsize
+      cryptsetup
+      curl
+      ddrescue
+      diceware
+      fd
+      ffmpeg-full
+      ffsend
+      file
+      git
+      gnupg
+      hdparm
+      iftop
+      iotop
+      iperf
+      iw
+      killall
+      libarchive
+      linuxPackages.cpupower
+      linuxPackages.perf
+      lm_sensors
+      lsof
+      lz4
+      man-pages
+      modemmanager
+      mosh
+      ncdu
+      neofetch
+      nix-bash-completions
+      nmap
+      nox
+      pciutils
+      pv
+      ranger
+      rclone
+      ripgrep
+      rsync
+      rtv
+      screen
+      smartmontools
+      sysstat
+      testdisk-photorec
+      thefuck
+      traceroute
+      tree
+      unzip
+      vim
+      wget
+      which
+      whois
+      zip
+      zstd
+    ];
+
+    # Packages to install if X is not enabled.
+    noX = [
+      emacs26-nox
+      rxvt_unicode.terminfo
+      signal-cli
+    ];
+
+    # Packages to install if X is enabled.
+    x = [
+      android-studio
+      anki
+      blender
+      bspwm
+      chromium
+      dmenu
+      emacs
+      firefox
+      gimp
+      jdk
+      jetbrains.idea-community
+      krita
+      libreoffice
+      lutris
+      lxrandr
+      modem-manager-gui
+      mpv
+      networkmanagerapplet
+      rxvt_unicode
+      signal-desktop
+      steam
+      sxhkd
+      tigervnc
+      virtmanager
+      vlc
+      xcape
+      xclip
+      xorg.xbacklight
+      xorg.xev
+    ];
+  }
