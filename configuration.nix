@@ -96,9 +96,8 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    wget vim rxvt_unicode.terminfo
-  ];
+  environment.systemPackages = with import ./systemPackages.nix pkgs;
+                               common ++ (if config.services.xserver.enable then x else noX);
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
