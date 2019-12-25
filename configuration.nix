@@ -1,5 +1,10 @@
 { config, pkgs, ... }:
 
+let
+  # meta.nix provides hostName and productName
+  meta = import ./meta.nix;
+in
+
 {
   # List of packages installed in system profile.
   # If the host config enables X, X packages are also imported
