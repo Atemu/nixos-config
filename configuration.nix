@@ -17,6 +17,16 @@ in
         then hostNix
       else ./genericHost.nix
     )
+
+    # Include hardware-specific configuration
+    (
+      let
+        productNix = (./. + "/${meta.productName}.nix");
+      in
+      if (builtins.pathExists productNix)
+        then productNix
+      else ./hardware-configuration.nix
+    )
   ];
 
   # List of packages installed in system profile.

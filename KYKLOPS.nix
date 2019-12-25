@@ -5,11 +5,6 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
   boot.loader.grub.devices = [ "/dev/disk/by-id/ata-OCZ-TRION100_95EB50GYKMFX" ];
 
   networking.hostName = "KYKLOPS";
