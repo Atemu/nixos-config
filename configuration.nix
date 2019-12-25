@@ -6,6 +6,19 @@ let
 in
 
 {
+  imports = [
+    # TODO: Find cleaner way to specify these
+    # Include host-specific configuration
+    (
+      let
+        hostNix = (./. + "/${meta.hostName}.nix");
+      in
+      if (builtins.pathExists hostNix)
+        then hostNix
+      else ./genericHost.nix
+    )
+  ];
+
   # List of packages installed in system profile.
   # If the host config enables X, X packages are also imported
   environment.systemPackages = with import ./systemPackages.nix pkgs;
