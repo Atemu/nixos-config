@@ -94,11 +94,6 @@
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with import ./systemPackages.nix pkgs;
-                               common ++ (if config.services.xserver.enable then x else noX);
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -135,12 +130,6 @@
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.plasma5.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.atemu = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
