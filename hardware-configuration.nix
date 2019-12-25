@@ -13,31 +13,6 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  swapDevices = [ ];
-
-  fileSystems."/" = {
-    device = "Kpool/K/root";
-    fsType = "zfs";
-  };
-  fileSystems."/home/" = {
-    device = "Kpool/K/home";
-    fsType = "zfs";
-  };
-  fileSystems."/var/" = {
-    device = "Kpool/K/var";
-    fsType = "zfs";
-  };
-  fileSystems."/tmp/" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-    options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
-  };
-  fileSystems."/boot/" = {
-    device = "/dev/disk/by-uuid/237E-DD69";
-    fsType = "vfat";
-    options = [ "umask=077" ];
-  };
-
   nix.maxJobs = lib.mkDefault 12;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = true;

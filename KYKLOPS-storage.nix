@@ -21,4 +21,29 @@
       device = "/dev/disk/by-uuid/e9b4abff-8f8d-4bd1-a366-1938a89c12bf";
     };
   };
+
+  fileSystems."/" = {
+    device = "Kpool/K/root";
+    fsType = "zfs";
+  };
+  fileSystems."/home/" = {
+    device = "Kpool/K/home";
+    fsType = "zfs";
+  };
+  fileSystems."/var/" = {
+    device = "Kpool/K/var";
+    fsType = "zfs";
+  };
+  fileSystems."/tmp/" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+    options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
+  };
+  fileSystems."/boot/" = {
+    device = "/dev/disk/by-uuid/237E-DD69";
+    fsType = "vfat";
+    options = [ "umask=077" ];
+  };
+
+  swapDevices = [ ];
 }
