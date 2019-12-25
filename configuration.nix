@@ -1,3 +1,7 @@
+# This file implements things I want to have on all my NixOS machines and
+# automatically includes host- and hardware-specific configuration based on
+# the imperatively generated meta.nix. See README.md for more information.
+
 { config, pkgs, ... }:
 
 let
