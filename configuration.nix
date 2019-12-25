@@ -2,7 +2,7 @@
 # automatically includes host- and hardware-specific configuration based on
 # the imperatively generated meta.nix. See README.md for more information.
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   # meta.nix provides hostName and productName
@@ -31,7 +31,13 @@ in
         then productNix
       else /etc/nixos/hardware-configuration.nix
     )
-  ];
+  ] ++ (
+    # Include host-specific storage configuration
+    let
+      hostStorageNix = (./. + "/${meta.hostName}-storage.nix");
+    in
+    lib.optional (builtins.pathExists hostStorageNix) hostStorageNix
+  );
 
   # List of packages installed in system profile.
   # If the host config enables X, X packages are also imported
