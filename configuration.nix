@@ -15,10 +15,10 @@ in
     # Include host-specific configuration
     (
       let
-        hostNix = (./. + "/${meta.hostName}.nix");
+        hostConfigNix = (./. + "/${meta.hostName}-config.nix");
       in
-      if (builtins.pathExists hostNix)
-        then hostNix
+      if (builtins.pathExists hostConfigNix)
+        then hostConfigNix
       else ./genericHost.nix
     )
 
