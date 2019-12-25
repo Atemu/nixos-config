@@ -25,7 +25,7 @@ in
       in
       if (builtins.pathExists productNix)
         then productNix
-      else ./hardware-configuration.nix
+      else /etc/nixos/hardware-configuration.nix
     )
   ];
 
