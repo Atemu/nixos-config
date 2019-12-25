@@ -21,7 +21,7 @@
   # Without this option set, ssh would try to use an (non-existent) ECDSA key
   # eventhough the RSA key file exists.
   # FIXME: Use native Nix secrets for this when they come out
-  boot.initrd.network.ssh.hostRSAKey = "${pkgs.writeTextFile {name = "empty"; text = "";}}";
+  boot.initrd.network.ssh.hostRSAKey = pkgs.writeTextFile {name = "empty"; text = "";};
 
   # Keyfile initrd generation commands:
   # # nix-shell -p dropbear --command "dropbearkey -t rsa -f /root/etc/dropbear/dropbear_rsa_host_key"
