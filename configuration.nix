@@ -49,6 +49,14 @@ in
 
   time.timeZone = "Europe/Berlin";
 
+  # Unstable channel pkgs override; e.g. pkgs.unstable.firefox
+  nixpkgs.config.packageOverrides = pkgs: {
+    unstable = import <nixos-unstable> {
+      # pass the nixpkgs config to the unstable alias
+      # to ensure `allowUnfree` is propagated:
+      config = config.nixpkgs.config;
+    };
+  };
   nixpkgs.config.allowUnfree = true; # required for Steam
   # List of packages installed in system profile.
   # If the host config enables X, X packages are also imported
