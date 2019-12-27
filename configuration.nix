@@ -49,6 +49,7 @@ in
 
   time.timeZone = "Europe/Berlin";
 
+  nixpkgs.config.allowUnfree = true; # required for Steam
   # List of packages installed in system profile.
   # If the host config enables X, X packages are also imported
   environment.systemPackages = with import ./systemPackages.nix pkgs;
