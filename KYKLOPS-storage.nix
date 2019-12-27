@@ -38,6 +38,10 @@
     device = "Kpool/K/var";
     fsType = "zfs";
   };
+  fileSystems."/var/tmp" = {
+    device = "Kpool/K/var/tmp";
+    fsType = "zfs";
+  };
   fileSystems."/tmp/" = {
     device = "tmpfs";
     fsType = "tmpfs";
