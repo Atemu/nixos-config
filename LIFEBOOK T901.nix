@@ -21,4 +21,6 @@
   # Might be a systemd bug though because the kernel seems to react properly
   # This makes it suspend eventhough it's "docked"
   services.logind.lidSwitchDocked = "suspend";
+
+  services.tlp.enable = true;
 }
