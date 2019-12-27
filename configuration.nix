@@ -44,6 +44,8 @@ in
   # TODO clean up this beauty
   networking.hostId = builtins.readFile (pkgs.runCommand "mkHostId" {} (''printf '%X' $(printf '' + meta.hostName + '' | cksum | cut -d \  -f1) > $out''));
 
+  i18n.defaultLocale = "en_US.UTF-8";
+
   # List of packages installed in system profile.
   # If the host config enables X, X packages are also imported
   environment.systemPackages = with import ./systemPackages.nix pkgs;
