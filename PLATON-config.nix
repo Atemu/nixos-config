@@ -18,7 +18,6 @@
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.useDHCP = true; # required for DHCP in boot.initrd.network!
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -51,6 +50,14 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+  networking.networkmanager.enable = true;
+  networking.networkmanager.dhcp = "dhclient";
+  networking.networkmanager.logLevel = "INFO"; # Prints useful info to journalctl
+  networking.networkmanager.wifi.backend = "iwd";
+  networking.networkmanager.wifi.macAddress = "stable"; # TODO what exactly does this mean?
+  networking.networkmanager.wifi.powersave = true;
+  networking.networkmanager.wifi.scanRandMacAddress = true; # default
+  networking.networkmanager.unmanaged = [ "docker0" "virbr0" ];
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
