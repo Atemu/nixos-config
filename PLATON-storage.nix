@@ -42,6 +42,10 @@
     fsType = "vfat";
     options = [ "umask=077" ];
   };
+  fileSystems."/mnt/Games" = {
+    device = "Ppool/P/Games";
+    fsType = "zfs";
+  };
 
   swapDevices = [ ];
 
