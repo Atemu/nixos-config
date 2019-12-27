@@ -23,4 +23,6 @@
   services.logind.lidSwitchDocked = "suspend";
 
   services.tlp.enable = true;
+
+  services.xserver.wacom.enable = true;
 }
