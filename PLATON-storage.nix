@@ -53,4 +53,7 @@
     priority = 5; # default
     swapDevices = 1; # why do I need this?
   };
+
+  services.fstrim.enable = true;
+  services.fstrim.interval = "weekly"; # default
 }
