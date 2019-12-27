@@ -69,6 +69,7 @@
     ports = [ "53:53/udp" ];
     volumes = [ "dnscrypt-blacklist:/blacklist/:ro" ];
   };
+  networking.resolvconf.useLocalResolver = true;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
