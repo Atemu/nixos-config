@@ -70,6 +70,10 @@
 
   services.fprintd.enable = true;
 
+  services.physlock.enable = true;
+  services.physlock.allowAnyUser = true;
+  services.physlock.disableSysRq = false; # Default. Is this actually a security concern?
+
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
   # services.xserver.layout = "us";
