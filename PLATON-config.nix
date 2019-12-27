@@ -94,6 +94,10 @@
   services.xserver.libinput.enable = true;
   services.xserver.libinput.naturalScrolling = false;
 
+  fonts.fonts = with pkgs; [
+    uni-vga
+  ];
+
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
 
