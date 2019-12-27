@@ -10,6 +10,9 @@
 
   hardware.bluetooth.powerOnBoot = false;
 
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
