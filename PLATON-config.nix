@@ -84,6 +84,8 @@
   services.xserver.windowManager.bspwm.enable = true;
   services.xserver.desktopManager.default = "none+bspwm";
 
+  services.xserver.layout = "us";
+
 
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
