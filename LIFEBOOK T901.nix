@@ -26,6 +26,11 @@
 
   services.xserver.wacom.enable = true;
   services.xserver.inputClassSections = [
+    ''
+    Identifier "Disable rfkill button"
+    MatchProduct  "FUJ02E3"
+    Option  "Ignore"  "true"
+    ''
     # Disable wacom gestures, stolen from the Gentoo wiki
     ''
     Identifier "Wacom class"
