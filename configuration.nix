@@ -69,6 +69,8 @@ in
   # If I want a different one on a specific host I can mkForce it
   environment.etc."background-image".source = "${pkgs.nixos-artwork.wallpapers.simple-dark-gray-bottom}/share/artwork/gnome/nix-wallpaper-simple-dark-gray_bottom.png";
 
+  services.xserver.libinput.accelProfile = "flat";
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.atemu = {
     isNormalUser = true;
