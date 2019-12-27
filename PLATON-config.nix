@@ -92,6 +92,7 @@
   services.xserver.autoRepeatInterval = 24;
 
   services.xserver.libinput.enable = true;
+  services.xserver.libinput.naturalScrolling = false;
 
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
