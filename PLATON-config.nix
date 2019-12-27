@@ -43,6 +43,9 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  # Disable annoying GUI password popup and console error message when using ssh
+  programs.ssh.askPassword = "";
+
   programs.mosh.enable = true;
 
   # Open ports in the firewall.
