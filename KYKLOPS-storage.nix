@@ -22,6 +22,10 @@
     };
   };
 
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportAll = false;
+  boot.zfs.forceImportRoot = false;
+
   fileSystems."/" = {
     device = "Kpool/K/root";
     fsType = "zfs";
