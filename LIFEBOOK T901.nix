@@ -25,4 +25,15 @@
   services.tlp.enable = true;
 
   services.xserver.wacom.enable = true;
+  services.xserver.inputClassSections = [
+    # Disable wacom gestures, stolen from the Gentoo wiki
+    ''
+    Identifier "Wacom class"
+    MatchProduct "Wacom|WACOM|Hanwang|PTK-540WL|ISDv4|ISD-V4|ISDV4"
+    MatchDevicePath "/dev/input/event*"
+
+    Driver "wacom"
+    Option "Gesture" "off"
+    ''
+  ];
 }
