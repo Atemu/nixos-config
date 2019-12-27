@@ -54,6 +54,8 @@ in
   environment.systemPackages = with import ./systemPackages.nix pkgs;
                                common ++ (if config.services.xserver.enable then x else noX);
 
+  programs.screen.screenrc = "startup_message off";
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.atemu = {
     isNormalUser = true;
