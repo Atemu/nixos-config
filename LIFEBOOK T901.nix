@@ -17,6 +17,8 @@
 
   hardware.brightnessctl.enable = true;
 
+  systemd.services.ModemManager.wantedBy = [ "network.target" ];
+
   # After lid suspend, the T901 becomes "docked" for some reason.
   # Might be a systemd bug though because the kernel seems to react properly
   # This makes it suspend eventhough it's "docked"
