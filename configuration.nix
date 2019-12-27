@@ -47,6 +47,8 @@ in
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.consoleKeyMap = "us";
 
+  time.timeZone = "Europe/Berlin";
+
   # List of packages installed in system profile.
   # If the host config enables X, X packages are also imported
   environment.systemPackages = with import ./systemPackages.nix pkgs;
