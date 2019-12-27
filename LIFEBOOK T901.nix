@@ -16,4 +16,9 @@
   hardware.cpu.intel.updateMicrocode = true;
 
   hardware.brightnessctl.enable = true;
+
+  # After lid suspend, the T901 becomes "docked" for some reason.
+  # Might be a systemd bug though because the kernel seems to react properly
+  # This makes it suspend eventhough it's "docked"
+  services.logind.lidSwitchDocked = "suspend";
 }
