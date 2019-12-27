@@ -41,4 +41,8 @@
     Option "Gesture" "off"
     ''
   ];
+
+  systemd.sockets.systemd-rfkill.enable = false;
+  systemd.services."systemd-rfkill@".enable = false;
+  systemd.services.systemd-rfkill.enable = false;
 }
