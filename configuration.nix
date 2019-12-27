@@ -49,6 +49,10 @@ in
 
   time.timeZone = "Europe/Berlin";
 
+  # Looks very similar the default console font and uni-vga though not 100%
+  # TODO: Find out what the actual console font is and use that instead
+  i18n.consoleFont = "cp1250";
+
   # Unstable channel pkgs override; e.g. pkgs.unstable.firefox
   nixpkgs.config.packageOverrides = pkgs: {
     unstable = import <nixos-unstable> {
