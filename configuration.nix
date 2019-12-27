@@ -45,6 +45,7 @@ in
   networking.hostId = builtins.readFile (pkgs.runCommand "mkHostId" {} (''printf '%X' $(printf '' + meta.hostName + '' | cksum | cut -d \  -f1) > $out''));
 
   i18n.defaultLocale = "en_US.UTF-8";
+  i18n.consoleKeyMap = "us";
 
   # List of packages installed in system profile.
   # If the host config enables X, X packages are also imported
