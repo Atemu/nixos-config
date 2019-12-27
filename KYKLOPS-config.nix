@@ -5,8 +5,6 @@
 { config, pkgs, ... }:
 
 {
-  networking.hostName = "KYKLOPS";
-  networking.hostId = "32ECBB16"; # crc32 of 'KYKLOPS'
   boot.initrd.network.enable = true;
   boot.initrd.network.ssh.enable = true;
 

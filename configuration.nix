@@ -39,6 +39,11 @@ in
     lib.optional (builtins.pathExists hostStorageNix) hostStorageNix
   );
 
+  networking.hostName = meta.hostName;
+  # The hostId is set to the crc32 of the hostName in hex
+  # TODO clean up this beauty
+  networking.hostId = builtins.readFile (pkgs.runCommand "mkHostId" {} (''printf '%X' $(printf '' + meta.hostName + '' | cksum | cut -d \  -f1) > $out''));
+
   # List of packages installed in system profile.
   # If the host config enables X, X packages are also imported
   environment.systemPackages = with import ./systemPackages.nix pkgs;
