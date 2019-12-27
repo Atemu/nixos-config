@@ -5,6 +5,7 @@
 { config, pkgs, ... }:
 
 {
+  boot.loader.timeout = 1;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
