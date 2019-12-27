@@ -96,7 +96,29 @@
 
   fonts.fonts = with pkgs; [
     uni-vga
+    # Japanese fonts
+    # Recommended by https://functor.tokyo/blog/2018-10-01-japanese-on-nixos
+    carlito
+    dejavu_fonts
+    ipafont
+    kochi-substitute
+    source-code-pro
+    ttf_bitstream_vera
   ];
+  fonts.fontconfig.defaultFonts = {
+    monospace = [
+      "DejaVu Sans Mono"
+      "IPAGothic"
+    ];
+    sansSerif = [
+      "DejaVu Sans"
+      "IPAPGothic"
+    ];
+    serif = [
+      "DejaVu Serif"
+      "IPAPMincho"
+    ];
+  };
 
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
