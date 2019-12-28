@@ -74,6 +74,8 @@
 
   programs.mosh.enable = true;
 
+  security.sudo.wheelNeedsPassword = false;
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
