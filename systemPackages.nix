@@ -38,6 +38,7 @@ pkgs: with pkgs;
       nix-bash-completions
       nmap
       nox
+      ntfs3g
       pciutils
       pv
       ranger
