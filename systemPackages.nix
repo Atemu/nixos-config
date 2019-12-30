@@ -58,6 +58,7 @@ pkgs: with pkgs;
       wget
       which
       whois
+      wol
       zip
       zstd
     ];
