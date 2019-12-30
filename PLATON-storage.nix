@@ -7,7 +7,7 @@
 
   boot.initrd.luks.devices = {
     TRION100-crypt = {
-      device = "/dev/disk/by-uuid/28b07833-04a0-4623-8cab-f79e19304720";
+      device = "/dev/disk/by-uuid/017b2e2a-332b-4de9-bd03-670a0841c3a9";
       allowDiscards = true;
     };
   };
