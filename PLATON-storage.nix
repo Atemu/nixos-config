@@ -46,6 +46,10 @@
     device = "Ppool/P/Games";
     fsType = "zfs";
   };
+  fileSystems."/var/lib/docker/" = {
+    device = "Ppool/P/docker";
+    fsType = "zfs";
+  };
 
   swapDevices = [ ];
 
