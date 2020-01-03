@@ -79,7 +79,7 @@ pkgs: with pkgs;
       chromium
       dmenu
       emacs
-      firefox
+      firefox-bin
       gimp
       jdk
       jetbrains.idea-community
