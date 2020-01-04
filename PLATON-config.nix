@@ -17,6 +17,8 @@
 
   programs.mosh.enable = true;
 
+  services.emacs.enable = true;
+
   networking.networkmanager.enable = true;
 
   networking.networkmanager.dhcp = "dhclient";
