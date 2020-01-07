@@ -43,6 +43,8 @@
 
   services.fprintd.enable = true;
 
+  hardware.brightnessctl.enable = true;
+
   services.physlock.enable = true;
   services.physlock.allowAnyUser = true;
   services.physlock.disableSysRq = false; # Default. Is this actually a security concern?
