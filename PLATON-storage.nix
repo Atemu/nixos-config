@@ -15,6 +15,7 @@
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportAll = false;
   boot.zfs.forceImportRoot = false;
+  boot.zfs.devNodes = "/dev/mapper/";
 
   fileSystems."/" = {
     device = "Ppool/P/root";
