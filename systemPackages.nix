@@ -7,6 +7,7 @@ pkgs: with pkgs;
       bc
       bind
       btrfs-progs
+      cifs-utils
       compsize
       cryptsetup
       curl
