@@ -81,6 +81,7 @@ pkgs: with pkgs;
       dmenu
       emacs
       firefox-bin
+      geogebra
       gimp
       jdk
       jetbrains.idea-community
