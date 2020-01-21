@@ -3,6 +3,7 @@ pkgs: with pkgs;
     # Packages to always install.
     common = [
       acpi
+      aespipe
       bash-completion
       bc
       bind
