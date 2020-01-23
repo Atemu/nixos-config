@@ -63,6 +63,6 @@
     swapDevices = 1; # why do I need this?
   };
 
-  services.fstrim.enable = true;
-  services.fstrim.interval = "weekly"; # default
+  services.zfs.trim.enable = true;
+  services.zfs.trim.interval = "weekly"; #default
 }
