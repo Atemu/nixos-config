@@ -20,6 +20,7 @@ pkgs: with pkgs;
       file
       git
       gnupg
+      gotop
       hdparm
       iftop
       iotop
