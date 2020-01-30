@@ -94,6 +94,7 @@ pkgs: with pkgs;
       modem-manager-gui
       mpv
       networkmanagerapplet
+      riot-desktop
       rxvt_unicode
       signal-desktop
       steam
