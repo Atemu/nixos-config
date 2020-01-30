@@ -55,6 +55,7 @@
   services.xserver.desktopManager.default = "none+bspwm";
 
   services.xserver.layout = "us";
+  services.xserver.xkbVariant = "altgr-intl";
 
   services.xserver.xkbOptions = "caps:escape";
 
