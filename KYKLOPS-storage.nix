@@ -55,4 +55,7 @@
   };
 
   swapDevices = [ ];
+
+  services.zfs.trim.enable = true;
+  services.zfs.trim.interval = "weekly"; #default
 }
