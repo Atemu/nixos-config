@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    # TODO make this a configurable option, e.g. meta.isDesktop = true
+    ./desktop.nix
+  ];
+
   boot.loader.timeout = 1;
 
   boot.kernel.sysctl = { "kernel.sysrq" = 1; };
