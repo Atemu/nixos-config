@@ -16,6 +16,8 @@
 
   networking.networkmanager.wifi.powersave = true;
 
+  systemd.services.ModemManager.wantedBy = [ "network.target" ];
+
   virtualisation.docker.enable = true;
 
   services.fprintd.enable = true;
