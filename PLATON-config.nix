@@ -14,6 +14,8 @@
 
   programs.mosh.enable = true;
 
+  services.tlp.enable = true;
+
   networking.networkmanager.wifi.powersave = true;
 
   systemd.services.ModemManager.wantedBy = [ "network.target" ];

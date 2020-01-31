@@ -22,8 +22,6 @@
   # This makes it suspend eventhough it's "docked"
   services.logind.lidSwitchDocked = config.services.logind.lidSwitch;
 
-  services.tlp.enable = true;
-
   services.xserver.wacom.enable = true;
   services.xserver.inputClassSections = [
     ''
