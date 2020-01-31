@@ -70,8 +70,6 @@
   services.xserver.libinput.enable = true;
   services.xserver.libinput.naturalScrolling = false;
 
-  services.xserver.desktopManager.wallpaper.mode = "fill";
-
   fonts.fonts = with pkgs; [
     uni-vga
     # Japanese fonts
