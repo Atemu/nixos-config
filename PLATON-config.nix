@@ -6,8 +6,6 @@
     ./desktop.nix
   ];
 
-  boot.loader.timeout = 1;
-
   hardware.bluetooth.powerOnBoot = false;
 
   services.openssh.enable = true;

@@ -41,6 +41,8 @@ in
     lib.optional (builtins.pathExists hostStorageNix) hostStorageNix
   );
 
+  boot.loader.timeout = 1;
+
   networking.hostName = meta.hostName;
   # The hostId is set to the crc32 of the hostName in hex
   # TODO clean up this beauty
