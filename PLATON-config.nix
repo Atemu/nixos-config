@@ -17,7 +17,6 @@
   networking.networkmanager.wifi.powersave = true;
 
   virtualisation.docker.enable = true;
-  virtualisation.docker.storageDriver = "zfs";
 
   services.fprintd.enable = true;
 

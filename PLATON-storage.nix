@@ -67,4 +67,6 @@
   services.zfs.trim.interval = "weekly"; #default
 
   services.zfs.autoSnapshot.enable = true;
+
+  virtualisation.docker.storageDriver = "zfs";
 }
