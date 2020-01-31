@@ -8,21 +8,11 @@
 
   boot.loader.timeout = 1;
 
-  boot.kernel.sysctl = { "kernel.sysrq" = 1; };
-
   hardware.bluetooth.powerOnBoot = false;
-
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
 
   services.openssh.enable = true;
 
-  # Disable annoying GUI password popup and console error message when using ssh
-  programs.ssh.askPassword = "";
-
   programs.mosh.enable = true;
-
-  services.emacs.enable = true;
 
   networking.networkmanager.enable = true;
 
@@ -46,55 +36,6 @@
   virtualisation.docker.storageDriver = "zfs";
 
   services.fprintd.enable = true;
-
-  hardware.brightnessctl.enable = true;
-
-  services.physlock.enable = true;
-  services.physlock.allowAnyUser = true;
-  services.physlock.disableSysRq = false; # Default. Is this actually a security concern?
-
-  services.xserver.enable = true;
-  services.xserver.displayManager.startx.enable = true;
-
-  services.xserver.windowManager.bspwm.enable = true;
-  services.xserver.desktopManager.default = "none+bspwm";
-
-  services.xserver.layout = "us";
-  services.xserver.xkbVariant = "altgr-intl";
-
-  services.xserver.xkbOptions = "caps:escape";
-
-  services.xserver.autoRepeatDelay = 224;
-  services.xserver.autoRepeatInterval = 24;
-
-  services.xserver.libinput.enable = true;
-  services.xserver.libinput.naturalScrolling = false;
-
-  fonts.fonts = with pkgs; [
-    uni-vga
-    # Japanese fonts
-    # Recommended by https://functor.tokyo/blog/2018-10-01-japanese-on-nixos
-    carlito
-    dejavu_fonts
-    ipafont
-    kochi-substitute
-    source-code-pro
-    ttf_bitstream_vera
-  ];
-  fonts.fontconfig.defaultFonts = {
-    monospace = [
-      "DejaVu Sans Mono"
-      "IPAGothic"
-    ];
-    sansSerif = [
-      "DejaVu Sans"
-      "IPAPGothic"
-    ];
-    serif = [
-      "DejaVu Serif"
-      "IPAPMincho"
-    ];
-  };
 
   system.stateVersion = "19.09"; # Did you read the comment?
 }

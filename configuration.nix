@@ -70,19 +70,12 @@ in
   };
   nixpkgs.config.allowUnfree = true; # required for Steam
 
-  # The Steam client needs 32bit libraries
-  # TODO only enable these if Steam is enabled
-  hardware.pulseaudio.support32Bit = true;
-  hardware.opengl.driSupport32Bit = true;
-
   # List of packages installed in system profile.
   # If the host config enables X, X packages are also imported
   environment.systemPackages = with import ./systemPackages.nix pkgs;
                                common ++ (if config.services.xserver.enable then x else noX);
 
   programs.screen.screenrc = "startup_message off";
-
-  services.xserver.libinput.accelProfile = "flat";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.atemu = {
