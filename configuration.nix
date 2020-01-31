@@ -17,9 +17,10 @@ in
       let
         hostConfigNix = (./. + "/${meta.hostName}-config.nix");
       in
-      if (builtins.pathExists hostConfigNix)
-        then hostConfigNix
-      else ./genericHost.nix
+      if (builtins.pathExists hostConfigNix) then
+        hostConfigNix
+      else
+        ./genericHost.nix
     )
 
     # Include hardware-specific configuration
@@ -27,9 +28,10 @@ in
       let
         productNix = (./. + "/${meta.productName}.nix");
       in
-      if (builtins.pathExists productNix)
-        then productNix
-      else /etc/nixos/hardware-configuration.nix
+      if (builtins.pathExists productNix) then
+        productNix
+      else
+        /etc/nixos/hardware-configuration.nix
     )
   ] ++ (
     # Include host-specific storage configuration
