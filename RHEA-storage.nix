@@ -43,10 +43,6 @@
     fsType = "vfat";
     options = [ "umask=077" ];
   };
-  fileSystems."/mnt/Games" = {
-    device = "Rpool/R/Games";
-    fsType = "zfs";
-  };
   fileSystems."/var/lib/docker/" = {
     device = "Rpool/R/docker";
     fsType = "zfs";
