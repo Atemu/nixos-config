@@ -6,8 +6,8 @@
   boot.loader.grub.efiSupport = true;
 
   boot.initrd.luks.devices = {
-    TRION100-crypt = {
-      device = "/dev/disk/by-uuid/017b2e2a-332b-4de9-bd03-670a0841c3a9";
+    EXTERNAL-crypt = {
+      device = "/dev/disk/by-uuid/34b1261a-ab90-495c-b872-f2f0fd7df14b";
       allowDiscards = true;
     };
   };
@@ -18,19 +18,19 @@
   boot.zfs.devNodes = "/dev/mapper/";
 
   fileSystems."/" = {
-    device = "Ppool/P/root";
+    device = "Rpool/R/root";
     fsType = "zfs";
   };
   fileSystems."/home/" = {
-    device = "Ppool/P/home";
+    device = "Rpool/R/home";
     fsType = "zfs";
   };
   fileSystems."/var/" = {
-    device = "Ppool/P/var";
+    device = "Rpool/R/var";
     fsType = "zfs";
   };
   fileSystems."/var/tmp" = {
-    device = "Ppool/P/var/tmp";
+    device = "Rpool/R/tmp";
     fsType = "zfs";
   };
   fileSystems."/tmp/" = {
@@ -39,16 +39,16 @@
     options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
   };
   fileSystems."/boot/" = {
-    device = "/dev/disk/by-uuid/1EDB-F8F4";
+    device = "/dev/disk/by-uuid/69FE-BCF4";
     fsType = "vfat";
     options = [ "umask=077" ];
   };
   fileSystems."/mnt/Games" = {
-    device = "Ppool/P/Games";
+    device = "Rpool/R/Games";
     fsType = "zfs";
   };
   fileSystems."/var/lib/docker/" = {
-    device = "Ppool/P/docker";
+    device = "Rpool/R/docker";
     fsType = "zfs";
   };
 
