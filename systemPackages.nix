@@ -85,6 +85,7 @@ pkgs: with pkgs;
       firefox-bin
       geogebra
       gimp
+      gnome3.adwaita-icon-theme # fix for lutris' icons FIXME 
       jdk
       jetbrains.idea-community
       krita
