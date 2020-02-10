@@ -21,11 +21,11 @@
     device = "Ppool/P/root";
     fsType = "zfs";
   };
-  fileSystems."/home/" = {
+  fileSystems."/home" = {
     device = "Ppool/P/home";
     fsType = "zfs";
   };
-  fileSystems."/var/" = {
+  fileSystems."/var" = {
     device = "Ppool/P/var";
     fsType = "zfs";
   };
@@ -33,12 +33,12 @@
     device = "Ppool/P/var/tmp";
     fsType = "zfs";
   };
-  fileSystems."/tmp/" = {
+  fileSystems."/tmp" = {
     device = "tmpfs";
     fsType = "tmpfs";
     options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
   };
-  fileSystems."/boot/" = {
+  fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/1EDB-F8F4";
     fsType = "vfat";
     options = [ "umask=077" ];
@@ -47,7 +47,7 @@
     device = "Ppool/P/Games";
     fsType = "zfs";
   };
-  fileSystems."/var/lib/docker/" = {
+  fileSystems."/var/lib/docker" = {
     device = "Ppool/P/docker";
     fsType = "zfs";
   };

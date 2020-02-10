@@ -25,11 +25,11 @@
     device = "Rpool/R/nix";
     fsType = "zfs";
   };
-  fileSystems."/home/" = {
+  fileSystems."/home" = {
     device = "Rpool/R/home";
     fsType = "zfs";
   };
-  fileSystems."/var/" = {
+  fileSystems."/var" = {
     device = "Rpool/R/var";
     fsType = "zfs";
   };
@@ -37,17 +37,17 @@
     device = "Rpool/R/tmp";
     fsType = "zfs";
   };
-  fileSystems."/tmp/" = {
+  fileSystems."/tmp" = {
     device = "tmpfs";
     fsType = "tmpfs";
     options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
   };
-  fileSystems."/boot/" = {
+  fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/69FE-BCF4";
     fsType = "vfat";
     options = [ "umask=077" ];
   };
-  fileSystems."/var/lib/docker/" = {
+  fileSystems."/var/lib/docker" = {
     device = "Rpool/R/docker";
     fsType = "zfs";
   };
