@@ -6,8 +6,8 @@
   boot.loader.grub.efiSupport = true;
 
   boot.initrd.luks.devices = {
-    TRION100-crypt = {
-      device = "/dev/disk/by-uuid/017b2e2a-332b-4de9-bd03-670a0841c3a9";
+    MZNTE128HMGR-crypt = {
+      device = "/dev/disk/by-uuid/6f9558c5-593c-4c86-b88f-63cc5b031ff0";
       allowDiscards = true;
     };
   };
@@ -39,7 +39,7 @@
     options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
   };
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/1EDB-F8F4";
+    device = "/dev/disk/by-uuid/3075-C917";
     fsType = "vfat";
     options = [ "umask=077" ];
   };
