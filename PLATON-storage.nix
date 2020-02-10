@@ -17,20 +17,9 @@
   boot.zfs.forceImportRoot = false;
   boot.zfs.devNodes = "/dev/mapper/";
 
+  # Instance-specific
   fileSystems."/" = {
-    device = "Ppool/P/root";
-    fsType = "zfs";
-  };
-  fileSystems."/home" = {
-    device = "Ppool/P/home";
-    fsType = "zfs";
-  };
-  fileSystems."/var" = {
-    device = "Ppool/P/var";
-    fsType = "zfs";
-  };
-  fileSystems."/var/tmp" = {
-    device = "Ppool/P/var/tmp";
+    device = "Ppool/instance/root";
     fsType = "zfs";
   };
   fileSystems."/tmp" = {
@@ -38,17 +27,31 @@
     fsType = "tmpfs";
     options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
   };
+  # Deployment-specific
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/3075-C917";
     fsType = "vfat";
     options = [ "umask=077" ];
   };
-  fileSystems."/mnt/Games" = {
-    device = "Ppool/P/Games";
+  fileSystems."/nix" = {
+    device = "Ppool/deployment/nix";
     fsType = "zfs";
   };
   fileSystems."/var/lib/docker" = {
-    device = "Ppool/P/docker";
+    device = "Ppool/deployment/docker";
+    fsType = "zfs";
+  };
+  # Purpose-specific
+  fileSystems."/home" = {
+    device = "Ppool/purpose/home";
+    fsType = "zfs";
+  };
+  fileSystems."/etc/NetworkManager/system-connections" = {
+    device = "Ppool/purpose/nm-connections";
+    fsType = "zfs";
+  };
+  fileSystems."/var/opt/games" = {
+    device = "Ppool/purpose/games";
     fsType = "zfs";
   };
 
