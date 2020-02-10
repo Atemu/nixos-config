@@ -81,4 +81,6 @@
     volumes = [ "dnscrypt-blacklist:/blacklist/:ro" ];
   };
   networking.resolvconf.useLocalResolver = true;
+
+  services.emacs.enable = true;
 }
