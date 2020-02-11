@@ -57,6 +57,7 @@ pkgs: with pkgs;
       traceroute
       tree
       unzip
+      usbutils
       vim
       wget
       which
