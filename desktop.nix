@@ -68,7 +68,6 @@
   networking.networkmanager.enable = true;
 
   networking.networkmanager.logLevel = "INFO"; # Prints useful info to journalctl
-  networking.networkmanager.wifi.backend = "iwd";
   networking.networkmanager.wifi.macAddress = "stable"; # TODO what exactly does this mean?
   networking.networkmanager.wifi.scanRandMacAddress = true; # default
   networking.networkmanager.unmanaged = [ "docker0" "virbr0" ];
