@@ -51,6 +51,7 @@ pkgs: with pkgs;
       rtv
       screen
       smartmontools
+      stress
       sysstat
       testdisk-photorec
       thefuck
