@@ -15,4 +15,6 @@
 
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  services.logind.lidSwitchDocked = config.services.logind.lidSwitch;
 }
