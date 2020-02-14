@@ -9,6 +9,7 @@ pkgs: with pkgs;
       bind
       btrfs-progs
       cifs-utils
+      clang # DOOM emacs
       compsize
       cryptsetup
       curl
