@@ -14,6 +14,8 @@
 
   services.tlp.enable = true;
 
+  services.undervolt.enable = true;
+
   networking.networkmanager.wifi.powersave = true;
 
   systemd.services.ModemManager.wantedBy = [ "network.target" ];
