@@ -16,6 +16,8 @@
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
+  services.undervolt.coreOffset = "-90";
+
   hardware.cpu.intel.updateMicrocode = true;
 
   services.logind.lidSwitchDocked = config.services.logind.lidSwitch;
