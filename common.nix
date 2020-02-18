@@ -7,6 +7,7 @@
 let
   # meta.nix provides hostName and productName
   meta = import ./meta.nix;
+  nixosConfig = "/nix/var/nix/nixos-config";
 in
 
 {
@@ -88,4 +89,6 @@ in
     shell = pkgs.bash;
     initialPassword = "none";
   };
+
+  nix.nixPath = lib.mkOptionDefault [ "nixos-config=${nixosConfig}/common.nix" ];
 }
