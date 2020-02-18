@@ -86,5 +86,6 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "docker" "video" ];
     shell = pkgs.bash;
+    initialPassword = "none";
   };
 }
