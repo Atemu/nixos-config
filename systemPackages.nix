@@ -81,7 +81,6 @@ pkgs: with pkgs;
       android-studio
       anki
       blender
-      bspwm
       chromium
       dmenu
       emacs
