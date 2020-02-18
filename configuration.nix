@@ -1,2 +1,2 @@
-builtins.trace "configuration.nix only exists as a backup alias for common.nix, please realise that file instead"
+# configuration.nix only exists as a backup alias for common.nix
 import ./common.nix
