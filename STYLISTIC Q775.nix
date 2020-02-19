@@ -43,5 +43,7 @@
     in ''
       # Reset dock keyboard
       ${resetUsbId} 04c5 148a
+      # Reset LTE modem on resume
+      ${resetUsbId} 1199 9041
     '';
 }
