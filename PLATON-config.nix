@@ -8,10 +8,6 @@
 
   hardware.bluetooth.powerOnBoot = false;
 
-  services.openssh.enable = true;
-
-  programs.mosh.enable = true;
-
   services.tlp.enable = true;
 
   services.undervolt.enable = true;
