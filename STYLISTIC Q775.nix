@@ -21,4 +21,27 @@
   hardware.cpu.intel.updateMicrocode = true;
 
   services.logind.lidSwitchDocked = config.services.logind.lidSwitch;
+
+  powerManagement.resumeCommands =
+    let resetUsbId = pkgs.writeShellScript "resetUsbId" ''
+      #reset device by ID
+      #based on https://forum.manjaro.org/t/keyboard-and-mouse-not-working-after-suspend/61424/35
+      set -euo pipefail
+      IFS=$'\n\t'
+
+      VENDOR="$1"
+      PRODUCT="$2"
+
+      for DIR in $(find /sys/bus/usb/devices/ -maxdepth 1 -type l); do
+        if [[ -f $DIR/idVendor && -f $DIR/idProduct &&
+              $(cat $DIR/idVendor) == $VENDOR && $(cat $DIR/idProduct) == $PRODUCT ]]; then
+          echo 0 > $DIR/authorized
+          echo 1 > $DIR/authorized
+        fi
+      done
+    '';
+    in ''
+      # Reset dock keyboard
+      ${resetUsbId} 04c5 148a
+    '';
 }
