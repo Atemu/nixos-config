@@ -12,6 +12,8 @@
 
   services.undervolt.enable = true;
 
+  services.logind.extraConfig = "HandlePowerKey=suspend";
+
   networking.networkmanager.wifi.powersave = true;
 
   systemd.services.ModemManager.wantedBy = [ "network.target" ];
