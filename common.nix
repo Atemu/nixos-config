@@ -11,36 +11,25 @@ let
 in
 
 {
-  imports = [
-    # TODO: Find cleaner way to specify these
-    # Include host-specific configuration
-    (
-      let
-        hostConfigNix = (./. + "/${meta.hostName}-config.nix");
-      in
-      if (builtins.pathExists hostConfigNix) then
-        hostConfigNix
-      else
-        ./genericHost.nix
-    )
-
-    # Include hardware-specific configuration
-    (
-      let
-        productNix = (./. + "/${meta.productName}.nix");
-      in
-      if (builtins.pathExists productNix) then
-        productNix
-      else
-        /etc/nixos/hardware-configuration.nix
-    )
-  ] ++ (
-    # Include host-specific storage configuration
+  imports =
     let
-      hostStorageNix = (./. + "/${meta.hostName}-storage.nix");
+      pathWithFallback = path: fallback:
+        if builtins.pathExists path then
+          path
+        else
+          fallback;
     in
-    lib.optional (builtins.pathExists hostStorageNix) hostStorageNix
-  );
+      [
+        # Include host-specific configuration
+        (pathWithFallback (./. + "/${meta.hostName}-config.nix") ./genericHost.nix)
+
+        # Include host-specific storage configuration
+        (pathWithFallback (./. + "/${meta.hostName}-storage.nix") null)
+
+        # Include hardware-specific configuration
+        (pathWithFallback (./. + "/${meta.productName}.nix") /etc/nixos/hardware-configuration.nix)
+
+      ];
 
   boot.loader.timeout = 1;
 
