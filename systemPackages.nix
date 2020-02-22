@@ -7,6 +7,7 @@ pkgs: with pkgs;
       bash-completion
       bc
       bind
+      brightnessctl
       btrfs-progs
       cifs-utils
       clang # DOOM emacs
@@ -60,7 +61,7 @@ pkgs: with pkgs;
       smartmontools
       stress
       sysstat
-      testdisk-photorec
+      testdisk
       thefuck
       traceroute
       tree

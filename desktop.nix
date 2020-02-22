@@ -11,8 +11,6 @@
   hardware.pulseaudio.support32Bit = true;
   hardware.opengl.driSupport32Bit = true;
 
-  hardware.brightnessctl.enable = true;
-
   # Disable annoying GUI password popup and console error message when using ssh
   programs.ssh.askPassword = "";
 
@@ -24,7 +22,7 @@
   services.xserver.displayManager.startx.enable = true;
 
   services.xserver.windowManager.bspwm.enable = true;
-  services.xserver.desktopManager.default = "none+bspwm";
+  services.xserver.displayManager.defaultSession = "none+bspwm";
 
   services.xserver.layout = "us";
   services.xserver.xkbVariant = "altgr-intl";

@@ -33,7 +33,7 @@ in
 
   boot.loader.timeout = 1;
 
-  boot.earlyVconsoleSetup = true;
+  console.earlySetup = true;
 
   networking.hostName = meta.hostName;
   # The hostId is set to the crc32 of the hostName in hex
@@ -46,13 +46,13 @@ in
     );
 
   i18n.defaultLocale = "en_US.UTF-8";
-  i18n.consoleKeyMap = "us";
+  console.keyMap = "us";
 
   time.timeZone = "Europe/Berlin";
 
   # Looks very similar the default console font and uni-vga though not 100%
   # TODO: Find out what the actual console font is and use that instead
-  i18n.consoleFont = "cp1250";
+  console.font = "cp1250";
 
   # Unstable channel pkgs override; e.g. pkgs.unstable.firefox
   nixpkgs.config.packageOverrides = pkgs: {
