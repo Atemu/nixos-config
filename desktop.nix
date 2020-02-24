@@ -36,7 +36,7 @@
 
   services.xserver.libinput.enable = true;
   services.xserver.libinput.naturalScrolling = false;
-
+  services.xserver.libinput.disableWhileTyping = true;
   services.xserver.libinput.accelProfile = "flat";
 
   fonts.fonts = with pkgs; [
