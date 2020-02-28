@@ -35,6 +35,7 @@ pkgs: with pkgs;
       lsof
       lz4
       man-pages
+      mediainfo
       mimic # Mycroft's TTS
       modemmanager
       mosh
