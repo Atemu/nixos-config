@@ -101,7 +101,6 @@ pkgs: with pkgs;
       libreoffice
       lutris
       lxrandr
-      modem-manager-gui
       mpv
       networkmanagerapplet
       riot-desktop
