@@ -55,6 +55,7 @@ pkgs: with pkgs;
       rsync
       rtv
       screen
+      shellcheck
       smartmontools
       stress
       sysstat
