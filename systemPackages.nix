@@ -42,6 +42,7 @@ pkgs: with pkgs;
       mosh
       ncdu
       neofetch
+      netcat-gnu
       nix-bash-completions
       nmap
       nox
