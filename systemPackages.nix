@@ -56,6 +56,7 @@ pkgs: with pkgs;
       rtv
       screen
       shellcheck
+      silver-searcher
       smartmontools
       stress
       sysstat
