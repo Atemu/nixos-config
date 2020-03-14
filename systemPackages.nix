@@ -27,6 +27,7 @@ pkgs: with pkgs;
       iotop
       iperf
       iw
+      jq
       killall
       libarchive
       linuxPackages.cpupower
