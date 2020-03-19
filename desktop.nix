@@ -73,4 +73,6 @@
   networking.networkmanager.unmanaged = [ "docker0" "virbr0" ];
 
   services.emacs.enable = true;
+
+  services.urxvtd.enable = true;
 }
