@@ -80,7 +80,6 @@ pkgs: with pkgs;
     noX = [
       emacs26-nox
       rxvt_unicode.terminfo
-      signal-cli
     ];
 
     # Packages to install if X is enabled.
