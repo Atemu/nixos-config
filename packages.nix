@@ -1,5 +1,6 @@
-pkgs: with pkgs;
+pkgs:
 
+with pkgs;
 {
   # Packages to always install.
   common = [
@@ -94,7 +95,7 @@ pkgs: with pkgs;
     firefox-bin
     geogebra
     gimp
-    gnome3.adwaita-icon-theme # fix for lutris' icons FIXME 
+    gnome3.adwaita-icon-theme # fix lutris' missing icons
     jdk
     jetbrains.idea-community
     krita
