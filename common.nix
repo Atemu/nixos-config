@@ -68,7 +68,7 @@ in
 
   # List of packages installed in system profile.
   # If the host config enables X, X packages are also imported
-  environment.systemPackages = with import ./systemPackages.nix pkgs;
+  environment.systemPackages = with import ./packages.nix pkgs;
                                common ++ (if config.services.xserver.enable then x else noX);
 
   programs.screen.screenrc = "startup_message off";
