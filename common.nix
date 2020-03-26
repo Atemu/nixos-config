@@ -24,7 +24,7 @@ in
         (pathWithFallback (./. + "/${meta.hostName}-config.nix") ./genericHost.nix)
 
         # Include host-specific storage configuration
-        (pathWithFallback (./. + "/${meta.hostName}-storage.nix") null)
+        (pathWithFallback (./. + "/${meta.hostName}-storage.nix") {})
 
         # Include hardware-specific configuration
         (pathWithFallback (./. + "/${meta.productName}.nix") /etc/nixos/hardware-configuration.nix)
