@@ -13,5 +13,8 @@
   swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;
+
+  nixpkgs.config.allowUnsupportedSystem = true;
+
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 }
