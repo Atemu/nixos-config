@@ -19,7 +19,6 @@ with pkgs;
     ddrescue
     diceware
     fd
-    ffmpeg-full
     ffsend
     file
     git
@@ -79,9 +78,11 @@ with pkgs;
   ];
 
   x86 = [
+    ffmpeg-full
   ];
 
   aarch32 = [
+    ffmpeg
   ];
 
   # Packages to install if X is not enabled.
