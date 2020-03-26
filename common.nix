@@ -21,13 +21,15 @@ in
     in
       [
         # Include host-specific configuration
-        (pathWithFallback (./. + "/${meta.hostName}-config.nix") /etc/nixos/configuration.nix)
+        (pathWithFallback (./. + "/${meta.hostName}-config.nix")
+          (pathWithFallback /mnt/etc/nixos/configuration.nix /etc/nixos/configuration.nix))
 
         # Include host-specific storage configuration
         (pathWithFallback (./. + "/${meta.hostName}-storage.nix") {})
 
         # Include hardware-specific configuration
-        (pathWithFallback (./. + "/${meta.productName}.nix") /etc/nixos/hardware-configuration.nix)
+        (pathWithFallback (./. + "/${meta.productName}.nix")
+          (pathWithFallback /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix))
 
       ];
 
