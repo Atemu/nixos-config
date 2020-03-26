@@ -57,7 +57,6 @@ with pkgs;
     rsync
     rtv
     screen
-    shellcheck
     silver-searcher
     smartmontools
     stress
@@ -79,6 +78,7 @@ with pkgs;
 
   x86 = [
     ffmpeg-full
+    shellcheck
   ];
 
   aarch32 = [
