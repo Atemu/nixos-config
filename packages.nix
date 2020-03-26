@@ -78,6 +78,12 @@ with pkgs;
     zstd
   ];
 
+  x86 = [
+  ];
+
+  aarch32 = [
+  ];
+
   # Packages to install if X is not enabled.
   noX = [
     emacs26-nox
