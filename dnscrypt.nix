@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  services.dnscrypt-proxy2.enable = true;
-
   services.dnscrypt-proxy2.settings = {
     ipv6_servers = true;
     require_dnssec = true;
