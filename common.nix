@@ -31,6 +31,8 @@ in
         (pathWithFallback (./. + "/${meta.productName}.nix")
           (pathWithFallback /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix))
 
+        # Service-specific configurations
+        ./dnscrypt.nix
       ];
 
   boot.loader.timeout = 1;
