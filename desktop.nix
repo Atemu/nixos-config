@@ -23,6 +23,9 @@
 
   services.xserver.windowManager.i3.enable = true;
   services.xserver.displayManager.defaultSession = "none+i3";
+  services.xserver.windowManager.i3.extraPackages = with pkgs; [
+    dmenu
+  ];
 
   services.xserver.layout = "us";
   services.xserver.xkbVariant = "altgr-intl";

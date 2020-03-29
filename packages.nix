@@ -97,7 +97,6 @@ with pkgs;
     anki
     blender
     chromium
-    dmenu
     emacs
     firefox-bin
     geogebra
