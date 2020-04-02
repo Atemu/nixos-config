@@ -28,6 +28,10 @@
   ];
 
   programs.sway.enable = true;
+  programs.sway.extraPackages = with pkgs; [
+    xwayland
+  ];
+
   services.xserver.layout = "us";
   services.xserver.xkbVariant = "altgr-intl";
 
