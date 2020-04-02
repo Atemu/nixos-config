@@ -27,6 +27,7 @@
     dmenu
   ];
 
+  programs.sway.enable = true;
   services.xserver.layout = "us";
   services.xserver.xkbVariant = "altgr-intl";
 
