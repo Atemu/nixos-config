@@ -29,6 +29,7 @@
 
   programs.sway.enable = true;
   programs.sway.extraPackages = with pkgs; [
+    bemenu
     xwayland
   ];
 
