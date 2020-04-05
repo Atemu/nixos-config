@@ -27,6 +27,16 @@
     dmenu
   ];
 
+  programs.sway.enable = true;
+  programs.sway.extraPackages = with pkgs; [
+    bemenu
+    qt5.qtwayland
+    xwayland
+  ];
+  programs.sway.extraSessionCommands = ''
+    [ -e ~/.wprofile ] && source ~/.wprofile
+  '';
+
   services.xserver.layout = "us";
   services.xserver.xkbVariant = "altgr-intl";
 
