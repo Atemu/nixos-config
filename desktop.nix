@@ -21,8 +21,11 @@
   services.xserver.enable = true;
   services.xserver.displayManager.startx.enable = true;
 
-  services.xserver.windowManager.bspwm.enable = true;
-  services.xserver.displayManager.defaultSession = "none+bspwm";
+  services.xserver.windowManager.i3.enable = true;
+  services.xserver.displayManager.defaultSession = "none+i3";
+  services.xserver.windowManager.i3.extraPackages = with pkgs; [
+    dmenu
+  ];
 
   services.xserver.layout = "us";
   services.xserver.xkbVariant = "altgr-intl";
