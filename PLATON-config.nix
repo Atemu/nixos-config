@@ -32,5 +32,7 @@
 
   programs.java.enable = true;
 
+  programs.adb.enable = true;
+
   system.stateVersion = "19.09"; # Did you read the comment?
 }
