@@ -46,6 +46,7 @@ with pkgs;
     neofetch
     netcat-gnu
     nix-bash-completions
+    nix-index
     nmap
     nox
     ntfs3g
