@@ -97,7 +97,7 @@ with pkgs;
     anki
     blender
     chromium
-    emacs
+    (emacsWithPackages [ emacsPackages.emacs-libvterm ])
     firefox-bin
     geogebra
     gimp
