@@ -63,7 +63,6 @@ with pkgs;
     stress
     sysstat
     testdisk
-    thefuck
     traceroute
     tree
     unzip
