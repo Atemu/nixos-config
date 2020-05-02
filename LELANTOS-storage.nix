@@ -10,10 +10,10 @@
     device = "Lpool/deployment/nix";
     fsType = "zfs";
   };
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/2178-694E";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/038E-8BC2";
+    fsType = "vfat";
+  };
   # Purpose-specific
   fileSystems."/home" = {
     device = "Lpool/purpose/home";
