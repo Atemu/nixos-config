@@ -10,8 +10,10 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  # Use the extlinux bootloader instead of GRUB
-  boot.loader.generic-extlinux-compatible.enable = true;
+  # We need the raspi bootloader with uboot
+  boot.loader.raspberryPi.enable = true;
+  boot.loader.raspberryPi.uboot.enable = true;
+  # Do not use GRUB
   boot.loader.grub.enable = false;
 
   swapDevices = [ ];
