@@ -13,6 +13,7 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/038E-8BC2";
     fsType = "vfat";
+    options = [ "umask=077" ];
   };
   # Purpose-specific
   fileSystems."/home" = {
