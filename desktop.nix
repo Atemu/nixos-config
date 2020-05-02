@@ -84,6 +84,7 @@
   networking.networkmanager.unmanaged = [ "docker0" "virbr0" ];
 
   services.emacs.enable = true;
+  services.emacs.package = with pkgs; emacsWithPackages [ emacsPackages.emacs-libvterm ];
 
   services.urxvtd.enable = true;
 }
