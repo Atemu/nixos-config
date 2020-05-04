@@ -13,7 +13,7 @@
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  services.undervolt.coreOffset = "-90";
+  services.undervolt.coreOffset = "-85";
 
   hardware.cpu.intel.updateMicrocode = true;
 
