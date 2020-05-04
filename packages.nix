@@ -47,6 +47,7 @@ with pkgs;
     netcat-gnu
     nix-bash-completions
     nix-index
+    nixpkgs-review
     nmap
     nox
     ntfs3g
