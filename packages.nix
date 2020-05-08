@@ -19,7 +19,6 @@ with pkgs;
     ddrescue
     diceware
     fd
-    ffsend
     file
     git
     gnupg
