@@ -46,6 +46,7 @@ with pkgs;
     netcat-gnu
     nix-bash-completions
     nix-index
+    nix-top
     nixpkgs-review
     nmap
     nox
