@@ -81,7 +81,7 @@
   networking.networkmanager.logLevel = "INFO"; # Prints useful info to journalctl
   networking.networkmanager.wifi.macAddress = "stable"; # TODO what exactly does this mean?
   networking.networkmanager.wifi.scanRandMacAddress = true; # default
-  networking.networkmanager.unmanaged = [ "docker0" "virbr0" ];
+  networking.networkmanager.unmanaged = [ "docker0" "virbr0" "anbox0" ];
 
   services.emacs.enable = true;
   services.emacs.package = with pkgs; emacsWithPackages [ emacsPackages.emacs-libvterm ];
