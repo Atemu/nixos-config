@@ -100,7 +100,6 @@ with pkgs;
     chromium
     (emacsWithPackages [ emacsPackages.emacs-libvterm ])
     firefox-bin
-    geogebra
     gimp
     gnome3.adwaita-icon-theme # fix lutris' missing icons
     jdk
