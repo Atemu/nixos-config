@@ -73,6 +73,7 @@ with pkgs;
     which
     whois
     wol
+    youtube-dl
     zip
     zstd
   ];
