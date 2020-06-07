@@ -2,11 +2,13 @@
 # automatically includes host- and hardware-specific configuration based on
 # the imperatively generated meta.nix. See README.md for more information.
 
+# Given by build.nix
+meta:
+
+# Given by Nixpkgs
 { config, lib, pkgs, ... }:
 
 let
-  # meta.nix provides hostName and productName
-  meta = import ./meta.nix;
   nixosConfig = "/nix/var/nix/nixos-config";
 in
 
