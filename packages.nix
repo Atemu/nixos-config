@@ -12,7 +12,6 @@ with pkgs;
     brightnessctl
     btrfs-progs
     cifs-utils
-    clang # DOOM emacs
     compsize
     cryptsetup
     curl
@@ -22,7 +21,6 @@ with pkgs;
     file
     git
     gnupg
-    gotop
     hdparm
     iftop
     iotop
@@ -38,7 +36,6 @@ with pkgs;
     lz4
     man-pages
     mediainfo
-    mimic # Mycroft's TTS
     modemmanager
     mosh
     ncdu
@@ -49,21 +46,16 @@ with pkgs;
     nix-top
     nixpkgs-review
     nmap
-    nox
     ntfs3g
     pciutils
     pv
     ranger
-    rclone
     ripgrep
     rsync
-    rtv
     screen
-    silver-searcher
     smartmontools
     stress
     sysstat
-    testdisk
     traceroute
     tree
     unzip
@@ -97,31 +89,22 @@ with pkgs;
   x = [
     android-studio
     anki
-    blender
     chromium
     (emacsWithPackages [ emacsPackages.emacs-libvterm ])
     firefox-bin
     gimp
     gnome3.adwaita-icon-theme # fix lutris' missing icons
-    jdk
     jetbrains.idea-community
-    krita
     libreoffice
     lutris
     lxrandr
     mpv
-    networkmanagerapplet
     riot-desktop
     rxvt_unicode
     signal-desktop
     steam
-    sxhkd
-    tigervnc
-    virtmanager
     vlc
-    xcape
     xclip
-    xorg.xbacklight
     xorg.xev
   ];
 }
