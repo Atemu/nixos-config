@@ -5,36 +5,17 @@
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.efiSupport = true;
 
-  boot.initrd.luks.devices = {
-    EXTERNAL-crypt = {
-      device = "/dev/disk/by-uuid/34b1261a-ab90-495c-b872-f2f0fd7df14b";
-      allowDiscards = true;
-    };
-  };
-
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportAll = false;
   boot.zfs.forceImportRoot = false;
   boot.zfs.devNodes = "/dev/mapper/";
 
   fileSystems."/" = {
-    device = "Rpool/R/root";
+    device = "Rpool/deployment/root";
     fsType = "zfs";
   };
   fileSystems."/nix" = {
-    device = "Rpool/R/nix";
-    fsType = "zfs";
-  };
-  fileSystems."/home" = {
-    device = "Rpool/R/home";
-    fsType = "zfs";
-  };
-  fileSystems."/var" = {
-    device = "Rpool/R/var";
-    fsType = "zfs";
-  };
-  fileSystems."/var/tmp" = {
-    device = "Rpool/R/tmp";
+    device = "Rpool/deployment/nix";
     fsType = "zfs";
   };
   fileSystems."/tmp" = {
@@ -43,13 +24,9 @@
     options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
   };
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/69FE-BCF4";
+    device = "/dev/disk/by-uuid/165A-C18C";
     fsType = "vfat";
     options = [ "umask=077" ];
-  };
-  fileSystems."/var/lib/docker" = {
-    device = "Rpool/R/docker";
-    fsType = "zfs";
   };
 
   swapDevices = [ ];
