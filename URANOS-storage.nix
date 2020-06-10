@@ -14,7 +14,7 @@
 
   # Deployment
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/D266-9E89";
+    device = "/dev/disk/by-uuid/165A-C18C";
     fsType = "vfat";
     options = [ "umask=077" ];
   };
