@@ -19,5 +19,7 @@
     ];
   };
 
+  services.logind.lidSwitch = "ignore";
+
   system.stateVersion = "20.03";
 }
