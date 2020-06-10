@@ -26,4 +26,10 @@
     device = "Upool/deployment/nix";
     fsType = "zfs";
   };
+  fileSystems."/var/lib/docker" = {
+    device = "Upool/deployment/docker";
+    fsType = "zfs";
+  };
+
+  virtualisation.docker.storageDriver = "zfs";
 }
