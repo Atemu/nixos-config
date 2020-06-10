@@ -8,7 +8,7 @@
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportAll = false;
   boot.zfs.forceImportRoot = false;
-  boot.zfs.devNodes = "/dev/mapper/";
+  boot.zfs.devNodes = "/dev/disk/by-id/"; # default
 
   fileSystems."/" = {
     device = "Rpool/deployment/root";
