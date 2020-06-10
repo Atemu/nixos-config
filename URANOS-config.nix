@@ -7,5 +7,7 @@
 
   security.sudo.wheelNeedsPassword = false;
 
+  virtualisation.docker.enable = true;
+
   system.stateVersion = "20.03";
 }
