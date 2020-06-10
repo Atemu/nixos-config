@@ -30,6 +30,15 @@
     device = "Upool/deployment/docker";
     fsType = "zfs";
   };
+  # Purposes
+  fileSystems."/srv/bz/wine" = {
+    device = "Upool/purpose/bz/wine";
+    fsType = "zfs";
+  };
+  fileSystems."/srv/bz/bzvol" = {
+    device = "Upool/purpose/bz/bzvol";
+    fsType = "zfs";
+  };
 
   virtualisation.docker.storageDriver = "zfs";
 }
