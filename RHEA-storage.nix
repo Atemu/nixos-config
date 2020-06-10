@@ -39,11 +39,4 @@
     priority = 5; # default
     swapDevices = 1; # why do I need this?
   };
-
-  services.zfs.trim.enable = true;
-  services.zfs.trim.interval = "weekly"; #default
-
-  services.zfs.autoSnapshot.enable = true;
-
-  virtualisation.docker.storageDriver = "zfs";
 }
