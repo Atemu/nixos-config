@@ -39,6 +39,10 @@
     device = "Upool/purpose/bz/bzvol";
     fsType = "zfs";
   };
+  fileSystems."/srv/bz/bzthread" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+  };
 
   virtualisation.docker.storageDriver = "zfs";
 

@@ -16,6 +16,7 @@
       "/srv/bz/wine:/wine/"
       "/srv/bz/upload/:/wine/drive_d/:ro"
       "/srv/bz/bzvol:/wine/drive_d/.bzvol"
+      "/srv/bz/bzthread:/wine/drive_c/ProgramData/Backblaze/bzdata/bzthread"
     ];
     extraDockerOptions = [ "--init" ];
   };
