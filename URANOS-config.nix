@@ -17,6 +17,7 @@
       "/srv/bz/upload/:/wine/drive_d/:ro"
       "/srv/bz/bzvol:/wine/drive_d/.bzvol"
     ];
+    extraDockerOptions = [ "--init" ];
   };
 
   services.logind.lidSwitch = "ignore";
