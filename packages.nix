@@ -103,6 +103,7 @@ with pkgs;
     rxvt_unicode
     signal-desktop
     steam
+    steam-run
     vlc
     xclip
     xorg.xev
