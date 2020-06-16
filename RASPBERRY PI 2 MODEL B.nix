@@ -15,6 +15,12 @@
   };
   boot.extraModulePackages = [ ];
 
+  # We need the raspi bootloader with uboot
+  boot.loader.raspberryPi.enable = true;
+  boot.loader.raspberryPi.uboot.enable = true;
+  # Do not use GRUB
+  boot.loader.grub.enable = false;
+
   swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;
