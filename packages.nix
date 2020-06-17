@@ -85,12 +85,14 @@ with pkgs;
     rxvt_unicode.terminfo
   ];
 
+  emacs-vterm = (emacsWithPackages [ emacsPackages.emacs-libvterm ]);
+
   # Packages to install if X is enabled.
   x = [
     android-studio
     anki
     chromium
-    (emacsWithPackages [ emacsPackages.emacs-libvterm ])
+    emacs-vterm
     firefox-bin
     gimp
     gnome3.adwaita-icon-theme # fix lutris' missing icons
