@@ -104,6 +104,7 @@ with pkgs;
     signal-desktop
     steam
     steam-run
+    torbrowser
     vlc
     xclip
     xorg.xev
