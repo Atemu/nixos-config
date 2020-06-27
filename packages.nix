@@ -106,6 +106,7 @@ let
     signal-desktop
     steam
     steam-run
+    texlive.combined.scheme-full
     torbrowser
     vlc
     xclip
