@@ -33,6 +33,8 @@ in
         (pathWithFallback (./. + "/${meta.productName}.nix")
           (pathWithFallback /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix))
 
+        (if (meta.withPackages or true) then ./packages.nix else { })
+
         # Service-specific configurations
         ./dnscrypt.nix
       ];
@@ -69,17 +71,6 @@ in
     };
   };
   nixpkgs.config.allowUnfree = true; # required for Steam
-
-  # List of packages installed in system profile.
-  # If the host config enables X, X packages are also imported
-  # Some packages are installed depending on the platform
-  environment.systemPackages =
-    if (meta.withPackages or true)
-    then with import ./packages.nix pkgs;
-      common ++ (if config.services.xserver.enable then x else noX)
-      ++ lib.optionals (pkgs.stdenv.targetPlatform.isx86) x86
-      ++ lib.optionals (pkgs.stdenv.targetPlatform.isAarch32) aarch32
-    else [];
 
   programs.screen.screenrc = "startup_message off";
 

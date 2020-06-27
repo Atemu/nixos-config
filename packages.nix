@@ -1,7 +1,8 @@
-pkgs:
+{ pkgs, config, lib, ... }:
 
 with pkgs;
-{
+
+let
   # Packages to always install.
   common = [
     acpi
@@ -68,14 +69,12 @@ with pkgs;
     youtube-dl
     zip
     zstd
-  ];
-
-  x86 = [
+  ]
+  ++ lib.optionals (stdenv.targetPlatform.isx86) [
     ffmpeg-full
     shellcheck
-  ];
-
-  aarch32 = [
+  ]
+  ++ lib.optionals (stdenv.targetPlatform.isAarch32) [
     ffmpeg
   ];
 
@@ -111,4 +110,9 @@ with pkgs;
     xclip
     xorg.xev
   ];
+in
+{
+  # List of packages installed in system profile.
+  # If the host config enables X, X packages are also imported
+  environment.systemPackages = common ++ (if config.services.xserver.enable then x else noX);
 }
