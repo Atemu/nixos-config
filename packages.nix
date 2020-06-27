@@ -84,7 +84,7 @@ let
     rxvt_unicode.terminfo
   ];
 
-  emacs-vterm = (emacsWithPackages [ emacsPackages.emacs-libvterm ]);
+  emacs-vterm = (emacsWithPackages [ emacsPackages.vterm ]);
 
   # Packages to install if X is enabled.
   x = [
