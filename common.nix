@@ -45,11 +45,10 @@ in
 
   networking.hostName = meta.hostName;
   # The hostId is set to the crc32 of the hostName in hex
-  # TODO clean up this beauty
   networking.hostId =
     builtins.readFile (
       pkgs.runCommand "mkHostId" {} ''
-      printf '%X' $(printf "${meta.hostName}" | cksum | cut -d \  -f1) > $out
+        printf '%X' $(printf "${meta.hostName}" | cksum | cut -d ' '  -f1) > $out
       ''
     );
 
