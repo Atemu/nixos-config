@@ -99,6 +99,7 @@ let
     libreoffice
     lutris
     lxrandr
+    mozlz4a
     mpv
     riot-desktop
     rxvt_unicode
