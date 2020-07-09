@@ -5,7 +5,7 @@
     ./desktop.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_5_6;
+  boot.kernelPackages = pkgs.linuxPackages_5_7;
   boot.kernelPatches = [
     {
       name = "fsync";
