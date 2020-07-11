@@ -1,5 +1,13 @@
 { config, lib, pkgs, ... }:
 
+let
+  mkUndervolt = offset:
+    if lib.versionAtLeast lib.trivial.release "20.09" then
+      offset
+    else
+      toString offset;
+in
+
 {
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
@@ -13,7 +21,7 @@
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  services.undervolt.coreOffset = "-85";
+  services.undervolt.coreOffset = mkUndervolt (-85);
 
   hardware.cpu.intel.updateMicrocode = true;
 
