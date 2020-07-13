@@ -23,5 +23,11 @@
 
   services.sshd.enable = true;
 
+  virtualisation.libvirtd = {
+    enable = true;
+    qemuOvmf = true;
+    qemuRunAsRoot = false;
+  };
+
   system.stateVersion = "20.09";
 }
