@@ -21,7 +21,7 @@
 
   boot.initrd.network.postCommands = ''
     # Make initrd SSH use the host ecdsa key from the extraInitrd.
-    cp /dropbear_ecdsa_host_key /etc/dropbear/
+    install /dropbear_ecdsa_host_key -Dt /etc/dropbear/
     # Automatically ask for the password on SSH login
     echo 'cryptsetup-askpass' >> /root/.profile
   '';
