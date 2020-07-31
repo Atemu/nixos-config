@@ -20,18 +20,17 @@ in
           path
         else
           fallback;
+      pathsWithFallbacks = paths: lib.foldr pathWithFallback { } paths;
     in
       [
         # Include host-specific configuration
-        (pathWithFallback (./. + "/${meta.hostName}-config.nix")
-          (pathWithFallback /mnt/etc/nixos/configuration.nix /etc/nixos/configuration.nix))
+        (pathsWithFallbacks [ (./. + "/${meta.hostName}-config.nix") /mnt/etc/nixos/configuration.nix /etc/nixos/configuration.nix ])
 
         # Include host-specific storage configuration
-        (pathWithFallback (./. + "/${meta.hostName}-storage.nix") {})
+        (pathsWithFallbacks [ (./. + "/${meta.hostName}-storage.nix") ])
 
         # Include hardware-specific configuration
-        (pathWithFallback (./. + "/${meta.productName}.nix")
-          (pathWithFallback /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix))
+        (pathsWithFallbacks [ (./. + "/${meta.productName}.nix") /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix ])
 
         (if (meta.withPackages or true) then ./packages.nix else { })
 
