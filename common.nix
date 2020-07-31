@@ -13,30 +13,33 @@ let
 in
 
 {
-  imports =
-    let
-      pathWithFallback = path: fallback:
-        if builtins.pathExists path then
-          path
-        else
-          fallback;
-      pathsWithFallbacks = paths: lib.foldr pathWithFallback { } paths;
-    in
-      [
-        # Include host-specific configuration
-        (pathsWithFallbacks [ (./. + "/${meta.hostName}-config.nix") /mnt/etc/nixos/configuration.nix /etc/nixos/configuration.nix ])
+  imports = let
+    pathWithFallback = path: fallback:
+      if builtins.pathExists path then
+        path
+      else
+        fallback;
+    pathsWithFallbacks = paths: lib.foldr pathWithFallback { } paths;
 
-        # Include host-specific storage configuration
-        (pathsWithFallbacks [ (./. + "/${meta.hostName}-storage.nix") ])
-
-        # Include hardware-specific configuration
-        (pathsWithFallbacks [ (./. + "/${meta.productName}.nix") /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix ])
-
-        (if (meta.withPackages or true) then ./packages.nix else { })
-
-        # Service-specific configurations
-        ./dnscrypt.nix
+    import = {
+      host = pathsWithFallbacks [
+        (./. + "/${meta.hostName}-config.nix")
+        /mnt/etc/nixos/configuration.nix
+        /etc/nixos/configuration.nix
       ];
+      storage = pathsWithFallbacks [ (./. + "/${meta.hostName}-storage.nix") ];
+      hardware = pathsWithFallbacks [
+        (./. + "/${meta.productName}.nix")
+        /mnt/etc/nixos/hardware-configuration.nix
+        /etc/nixos/hardware-configuration.nix
+      ];
+
+      packages = if (meta.withPackages or true) then ./packages.nix else { };
+    };
+  in map (item: import."${item}") (builtins.attrNames import) #include everything from the import attrset
+     ++ [
+       ./dnscrypt.nix
+     ];
 
   boot.loader.timeout = 1;
 
