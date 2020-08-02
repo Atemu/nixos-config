@@ -101,7 +101,7 @@ let
     lxrandr
     mozlz4a
     mpv
-    riot-desktop
+    element-desktop
     rxvt_unicode
     signal-desktop
     steam
