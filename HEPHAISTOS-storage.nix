@@ -50,6 +50,10 @@
     device = "Hpool/purpose/games";
     fsType = "zfs";
   };
+  fileSystems."/var/lib/libvirt/images/macOS" = {
+    device = "Hpool/purpose/macOS";
+    fsType = "zfs";
+  };
 
   swapDevices = [ ];
 
