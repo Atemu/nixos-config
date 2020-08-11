@@ -91,6 +91,7 @@ let
     android-studio
     anki
     chromium
+    element-desktop
     emacs-vterm
     firefox-bin
     gimp
@@ -102,7 +103,6 @@ let
     mlterm
     mozlz4a
     mpv
-    element-desktop
     rxvt_unicode
     signal-desktop
     steam
