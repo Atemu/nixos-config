@@ -99,6 +99,7 @@ let
     libreoffice
     lutris
     lxrandr
+    mlterm
     mozlz4a
     mpv
     element-desktop
