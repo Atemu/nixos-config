@@ -88,5 +88,7 @@
   services.emacs.enable = true;
   services.emacs.package = with pkgs; emacsWithPackages [ emacsPackages.vterm ];
 
+  programs.java.enable = true;
+
   services.urxvtd.enable = true;
 }
