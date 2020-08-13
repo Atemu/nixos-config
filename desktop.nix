@@ -51,8 +51,6 @@
   services.xserver.libinput.accelProfile = "flat";
 
   fonts.fonts = with pkgs; [
-    uni-vga
-
     # My preferred monospace font
     source-code-pro
 
