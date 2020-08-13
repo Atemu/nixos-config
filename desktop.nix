@@ -52,6 +52,10 @@
 
   fonts.fonts = with pkgs; [
     uni-vga
+
+    # My preferred monospace font
+    source-code-pro
+
     # Japanese fonts
     # Recommended by https://functor.tokyo/blog/2018-10-01-japanese-on-nixos
     carlito
@@ -63,7 +67,7 @@
   ];
   fonts.fontconfig.defaultFonts = {
     monospace = [
-      "DejaVu Sans Mono"
+      "Source Code Pro"
       "IPAGothic"
     ];
     sansSerif = [
