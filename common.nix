@@ -63,16 +63,6 @@ in
   # TODO: Find out what the actual console font is and use that instead
   console.font = "cp1250";
 
-  # Unstable channel pkgs override; e.g. pkgs.unstable.firefox
-  nixpkgs.config.packageOverrides = pkgs: {
-    unstable = import <nixos-unstable> {
-      # pass the nixpkgs config to the unstable alias
-      # to ensure `allowUnfree` is propagated:
-      config = config.nixpkgs.config;
-    };
-  };
-  nixpkgs.config.allowUnfree = true; # required for Steam
-
   programs.screen.screenrc = "startup_message off";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

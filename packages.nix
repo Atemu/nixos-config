@@ -114,6 +114,14 @@ let
   ];
 in
 {
+  nixpkgs.config.allowUnfree = true; # :(
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    unstable = import <nixos-unstable> {
+      config = config.nixpkgs.config; # propagate `allowUnfree`
+    };
+  };
+
   # List of packages installed in system profile.
   # If the host config enables X, X packages are also imported
   environment.systemPackages = common ++ (if config.services.xserver.enable then x else noX);
