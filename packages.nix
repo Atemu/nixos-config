@@ -120,6 +120,9 @@ in
     unstable = import <nixos-unstable> {
       config = config.nixpkgs.config; # propagate `allowUnfree`
     };
+    stable = import <nixos-stable> {
+      config = config.nixpkgs.config; # propagate `allowUnfree`
+    };
   };
 
   # List of packages installed in system profile.
