@@ -1,7 +1,7 @@
 # This file contains the configuration of disks and storage
 { ... }:
 {
-  boot.loader.grub.devices = [ "nodev" ];
+  boot.loader.grub.devices = [ "/dev/disk/by-id/usb-Generic_Flash_Disk_2512623E-0:0" ];
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.efiSupport = true;
 
