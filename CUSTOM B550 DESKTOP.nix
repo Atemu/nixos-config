@@ -11,7 +11,7 @@
   boot.kernelParams = [ "amd_iommu=on" ];
   boot.extraModulePackages = [ ];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 
   hardware.cpu.amd.updateMicrocode = true;
 }
