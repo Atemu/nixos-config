@@ -11,4 +11,6 @@
   boot.extraModulePackages = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  hardware.cpu.amd.updateMicrocode = true;
 }
