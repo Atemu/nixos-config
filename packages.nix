@@ -103,6 +103,7 @@ let
     mlterm
     mozlz4a
     mpv
+    python3
     rxvt_unicode
     signal-desktop
     steam
