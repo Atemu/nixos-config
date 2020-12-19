@@ -9,7 +9,7 @@ meta:
 { config, lib, pkgs, ... }:
 
 let
-  nixosConfig = "/nix/var/nix/nixos-config";
+  nixos-config = "/nix/var/nix/nixos-config";
   nixpkgs = "/nix/var/nix/nixpkgs";
 in
 
@@ -76,10 +76,10 @@ in
 
   nix.nixPath = [
     "nixpkgs=${nixpkgs}"
-    "nixos-config=${nixosConfig}"
+    "nixos-config=${nixos-config}"
     "nixos=${nixpkgs}"
   ];
-  environment.variables.NIXOS_CONFIG_DIR = "${nixosConfig}";
+  environment.variables.NIXOS_CONFIG_DIR = "${nixos-config}";
 
   systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp/";
 }
