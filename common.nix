@@ -14,33 +14,15 @@ let
 in
 
 {
-  imports = let
-    pathWithFallback = path: fallback:
-      if builtins.pathExists path then
-        path
-      else
-        fallback;
-    pathsWithFallbacks = paths: lib.foldr pathWithFallback { } paths;
+  imports = [
+    (./. + "/${meta.hostName}-config.nix")
+    (./. + "/${meta.hostName}-storage.nix")
+    (./. + "/${meta.productName}.nix")
 
-    import = {
-      host = pathsWithFallbacks [
-        (./. + "/${meta.hostName}-config.nix")
-        /mnt/etc/nixos/configuration.nix
-        /etc/nixos/configuration.nix
-      ];
-      storage = pathsWithFallbacks [ (./. + "/${meta.hostName}-storage.nix") ];
-      hardware = pathsWithFallbacks [
-        (./. + "/${meta.productName}.nix")
-        /mnt/etc/nixos/hardware-configuration.nix
-        /etc/nixos/hardware-configuration.nix
-      ];
+    (if (meta.withPackages or true) then ./packages.nix else { })
 
-      packages = if (meta.withPackages or true) then ./packages.nix else { };
-    };
-  in map (item: import."${item}") (builtins.attrNames import) #include everything from the import attrset
-     ++ [
-       ./dnscrypt.nix
-     ];
+    ./dnscrypt.nix
+  ];
 
   boot.loader.timeout = 1;
 
