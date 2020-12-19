@@ -7,7 +7,7 @@
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nvidiaBeta" ];
 
   hardware.steam-hardware.enable = true;
 
