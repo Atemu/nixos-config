@@ -5,7 +5,7 @@
     ./desktop.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxPackages_lqx;
 
   services.xserver.videoDrivers = [ "nvidiaBeta" ];
 
