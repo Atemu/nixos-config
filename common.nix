@@ -10,6 +10,7 @@ meta:
 
 let
   nixosConfig = "/nix/var/nix/nixos-config";
+  nixpkgs = "/nix/var/nix/nixpkgs";
 in
 
 {
@@ -73,8 +74,11 @@ in
     initialPassword = "none";
   };
 
-  # FIXME only replace nixos-config= instead of overwriting the whole path
-  nix.nixPath = [ "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos" "nixos-config=${nixosConfig}" "/nix/var/nix/profiles/per-user/root/channels" ];
+  nix.nixPath = [
+    "nixpkgs=${nixpkgs}"
+    "nixos-config=${nixosConfig}"
+    "nixos=${nixpkgs}"
+  ];
   environment.variables.NIXOS_CONFIG_DIR = "${nixosConfig}";
 
   systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp/";
