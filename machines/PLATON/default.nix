@@ -3,7 +3,7 @@
 {
   imports = [
     # TODO make this a configurable option, e.g. meta.isDesktop = true
-    ./desktop.nix
+    ../../desktop.nix
   ];
 
   hardware.bluetooth.powerOnBoot = false;

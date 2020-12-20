@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./desktop.nix
+    ../../desktop.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_lqx;
