@@ -17,7 +17,7 @@ in
   imports = [
     (./. + "/${meta.hostName}-config.nix")
     (./. + "/${meta.hostName}-storage.nix")
-    (./. + "/${meta.productName}.nix")
+    (./hardware + "/${meta.productName}.nix")
 
     (if (meta.withPackages or true) then ./packages.nix else { })
 
