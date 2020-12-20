@@ -1,7 +1,13 @@
 {
   imports = [
+    ../../common.nix
+
     ./storage.nix
+
+    ../../hardware/RPI2.nix
   ];
+
+  custom.hostName = "LELANTOS";
 
   services.openssh.enable = true;
   programs.mosh.enable = true;

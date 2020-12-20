@@ -2,8 +2,14 @@
 
 {
   imports = [
+    ../../common.nix
+
     ./storage.nix
+
+    ../../hardware/B550.nix
   ];
+
+  custom.hostName = "HEPHAISTOS";
 
   custom.desktop.enable = true;
 

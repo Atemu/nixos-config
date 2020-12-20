@@ -2,8 +2,14 @@
 
 {
   imports = [
+    ../../common.nix
+
     ./storage.nix
+
+    ../../hardware/T901.nix
   ];
+
+  custom.hostName = "URANOS";
 
   services.openssh.enable = true;
 

@@ -126,6 +126,8 @@ in
   };
 
   # List of packages installed in system profile.
-  # If the host config enables X, X packages are also imported
-  environment.systemPackages = common ++ (if config.services.xserver.enable then x else noX);
+  environment.systemPackages = lib.mkIf config.custom.withPackages (
+    # If the host config enables X, X packages are also imported
+    common ++ (if config.custom.desktop.enable then x else noX)
+  );
 }

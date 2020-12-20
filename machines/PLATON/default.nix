@@ -2,8 +2,14 @@
 
 {
   imports = [
+    ../../common.nix
+
     ./storage.nix
+
+    ../../hardware/Q775.nix
   ];
+
+  custom.hostName = "PLATON";
 
   custom.desktop.enable = true;
 

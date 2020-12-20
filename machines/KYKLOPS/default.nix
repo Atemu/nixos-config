@@ -2,8 +2,14 @@
 
 {
   imports = [
+    ../../common.nix
+
     ./storage.nix
+
+    ../../hardware/M720.nix
   ];
+
+  custom.hostName = "KYKLOPS";
 
   boot.initrd.network.enable = true;
   boot.initrd.network.ssh.enable = true;

@@ -1,11 +1,3 @@
-# This file implements things I want to have on all my NixOS machines and
-# automatically includes host- and hardware-specific configuration based on
-# the imperatively generated meta.nix. See README.md for more information.
-
-# Given by build.nix
-meta:
-
-# Given by Nixpkgs
 { config, lib, pkgs, ... }:
 
 let
@@ -15,27 +7,15 @@ in
 
 {
   imports = [
-    (./machines + "/${meta.hostName}/default.nix")
-    (./hardware + "/${meta.productName}.nix")
-
-    (if (meta.withPackages or true) then ./packages.nix else { })
-
+    ./custom.nix
     ./desktop.nix
     ./dnscrypt.nix
+    ./packages.nix
   ];
 
   boot.loader.timeout = 1;
 
   console.earlySetup = true;
-
-  networking.hostName = meta.hostName;
-  # The hostId is set to the crc32 of the hostName in hex
-  networking.hostId =
-    builtins.readFile (
-      pkgs.runCommand "mkHostId" {} ''
-        printf '%X' $(printf "${meta.hostName}" | cksum | cut -d ' '  -f1) > $out
-      ''
-    );
 
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
