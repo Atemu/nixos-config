@@ -9,6 +9,5 @@
   security.sudo.wheelNeedsPassword = false;
 
   custom.dnscrypt.enable = true;
-  custom.dnscrypt.passthru.settings.listen_addresses = [ "0.0.0.0:53" ];
-  networking.firewall.allowedUDPPorts = [ 53 ];
+  custom.dnscrypt.listen = true;
 }
