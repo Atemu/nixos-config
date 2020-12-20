@@ -2,9 +2,10 @@
 
 {
   imports = [
-    ../../desktop.nix
     ./storage.nix
   ];
+
+  custom.desktop.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_lqx;
 

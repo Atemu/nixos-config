@@ -2,10 +2,10 @@
 
 {
   imports = [
-    # TODO make this a configurable option, e.g. meta.isDesktop = true
-    ../../desktop.nix
     ./storage.nix
   ];
+
+  custom.desktop.enable = true;
 
   hardware.bluetooth.powerOnBoot = false;
 

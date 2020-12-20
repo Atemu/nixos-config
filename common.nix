@@ -20,6 +20,7 @@ in
 
     (if (meta.withPackages or true) then ./packages.nix else { })
 
+    ./desktop.nix
     ./dnscrypt.nix
   ];
 
