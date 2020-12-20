@@ -30,7 +30,7 @@
   virtualisation.docker.enable = true;
   virtualisation.anbox.enable = true;
 
-  services.dnscrypt-proxy2.enable = true;
+  custom.dnscrypt.enable = true;
 
   programs.adb.enable = true;
 
