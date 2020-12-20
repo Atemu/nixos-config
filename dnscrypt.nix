@@ -13,19 +13,11 @@
   };
 
   services.dnscrypt-proxy2.configFile = pkgs.runCommand "dnscrypt-proxy.toml" {
-    json =
-      let
-        settings = builtins.fromJSON (
-          builtins.readFile (
-            pkgs.runCommand "example-dnscrypt-proxy.json" {} ''
-              ${pkgs.remarshal}/bin/toml2json ${pkgs.dnscrypt-proxy2.src}/dnscrypt-proxy/example-dnscrypt-proxy.toml > $out
-            ''
-          )
-        ) // config.services.dnscrypt-proxy2.settings;
-      in
-        builtins.toJSON settings;
+    json = builtins.toJSON config.services.dnscrypt-proxy2.settings;
     passAsFile = [ "json" ];
   } ''
-    ${pkgs.remarshal}/bin/json2toml < $jsonPath > $out
+    ${pkgs.remarshal}/bin/toml2json ${pkgs.dnscrypt-proxy2.src}/dnscrypt-proxy/example-dnscrypt-proxy.toml > example.json
+    ${pkgs.jq}/bin/jq --slurp add example.json $jsonPath > config.json # merges the two
+    ${pkgs.remarshal}/bin/json2toml < config.json > $out
   '';
 }
