@@ -16,7 +16,6 @@ in
 {
   imports = [
     (./machines + "/${meta.hostName}/default.nix")
-    (./machines + "/${meta.hostName}/storage.nix")
     (./hardware + "/${meta.productName}.nix")
 
     (if (meta.withPackages or true) then ./packages.nix else { })

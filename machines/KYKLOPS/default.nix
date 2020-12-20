@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./storage.nix
+  ];
+
   boot.initrd.network.enable = true;
   boot.initrd.network.ssh.enable = true;
 

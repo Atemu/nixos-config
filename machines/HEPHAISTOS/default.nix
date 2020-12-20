@@ -3,6 +3,7 @@
 {
   imports = [
     ../../desktop.nix
+    ./storage.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_lqx;
