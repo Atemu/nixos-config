@@ -9,9 +9,14 @@ in
 {
   options.custom.dnscrypt = {
     enable = mkEnableOption "my custom dnscrypt-proxy config";
+
+    passthru = mkOption {
+      description = "options to pass through to the regular services.dnscrypt-proxy2";
+      default = { };
+    };
   };
 
-  config.services.dnscrypt-proxy2 = mkIf self.enable {
+  config.services.dnscrypt-proxy2 = mkIf self.enable (recursiveUpdate {
     enable = true;
 
     settings = {
@@ -33,5 +38,5 @@ in
       ${pkgs.jq}/bin/jq --slurp add example.json $jsonPath > config.json # merges the two
       ${pkgs.remarshal}/bin/json2toml < config.json > $out
     '';
-  };
+  } self.passthru);
 }
