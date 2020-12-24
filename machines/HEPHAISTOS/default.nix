@@ -15,7 +15,7 @@
 
   boot.kernelPackages = pkgs.linuxPackages_lqx;
 
-  services.xserver.videoDrivers = [ "nvidiaBeta" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   hardware.steam-hardware.enable = true;
 
