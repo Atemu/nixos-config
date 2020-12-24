@@ -5,9 +5,7 @@
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.efiSupport = true;
 
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.forceImportAll = false;
-  boot.zfs.forceImportRoot = false;
+  custom.zfs.enable = true;
   boot.zfs.devNodes = "/dev/disk/by-id/"; # default
 
   fileSystems."/" = {

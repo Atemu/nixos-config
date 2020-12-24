@@ -12,6 +12,7 @@ in
     ./dnscrypt.nix
     ./packages.nix
     ./vm.nix
+    ./zfs.nix
   ];
 
   boot.loader.timeout = 1;

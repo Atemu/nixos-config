@@ -22,9 +22,7 @@
     };
   };
 
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.forceImportAll = false;
-  boot.zfs.forceImportRoot = false;
+  custom.zfs.enable = true;
   boot.zfs.devNodes = "/dev/mapper/";
 
   fileSystems."/" = {
@@ -55,9 +53,4 @@
   };
 
   swapDevices = [ ];
-
-  services.zfs.trim.enable = true;
-  services.zfs.trim.interval = "weekly"; #default
-
-  services.zfs.autoSnapshot.enable = true;
 }

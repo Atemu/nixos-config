@@ -10,7 +10,7 @@
     };
   };
 
-  boot.supportedFilesystems = [ "zfs" ];
+  custom.zfs.enable = true;
 
   # Deployment
   fileSystems."/boot" = {
@@ -43,8 +43,6 @@
     device = "tmpfs";
     fsType = "tmpfs";
   };
-
-  virtualisation.docker.storageDriver = "zfs";
 
   zramSwap = {
     enable = true;
