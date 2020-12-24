@@ -11,6 +11,7 @@ in
     ./desktop.nix
     ./dnscrypt.nix
     ./packages.nix
+    ./vm.nix
   ];
 
   boot.loader.timeout = 1;
