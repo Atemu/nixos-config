@@ -10,4 +10,6 @@ mkIf (builtins.hasAttr "vm" config.system.build) {
   security.sudo.wheelNeedsPassword = mkForce false;
 
   services.mingetty.autologinUser = "atemu";
+
+  custom.withPackages = false;
 }
