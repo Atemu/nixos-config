@@ -13,8 +13,8 @@ if args != { } then {
   ];
 }
 else builtins.mapAttrs
-  # Makes an attrset of all my machines' nixos configurations.
+  # Makes an attrset of all my nixos configurations.
   # Try `nix-build -A TAB TAB`. Pretty neat, huh?
   (n: v: import <nixpkgs/nixos> { configuration = v; })
-  (import ./machines { lib = (import <nixpkgs> { }).lib; })
+  (import ./configs { lib = (import <nixpkgs> { }).lib; })
 

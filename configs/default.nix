@@ -3,7 +3,7 @@
 with builtins;
 with lib;
 
-# Set of all my machines
+# Set of all my configs
 let
   contents = readDir ./.;
   dirs = filterAttrs (n: v: v == "directory") contents;
