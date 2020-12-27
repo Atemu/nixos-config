@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -28,6 +28,8 @@
   };
 
   virtualisation.docker.enable = true;
+  # Makes Docker socket activated, only starting it after I use it once
+  systemd.services.docker.wantedBy = lib.mkForce [ ]; # TODO put in some sort of common module
 
   programs.adb.enable = true;
 
