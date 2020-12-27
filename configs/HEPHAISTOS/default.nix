@@ -28,6 +28,8 @@
   };
   # Libvirt takes forever to start, socket activate it when I actually need it
   systemd.services.libvirtd.wantedBy = [ ];
+  # Don't need this feature.
+  systemd.services.libvirt-guests.wantedBy = lib.mkForce [ ];
 
   virtualisation.docker.enable = true;
   # Makes Docker socket activated, only starting it after I use it once
