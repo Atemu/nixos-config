@@ -26,6 +26,8 @@
     qemuOvmf = true;
     qemuRunAsRoot = false;
   };
+  # Libvirt takes forever to start, socket activate it when I actually need it
+  systemd.services.libvirtd.wantedBy = [ ];
 
   virtualisation.docker.enable = true;
   # Makes Docker socket activated, only starting it after I use it once
