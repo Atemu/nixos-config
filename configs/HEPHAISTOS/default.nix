@@ -16,6 +16,9 @@
   boot.kernelPackages = pkgs.linuxPackages_lqx;
 
   services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.deviceSection = ''
+    Option "VariableRefresh" "True"
+  '';
 
   hardware.steam-hardware.enable = true;
 
