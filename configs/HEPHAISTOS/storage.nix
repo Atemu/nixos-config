@@ -4,6 +4,7 @@
   boot.loader.grub.devices = [ "nodev" ];
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.efiSupport = true;
+  boot.loader.grub.useOSProber = true;
 
   boot.initrd.luks.devices = {
     CT1000MX500-crypt = {
