@@ -46,4 +46,6 @@ in
   environment.variables.NIXOS_CONFIG_DIR = "${nixos-config}";
 
   systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp/";
+
+  programs.command-not-found.dbPath = "/nix/var/nix/programs.sqlite";
 }
