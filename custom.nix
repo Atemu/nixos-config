@@ -25,7 +25,11 @@ in
 
     emacs = mkOption {
       description = "Emacs package to use.";
-      default = pkgs.emacs;
+      default = let
+        emacs-overlay = import <emacs-overlay> pkgs pkgs;
+      in if (builtins.tryEval emacs-overlay).success
+         then emacs-overlay.emacsPgtkGcc
+         else builtins.trace "Warning: emacs-overlay not in NIX_PATH! Falling back to regular emacs..." pkgs.emacs;
       example = pkgs.emacs-nox;
       type = types.package;
       # implemented in packages.nix and desktop.nix
