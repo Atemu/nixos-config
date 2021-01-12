@@ -42,6 +42,7 @@ in
     "nixpkgs=${nixpkgs}"
     "nixos-config=${nixos-config}"
     "nixos=${nixpkgs}"
+    "/nix/var/nix/profiles/per-user/root/channels"
   ];
   environment.variables.NIXOS_CONFIG_DIR = "${nixos-config}";
 
