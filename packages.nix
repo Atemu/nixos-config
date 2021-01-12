@@ -80,7 +80,7 @@ let
 
   # Packages to install if X is not enabled.
   noX = [
-    emacs26-nox
+    emacs26-nox # FIXME this needs to be handled in custom.emacs
     rxvt_unicode.terminfo
   ];
 
@@ -89,8 +89,8 @@ let
     android-studio
     anki
     chromium
+    config.custom.emacs
     element-desktop
-    emacs
     firefox-bin
     gimp
     gnome3.adwaita-icon-theme # fix lutris' missing icons

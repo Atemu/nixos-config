@@ -22,6 +22,14 @@ in
       type = types.bool;
       # FIXME implemented in packages.nix for now
     };
+
+    emacs = mkOption {
+      description = "Emacs package to use.";
+      default = pkgs.emacs;
+      example = pkgs.emacs-nox;
+      type = types.package;
+      # implemented in packages.nix and desktop.nix
+    };
   };
 
   config = {

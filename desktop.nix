@@ -93,7 +93,7 @@ with lib;
     networking.networkmanager.unmanaged = [ "docker0" "virbr0" "anbox0" ];
 
     services.emacs.enable = true;
-    services.emacs.package = pkgs.emacs;
+    services.emacs.package = config.custom.emacs;
 
     programs.java.enable = true;
 
