@@ -72,6 +72,7 @@ let
   ]
   ++ lib.optionals (stdenv.targetPlatform.isx86) [
     ffmpeg-full
+    haskellPackages.git-annex
     shellcheck
   ]
   ++ lib.optionals (stdenv.targetPlatform.isAarch32) [
