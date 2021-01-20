@@ -17,6 +17,8 @@ in
 
   boot.loader.timeout = 1;
 
+  boot.initrd.availableKernelModules = [ "hid_roccat_ryos" ];
+
   console.earlySetup = true;
 
   i18n.defaultLocale = "en_US.UTF-8";
