@@ -12,6 +12,7 @@
   custom.hostName = "KYKLOPS";
 
   boot.initrd.network.enable = true;
+  boot.initrd.network.udhcpc.extraArgs = [ "-t" "20" ];
   boot.initrd.network.ssh.enable = true;
 
   # mkdir /etc/secrets/initrd -p
