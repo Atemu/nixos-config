@@ -6,7 +6,7 @@
     ];
 
   boot.initrd.availableKernelModules =
-    # Networking in initrd
+    # Ethernet
     [ "r8169" ]
     # Auto-generated
     ++ [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
