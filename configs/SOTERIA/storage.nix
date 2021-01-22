@@ -1,7 +1,9 @@
 # This file contains the configuration of disks and storage
 { config, ... }:
 {
-  boot.loader.grub.devices = [ "/dev/disk/by-id/ata-OCZ-TRION100_95EB50GYKMFX" ];
+  boot.loader.grub.devices = [ "nodev" ];
+  boot.loader.grub.efiInstallAsRemovable = true;
+  boot.loader.grub.efiSupport = true;
 
   boot.initrd.luks.devices = {
     TRION100-crypt = {
