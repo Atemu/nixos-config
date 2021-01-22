@@ -48,6 +48,7 @@ let
     nixpkgs-review
     nmap
     ntfs3g
+    p7zip
     pciutils
     pv
     ranger
