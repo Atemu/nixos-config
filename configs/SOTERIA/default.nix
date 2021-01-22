@@ -6,7 +6,7 @@
 
     ./storage.nix
 
-    ../../hardware/M720.nix
+    ../../hardware/J4105M.nix
   ];
 
   custom.hostName = "SOTERIA";
