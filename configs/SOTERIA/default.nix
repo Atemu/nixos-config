@@ -33,7 +33,7 @@
 
   boot.initrd.network.postCommands = ''
     # Automatically ask for the password on SSH login
-    echo 'cryptsetup-askpass' >> /root/.profile
+    echo 'cryptsetup-askpass || echo "Unlock was successful; exiting SSH session" && exit 1' >> /root/.profile
   '';
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
