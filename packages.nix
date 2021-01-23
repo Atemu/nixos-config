@@ -35,6 +35,7 @@ let
     linuxPackages.perf
     lm_sensors
     lsof
+    lsscsi
     lz4
     man-pages
     mediainfo
