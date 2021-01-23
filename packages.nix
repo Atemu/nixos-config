@@ -18,6 +18,7 @@ let
     curl
     ddrescue
     diceware
+    f2fs-tools
     fd
     file
     git
