@@ -10,6 +10,7 @@ let
     bash-completion
     bc
     bind
+    borgbackup
     brightnessctl
     btrfs-progs
     cifs-utils
