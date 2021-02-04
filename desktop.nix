@@ -56,6 +56,7 @@ with lib;
     services.xserver.libinput.naturalScrolling = false;
     services.xserver.libinput.disableWhileTyping = true;
     services.xserver.libinput.accelProfile = "flat";
+    services.xserver.libinput.mouse.accelProfile = "flat";
 
     fonts.fonts = with pkgs; [
       # My preferred monospace font
