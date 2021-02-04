@@ -53,9 +53,9 @@ with lib;
     services.xserver.autoRepeatInterval = 24;
 
     services.xserver.libinput.enable = true;
-    services.xserver.libinput.naturalScrolling = false;
-    services.xserver.libinput.disableWhileTyping = true;
-    services.xserver.libinput.accelProfile = "flat";
+    services.xserver.libinput.touchpad.naturalScrolling = false;
+    services.xserver.libinput.touchpad.disableWhileTyping = true;
+    services.xserver.libinput.touchpad.accelProfile = "flat";
     services.xserver.libinput.mouse.accelProfile = "flat";
 
     fonts.fonts = with pkgs; [
