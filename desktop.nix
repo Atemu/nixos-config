@@ -41,8 +41,8 @@ with lib;
       xwayland
     ];
     programs.sway.extraSessionCommands = ''
-    [ -e ~/.wprofile ] && source ~/.wprofile
-  '';
+      [ -e ~/.wprofile ] && source ~/.wprofile
+    '';
 
     services.xserver.layout = "us";
     services.xserver.xkbVariant = "altgr-intl";
