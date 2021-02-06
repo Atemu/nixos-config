@@ -59,6 +59,7 @@ let
     rsync
     screen
     smartmontools
+    sshfs
     stress
     sysstat
     traceroute
