@@ -96,6 +96,7 @@ let
     anki
     chromium
     config.custom.emacs
+    discord
     element-desktop
     firefox-bin
     gimp
