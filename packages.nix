@@ -115,6 +115,7 @@ let
     spotify
     steam
     steam-run
+    virt-manager
     vlc
     xclip
     xorg.xev
