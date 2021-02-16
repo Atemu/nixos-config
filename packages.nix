@@ -112,6 +112,7 @@ let
     python3
     rxvt_unicode
     signal-desktop
+    spotify
     steam
     steam-run
     vlc
