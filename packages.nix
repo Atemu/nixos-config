@@ -86,7 +86,7 @@ let
 
   # Packages to install if X is not enabled.
   noX = [
-    emacs26-nox # FIXME this needs to be handled in custom.emacs
+    emacs-nox # FIXME this needs to be handled in custom.emacs
     rxvt_unicode.terminfo
   ];
 
