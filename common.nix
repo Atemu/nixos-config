@@ -50,5 +50,7 @@ in
 
   systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp/";
 
+  nix.requireSignedBinaryCaches = false;
+
   programs.command-not-found.dbPath = "/nix/var/nix/programs.sqlite";
 }
