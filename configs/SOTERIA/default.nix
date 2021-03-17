@@ -50,6 +50,18 @@
   custom.dnscrypt.enable = true;
   custom.dnscrypt.listen = true;
 
+  services.grocy = {
+    hostName = config.custom.hostName;
+    enable = true;
+    settings = {
+      currency = "EUR";
+      culture = "en";
+      calendar.firstDayOfWeek = 1; # Monday
+    };
+    nginx.enableSSL = false;
+  };
+  networking.firewall.allowedTCPPorts = [ 80 ];
+
   system.stateVersion = "19.09"; # Did you read the comment?
 }
 
