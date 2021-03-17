@@ -9,7 +9,7 @@
     ../../hardware/M720.nix
   ];
 
-  custom.hostName = "KYKLOPS";
+  custom.hostName = "SOTERIA";
 
   boot.initrd.network.enable = true;
   boot.initrd.network.udhcpc.extraArgs = [ "-t" "20" ];
