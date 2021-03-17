@@ -52,11 +52,27 @@ with lib;
     services.xserver.autoRepeatDelay = 224;
     services.xserver.autoRepeatInterval = 24;
 
-    services.xserver.libinput.enable = true;
-    services.xserver.libinput.touchpad.naturalScrolling = false;
-    services.xserver.libinput.touchpad.disableWhileTyping = true;
-    services.xserver.libinput.touchpad.accelProfile = "flat";
-    services.xserver.libinput.mouse.accelProfile = "flat";
+    services.xserver.libinput =
+      let
+        okapi = {
+          touchpad.naturalScrolling = false;
+          touchpad.disableWhileTyping = true;
+          touchpad.accelProfile = "flat";
+          mouse.accelProfile = "flat";
+        };
+        nightingale = {
+          naturalScrolling = false;
+          disableWhileTyping = true;
+          accelProfile = "flat";
+        };
+        common = {
+          enable = true;
+        };
+      in common // (
+        if lib.versionOlder lib.trivial.release "21.03"
+        then nightingale
+        else okapi
+      );
 
     fonts.fonts = with pkgs; [
       # My preferred monospace font
