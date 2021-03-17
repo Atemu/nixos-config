@@ -47,6 +47,9 @@
 
   security.sudo.wheelNeedsPassword = false;
 
+  custom.dnscrypt.enable = true;
+  custom.dnscrypt.listen = true;
+
   system.stateVersion = "19.09"; # Did you read the comment?
 }
 
