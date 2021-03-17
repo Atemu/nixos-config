@@ -38,7 +38,7 @@ in
     # The hostId is set to the crc32 of the hostName in hex
     networking.hostId = builtins.readFile (
       pkgs.runCommand "mkHostId" {} ''
-        printf '%X' $(printf "${self.hostName}" | cksum | cut -d ' '  -f1) > $out
+        echo -n $(printf "${self.hostName}" | gzip -c | tail -c8 | od -t x4 -N 4 -A n) > $out
       ''
     );
   };
