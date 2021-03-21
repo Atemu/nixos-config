@@ -6,10 +6,10 @@
 
     ./storage.nix
 
-    ../../hardware/M720.nix
+    ../../hardware/J4105M.nix
   ];
 
-  custom.hostName = "KYKLOPS";
+  custom.hostName = "SOTERIA";
 
   boot.initrd.network.enable = true;
   boot.initrd.network.udhcpc.extraArgs = [ "-t" "20" ];
@@ -33,7 +33,7 @@
 
   boot.initrd.network.postCommands = ''
     # Automatically ask for the password on SSH login
-    echo 'cryptsetup-askpass' >> /root/.profile
+    echo 'cryptsetup-askpass || echo "Unlock was successful; exiting SSH session" && exit 1' >> /root/.profile
   '';
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -46,6 +46,23 @@
   programs.mosh.enable = true;
 
   security.sudo.wheelNeedsPassword = false;
+
+  custom.dnscrypt.enable = true;
+  custom.dnscrypt.listen = true;
+
+  services.grocy = {
+    hostName = config.custom.hostName;
+    enable = true;
+    settings = {
+      currency = "EUR";
+      culture = "en";
+      calendar.firstDayOfWeek = 1; # Monday
+    };
+    nginx.enableSSL = false;
+  };
+  networking.firewall.allowedTCPPorts = [ 80 ];
+
+  virtualisation.docker.enable = true;
 
   system.stateVersion = "19.09"; # Did you read the comment?
 }
