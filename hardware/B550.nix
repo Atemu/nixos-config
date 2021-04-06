@@ -22,4 +22,9 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 
   hardware.cpu.amd.updateMicrocode = true;
+
+  hardware.opengl.extraPackages = with pkgs; [
+    rocm-opencl-icd
+    rocm-opencl-runtime
+  ];
 }
