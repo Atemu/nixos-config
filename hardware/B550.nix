@@ -27,4 +27,7 @@
     rocm-opencl-icd
     rocm-opencl-runtime
   ];
+  environment.systemPackages = with pkgs; [
+    radeontop
+  ];
 }
