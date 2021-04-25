@@ -117,6 +117,7 @@ let
     steam-run
     virt-manager
     vlc
+    wineWowPackages.staging
     xclip
     xorg.xev
   ];
