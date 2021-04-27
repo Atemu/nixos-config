@@ -102,6 +102,7 @@ let
     firefox-bin
     gimp
     gnome3.adwaita-icon-theme # fix lutris' missing icons
+    jetbrains.clion
     jetbrains.idea-community
     libreoffice
     lutris
