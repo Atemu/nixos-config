@@ -96,6 +96,7 @@ let
     anki-bin
     chromium
     config.custom.emacs
+    direnv
     discord
     element-desktop
     ethminer-free
