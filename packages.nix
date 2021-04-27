@@ -109,6 +109,7 @@ let
     libreoffice
     lutris
     lxrandr
+    mangohud
     mlterm
     mozlz4a
     mpv
