@@ -53,6 +53,7 @@ let
     ntfs3g
     p7zip
     pciutils
+    protonvpn-cli
     pv
     ranger
     ripgrep
