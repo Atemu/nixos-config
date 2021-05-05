@@ -76,7 +76,7 @@ with lib;
 
     fonts.fonts = with pkgs; [
       # My preferred monospace font
-      source-code-pro
+      hasklig # source-code-pro with ligatures
 
       # Japanese fonts
       # Recommended by https://functor.tokyo/blog/2018-10-01-japanese-on-nixos
