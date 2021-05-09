@@ -3,8 +3,19 @@
 with pkgs;
 
 let
-  nixFlakes = pkgs.writeShellScriptBin "nixFlakes" ''
-    exec ${pkgs.nixUnstable}/bin/nix --experimental-features "nix-command flakes" "$@"
+  nixFlakes = let
+    nixFlakesWrapper = pkgs.writeShellScriptBin "nixFlakes" ''
+      exec ${pkgs.nixUnstable}/bin/nix --experimental-features "nix-command flakes" "$@"
+    '';
+  in pkgs.runCommand "nixFlakes" { } ''
+    cp -r ${nixFlakesWrapper}/. $out
+    # cp preserves -w for some reason. Will be stripped later anyways.
+    chmod -R +w $out
+
+    install -D ${pkgs.nixUnstable}/share/bash-completion/completions/nix $out/share/bash-completion/completions/nixFlakes
+
+    substituteInPlace $out/share/bash-completion/completions/nixFlakes --replace "_complete_nix" "_complete_nix_flakes"
+    substituteInPlace $out/share/bash-completion/completions/nixFlakes --replace " nix" " nixFlakes"
   '';
 
   # Packages to always install.
