@@ -12,9 +12,21 @@ if args != { } then {
     ./current-config.nix
   ];
 }
-else builtins.mapAttrs
+else let
+  pkgs = import <nixpkgs> { };
+  configs = import ./configs { inherit (pkgs) lib; };
+  nixosFor = configuration: import <nixpkgs/nixos> {
+    inherit configuration;
+  };
+  nixosVmWithPackages = configuration: (nixosFor {
+    imports = [
+      configuration
+    ];
+    custom.withPackages = pkgs.lib.mkForce true;
+  }).vm;
+
   # Makes an attrset of all my nixos configurations.
   # Try `nix-build -A TAB TAB`. Pretty neat, huh?
-  (n: v: import <nixpkgs/nixos> { configuration = v; })
-  (import ./configs { lib = (import <nixpkgs> { }).lib; })
-
+in builtins.mapAttrs
+  (_: config: nixosFor config // { vmWithPackages = nixosVmWithPackages config; })
+  configs
