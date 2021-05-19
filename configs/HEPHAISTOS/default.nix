@@ -44,5 +44,7 @@
 
   programs.adb.enable = true;
 
+  custom.dnscrypt.enable = true;
+
   system.stateVersion = "20.09";
 }
