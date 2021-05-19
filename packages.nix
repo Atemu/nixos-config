@@ -5,6 +5,7 @@ with pkgs;
 let
   # Packages to always install.
   common = [
+    (nixos-rebuild.override { nix = pkgs.nixUnstable; })
     acpi
     aespipe
     bash-completion
