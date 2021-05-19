@@ -3,10 +3,6 @@
 with pkgs;
 
 let
-  nixFlakes = pkgs.writeShellScriptBin "nixFlakes" ''
-    exec ${pkgs.nixUnstable}/bin/nix --experimental-features "nix-command flakes" "$@"
-  '';
-
   # Packages to always install.
   common = [
     acpi
@@ -52,7 +48,6 @@ let
     nix-bash-completions
     nix-index
     nix-top
-    nixFlakes
     nixpkgs-review
     nmap
     ntfs3g
