@@ -48,6 +48,7 @@ let
     nix-bash-completions
     nix-index
     nix-top
+    nixpkgs-fmt
     nixpkgs-review
     nmap
     ntfs3g
