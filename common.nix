@@ -56,6 +56,7 @@ in
       experimental-features = nix-command flakes
     '';
     requireSignedBinaryCaches = false;
+    daemonNiceLevel = 10;
   };
 
   programs.command-not-found.dbPath = "/nix/var/nix/programs.sqlite";
