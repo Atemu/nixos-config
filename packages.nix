@@ -156,6 +156,7 @@ let
     vlc
     vulkan-tools
     wineWowPackages.staging
+    write_stylus
     xclip
     xorg.xev
   ];
