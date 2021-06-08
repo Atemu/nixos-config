@@ -2,9 +2,14 @@
 
 with lib;
 
+let
+  tablet = config.custom.desktop.tablet;
+in
+
 {
   options.custom.desktop = {
     enable = mkEnableOption "my custom desktop";
+    tablet = mkEnableOption "tablet variant";
   };
 
   config = mkIf config.custom.desktop.enable {
@@ -29,10 +34,12 @@ with lib;
     programs.ssh.askPassword = "";
 
     services.xserver.enable = true;
-    services.xserver.displayManager.sddm.enable = true;
+    services.xserver.displayManager.sddm.enable = !tablet;
+    services.xserver.displayManager.gdm.enable = tablet;
+
+    services.xserver.displayManager.defaultSession = if tablet then "gnome" else "none+i3";
 
     services.xserver.windowManager.i3.enable = true;
-    services.xserver.displayManager.defaultSession = "none+i3";
     services.xserver.windowManager.i3.extraPackages = with pkgs; [
       dmenu
     ];
@@ -47,12 +54,15 @@ with lib;
       [ -e ~/.wprofile ] && source ~/.wprofile
     '';
 
+    services.xserver.desktopManager.gnome.enable = tablet;
+
     services.dbus.enable = true;
 
     xdg.portal = {
       enable = true;
       wlr.enable = true;
-      extraPortals = [
+      # GNOME adds xdg-desktop-portal-gtk on its own which causes a collision
+      extraPortals = lib.optionals (!config.services.xserver.desktopManager.gnome.enable) [
         # TODO I'd prefer to use `pkgs.xdg-desktop-portal-kde'. This currently
         # causes Firefox to go into a sort of QT compatibility mode which
         # disables my Emacs gtk key-theme however, so not an option
@@ -77,6 +87,8 @@ with lib;
       mouse.middleEmulation = false;
       enable = true;
     };
+
+    services.xserver.wacom.enable = tablet;
 
     fonts.fonts = with pkgs; [
       # My preferred monospace font
