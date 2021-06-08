@@ -25,10 +25,6 @@ with lib;
       lsp-plugins
     ]);
 
-    # The Steam client needs 32bit libraries
-    # TODO only enable these if Steam is enabled
-    hardware.opengl.driSupport32Bit = true;
-
     # Disable annoying GUI password popup and console error message when using ssh
     programs.ssh.askPassword = "";
 
