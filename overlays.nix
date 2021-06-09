@@ -3,8 +3,13 @@
 {
   nixpkgs.overlays = [
     (final: prev: {
-      nix = final.nixUnstable.overrideAttrs (old: {
-        postInstallCheck = ''
+      nix = final.stdenv.mkDerivation {
+        inherit (final.nixUnstable) pname version;
+        src = final.nixUnstable;
+        installPhase = ''
+          cp -a $src $out
+          chmod -R +rw $out
+
           mv $out/bin/nix $out/bin/nixUnstable
           ln $out/bin/nixUnstable $out/bin/nixFlakes
           for cmd in $out/bin/nix-* ; do ln -sf nixUnstable "$cmd" ; done
@@ -17,8 +22,18 @@
           substituteInPlace $out/share/bash-completion/completions/nixUnstable --replace " nix" " nixUnstable"
           substituteInPlace $out/share/bash-completion/completions/nixFlakes --replace " nix" " nixFlakes"
         '';
-        doCheck = false;
-      });
+        meta = final.nixUnstable.meta // {
+          description = "My custom nixStable nixUnstable hybrid";
+          longDescription = ''
+            My custom Nix with the `nix` command from nixStable and everything else from nixUnstable.
+
+            The new `nix` is available via `nixUnstble` or `nixFlakes`. Bash completions work for these.
+
+            Since `nix` is still the old one, nix-bash-completions also work just fine.
+          '';
+          maintainers = [ lib.maintainers.atemu ];
+        };
+      };
 
       jetbrains = let
         mkUnset = pkg: pkg.overrideAttrs (old: {
