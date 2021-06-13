@@ -64,6 +64,7 @@ let
     sshfs
     stress
     sysstat
+    tigervnc
     traceroute
     tree
     unzip
