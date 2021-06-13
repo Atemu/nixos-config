@@ -4,7 +4,7 @@
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.efiSupport = true;
 
-  boot.initrd.luks.devices = {
+  custom.luks.devices = {
     Elements_25A3-crypt = {
       device = "/dev/disk/by-uuid/250918cc-965e-4873-80c9-7361ea622723";
     };

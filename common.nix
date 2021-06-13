@@ -10,6 +10,7 @@ in
     ./custom.nix
     ./desktop.nix
     ./dnscrypt.nix
+    ./luks.nix
     ./overlays.nix
     ./packages.nix
     ./vm.nix

@@ -6,10 +6,9 @@
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.useOSProber = true;
 
-  boot.initrd.luks.devices = {
+  custom.luks.devices = {
     CT1000MX500-crypt = {
       device = "/dev/disk/by-uuid/37473d86-55d3-4101-a7d7-16474d8a176d";
-      allowDiscards = true;
     };
   };
 

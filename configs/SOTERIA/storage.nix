@@ -5,10 +5,9 @@
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.efiSupport = true;
 
-  boot.initrd.luks.devices = {
+  custom.luks.devices = {
     TRION100-crypt = {
       device = "/dev/disk/by-uuid/140c8ebf-0664-47d6-8c71-cf9ef655efe0";
-      allowDiscards = true;
     };
     WD10EADS-crypt = {
       device = "/dev/disk/by-uuid/90fcb44c-275a-4641-99c6-9c36b753f283";

@@ -5,10 +5,9 @@
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.efiSupport = true;
 
-  boot.initrd.luks.devices = {
+  custom.luks.devices = {
     MZNTE128HMGR-crypt = {
       device = "/dev/disk/by-uuid/6f9558c5-593c-4c86-b88f-63cc5b031ff0";
-      allowDiscards = true;
     };
   };
 
