@@ -29,6 +29,8 @@
 
   services.logind.extraConfig = "HandlePowerKey=suspend";
 
+  services.sshd.enable = true;
+
   networking.networkmanager.wifi.powersave = true;
 
   systemd.services.ModemManager.wantedBy = [ "network.target" ];
