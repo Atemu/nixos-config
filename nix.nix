@@ -14,10 +14,13 @@ stdenv.mkDerivation {
     ln -s ${nixStable}/bin/nix $out/bin/nixStable
     ln -s nixStable $out/bin/nix
 
-    mv $out/share/bash-completion/completions/nix $out/share/bash-completion/completions/nixUnstable
-    cp -a $out/share/bash-completion/completions/nixUnstable $out/share/bash-completion/completions/nixFlakes
-    substituteInPlace $out/share/bash-completion/completions/nixUnstable --replace " nix" " nixUnstable"
-    substituteInPlace $out/share/bash-completion/completions/nixFlakes --replace " nix" " nixFlakes"
+    cd $out/share/bash-completion/completions/
+    cp nix nixUnstable
+    cp nix nixFlakes
+    rm nix
+    substituteInPlace nixUnstable --replace " nix" " nixUnstable"
+    substituteInPlace nixFlakes --replace " nix" " nixFlakes"
+    cd -
   '';
 
   meta = nixUnstable.meta // {
