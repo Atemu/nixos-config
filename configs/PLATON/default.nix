@@ -34,7 +34,6 @@
   systemd.services.ModemManager.wantedBy = [ "network.target" ];
 
   virtualisation.docker.enable = true;
-  virtualisation.anbox.enable = true;
 
   custom.dnscrypt.enable = true;
 
