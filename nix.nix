@@ -8,7 +8,7 @@ stdenv.mkDerivation {
     chmod -R +rw $out
 
     mv $out/bin/nix $out/bin/nixUnstable
-    ln -s $out/bin/nixUnstable $out/bin/nixFlakes
+    ln -s nixUnstable $out/bin/nixFlakes
     for cmd in $out/bin/nix-* ; do ln -sf nixUnstable "$cmd" ; done
 
     ln -s ${nixStable}/bin/nix $out/bin/nixStable
