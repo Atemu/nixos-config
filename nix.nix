@@ -4,7 +4,7 @@ stdenv.mkDerivation {
   inherit (nixUnstable) pname version;
   src = nixUnstable;
   installPhase = ''
-    cp -a $src $out
+    cp -as $src $out
     chmod -R +rw $out
 
     mv $out/bin/nix $out/bin/nixUnstable
