@@ -24,7 +24,10 @@ in
 
   boot.loader.timeout = 1;
 
-  boot.initrd.availableKernelModules = [ "hid_roccat_ryos" ];
+  boot.initrd.availableKernelModules = [
+    "hid_roccat_ryos" # One of my USB keyboards
+    "uas" # "USB Attached SATA", needed for booting off external USB drives
+  ];
   boot.initrd.supportedFilesystems = [ "vfat" ]; # For recovery purposes
 
   boot.kernelParams = [
