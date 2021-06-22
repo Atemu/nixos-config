@@ -8,16 +8,18 @@ stdenv.mkDerivation {
     cp -as $src $out
     chmod -R +rw $out
 
-    mv $out/bin/nix $out/bin/nixUnstable
-    ln -s nixUnstable $out/bin/nixFlakes
+    cd $out/bin
+    mv nix nixUnstable
+    ln -s nixUnstable nixFlakes
 
     # All nix-* commands need to point at nixUnstable now (it's a multi-call binary)
-    for cmd in $out/bin/nix-* ; do ln -sf nixUnstable "$cmd" ; done
+    for cmd in nix-* ; do ln -sf nixUnstable "$cmd" ; done
 
     # Provide old nix as nixStable
-    ln -s ${nixStable}/bin/nix $out/bin/nixStable
+    ln -s ${nixStable}/bin/nix nixStable
     # nix needs to be the old one for nix-bash-completions (and my muscle memory) to work
-    ln -s nixStable $out/bin/nix
+    ln -s nixStable nix
+    cd -
 
     # Make nixUnstable's built-in bash-completions work for the new binary names
     cd $out/share/bash-completion/completions/
