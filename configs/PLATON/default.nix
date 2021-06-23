@@ -12,6 +12,7 @@
   custom.hostName = "PLATON";
 
   custom.desktop.enable = true;
+  custom.desktop.tablet = true;
 
   hardware.bluetooth.powerOnBoot = false;
 
