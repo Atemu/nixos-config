@@ -15,8 +15,6 @@
 
   hardware.bluetooth.powerOnBoot = false;
 
-  services.tlp.enable = true;
-
   services.undervolt.enable = true;
   # It don't want the logspam, this is only needed because undervolt resets on boot
   systemd.timers.undervolt.enable = false;
