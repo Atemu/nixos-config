@@ -5,6 +5,8 @@
     (final: prev: {
       customNix = final.callPackage ./nix.nix { };
 
+      nix = final.nixUnstable;
+
       jetbrains = let
         mkUnset = pkg: pkg.overrideAttrs (old: {
           postFixup = old.postFixup or "" + ''
