@@ -57,6 +57,7 @@ in
     '';
     requireSignedBinaryCaches = false;
     daemonNiceLevel = 10;
+    package = pkgs.customNix;
   };
 
   programs.command-not-found.dbPath = "/nix/var/nix/programs.sqlite";

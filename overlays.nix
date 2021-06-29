@@ -3,7 +3,7 @@
 {
   nixpkgs.overlays = [
     (final: prev: {
-      nix = final.callPackage ./nix.nix { };
+      customNix = final.callPackage ./nix.nix { };
 
       jetbrains = let
         mkUnset = pkg: pkg.overrideAttrs (old: {
