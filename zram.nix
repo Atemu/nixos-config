@@ -15,7 +15,7 @@ in
 
         This should be set to the maximum amount possible that doesn't endanger essential applications like the kernel when 100% of it is utilised for swap.
       '';
-      default = 50;
+      default = 85;
     };
   };
 
