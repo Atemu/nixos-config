@@ -23,8 +23,5 @@ in
     enable = true;
     algorithm = "lz4";
     memoryPercent = cfg.percent;
-    numDevices = 1; # default
-    priority = 5; # default
-    swapDevices = 1; # why do I need this?
   };
 }
