@@ -54,14 +54,5 @@
     fsType = "zfs";
   };
 
-  swapDevices = [ ];
-
-  zramSwap = {
-    enable = true;
-    algorithm = "lz4";
-    memoryPercent = 50;
-    numDevices = 1; # default
-    priority = 5; # default
-    swapDevices = 1; # why do I need this?
-  };
+  custom.zramSwap.enable = true;
 }

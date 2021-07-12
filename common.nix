@@ -14,6 +14,7 @@ in
     ./packages.nix
     ./vm.nix
     ./zfs.nix
+    ./zram.nix
   ];
 
   boot.loader.timeout = 1;
