@@ -21,6 +21,14 @@ in
 
   boot.initrd.availableKernelModules = [ "hid_roccat_ryos" ];
 
+  boot.kernelParams = [
+    # THP transparently collapses large regions of separately allocated memory
+    # into hugepages which can lead to significant performance benefits.
+    # By default, it only does this for processes which explicitly ask for it,
+    # this makes it do that for any process
+    "transparent_hugepage=always"
+  ];
+
   console.earlySetup = true;
 
   i18n.defaultLocale = "en_US.UTF-8";
