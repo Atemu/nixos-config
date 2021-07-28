@@ -11,11 +11,13 @@ with lib;
     boot.kernel.sysctl = { "kernel.sysrq" = 1; };
 
     sound.enable = true;
-    hardware.pulseaudio.enable = true;
+    services.pipewire.enable = true;
+    services.pipewire.pulse.enable = true;
+    services.pipewire.alsa.enable = true;
+    services.pipewire.alsa.support32Bit = true;
 
     # The Steam client needs 32bit libraries
     # TODO only enable these if Steam is enabled
-    hardware.pulseaudio.support32Bit = true;
     hardware.opengl.driSupport32Bit = true;
 
     # Disable annoying GUI password popup and console error message when using ssh
