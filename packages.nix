@@ -102,7 +102,6 @@ let
     direnv
     discord
     element-desktop
-    ethminer-free
     firefox-bin
     gimp
     gnome3.adwaita-icon-theme # fix lutris' missing icons
