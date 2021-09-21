@@ -7,7 +7,12 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [
+    "kvm-amd"
+
+    # The board has an NCT6687D which is supported by the NCT6683 module
+    "nct6683"
+  ];
   boot.kernelParams = [ "amd_iommu=on" ];
   boot.extraModulePackages = [ ];
 
