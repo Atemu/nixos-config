@@ -32,8 +32,6 @@ let
     jq
     killall
     libarchive
-    linuxPackages.cpupower
-    linuxPackages.perf
     lm_sensors
     lsof
     lsscsi
@@ -78,6 +76,10 @@ let
     zip
     zstd
   ]
+  ++ (with config.boot.kernelPackages; [
+    cpupower
+    perf
+  ])
   ++ lib.optionals (stdenv.targetPlatform.isx86) [
     ffmpeg-full
     haskellPackages.git-annex
