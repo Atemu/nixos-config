@@ -9,7 +9,7 @@
     # Ethernet
     [ "r8169" ]
     # Auto-generated
-    ++ [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
+    ++ [ "ahci" "xhci_pci" "sata_sil24" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
