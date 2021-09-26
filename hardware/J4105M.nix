@@ -16,7 +16,7 @@
 
   swapDevices = [ ];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  powerManagement.cpuFreqGovernor = "schedutil";
 
   hardware.cpu.intel.updateMicrocode = true;
 }
