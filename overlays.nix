@@ -17,7 +17,11 @@
         isJBIDE = pkg: lib.isDerivation pkg && !lib.hasPrefix "jetbrains-jdk" pkg.name;
       in lib.mapAttrs (n: v: if isJBIDE v then mkUnset v else v) prev.jetbrains;
 
-      youtube-dl = final.yt-dlp.override { withAlias = true; };
+      youtube-dl = (
+        if final ? yt-dlp
+        then final.yt-dlp.override { withAlias = true; }
+        else prev.youtube-dl
+      );
     })
   ];
 }
