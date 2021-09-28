@@ -11,6 +11,7 @@ in
     ./custom.nix
     ./desktop.nix
     ./dnscrypt.nix
+    ./fs.nix
     ./overlays.nix
     ./packages.nix
     ./vm.nix
