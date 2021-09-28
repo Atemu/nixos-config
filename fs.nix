@@ -44,6 +44,7 @@ in
   };
 
   config.custom.btrfs.default.device = cfg.btrfs.device;
+  config.custom.btrfs.default.options = [ "space_cache=v2" ];
   config.custom.btrfs.fileSystems = let
     mkMount = subvol: {
       inherit (cfg.btrfs) device;
