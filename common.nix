@@ -12,6 +12,7 @@ in
     ./desktop.nix
     ./dnscrypt.nix
     ./fs.nix
+    ./lib.nix
     ./overlays.nix
     ./packages.nix
     ./vm.nix
