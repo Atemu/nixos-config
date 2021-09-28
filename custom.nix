@@ -40,11 +40,7 @@ in
   config = {
     networking.hostName = self.hostName;
 
-    # The hostId is set to the crc32 of the hostName in hex
-    networking.hostId = builtins.readFile (
-      pkgs.runCommand "mkHostId" {} ''
-        echo -n $(printf "${self.hostName}" | gzip -c | tail -c8 | od -t x4 -N 4 -A n) > $out
-      ''
-    );
+    # The hostId is set to the first 8 chars of the sha256 of the hostName
+    networking.hostId = substring 0 8 (builtins.hashString "sha256" self.hostName);
   };
 }
