@@ -8,12 +8,40 @@ in
 
 {
   options.custom.btrfs = {
+    # TODO Make this a submodule like all the others that serves as the default for them
+    default = {
+      device = mkOption {
+        description = ''
+          The default device to use if none is declared.
+        '';
+        default = lib.warn "No `custom.btrfs.default.device` declared, proceed with caution!" null;
+        defaultText = ''
+          The device specified in `custom.custom.fs.btrfs.device`
+
+          This allows for easily extending the defaults without having to re-specify the main device every time
+        '';
+      };
+
+      options = mkOption {
+        description = ''
+          The mount options to use if none are declared.
+        '';
+        default = [ ];
+      };
+    };
+
     fileSystems = mkOption {
       type = types.attrsOf (types.submodule {
         options = {
           device = mkOption {
             description = ''
               The device to mount
+            '';
+            default = cfg.defaults.device;
+            defaultText = ''
+              The device declared in `custom.btrfs.default.device`
+
+              This allows for easily extending custom generic defaults without having to declare the same main device every time
             '';
           };
 
@@ -58,7 +86,7 @@ in
             description = ''
               Mount options too add on
             '';
-            default = [ ];
+            default = cfg.default.options;
           };
         };
       });
