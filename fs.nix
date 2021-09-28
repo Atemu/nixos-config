@@ -43,6 +43,7 @@ in
     };
   };
 
+  config.custom.btrfs.default.device = cfg.btrfs.device;
   config.custom.btrfs.fileSystems = let
     mkMount = subvol: {
       inherit (cfg.btrfs) device;
