@@ -7,6 +7,7 @@ in
 
 {
   imports = [
+    ./btrfs.nix
     ./custom.nix
     ./desktop.nix
     ./dnscrypt.nix
