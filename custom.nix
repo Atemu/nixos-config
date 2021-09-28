@@ -29,7 +29,7 @@ in
         emacs-overlay = import <emacs-overlay> pkgs pkgs;
         package = if (builtins.tryEval emacs-overlay).success
                   then emacs-overlay.emacsGcc
-                  else builtins.trace "Warning: emacs-overlay not in NIX_PATH! Falling back to regular emacs..." pkgs.emacs;
+                  else warn "emacs-overlay not in NIX_PATH! Falling back to regular emacs..." pkgs.emacs;
       in package.override { withGTK3 = false; }; # gtk crashes daemon when X server is stopped
       example = pkgs.emacs-nox;
       type = types.package;
