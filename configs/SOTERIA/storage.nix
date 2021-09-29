@@ -9,6 +9,8 @@ with config.lib.custom;
   custom.fs.btrfs.enable = true;
   custom.fs.btrfs.device = mkUuid "53a12e2b-fdd8-4b83-ba37-369baa7ec1ab";
 
+  boot.supportedFilesystems = [ "zfs" ];
+
   boot.loader.grub.devices = [ "nodev" ];
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.efiSupport = true;
