@@ -1,11 +1,24 @@
 # This file contains the configuration of disks and storage
 { config, ... }:
+
+with config.lib.custom;
+
 {
+  custom.fs.enable = true;
+  custom.fs.boot = mkUuid "21F5-7652";
+  custom.fs.btrfs.enable = true;
+  custom.fs.btrfs.device = mkUuid "53a12e2b-fdd8-4b83-ba37-369baa7ec1ab";
+
   boot.loader.grub.devices = [ "nodev" ];
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.efiSupport = true;
 
   boot.initrd.luks.devices = {
+    SAMSUNG_MZ7LN256HCHP-crypt = {
+      device = mkUuid "82a2b716-11ca-4c0b-8c4f-5470b8a97bd9";
+      allowDiscards = true;
+    };
+
     TRION100-crypt = {
       device = "/dev/disk/by-uuid/140c8ebf-0664-47d6-8c71-cf9ef655efe0";
       allowDiscards = true;
@@ -23,36 +36,4 @@
       device = "/dev/disk/by-uuid/e9b4abff-8f8d-4bd1-a366-1938a89c12bf";
     };
   };
-
-  custom.zfs.enable = true;
-  boot.zfs.devNodes = "/dev/mapper/";
-
-  fileSystems."/" = {
-    device = "Kpool/K/root";
-    fsType = "zfs";
-  };
-  fileSystems."/home" = {
-    device = "Kpool/K/home";
-    fsType = "zfs";
-  };
-  fileSystems."/var" = {
-    device = "Kpool/K/var";
-    fsType = "zfs";
-  };
-  fileSystems."/var/tmp" = {
-    device = "Kpool/K/var/tmp";
-    fsType = "zfs";
-  };
-  fileSystems."/tmp" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-    options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
-  };
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/237E-DD69";
-    fsType = "vfat";
-    options = [ "umask=077" ];
-  };
-
-  swapDevices = [ ];
 }
