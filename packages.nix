@@ -12,6 +12,7 @@ let
     bind
     borgbackup
     brightnessctl
+    btop
     btrfs-progs
     cifs-utils
     compsize
