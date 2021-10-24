@@ -29,7 +29,7 @@ in
         emacs-overlay = import <emacs-overlay> pkgs pkgs;
         package = if (builtins.tryEval emacs-overlay).success
                   then emacs-overlay.emacsGcc
-                  else builtins.trace "Warning: emacs-overlay not in NIX_PATH! Falling back to regular emacs..." pkgs.emacs;
+                  else warn "emacs-overlay not in NIX_PATH! Falling back to regular emacs..." pkgs.emacs;
       in package.override { withGTK3 = false; }; # gtk crashes daemon when X server is stopped
       example = pkgs.emacs-nox;
       type = types.package;
@@ -40,11 +40,7 @@ in
   config = {
     networking.hostName = self.hostName;
 
-    # The hostId is set to the crc32 of the hostName in hex
-    networking.hostId = builtins.readFile (
-      pkgs.runCommand "mkHostId" {} ''
-        echo -n $(printf "${self.hostName}" | gzip -c | tail -c8 | od -t x4 -N 4 -A n) > $out
-      ''
-    );
+    # The hostId is set to the first 8 chars of the sha256 of the hostName
+    networking.hostId = substring 0 8 (builtins.hashString "sha256" self.hostName);
   };
 }
