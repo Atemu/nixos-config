@@ -62,6 +62,9 @@
   };
   networking.firewall.allowedTCPPorts = [ 80 ];
 
+  services.iperf3.enable = true;
+  services.iperf3.openFirewall = true;
+
   virtualisation.docker.enable = true;
 
   system.stateVersion = "19.09"; # Did you read the comment?
