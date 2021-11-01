@@ -27,6 +27,33 @@ in
 
   services.logind.lidSwitchDocked = config.services.logind.lidSwitch;
 
+  services.xserver.inputClassSections = [
+    ''
+      Identifier      "calibration"
+      MatchProduct    "Wacom MultiTouch Sensor Pen stylus"
+      Option  "MinX"  "243"
+      Option  "MaxX"  "29555"
+      Option  "MinY"  "-34"
+      Option  "MaxY"  "16487"
+    ''
+    ''
+      Identifier      "calibration"
+      MatchProduct    "Wacom MultiTouch Sensor Pen eraser"
+      Option  "MinX"  "126"
+      Option  "MaxX"  "29448"
+      Option  "MinY"  "-41"
+      Option  "MaxY"  "16418"
+    ''
+    ''
+      Identifier      "calibration"
+      MatchProduct    "Wacom MultiTouch Sensor Finger touch"
+      Option  "MinX"  "109"
+      Option  "MaxX"  "11770"
+      Option  "MinY"  "-4"
+      Option  "MaxY"  "6608"
+    ''
+  ];
+
   powerManagement.resumeCommands =
     let resetUsbId = pkgs.writeShellScript "resetUsbId" ''
       #reset device by ID
