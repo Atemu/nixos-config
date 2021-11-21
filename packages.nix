@@ -124,6 +124,7 @@ let
     spotify
     steam
     steam-run
+    teamspeak_client
     virt-manager
     vlc
     wineWowPackages.staging
