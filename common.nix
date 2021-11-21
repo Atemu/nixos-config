@@ -68,7 +68,7 @@ in
       experimental-features = nix-command flakes
     '';
     requireSignedBinaryCaches = false;
-    daemonNiceLevel = 10;
+    # daemonNiceLevel = 10; # TODO replace with new way of making daemon lower priority
     package = pkgs.customNix;
   };
 
