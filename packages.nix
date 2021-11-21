@@ -119,6 +119,7 @@ let
     mozlz4a
     mpv
     pavucontrol
+    piper
     python3
     rxvt_unicode
     signal-desktop

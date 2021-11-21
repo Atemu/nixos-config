@@ -23,6 +23,8 @@
 
   hardware.steam-hardware.enable = true;
 
+  services.ratbagd.enable = true;
+
   services.sshd.enable = true;
 
   virtualisation.libvirtd = {
