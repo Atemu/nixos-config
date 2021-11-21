@@ -58,7 +58,9 @@ with lib;
       touchpad.naturalScrolling = false;
       touchpad.disableWhileTyping = true;
       touchpad.accelProfile = "flat";
+      touchpad.middleEmulation = true;
       mouse.accelProfile = "flat";
+      mouse.middleEmulation = false;
       enable = true;
     };
 
