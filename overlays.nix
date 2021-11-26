@@ -3,7 +3,10 @@
 {
   nixpkgs.overlays = [
     (final: prev: {
-      customNix = final.callPackage ./nix.nix { };
+      customNix = final.callPackage ./nix.nix {
+        nixStable =
+          if lib.versionOlder lib.trivial.release "21.11" then final.nixUnstable else final.nixStable;
+      };
 
       nix = final.nixUnstable;
 
