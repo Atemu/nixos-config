@@ -120,6 +120,7 @@ let
     mpv
     pavucontrol
     piper
+    pulseaudio # For pactl when pipewire is enabled
     python3
     rxvt_unicode
     signal-desktop
