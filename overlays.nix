@@ -3,7 +3,9 @@
 {
   nixpkgs.overlays = [
     (final: prev: {
-      customNix = final.callPackage ./nix.nix { };
+      customNix = final.callPackage ./nix.nix {
+        nixStable = final.nix;
+      };
 
       nix = final.nix_2_4 or final.nixUnstable;
 
