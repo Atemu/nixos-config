@@ -5,7 +5,7 @@
     (final: prev: {
       customNix = final.callPackage ./nix.nix { };
 
-      nix = final.nixUnstable;
+      nix = final.nix_2_4 or final.nixUnstable;
 
       jetbrains = let
         mkUnset = pkg: pkg.overrideAttrs (old: {
