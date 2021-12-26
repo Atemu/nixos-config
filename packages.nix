@@ -20,6 +20,7 @@ let
     curl
     ddrescue
     diceware
+    dos2unix
     f2fs-tools
     fd
     file
