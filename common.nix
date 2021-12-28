@@ -70,7 +70,11 @@ in
       experimental-features = nix-command flakes
     '';
     requireSignedBinaryCaches = false;
-    # daemonNiceLevel = 10; # TODO replace with new way of making daemon lower priority
+
+    daemonCPUSchedPolicy = "idle";
+    daemonIOSchedClass = "idle";
+    # maybe set to batch on non-desktop
+
     package = pkgs.customNix;
   };
 
