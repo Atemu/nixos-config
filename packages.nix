@@ -55,6 +55,7 @@ let
     p7zip
     pciutils
     protonvpn-cli
+    pstree
     pv
     ranger
     ripgrep
