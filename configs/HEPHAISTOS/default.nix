@@ -29,8 +29,8 @@
 
   virtualisation.libvirtd = {
     enable = true;
-    qemuOvmf = true;
-    qemuRunAsRoot = false;
+    qemu.ovmf.enable = true;
+    qemu.runAsRoot = false;
   };
   # Libvirt takes forever to start, socket activate it when I actually need it
   systemd.services.libvirtd.wantedBy = [ ];
