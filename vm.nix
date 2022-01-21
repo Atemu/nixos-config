@@ -8,7 +8,7 @@ let
 
     security.sudo.wheelNeedsPassword = lib.mkForce false;
 
-    services.mingetty.autologinUser = "atemu";
+    services.getty.autologinUser = "atemu";
   };
 in
 
