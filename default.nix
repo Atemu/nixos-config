@@ -18,15 +18,17 @@ else let
   nixosFor = configuration: import <nixpkgs/nixos> {
     inherit configuration;
   };
-  nixosVmWithPackages = configuration: (nixosFor {
+  nixosVmWithoutPackages = configuration: (nixosFor {
     imports = [
       configuration
     ];
-    custom.withPackages = pkgs.lib.mkForce true;
+    custom.withPackages = pkgs.lib.mkForce false;
   }).vm;
 
   # Makes an attrset of all my nixos configurations.
   # Try `nix-build -A TAB TAB`. Pretty neat, huh?
 in builtins.mapAttrs
-  (_: config: nixosFor config // { vmWithPackages = nixosVmWithPackages config; })
-  configs
+  (_: config: nixosFor config // {
+    vmWithoutPackages = nixosVmWithoutPackages config;
+    vmWithPackages = (nixosFor config).vm;
+  }) configs

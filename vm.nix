@@ -9,8 +9,6 @@ let
     security.sudo.wheelNeedsPassword = lib.mkForce false;
 
     services.mingetty.autologinUser = "atemu";
-
-    custom.withPackages = false;
   };
 in
 
