@@ -62,6 +62,7 @@ let
     rsync
     screen
     smartmontools
+    smem
     sshfs
     stress
     sysstat
