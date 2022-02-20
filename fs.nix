@@ -1,6 +1,7 @@
 { config, lib, ... }:
 
 with lib;
+with config.lib.custom;
 
 let
   cfg = config.custom.fs;
@@ -13,7 +14,13 @@ in
       description = ''
         Device to mount the boot partition from.
       '';
-      default = lib.warn "No `custom.fs.boot` device declared, proceed with caution!" null;
+      default = mkLabel "${substring 0 11 config.custom.hostName}"; # FAT32 is shit and only allows 11 chars
+    };
+    root = mkOption {
+      description = ''
+        Device to mount the root partition from.
+      '';
+      default = mkLabel "${config.custom.hostName}-root";
     };
 
     btrfs = {
@@ -23,7 +30,7 @@ in
         description = ''
           The device to mount the main pool from
         '';
-        default = lib.warn "No `custom.fs.btrfs.device` declared, proceed with caution!" null;
+        default = mkLabel "${config.custom.fs.root}";
       };
     };
 

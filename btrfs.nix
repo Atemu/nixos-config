@@ -37,7 +37,7 @@ in
             description = ''
               The device to mount
             '';
-            default = cfg.defaults.device;
+            default = cfg.default.device;
             defaultText = ''
               The device declared in `custom.btrfs.default.device`
 
