@@ -69,6 +69,10 @@ in
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+    # Because of my special nix setup, the `nix` command is actually 2.3 eventhough the package is newer
+    # Disable checks
+    checkConfig = false;
+
     requireSignedBinaryCaches = false;
 
     daemonCPUSchedPolicy = "idle";
