@@ -11,16 +11,21 @@ with config.lib.custom;
 
   # TODO refactor into custom.luksPools
   boot.initrd.luks.devices = {
-    CT1000MX500-crypt = {
-      device = "/dev/disk/by-uuid/37473d86-55d3-4101-a7d7-16474d8a176d";
+    # TODO abstract these declarations into a function
+    HEPHAISTOS-crypt01 = {
+      device = mkLabel "HEPHAISTOS-crypt01";
+      allowDiscards = true;
+    };
+    HEPHAISTOS-crypt02 = {
+      device = mkLabel "HEPHAISTOS-crypt02";
       allowDiscards = true;
     };
   };
 
   custom.fs.enable = true;
-  custom.fs.boot = mkUuid "21F5-7652"; # TODO change
+  custom.fs.boot = mkLabel "HEPHAISTOS";
   custom.fs.btrfs.enable = true;
-  custom.fs.btrfs.device = mkUuid "1700c195-e991-4c08-9055-5d0403fb1cc6"; # TODO change
+  custom.fs.btrfs.device = mkLabel "HEPHAISTOS-root";
 
   custom.btrfs.fileSystems = {
     "/var/opt/games" = {
