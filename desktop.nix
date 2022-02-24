@@ -23,12 +23,8 @@ with lib;
     # Disable annoying GUI password popup and console error message when using ssh
     programs.ssh.askPassword = "";
 
-    services.physlock.enable = true;
-    services.physlock.allowAnyUser = true;
-    services.physlock.disableSysRq = false; # Default. Is this actually a security concern?
-
     services.xserver.enable = true;
-    services.xserver.displayManager.startx.enable = true;
+    services.xserver.displayManager.sddm.enable = true;
 
     services.xserver.windowManager.i3.enable = true;
     services.xserver.displayManager.defaultSession = "sway";
