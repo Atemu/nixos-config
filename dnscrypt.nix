@@ -28,7 +28,7 @@ in
     settings = {
       listen_addresses = if self.listen then [ "0.0.0.0:53" ] else [ "127.0.0.1:53" ];
       ipv6_servers = true;
-      server_names = [ "sicher-surfen-de" "cs-de" "ffmuc.net-v6" "ffmuc.net" "cloudflare-ipv6" "cloudflare" ];
+      server_names = [ "cloudflare-ipv6" "cloudflare" ];
       require_dnssec = true;
       require_nolog = true;
       require_nofilter = true;
