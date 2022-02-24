@@ -52,6 +52,7 @@ let
     nixpkgs-review
     nmap
     ntfs3g
+    onefetch
     p7zip
     pciutils
     protonvpn-cli
