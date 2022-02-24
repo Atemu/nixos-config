@@ -45,6 +45,7 @@ let
     ncdu
     neofetch
     netcat-gnu
+    nethogs
     nix-bash-completions
     nix-index
     nix-top
