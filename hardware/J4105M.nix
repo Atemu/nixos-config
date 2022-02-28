@@ -16,7 +16,7 @@
 
   swapDevices = [ ];
 
-  powerManagement.cpuFreqGovernor = "schedutil";
+  powerManagement.cpuFreqGovernor = "performance";
 
   hardware.cpu.intel.updateMicrocode = true;
 }
