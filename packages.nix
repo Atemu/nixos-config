@@ -133,7 +133,7 @@ let
     steam
     steam-run
     teamspeak_client
-    torbrowser
+    tor-browser-bundle-bin
     virt-manager
     vlc
     wineWowPackages.staging
