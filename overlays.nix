@@ -7,7 +7,7 @@
         nixStable = final.nix;
       };
 
-      nix = final.nix_2_6 or final.nix_2_5 or final.nix_2_4 or final.nixUnstable;
+      nix = final.nix_2_7 or final.nix_2_6 or final.nix_2_4 or final.nixUnstable;
 
       jetbrains = let
         mkUnset = pkg: pkg.overrideAttrs (old: {
