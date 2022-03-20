@@ -125,6 +125,7 @@ let
     mpv
     pavucontrol
     piper
+    polymc
     pulseaudio # For pactl when pipewire is enabled
     python3
     rxvt_unicode
