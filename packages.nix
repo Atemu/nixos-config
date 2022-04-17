@@ -110,7 +110,7 @@ let
     direnv
     discord
     element-desktop
-    firefox-bin
+    firefox-pgo
     gimp
     gnome3.adwaita-icon-theme # fix lutris' missing icons
     goverlay
