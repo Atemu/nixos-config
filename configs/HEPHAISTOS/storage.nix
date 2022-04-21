@@ -9,18 +9,8 @@ with config.lib.custom;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.useOSProber = true;
 
-  # TODO refactor into custom.luksPools
-  boot.initrd.luks.devices = {
-    # TODO abstract these declarations into a function
-    HEPHAISTOS-crypt01 = {
-      device = mkLabel "HEPHAISTOS-crypt01";
-      allowDiscards = true;
-    };
-    HEPHAISTOS-crypt02 = {
-      device = mkLabel "HEPHAISTOS-crypt02";
-      allowDiscards = true;
-    };
-  };
+  # FIXME HEHPAISTOS numeration begins at 1
+  custom.luks.devices = [ 1 2 ];
 
   custom.fs.enable = true;
   custom.fs.btrfs.enable = true;
