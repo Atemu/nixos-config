@@ -47,6 +47,23 @@ in
 
   services.tailscale.enable = true;
 
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+
+    publish = {
+      enable = true;
+      domain = true;
+      addresses = true;
+      hinfo = true;
+    };
+
+    extraServiceFiles = {
+      ssh = lib.mkIf config.services.sshd.enable "${pkgs.avahi}/etc/avahi/services/ssh.service";
+    };
+  };
+
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.atemu = {
     isNormalUser = true;
