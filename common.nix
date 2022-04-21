@@ -23,6 +23,7 @@ in
   boot.loader.timeout = 1;
 
   boot.initrd.availableKernelModules = [ "hid_roccat_ryos" ];
+  boot.initrd.supportedFilesystems = [ "vfat" ]; # For recovery purposes
 
   boot.kernelParams = [
     # THP transparently collapses large regions of separately allocated memory
