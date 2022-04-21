@@ -13,6 +13,7 @@ in
     ./dnscrypt.nix
     ./fs.nix
     ./lib.nix
+    ./luks.nix
     ./overlays.nix
     ./packages.nix
     ./vm.nix
