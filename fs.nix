@@ -30,7 +30,7 @@ in
         description = ''
           The device to mount the main pool from
         '';
-        default = mkLabel "${config.custom.fs.root}";
+        default = config.custom.fs.root;
       };
     };
 
