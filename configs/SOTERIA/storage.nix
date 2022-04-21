@@ -11,18 +11,5 @@ with config.lib.custom;
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.efiSupport = true;
 
-  boot.initrd.luks.devices = {
-    SOTERIA-crypt01 = {
-      device = mkLabel "SOTERIA-crypt01";
-      allowDiscards = true;
-    };
-    SOTERIA-crypt02 = {
-      device = mkLabel "SOTERIA-crypt02";
-      allowDiscards = true;
-    };
-    SOTERIA-crypt03 = {
-      device = mkLabel "SOTERIA-crypt03";
-      allowDiscards = true;
-    };
-  };
+  custom.luks.autoDevices = 3;
 }
