@@ -5,9 +5,7 @@ with config.lib.custom;
 
 {
   custom.fs.enable = true;
-  custom.fs.boot = mkLabel "SOTERIA";
   custom.fs.btrfs.enable = true;
-  custom.fs.btrfs.device = mkLabel "SOTERIA-root";
 
   boot.loader.grub.devices = [ "nodev" ];
   boot.loader.grub.efiInstallAsRemovable = true;
