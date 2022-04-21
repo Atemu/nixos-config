@@ -23,9 +23,7 @@ with config.lib.custom;
   };
 
   custom.fs.enable = true;
-  custom.fs.boot = mkLabel "HEPHAISTOS";
   custom.fs.btrfs.enable = true;
-  custom.fs.btrfs.device = mkLabel "HEPHAISTOS-root";
 
   custom.btrfs.fileSystems = {
     "/var/opt/games" = {
