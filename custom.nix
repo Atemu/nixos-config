@@ -25,12 +25,8 @@ in
 
     emacs = mkOption {
       description = "Emacs package to use.";
-      default = let
-        emacs-overlay = import <emacs-overlay> pkgs pkgs;
-        package = if (builtins.tryEval emacs-overlay).success
-                  then emacs-overlay.emacsGcc
-                  else warn "emacs-overlay not in NIX_PATH! Falling back to regular emacs..." pkgs.emacs;
-      in package.override { withGTK3 = false; }; # gtk crashes daemon when X server is stopped
+      # TODO Use { withGTK3 = false; } again
+      default = pkgs.emacsNativeComp or pkgs.emacs;
       example = pkgs.emacs-nox;
       type = types.package;
       # implemented in packages.nix and desktop.nix
