@@ -8,6 +8,7 @@ let
     acpi
     aespipe
     bash-completion
+    bat
     bc
     bind
     borgbackup
