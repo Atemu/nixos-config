@@ -69,7 +69,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.atemu = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" "video" "libvirtd" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "video" "libvirtd" "corectrl" ];
     shell = pkgs.bash;
     initialPassword = "none";
   };

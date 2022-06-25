@@ -29,4 +29,6 @@
     rocm-smi
     umr
   ];
+
+  programs.corectrl.enable = true;
 }
