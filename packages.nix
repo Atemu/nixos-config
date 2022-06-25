@@ -20,6 +20,7 @@ let
     cryptsetup
     curl
     ddrescue
+    delta
     diceware
     dos2unix
     f2fs-tools
