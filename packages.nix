@@ -54,6 +54,7 @@ let
     nixpkgs-fmt
     nixpkgs-review
     nmap
+    nomacs
     ntfs3g
     onefetch
     p7zip
