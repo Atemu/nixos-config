@@ -36,6 +36,7 @@ let
     jq
     killall
     libarchive
+    libstrangle
     lm_sensors
     lsof
     lsscsi
