@@ -141,6 +141,7 @@ let
     tor-browser-bundle-bin
     virt-manager
     vlc
+    vulkan-tools
     wineWowPackages.staging
     xclip
     xorg.xev
