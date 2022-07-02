@@ -24,6 +24,12 @@
         nixVersions = final.nixVersions or final; # 21.11 doesn't have nixVersions, use pkgs' aliases instead
       in nixVersions.nix_2_9 or nixVersions.nix_2_8 or nixVersions.nix_2_7 or nixVersions.nix_2_6 or nixVersions.nix_2_4 or nixVersions.nixUnstable;
 
+      mangohud = (prev.mangohud.override { libXNVCtrl = null; }).overrideAttrs (old: {
+        mesonFlags = old.mesonFlags ++ [
+          "-Dwith_xnvctrl=disabled"
+        ];
+      });
+
       youtube-dl = (
         if final ? yt-dlp
         then final.yt-dlp.override { withAlias = true; }
