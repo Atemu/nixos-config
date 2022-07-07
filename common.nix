@@ -101,5 +101,8 @@ in
     package = pkgs.customNix;
   };
 
+  # Don't need it and it takes quite a while to build.
+  documentation.nixos.enable = false;
+
   programs.command-not-found.dbPath = "/nix/var/nix/programs.sqlite";
 }
