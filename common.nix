@@ -48,6 +48,9 @@ in
   programs.screen.screenrc = "startup_message off";
 
   services.tailscale.enable = true;
+  # Required for exit nodes
+  # TODO only allow on servers/some machines?
+  networking.firewall.checkReversePath = "loose";
 
   services.avahi = {
     enable = true;
