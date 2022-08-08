@@ -92,7 +92,7 @@ in
     # Disable checks
     checkConfig = false;
 
-    requireSignedBinaryCaches = false;
+    settings.require-sigs = false;
 
     daemonCPUSchedPolicy = "idle";
     daemonIOSchedClass = "idle";
