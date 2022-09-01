@@ -106,7 +106,14 @@ let
   ];
 
   # Packages to install if X is enabled.
-  x = [
+  x = let
+    obs = wrapOBS {
+      plugins = with obs-studio-plugins; [
+        obs-vkcapture
+        obs-gstreamer
+      ];
+    };
+  in [
     anki-bin
     chromium
     config.custom.emacs
@@ -126,6 +133,7 @@ let
     mlterm
     mozlz4a
     mpv
+    obs
     pavucontrol
     piper
     polymc
