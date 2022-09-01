@@ -30,6 +30,33 @@
         ];
       });
 
+      mesa_22_2 = prev.mesa.overrideAttrs (old: rec {
+        version = "22.2.0-rc3";
+
+        src = prev.fetchurl {
+          url = "https://mesa.freedesktop.org/archive/mesa-${version}.tar.xz";
+          sha256 = "sha256-2zkjB6Avl7eoI3gJ4oticwY1aisnu5Eb+fQ0S2YxPjk=";
+        };
+
+        patches = with builtins; let
+          isGoodPatch = item: let
+            isStacksizePatch = isAttrs item && item.name == "musl-stacksize.patch";
+            isOldCachPatch = isPath item && baseNameOf item == "disk_cache-include-dri-driver-path-in-cache-key.patch";
+          in !isStacksizePatch && !isOldCachPatch;
+        in (filter isGoodPatch old.patches) ++ [
+          # Rebased version of the previous one
+          ./disk_cache-include-dri-driver-path-in-cache-key.patch
+        ];
+
+        nativeBuildInputs = old.nativeBuildInputs ++[
+          prev.glslang
+        ];
+
+        mesonFlags = old.mesonFlags ++ [
+          "-Dvideo-codecs=vc1dec,h264dec,h264enc,h265dec,h265enc"
+        ];
+      });
+
       youtube-dl = (
         if final ? yt-dlp
         then final.yt-dlp.override { withAlias = true; }
