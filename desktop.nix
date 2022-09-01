@@ -42,6 +42,19 @@ with lib;
       [ -e ~/.wprofile ] && source ~/.wprofile
     '';
 
+    services.dbus.enable = true;
+
+    xdg.portal = {
+      enable = true;
+      wlr.enable = true;
+      extraPortals = [
+        # TODO I'd prefer to use `pkgs.xdg-desktop-portal-kde'. This currently
+        # causes Firefox to go into a sort of QT compatibility mode which
+        # disables my Emacs gtk key-theme however, so not an option
+        pkgs.xdg-desktop-portal-gtk
+      ];
+    };
+
     services.xserver.layout = "us";
     services.xserver.xkbVariant = "altgr-intl";
 
