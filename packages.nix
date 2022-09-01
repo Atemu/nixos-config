@@ -107,7 +107,6 @@ let
 
   # Packages to install if X is enabled.
   x = [
-    android-studio
     anki-bin
     chromium
     config.custom.emacs
