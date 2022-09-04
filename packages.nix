@@ -7,6 +7,7 @@ let
   common = [
     acpi
     aespipe
+    aria2
     bash-completion
     bat
     bc
