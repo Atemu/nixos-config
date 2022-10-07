@@ -27,11 +27,11 @@
       });
 
       mesa_22_2 = prev.mesa.overrideAttrs (old: rec {
-        version = "22.2.0-rc3";
+        version = "22.2.0";
 
         src = prev.fetchurl {
           url = "https://mesa.freedesktop.org/archive/mesa-${version}.tar.xz";
-          sha256 = "sha256-2zkjB6Avl7eoI3gJ4oticwY1aisnu5Eb+fQ0S2YxPjk=";
+          sha256 = "sha256-sfnI/QjyyuOt+DNVvvTSOY6AJfRJRzMogPLQBmva+ow=";
         };
 
         patches = with builtins; let
