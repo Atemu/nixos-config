@@ -103,7 +103,7 @@ let
   # Packages to install if X is not enabled.
   noX = [
     emacs-nox # FIXME this needs to be handled in custom.emacs
-    rxvt_unicode.terminfo
+    rxvt-unicode.terminfo
   ];
 
   # Packages to install if X is enabled.
@@ -141,7 +141,7 @@ let
     protontricks
     pulseaudio # For pactl when pipewire is enabled
     python3
-    rxvt_unicode
+    rxvt-unicode
     signal-desktop
     spotify
     steam
