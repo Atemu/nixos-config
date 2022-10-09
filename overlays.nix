@@ -42,6 +42,11 @@
         in (filter isGoodPatch old.patches) ++ [
           # Rebased version of the previous one
           ./disk_cache-include-dri-driver-path-in-cache-key.patch
+
+          (final.fetchpatch {
+            url = "https://gitlab.freedesktop.org/mesa/mesa/uploads/abb792ee6830a765789b15cbec4b7c59/0001-radeonsi-vcn-enc-fix-issue-with-width-when-encoding-.patch";
+            hash = "sha256-j2/WlGUeLR7AQvWMvF4Cvn+/Lvz3FhnNshAi0p35mjY=";
+          })
         ];
 
         nativeBuildInputs = old.nativeBuildInputs ++[
