@@ -13,7 +13,7 @@
 
   custom.desktop.enable = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_xanmod;
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
   services.xserver.videoDrivers = [ "amdgpu" ];
   services.xserver.deviceSection = ''
