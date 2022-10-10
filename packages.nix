@@ -112,6 +112,7 @@ let
       plugins = with obs-studio-plugins; [
         obs-vkcapture
         obs-gstreamer
+        wlrobs
       ];
     };
   in [
