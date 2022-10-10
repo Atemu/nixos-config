@@ -11,6 +11,8 @@ with lib;
     boot.kernel.sysctl = { "kernel.sysrq" = 1; };
 
     sound.enable = true;
+
+    security.rtkit.enable = true; # For pipewire
     services.pipewire.enable = true;
     services.pipewire.pulse.enable = true;
     services.pipewire.alsa.enable = true;
