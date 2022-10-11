@@ -5,8 +5,8 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "sd_mod" "amdgpu" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "sd_mod" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" "amdgpu" ];
   boot.kernelModules = [
     "kvm-amd"
 
