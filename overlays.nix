@@ -20,6 +20,15 @@
         isJBIDE = pkg: lib.isDerivation pkg && !lib.hasPrefix "jetbrains-jdk" pkg.name;
       in lib.mapAttrs (n: v: if isJBIDE v then mkUnset v else v) prev.jetbrains;
 
+      lutris-unwrapped = prev.lutris-unwrapped.overrideAttrs (old: {
+        patches = old.patches or [ ] ++ [
+          (prev.fetchpatch {
+            url = "https://github.com/lutris/lutris/commit/3d5331d812502ac14de3a9cd22dcbfd7cf863cdd.patch";
+            hash = "sha256-zR4Zto/7AqshFPCHwj68SV7DOrNlixnGGlPHyPMyPt0=";
+          })
+        ];
+      });
+
       mangohud = (prev.mangohud.override { libXNVCtrl = null; }).overrideAttrs (old: {
         mesonFlags = old.mesonFlags ++ [
           "-Dwith_xnvctrl=disabled"
