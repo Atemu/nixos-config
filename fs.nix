@@ -71,4 +71,9 @@ in
       "/Users" = mkMount "Users";
     };
   in lib.mkIf cfg.btrfs.enable (if cfg.newLayout then newLayout else oldLayout);
+
+  config.systemd.tmpfiles.rules = mkIf cfg.newLayout [
+    # Create a symlink for backwards compatibility
+    "L+ /home - - - - /Users"
+  ];
 }
