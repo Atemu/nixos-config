@@ -23,6 +23,8 @@ in
       default = mkLabel "${config.custom.hostName}-root";
     };
 
+    newLayout = mkEnableOption "new root layout with /Users and /Volumes inspired by macOS";
+
     btrfs = {
       enable = mkEnableOption "my default btrfs layout";
 
@@ -57,9 +59,16 @@ in
       inherit (cfg.btrfs) device;
       inherit subvol;
     };
-  in lib.mkIf cfg.btrfs.enable {
-    "/" = mkMount "root";
-    "/nix" = mkMount "nix";
-    "/home" = mkMount "home";
-  };
+
+    oldLayout = {
+      "/" = mkMount "root";
+      "/nix" = mkMount "nix";
+      "/home" = mkMount "home";
+    };
+    newLayout = {
+      "/" = mkMount "Root";
+      "/nix" = mkMount "Nix";
+      "/Users" = mkMount "Users";
+    };
+  in lib.mkIf cfg.btrfs.enable (if cfg.newLayout then newLayout else oldLayout);
 }
