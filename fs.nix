@@ -75,5 +75,7 @@ in
   config.systemd.tmpfiles.rules = mkIf cfg.newLayout [
     # Create a symlink for backwards compatibility
     "L+ /home - - - - /Users"
+    # macOS does this too
+    "L+ /Volumes/Root - - - - /"
   ];
 }
