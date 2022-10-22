@@ -30,6 +30,7 @@ let
     git
     gnupg
     hdparm
+    hyperfine
     iftop
     iotop
     iperf
