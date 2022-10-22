@@ -67,7 +67,7 @@ in
     };
     newLayout = {
       "/" = mkMount "Root";
-      "/nix" = mkMount "Nix";
+      "/nix" = mkMount "Nix Store";
       "/Users" = mkMount "Users";
     };
   in lib.mkIf cfg.btrfs.enable (if cfg.newLayout then newLayout else oldLayout);
