@@ -73,6 +73,8 @@ in
     };
   in lib.mkIf cfg.btrfs.enable (if cfg.newLayout then newLayout else oldLayout);
 
+  # Systemd tries to generate /home by default. It doesn't seem to conflict but better disable that
+  config.environment.etc."tmpfiles.d/home.conf".source = lib.mkIf cfg.newLayout "/dev/null";
   config.systemd.tmpfiles.rules = mkIf cfg.newLayout [
     # Create a symlink for backwards compatibility
     "L+ /home - - - - /Users"
