@@ -139,7 +139,7 @@ let
     obs
     pavucontrol
     piper
-    polymc
+    prismlauncher
     protontricks
     pulseaudio # For pactl when pipewire is enabled
     python3
