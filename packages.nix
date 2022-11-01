@@ -38,7 +38,6 @@ let
     jq
     killall
     libarchive
-    libstrangle
     lm_sensors
     lsof
     lsscsi
@@ -130,6 +129,7 @@ let
     jetbrains.clion
     jetbrains.idea-community
     libreoffice
+    libstrangle
     lutris
     lxrandr
     mangohud
