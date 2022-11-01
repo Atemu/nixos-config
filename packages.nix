@@ -103,7 +103,7 @@ let
   # Packages to install if X is not enabled.
   noX = [
     emacs-nox # FIXME this needs to be handled in custom.emacs
-    rxvt-unicode.terminfo
+    rxvt-unicode-unwrapped.terminfo
   ];
 
   # Packages to install if X is enabled.
