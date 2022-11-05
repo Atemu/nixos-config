@@ -4,10 +4,9 @@
 with config.lib.custom;
 
 {
-  boot.loader.grub.devices = [ "nodev" ];
-  boot.loader.grub.efiInstallAsRemovable = true;
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.useOSProber = true;
+  # TODO externalise
+  boot.loader.grub.enable = false;
+  boot.loader.systemd-boot.enable = true;
 
   # FIXME HEHPAISTOS mount all the disks
   custom.luks.devices = [ 0 3 ];
