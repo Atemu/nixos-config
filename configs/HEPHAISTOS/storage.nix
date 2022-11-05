@@ -8,8 +8,7 @@ with config.lib.custom;
   boot.loader.grub.enable = false;
   boot.loader.systemd-boot.enable = true;
 
-  # FIXME HEHPAISTOS mount all the disks
-  custom.luks.devices = [ 0 3 ];
+  custom.luks.autoDevices = 4;
 
   custom.fs.enable = true;
   custom.fs.newLayout = true;
@@ -22,6 +21,11 @@ with config.lib.custom;
   custom.btrfs.fileSystems = {
     "/Volumes/Games" = {
       subvol = "Games";
+    };
+
+    "/Volumes/Data" = {
+      subvol = "";
+      device = mkLabel "${config.custom.hostName}-data";
     };
   };
 
