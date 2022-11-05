@@ -77,6 +77,7 @@ in
     extraGroups = [ "wheel" "networkmanager" "docker" "video" "libvirtd" "corectrl" ];
     shell = pkgs.bash;
     initialPassword = "none";
+    home = lib.mkIf config.custom.fs.newLayout "/Users/atemu";
   };
 
   nix.nixPath = [
