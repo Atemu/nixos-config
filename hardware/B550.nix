@@ -20,7 +20,7 @@
 
   hardware.cpu.amd.updateMicrocode = true;
 
-  hardware.opengl.package = pkgs.mesa_22_2.drivers;
+  hardware.opengl.package = pkgs.mesa-patched.drivers;
 
   hardware.opengl.extraPackages = with pkgs; [
     rocm-opencl-icd
