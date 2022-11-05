@@ -13,11 +13,12 @@ with config.lib.custom;
   custom.luks.devices = [ 1 2 ];
 
   custom.fs.enable = true;
+  custom.fs.newLayout = true;
   custom.fs.btrfs.enable = true;
 
   custom.btrfs.fileSystems = {
-    "/var/opt/games" = {
-      subvol = "games";
+    "/Volumes/Games" = {
+      subvol = "Games";
     };
   };
 
