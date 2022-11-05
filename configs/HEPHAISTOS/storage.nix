@@ -16,6 +16,10 @@ with config.lib.custom;
   custom.fs.newLayout = true;
   custom.fs.btrfs.enable = true;
 
+  systemd.tmpfiles.rules = [
+    "L+ /var/opt/games - - - - /Volumes/Games"
+  ];
+
   custom.btrfs.fileSystems = {
     "/Volumes/Games" = {
       subvol = "Games";
