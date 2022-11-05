@@ -54,6 +54,9 @@ in
   # TODO only allow on servers/some machines?
   networking.firewall.checkReversePath = "loose";
 
+  # Stop log spam from my SOHO router's amazingly helpful port scanning
+  networking.firewall.logRefusedConnections = false;
+
   services.avahi = {
     enable = true;
     nssmdns = true;
