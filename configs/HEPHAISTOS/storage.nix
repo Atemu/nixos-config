@@ -9,8 +9,8 @@ with config.lib.custom;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.useOSProber = true;
 
-  # FIXME HEHPAISTOS numeration begins at 1
-  custom.luks.devices = [ 1 2 ];
+  # FIXME HEHPAISTOS mount all the disks
+  custom.luks.devices = [ 0 3 ];
 
   custom.fs.enable = true;
   custom.fs.newLayout = true;
