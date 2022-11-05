@@ -39,6 +39,7 @@ in
       lib.genAttrs names (name: {
         device = config.lib.custom.mkLabel name;
         allowDiscards = true; # Not part of my threat model
+        bypassWorkqueues = true; # Better performance https://blog.cloudflare.com/speeding-up-linux-disk-encryption/
       }
     );
   };
