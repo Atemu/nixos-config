@@ -24,6 +24,7 @@ let
     delta
     diceware
     dos2unix
+    exiftool
     f2fs-tools
     fd
     file
