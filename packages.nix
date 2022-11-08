@@ -117,6 +117,7 @@ let
       ];
     };
   in [
+    BeatSaberModManager
     anki-bin
     chromium
     config.custom.emacs
