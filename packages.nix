@@ -119,6 +119,7 @@ let
   in [
     BeatSaberModManager
     anki-bin
+    appimage-run
     chromium
     config.custom.emacs
     direnv
