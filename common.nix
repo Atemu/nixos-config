@@ -7,6 +7,7 @@ in
 
 {
   imports = [
+    ./btrbk.nix
     ./btrfs.nix
     ./custom.nix
     ./desktop.nix
