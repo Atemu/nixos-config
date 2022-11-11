@@ -45,7 +45,7 @@ in
       options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
     };
 
-    "/boot" = {
+    "/System/Volumes/Boot" = {
       device = cfg.boot;
       fsType = "vfat";
       options = [ "umask=077" ];
@@ -76,8 +76,10 @@ in
   # Systemd tries to generate /home by default. It doesn't seem to conflict but better disable that
   config.environment.etc."tmpfiles.d/home.conf".source = lib.mkIf cfg.newLayout "/dev/null";
   config.systemd.tmpfiles.rules = mkIf cfg.newLayout [
-    # Create a symlink for backwards compatibility
+    # Create symlinks for backwards compatibility
     "L+ /home - - - - /Users"
+    "L+ /boot - - - - /System/Volumes/Boot"
+
     # macOS does this too
     "L+ /Volumes/Root - - - - /"
   ];
