@@ -34,6 +34,12 @@ in
       };
 
       newLayout = mkEnableOption "new root layout with /Users and /Volumes inspired by macOS";
+
+      stateVolumes = mkOption {
+        description = "Subvolumes to create and mount that contain important state. Only works with newLayout.";
+        default = [ ]; # Implemented below
+        defaultText = ''`[ "Users" ]` (not overridden addititve when set, only added to)'';
+      };
     };
 
   };
@@ -72,6 +78,11 @@ in
       "/System/Volumes" = mkMount "";
     };
   in lib.mkIf cfg.btrfs.enable (if cfg.btrfs.newLayout then newLayout else oldLayout);
+
+  # We want these to be additive, so we need to set these here rather than as
+  # the options' defaults which would get overridden when additional
+  # stateVolumes are set elsewhere
+  config.custom.fs.btrfs.stateVolumes = [ "Users" ];
 
   # Systemd tries to generate /home by default. It doesn't seem to conflict but better disable that
   config.environment.etc."tmpfiles.d/home.conf".source = lib.mkIf cfg.btrfs.newLayout "/dev/null";

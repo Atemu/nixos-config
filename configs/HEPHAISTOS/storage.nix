@@ -14,15 +14,14 @@ with config.lib.custom;
   custom.fs.btrfs.enable = true;
   custom.fs.btrfs.newLayout = true;
 
+  custom.fs.stateVolumes = [ "Games" ];
+
   systemd.tmpfiles.rules = [
     "L+ /var/opt/games - - - - /Volumes/Games"
   ];
 
   custom.btrfs.fileSystems = {
-    "/Volumes/Games" = {
-      subvol = "Games";
-    };
-
+    # TODO refactor fs.nix such that custom.btrfs can be configured for multiple volumes
     "/Volumes/Data" = {
       subvol = "";
       device = mkLabel "${config.custom.hostName}-data";
