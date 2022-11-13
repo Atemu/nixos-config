@@ -12,9 +12,4 @@ with config.lib.custom;
   custom.fs.btrfs.enable = true;
   custom.fs.btrfs.device = mkUuid "53a12e2b-fdd8-4b83-ba37-369baa7ec1ab";
   custom.fs.btrfs.newLayout = true;
-
-  custom.btrbk.enable = true;
-  custom.btrbk.volume."/System/Volumes" = {
-    subvolume."Users" = { };
-  };
 }

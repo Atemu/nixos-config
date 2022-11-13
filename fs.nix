@@ -40,6 +40,20 @@ in
         default = [ ]; # Implemented below
         defaultText = ''`[ "Users" ]` (not overridden addititve when set, only added to)'';
       };
+
+      autoSnapshots = {
+        enable = mkOption {
+          default = cfg.btrfs.newLayout;
+          defaultText = "`config.custom.btrfs.newLayout`";
+          description = "Whether to enable automatic snapshotting";
+        };
+
+        subvolumes = mkOption {
+          description = "The list of subvolumes to auto-snapshot";
+          default = [ ]; # Implemented below
+          defaultText = "All stateVolumes; they are assumed to have state in them that is important enough to warrant snapshots.";
+        };
+      };
     };
 
   };
@@ -83,6 +97,7 @@ in
   # the options' defaults which would get overridden when additional
   # stateVolumes are set elsewhere
   config.custom.fs.btrfs.stateVolumes = [ "Users" ];
+  config.custom.fs.btrfs.autoSnapshots.subvolumes = cfg.btrfs.stateVolumes;
 
   # Systemd tries to generate /home by default. It doesn't seem to conflict but better disable that
   config.environment.etc."tmpfiles.d/home.conf".source = lib.mkIf cfg.btrfs.newLayout "/dev/null";
@@ -94,4 +109,11 @@ in
     # macOS does this too
     "L+ /Volumes/Root - - - - /"
   ];
+
+  config.custom.btrbk = mkIf cfg.btrfs.autoSnapshots.enable {
+    enable = true;
+
+    # autoSnapshots.subvolumes = [ "Foo" "Bar" ] -> subvolume = { Foo = { }; Bar = { }; }
+    volume."/System/Volumes".subvolume = genAttrs cfg.btrfs.autoSnapshots.subvolumes (_: { });
+  };
 }
