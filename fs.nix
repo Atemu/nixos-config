@@ -23,8 +23,6 @@ in
       default = mkLabel "${config.custom.hostName}-root";
     };
 
-    newLayout = mkEnableOption "new root layout with /Users and /Volumes inspired by macOS";
-
     btrfs = {
       enable = mkEnableOption "my default btrfs layout";
 
@@ -34,6 +32,8 @@ in
         '';
         default = config.custom.fs.root;
       };
+
+      newLayout = mkEnableOption "new root layout with /Users and /Volumes inspired by macOS";
     };
 
   };
@@ -71,11 +71,11 @@ in
       "/Users" = mkMount "Users";
       "/System/Volumes" = mkMount "";
     };
-  in lib.mkIf cfg.btrfs.enable (if cfg.newLayout then newLayout else oldLayout);
+  in lib.mkIf cfg.btrfs.enable (if cfg.btrfs.newLayout then newLayout else oldLayout);
 
   # Systemd tries to generate /home by default. It doesn't seem to conflict but better disable that
-  config.environment.etc."tmpfiles.d/home.conf".source = lib.mkIf cfg.newLayout "/dev/null";
-  config.systemd.tmpfiles.rules = mkIf cfg.newLayout [
+  config.environment.etc."tmpfiles.d/home.conf".source = lib.mkIf cfg.btrfs.newLayout "/dev/null";
+  config.systemd.tmpfiles.rules = mkIf cfg.btrfs.newLayout [
     # Create symlinks for backwards compatibility
     "L+ /home - - - - /Users"
     "L+ /boot - - - - /System/Volumes/Boot"

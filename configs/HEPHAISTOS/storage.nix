@@ -11,8 +11,8 @@ with config.lib.custom;
   custom.luks.autoDevices = 4;
 
   custom.fs.enable = true;
-  custom.fs.newLayout = true;
   custom.fs.btrfs.enable = true;
+  custom.fs.btrfs.newLayout = true;
 
   systemd.tmpfiles.rules = [
     "L+ /var/opt/games - - - - /Volumes/Games"
