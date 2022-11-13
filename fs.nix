@@ -65,7 +65,7 @@ in
       options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
     };
 
-    "/System/Volumes/Boot" = {
+    "/boot" = {
       device = cfg.boot;
       fsType = "vfat";
       options = [ "umask=077" ];
@@ -104,8 +104,6 @@ in
   config.systemd.tmpfiles.rules = mkIf cfg.btrfs.newLayout [
     # Create symlinks for backwards compatibility
     "L+ /home - - - - /Users"
-    "L+ /boot - - - - /System/Volumes/Boot"
-
     # macOS does this too
     "L+ /Volumes/Root - - - - /"
   ];
