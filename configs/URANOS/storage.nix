@@ -3,9 +3,8 @@
 with config.lib.custom;
 
 {
-  boot.loader.grub.devices = [ "nodev" ];
-  boot.loader.grub.efiInstallAsRemovable = true;
-  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.enable = false;
+  boot.loader.systemd-boot.enable = true;
 
   custom.fs.enable = true;
   custom.fs.boot = mkUuid "21F5-7652";
