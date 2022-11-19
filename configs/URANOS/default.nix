@@ -15,7 +15,7 @@
 
   programs.mosh.enable = true;
 
-  security.sudo.wheelNeedsPassword = false;
+  custom.vm.enable = true;
 
   system.stateVersion = "22.11";
 }
