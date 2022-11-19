@@ -1,6 +1,7 @@
 { lib, config, ... }:
 
 let
+  cfg = config.custom.vm;
   hasVmVariant = config.virtualisation ? vmVariant;
   vmConfig = {
     users.users.atemu.initialHashedPassword = "";
@@ -10,16 +11,25 @@ let
 
     services.getty.autologinUser = "atemu";
   };
+  inherit (lib) mkOption mkMerge mkIf;
 in
 
-# Ugly because the module system doesn't support if then else.
-lib.mkMerge [
-  {
-    virtualisation.vmVariant = lib.mkIf hasVmVariant vmConfig;
+{
+  options.custom.vm.enable = mkOption {
+    description = "Sensible config options for use in a VM";
+    default = !hasVmVariant && builtins.hasAttr "vm" config.system.build;
+  };
 
-    # The mkIf is *false*, but the option checker doesn't care.
-    # Get your shit together module system. I should not have to do this.
-    _module.check = false; # Ew.
-  }
-  (lib.mkIf (!hasVmVariant && builtins.hasAttr "vm" config.system.build) vmConfig)
-]
+  # Ugly because the module system doesn't support if then else.
+  config = mkMerge [
+    {
+      virtualisation.vmVariant = mkIf hasVmVariant vmConfig;
+
+      # The mkIf is *false*, but the option checker doesn't care.
+      # Get your shit together module system. I should not have to do this.
+      _module.check = false; # Ew.
+    }
+
+    (mkIf cfg.enable vmConfig)
+  ];
+}
