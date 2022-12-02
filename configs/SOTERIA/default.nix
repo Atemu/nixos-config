@@ -29,7 +29,6 @@
   boot.initrd.network.ssh.port = 2222;
 
   boot.initrd.network.ssh.authorizedKeys = [
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEXcFOT69BeaMxLSYOpgHxbHVcPR0DYpSWZDGYpxJ/uFdG3S6ZXiCVUhSeRMaDGtcsEcx+3Uz3rQaRaqq5OQsBwjDLYI/5Dy1GpH8oFLgZUfhBEriCbePrASJoRVMcL1KT/w8hIHM1ZbWqw9rfxDp2WNYNQL0UcrV9zlpLEyddSg6YBNaekxKtRjoSmsKvdarGVu6ffO46LNlaktXOFDoVOHEnDoG86oZv7r7CSJv/RFf7OP4HOchQx7X+F+CEeZvzweqtrebFXj3Pda8hWM2rFkPgSAMA4S5oPivoRpuKuEht9MQSRiLh37zl/NFH8KaI19on+X5UDiV+sbNork2t atemu@PLATON"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3J1F+a1lSq05KPiH0gdZkx9q5w8XHfwqB3JfCzSzAV atemu@HEPHAISTOS"
   ];
 
