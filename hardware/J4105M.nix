@@ -19,4 +19,6 @@
   powerManagement.cpuFreqGovernor = "performance";
 
   hardware.cpu.intel.updateMicrocode = true;
+
+  nixpkgs.hostPlatform = "x86_64-linux";
 }
