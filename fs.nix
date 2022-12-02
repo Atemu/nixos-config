@@ -100,7 +100,7 @@ in
   config.custom.fs.btrfs.autoSnapshots.subvolumes = cfg.btrfs.stateVolumes;
 
   # Systemd tries to generate /home by default. It doesn't seem to conflict but better disable that
-  config.environment.etc."tmpfiles.d/home.conf".source = lib.mkIf cfg.btrfs.newLayout "/dev/null";
+  config.environment.etc."tmpfiles.d/home.conf" = lib.mkIf cfg.btrfs.newLayout { source = "/dev/null"; };
   config.systemd.tmpfiles.rules = mkIf cfg.btrfs.newLayout [
     # Create symlinks for backwards compatibility
     "L+ /home - - - - /Users"
