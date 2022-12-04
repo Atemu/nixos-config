@@ -14,7 +14,7 @@ with config.lib.custom;
   custom.fs.btrfs.enable = true;
   custom.fs.btrfs.newLayout = true;
 
-  custom.fs.stateVolumes = [ "Games" ];
+  custom.fs.btrfs.stateVolumes = [ "Games" ];
 
   systemd.tmpfiles.rules = [
     "L+ /var/opt/games - - - - /Volumes/Games"
