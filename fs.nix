@@ -85,12 +85,18 @@ in
       "/nix" = mkMount "nix";
       "/home" = mkMount "home";
     };
-    newLayout = {
-      "/" = mkMount "Root";
-      "/nix" = mkMount "Nix Store";
-      "/Users" = mkMount "Users";
-      "/System/Volumes" = mkMount "";
-    };
+    newLayout = let
+      defaultVolumes = {
+        "/" = mkMount "Root";
+        "/nix" = mkMount "Nix Store";
+        "/Users" = mkMount "Users";
+        "/System/Volumes" = mkMount "";
+      };
+
+      # TODO is there a cleaner way here? genAttrs doesn't quite work.
+      stateVolumes = map (name: { "/Volumes/${name}" = mkMount name; }) cfg.btrfs.stateVolumes;
+    in
+      mkMerge ([ defaultVolumes ] ++ stateVolumes);
   in lib.mkIf cfg.btrfs.enable (if cfg.btrfs.newLayout then newLayout else oldLayout);
 
   # We want these to be additive, so we need to set these here rather than as
