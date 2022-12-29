@@ -113,7 +113,5 @@ with lib;
 
     services.emacs.enable = true;
     services.emacs.package = config.custom.emacs;
-
-    programs.java.enable = true;
   };
 }
