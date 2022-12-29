@@ -30,7 +30,7 @@ with lib;
     services.xserver.displayManager.sddm.enable = true;
 
     services.xserver.windowManager.i3.enable = true;
-    services.xserver.displayManager.defaultSession = "sway";
+    services.xserver.displayManager.defaultSession = "none+i3";
     services.xserver.windowManager.i3.extraPackages = with pkgs; [
       dmenu
     ];
