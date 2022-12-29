@@ -115,7 +115,5 @@ with lib;
     services.emacs.package = config.custom.emacs;
 
     programs.java.enable = true;
-
-    services.urxvtd.enable = true;
   };
 }

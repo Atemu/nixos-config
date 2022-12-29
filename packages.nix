@@ -146,7 +146,6 @@ let
     protontricks
     pulseaudio # For pactl when pipewire is enabled
     python3
-    rxvt-unicode
     signal-desktop
     spotify
     steam
