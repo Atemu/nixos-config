@@ -31,6 +31,7 @@
     enable = true;
     qemu.ovmf.enable = true;
     qemu.runAsRoot = false;
+    qemu.package = pkgs.qemu_kvm; # Closure size; I don't need other µarchs
   };
   # Libvirt takes forever to start, socket activate it when I actually need it
   systemd.services.libvirtd.wantedBy = [ ];
