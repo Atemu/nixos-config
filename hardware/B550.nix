@@ -20,8 +20,6 @@
 
   hardware.cpu.amd.updateMicrocode = true;
 
-  hardware.opengl.package = pkgs.mesa-patched.drivers;
-
   environment.systemPackages = with pkgs; [
     radeontop
     rocm-smi
