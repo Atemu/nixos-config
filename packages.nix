@@ -24,6 +24,7 @@ let
     delta
     diceware
     dos2unix
+    efibootmgr
     exiftool
     f2fs-tools
     fd
