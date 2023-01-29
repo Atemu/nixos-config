@@ -19,6 +19,12 @@ with lib;
     services.pipewire.alsa.enable = true;
     services.pipewire.alsa.support32Bit = true;
 
+    # ladspa only looks in the lib/ladspa subdir
+    systemd.user.services.pipewire.environment.LADSPA_PATH = lib.makeSearchPathOutput "lib" "lib/ladspa" (with pkgs; [
+      rnnoise-plugin
+      lsp-plugins
+    ]);
+
     # The Steam client needs 32bit libraries
     # TODO only enable these if Steam is enabled
     hardware.opengl.driSupport32Bit = true;
