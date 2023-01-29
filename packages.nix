@@ -147,8 +147,6 @@ let
     python3
     signal-desktop
     spotify
-    steam
-    steam-run
     teamspeak_client
     tor-browser-bundle-bin
     virt-manager

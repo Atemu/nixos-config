@@ -13,6 +13,8 @@
 
   custom.desktop.enable = true;
 
+  programs.steam.enable = true;
+
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
   services.xserver.videoDrivers = [ "amdgpu" ];
