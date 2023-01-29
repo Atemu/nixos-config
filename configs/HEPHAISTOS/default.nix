@@ -14,6 +14,11 @@
   custom.desktop.enable = true;
 
   programs.steam.enable = true;
+  programs.steam.env = {
+    MANGOHUD = true;
+    OBS_VKCAPTURE = true;
+    RADV_TEX_ANISO = 16;
+  };
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
