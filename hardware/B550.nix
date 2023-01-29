@@ -27,4 +27,8 @@
   ];
 
   programs.corectrl.enable = true;
+
+  hardware.steam-hardware.enable = true;
+
+  services.ratbagd.enable = true;
 }
