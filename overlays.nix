@@ -26,6 +26,8 @@
         ];
       });
 
+      steam = prev.steam-small;
+
       youtube-dl = (
         if final ? yt-dlp
         then final.yt-dlp.override { withAlias = true; }
