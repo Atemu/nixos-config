@@ -89,6 +89,7 @@ let
     youtube-dl
     zip
     zstd
+    vmtouch
   ]
   ++ (with config.boot.kernelPackages; [
     cpupower
