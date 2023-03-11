@@ -21,6 +21,9 @@
       RADV_TEX_ANISO = 16;
       DXVK_HUD = "compiler";
     };
+    extraLibraries = p: with p; [
+      atk
+    ];
   };
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
