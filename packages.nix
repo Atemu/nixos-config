@@ -68,6 +68,7 @@ let
     protonvpn-cli
     pstree
     pv
+    qrencode
     ranger
     ripgrep
     rsync
