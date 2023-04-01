@@ -82,6 +82,7 @@ let
     unzip
     usbutils
     vim
+    vmtouch
     wget
     which
     whois
@@ -89,7 +90,6 @@ let
     youtube-dl
     zip
     zstd
-    vmtouch
   ]
   ++ (with config.boot.kernelPackages; [
     cpupower
