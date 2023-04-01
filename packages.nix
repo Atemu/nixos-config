@@ -25,6 +25,7 @@ let
     diceware
     dos2unix
     efibootmgr
+    ethtool
     exiftool
     f2fs-tools
     fd
