@@ -134,7 +134,6 @@ let
     gimp
     gnome.adwaita-icon-theme # fix lutris' missing icons
     goverlay
-    libreoffice
     libstrangle
     lutris
     lxrandr
