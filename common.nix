@@ -42,10 +42,6 @@ in
 
   time.timeZone = "Europe/Berlin";
 
-  # Looks very similar the default console font and uni-vga though not 100%
-  # TODO: Find out what the actual console font is and use that instead
-  console.font = "cp1250";
-
   programs.screen.screenrc = "startup_message off";
 
   programs.fuse.userAllowOther = true;
