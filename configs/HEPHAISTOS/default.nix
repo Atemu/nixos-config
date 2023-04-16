@@ -23,6 +23,7 @@
     };
     extraLibraries = p: with p; [
       atk
+      udev
     ];
   };
 
