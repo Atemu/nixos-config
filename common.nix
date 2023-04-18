@@ -17,6 +17,7 @@ in
     ./luks.nix
     ./overlays.nix
     ./packages.nix
+    ./paperless.nix
     ./vm.nix
     ./zfs.nix
     ./zram.nix
