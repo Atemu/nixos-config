@@ -29,6 +29,11 @@
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
+  boot.kernel.sysctl = {
+    # SteamOS/Fedora default, can help with performance.
+    "vm.max_map_count" = 2147483642;
+  };
+
   services.xserver.videoDrivers = [ "amdgpu" ];
   services.xserver.deviceSection = ''
     Option "TearFree" "False"
