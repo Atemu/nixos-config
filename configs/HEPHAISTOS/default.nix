@@ -56,5 +56,26 @@
 
   custom.dnscrypt.enable = true;
 
+  security.pam.loginLimits = [
+    {
+      domain = "@users";
+      item = "rtprio";
+      type = "-";
+      value = "95";
+    }
+    {
+      domain = "@users";
+      item = "nice";
+      type = "-";
+      value = "-19";
+    }
+    {
+      domain = "@users";
+      item = "memlock";
+      type = "-";
+      value = "4194304";
+    }
+  ];
+
   system.stateVersion = "20.09";
 }
