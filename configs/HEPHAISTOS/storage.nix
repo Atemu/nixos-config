@@ -7,6 +7,7 @@ with config.lib.custom;
   # TODO externalise
   boot.loader.grub.enable = false;
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.consoleMode = "auto";
   boot.loader.efi.canTouchEfiVariables = true;
 
   custom.luks.autoDevices = 4;
