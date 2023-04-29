@@ -12,7 +12,6 @@ with lib;
 
     sound.enable = true;
 
-    security.rtkit.enable = true; # For pipewire
     hardware.pulseaudio.enable = false;
     services.pipewire.enable = true;
     services.pipewire.pulse.enable = true;
