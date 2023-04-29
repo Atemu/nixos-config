@@ -13,7 +13,10 @@
     # The board has an NCT6687D which is supported by the NCT6683 module
     "nct6683"
   ];
-  boot.kernelParams = [ "amd_iommu=on" ];
+  boot.kernelParams = [
+    "amd_iommu=on"
+    "amd_pstate=active"
+  ];
   boot.extraModulePackages = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
