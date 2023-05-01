@@ -20,6 +20,7 @@
       OBS_VKCAPTURE = true;
       RADV_TEX_ANISO = 16;
       DXVK_HUD = "compiler";
+      PULSE_SINK = "game_sink"; # For separate capture
     };
     extraLibraries = p: with p; [
       atk
