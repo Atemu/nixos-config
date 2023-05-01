@@ -55,6 +55,7 @@ let
     nethogs
     nix-bash-completions
     nix-index
+    nix-init
     nix-top
     nix-tree
     nixpkgs-fmt
