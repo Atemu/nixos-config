@@ -27,6 +27,21 @@
     ];
   };
 
+  environment.systempackages = with pkgs; [
+    BeatSaberModManager
+    gnome.adwaita-icon-theme # fix lutris' missing icons
+    goverlay
+    libstrangle
+    lutris
+    mangohud
+    obs
+    piper
+    prismlauncher
+    protontricks
+    vulkan-tools
+    wineWowPackages.staging
+  ];
+
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
   services.xserver.videoDrivers = [ "amdgpu" ];
