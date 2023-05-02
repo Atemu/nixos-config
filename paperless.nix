@@ -11,6 +11,7 @@
     services.paperless.passwordFile = builtins.toFile "password" "none";
     services.paperless.extraConfig = {
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
+      PAPERLESS_NUMBER_OF_SUGGESTED_DATES = 42; # All the dates please
 
       PAPERLESS_ADMIN_USER = "atemu";
 
