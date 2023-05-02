@@ -13,8 +13,9 @@
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
 
       PAPERLESS_ADMIN_USER = "atemu";
-      PAPERLESS_THREADS_PER_WORKER = 4;
-      PAPERLESS_TASK_WORKERS = 2;
+
+      PAPERLESS_THREADS_PER_WORKER = 1;
+      PAPERLESS_TASK_WORKERS = 4;
     };
 
     networking.firewall.allowedTCPPorts = [ 28981 ];
