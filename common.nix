@@ -111,4 +111,7 @@ in
   documentation.nixos.enable = false;
 
   programs.command-not-found.dbPath = "/nix/var/nix/programs.sqlite";
+
+  # Makes Docker socket activated, only starting it after I use it once
+  systemd.services.docker.wantedBy = lib.mkIf config.virtualisation.docker.enable (lib.mkForce [ ]);
 }
