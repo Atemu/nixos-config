@@ -10,7 +10,7 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "performance"; # Powersave is super laggy; use power limits instead
 
   services.undervolt.coreOffset = -85;
 
