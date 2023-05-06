@@ -11,6 +11,7 @@
 
   custom.fs.enable = true;
   custom.fs.btrfs.enable = true;
+  custom.fs.btrfs.newLayout = true;
 
   # TODO put in custom.btrfs
   # Also, is this still necessary?
