@@ -13,6 +13,8 @@
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
       PAPERLESS_NUMBER_OF_SUGGESTED_DATES = 42; # All the dates please
 
+      PAPERLESS_FILENAME_FORMAT = "{correspondent}/{created} {title}";
+
       PAPERLESS_ADMIN_USER = "atemu";
 
       PAPERLESS_THREADS_PER_WORKER = 1;
