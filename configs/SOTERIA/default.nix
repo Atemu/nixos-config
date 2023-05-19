@@ -65,6 +65,8 @@
   };
   networking.firewall.allowedTCPPorts = [ 80 ];
 
+  custom.paperless.enable = true;
+
   services.iperf3.enable = true;
   services.iperf3.openFirewall = true;
 
