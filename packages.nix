@@ -114,16 +114,7 @@ let
   ];
 
   # Packages to install if X is enabled.
-  x = let
-    obs = wrapOBS {
-      plugins = with obs-studio-plugins; [
-        obs-vkcapture
-        obs-gstreamer
-        wlrobs
-      ];
-    };
-  in [
-    BeatSaberModManager
+  x = [
     anki-bin
     appimage-run
     chromium
@@ -133,20 +124,11 @@ let
     element-desktop
     firefox-pgo
     gimp
-    gnome.adwaita-icon-theme # fix lutris' missing icons
-    goverlay
-    libstrangle
-    lutris
     lxrandr
-    mangohud
     mlterm
     mozlz4a
     mpv
-    obs
     pavucontrol
-    piper
-    prismlauncher
-    protontricks
     pulseaudio # For pactl when pipewire is enabled
     python3
     signal-desktop
@@ -155,8 +137,7 @@ let
     tor-browser-bundle-bin
     virt-manager
     vlc
-    vulkan-tools
-    wineWowPackages.staging
+    write_stylus
     xclip
     xorg.xev
   ];

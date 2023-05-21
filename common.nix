@@ -25,7 +25,10 @@ in
 
   boot.loader.timeout = 1;
 
-  boot.initrd.availableKernelModules = [ "hid_roccat_ryos" ];
+  boot.initrd.availableKernelModules = [
+    "hid_roccat_ryos" # One of my USB keyboards
+    "uas" # "USB Attached SATA", needed for booting off external USB drives
+  ];
   boot.initrd.supportedFilesystems = [ "vfat" ]; # For recovery purposes
 
   boot.kernelParams = [
@@ -109,4 +112,7 @@ in
   documentation.nixos.enable = false;
 
   programs.command-not-found.dbPath = "/nix/var/nix/programs.sqlite";
+
+  # Makes Docker socket activated, only starting it after I use it once
+  systemd.services.docker.wantedBy = lib.mkIf config.virtualisation.docker.enable (lib.mkForce [ ]);
 }

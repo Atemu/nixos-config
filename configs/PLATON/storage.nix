@@ -1,57 +1,23 @@
 # This file contains the configuration of disks and storage
 { config, ... }:
+
 {
-  boot.loader.grub.devices = [ "nodev" ];
-  boot.loader.grub.efiInstallAsRemovable = true;
-  boot.loader.grub.efiSupport = true;
+  # TODO externalise
+  boot.loader.grub.enable = false;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.luks.devices = {
-    MZNTE128HMGR-crypt = {
-      device = "/dev/disk/by-uuid/6f9558c5-593c-4c86-b88f-63cc5b031ff0";
-      allowDiscards = true;
-    };
-  };
+  custom.luks.autoDevices = 1;
 
-  custom.zfs.enable = true;
-  boot.zfs.devNodes = "/dev/mapper/";
+  custom.fs.enable = true;
+  custom.fs.btrfs.enable = true;
+  custom.fs.btrfs.newLayout = true;
 
-  # Instance-specific
-  fileSystems."/" = {
-    device = "Ppool/instance/root";
-    fsType = "zfs";
-  };
-  fileSystems."/tmp" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-    options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
-  };
-  # Deployment-specific
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/3075-C917";
-    fsType = "vfat";
-    options = [ "umask=077" ];
-  };
-  fileSystems."/nix" = {
-    device = "Ppool/deployment/nix";
-    fsType = "zfs";
-  };
-  fileSystems."/var/lib/docker" = {
-    device = "Ppool/deployment/docker";
-    fsType = "zfs";
-  };
-  # Purpose-specific
-  fileSystems."/home" = {
-    device = "Ppool/purpose/home";
-    fsType = "zfs";
-  };
-  fileSystems."/etc/NetworkManager/system-connections" = {
-    device = "Ppool/purpose/nm-connections";
-    fsType = "zfs";
-  };
-  fileSystems."/var/opt/games" = {
-    device = "Ppool/purpose/games";
-    fsType = "zfs";
-  };
+  # TODO put in custom.btrfs
+  # Also, is this still necessary?
+  boot.initrd.availableKernelModules = [
+    "xxhash_generic" # needed to boot btrfs with xxhash64
+  ];
 
   custom.zramSwap.enable = true;
 }

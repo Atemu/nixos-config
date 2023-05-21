@@ -28,6 +28,29 @@
     ];
   };
 
+  environment.systemPackages = with pkgs; let
+    obs = wrapOBS {
+      plugins = with obs-studio-plugins; [
+        obs-vkcapture
+        obs-gstreamer
+        wlrobs
+      ];
+    };
+  in [
+    BeatSaberModManager
+    gnome.adwaita-icon-theme # fix lutris' missing icons
+    goverlay
+    libstrangle
+    lutris
+    mangohud
+    obs
+    piper
+    prismlauncher
+    protontricks
+    vulkan-tools
+    wineWowPackages.staging
+  ];
+
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
   boot.kernel.sysctl = {
@@ -55,8 +78,6 @@
   systemd.services.libvirt-guests.wantedBy = lib.mkForce [ ];
 
   virtualisation.docker.enable = true;
-  # Makes Docker socket activated, only starting it after I use it once
-  systemd.services.docker.wantedBy = lib.mkForce [ ]; # TODO put in some sort of common module
 
   programs.adb.enable = true;
 

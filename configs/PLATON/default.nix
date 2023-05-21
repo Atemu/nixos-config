@@ -12,10 +12,9 @@
   custom.hostName = "PLATON";
 
   custom.desktop.enable = true;
+  custom.desktop.tablet = true;
 
   hardware.bluetooth.powerOnBoot = false;
-
-  services.tlp.enable = true;
 
   services.undervolt.enable = true;
   # It don't want the logspam, this is only needed because undervolt resets on boot
@@ -29,12 +28,13 @@
 
   services.logind.extraConfig = "HandlePowerKey=suspend";
 
+  services.sshd.enable = true;
+
   networking.networkmanager.wifi.powersave = true;
 
   systemd.services.ModemManager.wantedBy = [ "network.target" ];
 
   virtualisation.docker.enable = true;
-  virtualisation.anbox.enable = true;
 
   custom.dnscrypt.enable = true;
 
