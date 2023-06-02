@@ -25,7 +25,7 @@ with config.lib.custom;
   custom.btrfs.fileSystems = {
     # TODO refactor fs.nix such that custom.btrfs can be configured for multiple volumes
     "/Volumes/Data" = {
-      subvol = "";
+      subvol = "/";
       device = mkLabel "${config.custom.hostName}-data";
     };
   };
