@@ -26,6 +26,14 @@
         ];
       });
 
+      nix-bash-completions = prev.nix-bash-completions.overrideAttrs (old: {
+        # Override upstream postPatch to still apply to `nix2`
+        postPatch = ''
+          substituteInPlace _nix --replace 'nix nixos-option' 'nix nixos-option' \
+            --replace 'nix)' 'nix)'
+        '';
+      });
+
       youtube-dl = (
         if final ? yt-dlp
         then final.yt-dlp.override { withAlias = true; }
