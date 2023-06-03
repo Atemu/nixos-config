@@ -105,7 +105,7 @@ in
     daemonIOSchedClass = "idle";
     # maybe set to batch on non-desktop
 
-    package = pkgs.customNix;
+    package = pkgs.nix_2_3;
   };
 
   # Don't need it and it takes quite a while to build.
