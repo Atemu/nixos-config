@@ -64,6 +64,10 @@
     nginx.enableSSL = false;
   };
   networking.firewall.allowedTCPPorts = [ 80 ];
+  # FIXME Grocy needs a PHP version with OpenSSL 1.1.1?
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1t"
+  ];
 
   custom.paperless.enable = true;
 
