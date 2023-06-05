@@ -115,7 +115,7 @@ let
 
   # Packages to install if X is enabled.
   x = [
-    anki-bin
+    anki
     appimage-run
     chromium
     config.custom.emacs
