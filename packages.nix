@@ -117,7 +117,6 @@ let
   x = [
     anki
     appimage-run
-    chromium
     config.custom.emacs
     direnv
     discord
