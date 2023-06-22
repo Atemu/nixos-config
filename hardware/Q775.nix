@@ -21,6 +21,13 @@
 
   services.logind.lidSwitchDocked = config.services.logind.lidSwitch;
 
+  services.power-profiles-daemon.enable = false;
+  services.tlp.enable = true;
+  services.tlp.settings = {
+    # Suspend audio devices too
+    USB_EXCLUDE_AUDIO = 0;
+  };
+
   services.xserver.inputClassSections = [
     ''
       Identifier      "calibration"
