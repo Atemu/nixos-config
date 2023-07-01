@@ -54,6 +54,9 @@ in
     '';
 
     services.xserver.desktopManager.gnome.enable = tablet;
+    environment.gnome.excludePackages = with pkgs; [
+      orca
+    ];
 
     services.dbus.enable = true;
 
