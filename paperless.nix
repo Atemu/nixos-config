@@ -1,11 +1,19 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
+
+let
+  inherit (lib) mkEnableOption mkOption mkIf getBin;
+  this = config.custom.paperless;
+  cfg = config.services.paperless;
+in
 
 {
   options.custom.paperless = {
-    enable = lib.mkEnableOption "my custom paperless config";
+    enable = mkEnableOption "my custom paperless config";
+
+    autoExport = mkEnableOption "efficient export of paperless content to the `export` directory under {option}`services.paperless.dataDir`";
   };
 
-  config = lib.mkIf config.custom.paperless.enable {
+  config = mkIf this.enable {
     services.paperless.enable = true;
     services.paperless.address = "0.0.0.0";
     services.paperless.passwordFile = builtins.toFile "password" "none";
@@ -22,5 +30,35 @@
     };
 
     networking.firewall.allowedTCPPorts = [ 28981 ];
+
+    systemd.timers.paperless-exporter = {
+      timerConfig = mkIf this.autoExport {
+        OnCalendar = "daily";
+        Unit = "paperless-exporter.service";
+      };
+      wantedBy = [ "multi-user.target" ];
+    };
+    systemd.services.paperless-exporter = mkIf this.autoExport {
+      serviceConfig.User = config.services.paperless.user;
+
+      script = ''
+        exportDir="${cfg.dataDir}/export"
+
+        # Create hardlinks of all documents
+        ${getBin pkgs.coreutils}/bin/cp --link --archive --update ${cfg.mediaDir}/documents/originals/. $exportDir
+
+        # Run the exporter
+        cmd=(
+          ${cfg.dataDir}/paperless-manage document_exporter
+          --compare-checksums
+          --delete
+          --no-archive
+          --no-thumbnail
+          --use-filename-format
+          --split-manifest
+          $exportDir
+        ); "''${cmd[@]}"
+      '';
+    };
   };
 }
