@@ -139,11 +139,23 @@ let
   ];
 in
 {
-  nixpkgs.config.allowUnfree = true; # :(
+  options.custom.packages = {
+    enable = lib.mkOption {
+      description = "Whether to include my set of system packages.";
+      default = true;
+      example = false;
+      type = lib.types.bool;
+    };
 
-  # List of packages installed in system profile.
-  environment.systemPackages = lib.mkIf config.custom.withPackages (
-    # If the host config enables X, X packages are also imported
-    common ++ (if config.custom.desktop.enable then x else noX)
-  );
+  };
+
+  config = {
+    nixpkgs.config.allowUnfree = true; # :(
+
+    # List of packages installed in system profile.
+    environment.systemPackages = lib.mkIf config.custom.packages.enable (
+      # If the host config enables X, X packages are also imported
+      common ++ (if config.custom.desktop.enable then x else noX)
+    );
+  };
 }

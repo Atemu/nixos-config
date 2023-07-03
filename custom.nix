@@ -15,14 +15,6 @@ in
       type = types.str;
     };
 
-    withPackages = mkOption {
-      description = "Whether to include system packages.";
-      default = true;
-      example = false;
-      type = types.bool;
-      # FIXME implemented in packages.nix for now
-    };
-
     emacs = mkOption {
       description = "Emacs package to use.";
       # TODO Use { withGTK3 = false; } again
