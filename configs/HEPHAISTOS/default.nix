@@ -38,6 +38,7 @@
     };
   in [
     BeatSaberModManager
+    discord
     gnome.adwaita-icon-theme # fix lutris' missing icons
     goverlay
     libstrangle

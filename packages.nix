@@ -119,7 +119,6 @@ let
     appimage-run
     config.custom.emacs
     direnv
-    discord
     element-desktop
     firefox-pgo
     gimp
