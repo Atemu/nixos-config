@@ -62,6 +62,10 @@ in
       write_stylus
     ];
 
+    custom.packages.allowedUnfree = [
+      "write_stylus"
+    ];
+
     services.dbus.enable = true;
 
     xdg.portal = {

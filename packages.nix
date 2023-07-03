@@ -147,10 +147,20 @@ in
       type = lib.types.bool;
     };
 
+    allowedUnfree = lib.mkOption {
+      description = "package names of unfree packages that are allowed";
+      default = [ ];
+      type = with lib.types; listOf string;
+    };
   };
 
   config = {
-    nixpkgs.config.allowUnfree = true; # :(
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.custom.packages.allowedUnfree;
+
+    # :(
+    custom.packages.allowedUnfree = [
+      "spotify"
+    ];
 
     # List of packages installed in system profile.
     environment.systemPackages = lib.mkIf config.custom.packages.enable (
