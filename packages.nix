@@ -131,7 +131,6 @@ let
     python3
     signal-desktop
     spotify
-    teamspeak_client
     tor-browser-bundle-bin
     virt-manager
     vlc

@@ -48,6 +48,7 @@
     piper
     prismlauncher
     protontricks
+    teamspeak_client
     vulkan-tools
     wineWowPackages.staging
   ];
