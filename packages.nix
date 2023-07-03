@@ -135,7 +135,6 @@ let
     tor-browser-bundle-bin
     virt-manager
     vlc
-    write_stylus
     xclip
     xorg.xev
   ];
