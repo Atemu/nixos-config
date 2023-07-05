@@ -11,8 +11,6 @@
 
   custom.hostName = "SOTERIA";
 
-  boot.kernelPackages = pkgs.linuxPackages_5_15;
-
   boot.initrd.network.enable = true;
   boot.initrd.network.udhcpc.extraArgs = [ "-t" "20" ];
   boot.initrd.network.ssh.enable = true;
