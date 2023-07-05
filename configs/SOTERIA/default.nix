@@ -68,6 +68,7 @@
   ];
 
   custom.paperless.enable = true;
+  custom.paperless.autoExport = true;
 
   services.iperf3.enable = true;
   services.iperf3.openFirewall = true;
