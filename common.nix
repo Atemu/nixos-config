@@ -7,6 +7,7 @@ in
 
 {
   imports = [
+    ./bootloader.nix
     ./btrbk.nix
     ./btrfs.nix
     ./custom.nix
