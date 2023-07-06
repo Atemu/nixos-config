@@ -53,6 +53,7 @@ in
 
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeature = lib.mkDefault "client"; # May get overridden for a machine
+  systemd.services.tailscaled.serviceConfig.LogLevelMax = 5; # Stop the info spam
 
   services.avahi = {
     enable = true;
