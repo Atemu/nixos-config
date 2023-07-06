@@ -52,9 +52,7 @@ in
   programs.fuse.userAllowOther = true;
 
   services.tailscale.enable = true;
-  # Required for exit nodes
-  # TODO only allow on servers/some machines?
-  networking.firewall.checkReversePath = "loose";
+  services.tailscale.useRoutingFeature = lib.mkDefault "client"; # May get overridden for a machine
 
   services.avahi = {
     enable = true;
