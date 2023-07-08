@@ -18,7 +18,7 @@ in
     services.paperless.address = "0.0.0.0";
     services.paperless.passwordFile = builtins.toFile "password" "none";
     services.paperless.extraConfig = {
-      PAPERLESS_OCR_LANGUAGE = "deu+eng";
+      PAPERLESS_OCR_LANGUAGE = "deu";
       PAPERLESS_NUMBER_OF_SUGGESTED_DATES = 42; # All the dates please
 
       PAPERLESS_FILENAME_FORMAT = "{correspondent}/{created} {title}";
