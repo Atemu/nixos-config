@@ -19,6 +19,12 @@ in
     services.paperless.passwordFile = builtins.toFile "password" "none";
     services.paperless.extraConfig = {
       PAPERLESS_OCR_LANGUAGE = "deu";
+
+      PAPERLESS_OCR_USER_ARGS = builtins.toJSON {
+        optimize = 1;
+        pdfa_image_compression = "lossless";
+      };
+
       PAPERLESS_NUMBER_OF_SUGGESTED_DATES = 42; # All the dates please
 
       PAPERLESS_FILENAME_FORMAT = "{correspondent}/{created} {title}";
