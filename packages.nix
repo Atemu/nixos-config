@@ -38,6 +38,7 @@ let
     iotop
     iperf
     iw
+    jc
     jq
     killall
     libarchive
