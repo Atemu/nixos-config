@@ -39,8 +39,8 @@ in
 
     networking.firewall.allowedTCPPorts = [ 28981 ];
 
-    systemd.timers.paperless-exporter = {
-      timerConfig = mkIf this.autoExport {
+    systemd.timers.paperless-exporter = mkIf this.autoExport {
+      timerConfig = {
         OnCalendar = "daily";
         Unit = "paperless-exporter.service";
       };
