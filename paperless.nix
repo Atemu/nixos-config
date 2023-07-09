@@ -44,7 +44,7 @@ in
         OnCalendar = "daily";
         Unit = "paperless-exporter.service";
       };
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = [ "timers.target" ];
     };
     systemd.services.paperless-exporter = mkIf this.autoExport {
       serviceConfig.User = config.services.paperless.user;
