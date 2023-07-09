@@ -25,6 +25,8 @@ in
         pdfa_image_compression = "lossless";
       };
 
+      PAPERLESS_OCR_OUTPUT_TYPE = "pdfa-3";
+
       PAPERLESS_NUMBER_OF_SUGGESTED_DATES = 42; # All the dates please
 
       PAPERLESS_FILENAME_FORMAT = "{correspondent}/{created} {title}";
