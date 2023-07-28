@@ -54,6 +54,8 @@ in
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeature = lib.mkDefault "client"; # May get overridden for a machine
   systemd.services.tailscaled.serviceConfig.LogLevelMax = 5; # Stop the info spam
+  # FIXME https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1655787774
+  networking.networkmanager.unmanaged = [ "tailscale0" ];
 
   # Stop log spam from my SOHO router's amazingly helpful port scanning
   networking.firewall.logRefusedConnections = false;
