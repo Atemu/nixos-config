@@ -113,6 +113,8 @@ in
     package = pkgs.customNix;
   };
 
+  custom.overlays.enable = true;
+
   # Don't need it and it takes quite a while to build.
   documentation.nixos.enable = false;
 

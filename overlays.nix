@@ -1,7 +1,16 @@
-{ lib, ... }:
+{ lib, config, ... }:
+
+let
+  this = config.custom.overlays;
+  inherit (lib) mkEnableOption mkIf;
+in
 
 {
-  nixpkgs.overlays = [
+  options.custom.overlays = {
+    enable = mkEnableOption "my custom overlays";
+  };
+
+  config.nixpkgs.overlays = mkIf this.enable [
     (final: prev: {
       customNix = final.callPackage ./nix.nix {
         nixStable = final.nix;
