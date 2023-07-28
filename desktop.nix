@@ -33,8 +33,7 @@ in
     programs.ssh.askPassword = "";
 
     services.xserver.enable = true;
-    services.xserver.displayManager.sddm.enable = !tablet;
-    services.xserver.displayManager.gdm.enable = tablet;
+    services.xserver.displayManager.gdm.enable = true;
 
     services.xserver.displayManager.defaultSession = if tablet then "gnome" else "none+i3";
 
