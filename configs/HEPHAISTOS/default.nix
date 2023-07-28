@@ -75,6 +75,8 @@
     Option "VariableRefresh" "True"
   '';
 
+  custom.overlays.mutterPatch = true;
+
   services.sshd.enable = true;
 
   virtualisation.libvirtd = {
