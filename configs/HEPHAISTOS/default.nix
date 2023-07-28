@@ -29,6 +29,7 @@
     ];
   };
 
+  # TODO extract into a custom.gaming option
   environment.systemPackages = with pkgs; let
     obs = wrapOBS {
       plugins = with obs-studio-plugins; [
@@ -39,6 +40,7 @@
     };
   in [
     BeatSaberModManager
+    discord
     gnome.adwaita-icon-theme # fix lutris' missing icons
     goverlay
     libstrangle
@@ -48,8 +50,16 @@
     piper
     prismlauncher
     protontricks
+    teamspeak_client
     vulkan-tools
     wineWowPackages.staging
+  ];
+  custom.packages.allowedUnfree = [
+    "steam"
+    "steam-original"
+    "steam-run"
+    "discord"
+    "teamspeak-client"
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;

@@ -58,6 +58,14 @@ in
       orca
     ];
 
+    environment.systemPackages = with pkgs; [
+      write_stylus
+    ];
+
+    custom.packages.allowedUnfree = [
+      "write_stylus"
+    ];
+
     services.dbus.enable = true;
 
     xdg.portal = {

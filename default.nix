@@ -22,7 +22,7 @@ else let
     imports = [
       configuration
     ];
-    custom.withPackages = pkgs.lib.mkForce false;
+    custom.packages.enable = pkgs.lib.mkForce false;
   }).vm;
 
   # Makes an attrset of all my nixos configurations.

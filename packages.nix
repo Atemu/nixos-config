@@ -120,7 +120,6 @@ let
     appimage-run
     config.custom.emacs
     direnv
-    discord
     element-desktop
     firefox-pgo
     gimp
@@ -133,30 +132,41 @@ let
     python3
     signal-desktop
     spotify
-    teamspeak_client
     tor-browser-bundle-bin
     virt-manager
     vlc
-    write_stylus
     xclip
     xorg.xev
   ];
 in
 {
-  nixpkgs.config.allowUnfree = true; # :(
-
-  nixpkgs.config.packageOverrides = pkgs: {
-    unstable = import <nixos-unstable> {
-      config = config.nixpkgs.config; # propagate `allowUnfree`
+  options.custom.packages = {
+    enable = lib.mkOption {
+      description = "Whether to include my set of system packages.";
+      default = true;
+      example = false;
+      type = lib.types.bool;
     };
-    stable = import <nixos-stable> {
-      config = config.nixpkgs.config; # propagate `allowUnfree`
+
+    allowedUnfree = lib.mkOption {
+      description = "package names of unfree packages that are allowed";
+      default = [ ];
+      type = with lib.types; listOf string;
     };
   };
 
-  # List of packages installed in system profile.
-  environment.systemPackages = lib.mkIf config.custom.withPackages (
-    # If the host config enables X, X packages are also imported
-    common ++ (if config.custom.desktop.enable then x else noX)
-  );
+  config = {
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.custom.packages.allowedUnfree;
+
+    # :(
+    custom.packages.allowedUnfree = [
+      "spotify"
+    ];
+
+    # List of packages installed in system profile.
+    environment.systemPackages = lib.mkIf config.custom.packages.enable (
+      # If the host config enables X, X packages are also imported
+      common ++ (if config.custom.desktop.enable then x else noX)
+    );
+  };
 }
