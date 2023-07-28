@@ -8,6 +8,8 @@ in
 {
   options.custom.overlays = {
     enable = mkEnableOption "my custom overlays";
+
+    mutterPatch = mkEnableOption "mutter patch allowing >144Hz in GDM";
   };
 
   config.nixpkgs.overlays = mkIf this.enable [
@@ -33,6 +35,17 @@ in
         mesonFlags = old.mesonFlags ++ [
           "-Dwith_xnvctrl=disabled"
         ];
+      });
+
+      gnome = prev.gnome.overrideScope' (gfinal: gprev: {
+        mutter = gprev.mutter.overrideDerivation (old: {
+          patches = old.patches ++ [
+            (final.fetchpatch {
+              url = "https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/3120.patch";
+              hash = "sha256-nOHuc9Z9EbountH4Hf+fxjyhQwaCnsz78eoJ5UapP1A=";
+            })
+          ];
+        });
       });
 
       youtube-dl = (
