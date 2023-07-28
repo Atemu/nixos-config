@@ -24,6 +24,7 @@
     };
     extraLibraries = p: with p; [
       atk
+      dbus
       udev
     ];
   };
