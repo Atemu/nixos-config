@@ -55,6 +55,9 @@ in
   services.tailscale.useRoutingFeature = lib.mkDefault "client"; # May get overridden for a machine
   systemd.services.tailscaled.serviceConfig.LogLevelMax = 5; # Stop the info spam
 
+  # Stop log spam from my SOHO router's amazingly helpful port scanning
+  networking.firewall.logRefusedConnections = false;
+
   services.avahi = {
     enable = true;
     nssmdns = true;
