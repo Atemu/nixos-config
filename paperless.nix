@@ -67,7 +67,7 @@ in
 
         # Allow users of the paperless groups to inspect the backup
         find $exportDir -type f -exec chmod 640 {} +
-        find $exportDir -type d -exec chmod 650 {} +
+        find $exportDir -type d -exec chmod 750 {} +
       '';
     };
   };
