@@ -80,7 +80,8 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.atemu = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" "video" "libvirtd" "corectrl" ];
+    # TODO set these in the respective modules
+    extraGroups = [ "wheel" "networkmanager" "docker" "video" "libvirtd" "corectrl" "paperless" ];
     shell = pkgs.bash;
     initialPassword = "none";
     home = lib.mkIf config.custom.fs.btrfs.newLayout "/Users/atemu";
