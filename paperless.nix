@@ -31,8 +31,6 @@ in
 
       PAPERLESS_FILENAME_FORMAT = "{correspondent}/{created} {title}";
 
-      PAPERLESS_ADMIN_USER = "atemu";
-
       PAPERLESS_THREADS_PER_WORKER = 1;
       PAPERLESS_TASK_WORKERS = 4;
     };
