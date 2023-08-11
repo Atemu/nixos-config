@@ -151,7 +151,7 @@ in
     allowedUnfree = lib.mkOption {
       description = "package names of unfree packages that are allowed";
       default = [ ];
-      type = with lib.types; listOf string;
+      type = with lib.types; listOf str;
     };
   };
 
