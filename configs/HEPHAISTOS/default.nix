@@ -79,6 +79,9 @@
 
   services.sshd.enable = true;
 
+  # Scanner
+  hardware.sane.enable = true;
+
   virtualisation.libvirtd = {
     enable = true;
     qemu.ovmf.enable = true;
