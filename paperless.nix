@@ -21,8 +21,11 @@ in
       PAPERLESS_OCR_LANGUAGE = "deu";
 
       PAPERLESS_OCR_USER_ARGS = builtins.toJSON {
-        optimize = 1;
-        pdfa_image_compression = "lossless";
+        optimize = 2;
+        pdfa_image_compression = "auto";
+        # Doesn't do anything because GhostScript compresses down to q=95
+        # anyways; this serves to not degrade quality further
+        jpeg_quality = 100;
       };
 
       PAPERLESS_OCR_OUTPUT_TYPE = "pdfa-3";
