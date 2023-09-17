@@ -2,7 +2,7 @@
 
 let
   this = config.custom.overlays;
-  inherit (lib) mkEnableOption mkIf optionals;
+  inherit (lib) mkEnableOption mkIf;
 in
 
 {
@@ -39,7 +39,7 @@ in
 
       gnome = prev.gnome.overrideScope' (gfinal: gprev: {
         mutter = gprev.mutter.overrideDerivation (old: {
-          patches = old.patches ++ optionals this.mutterPatch [
+          patches = old.patches ++ [
             (final.fetchpatch {
               url = "https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/3120.patch";
               hash = "sha256-nOHuc9Z9EbountH4Hf+fxjyhQwaCnsz78eoJ5UapP1A=";
