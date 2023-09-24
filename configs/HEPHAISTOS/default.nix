@@ -39,6 +39,7 @@
       ];
     };
   in [
+    # Gaming
     BeatSaberModManager
     discord
     gnome.adwaita-icon-theme # fix lutris' missing icons
@@ -53,6 +54,9 @@
     teamspeak_client
     vulkan-tools
     wineWowPackages.staging
+  ] ++ [
+    # Scanning
+    img2pdf
   ];
   custom.packages.allowedUnfree = [
     "steam"
