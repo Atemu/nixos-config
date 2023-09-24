@@ -62,6 +62,7 @@ let
     nixpkgs-fmt
     nixpkgs-review
     nmap
+    nodePackages.insect
     nomacs
     ntfs3g
     onefetch
