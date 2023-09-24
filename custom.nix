@@ -18,7 +18,7 @@ in
     emacs = mkOption {
       description = "Emacs package to use.";
       # TODO Use { withGTK3 = false; } again
-      default = pkgs.emacsNativeComp or pkgs.emacs;
+      default = pkgs.emacs29;
       example = pkgs.emacs-nox;
       type = types.package;
       # implemented in packages.nix and desktop.nix
