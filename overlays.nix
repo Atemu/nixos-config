@@ -12,10 +12,6 @@ in
 
   config.nixpkgs.overlays = mkIf this.enable [
     (final: prev: {
-      customNix = final.callPackage ./nix.nix {
-        nixStable = final.nix;
-      };
-
       # A firefox with PGO, enabled in regular from-source firefox since 22.05
       firefox-pgo = if lib.versionAtLeast lib.trivial.version "22.05" then final.firefox else final.firefox-bin;
 

@@ -101,17 +101,12 @@ in
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-    # Because of my special nix setup, the `nix` command is actually 2.3 eventhough the package is newer
-    # Disable checks
-    checkConfig = false;
 
     settings.require-sigs = false;
 
     daemonCPUSchedPolicy = "idle";
     daemonIOSchedClass = "idle";
     # maybe set to batch on non-desktop
-
-    package = pkgs.customNix;
   };
 
   custom.overlays.enable = true;
