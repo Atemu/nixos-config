@@ -81,11 +81,10 @@ in
       orca
     ];
 
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages = with pkgs; optionals tablet [
       write_stylus
     ];
-
-    custom.packages.allowedUnfree = [
+    custom.packages.allowedUnfree = optionals tablet [
       "write_stylus"
     ];
 
