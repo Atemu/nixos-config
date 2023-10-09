@@ -84,17 +84,6 @@
   # Scanner
   hardware.sane.enable = true;
 
-  virtualisation.libvirtd = {
-    enable = true;
-    qemu.ovmf.enable = true;
-    qemu.runAsRoot = false;
-    qemu.package = pkgs.qemu_kvm; # Closure size; I don't need other µarchs
-  };
-  # Libvirt takes forever to start, socket activate it when I actually need it
-  systemd.services.libvirtd.wantedBy = [ ];
-  # Don't need this feature.
-  systemd.services.libvirt-guests.wantedBy = lib.mkForce [ ];
-
   virtualisation.docker.enable = true;
 
   programs.adb.enable = true;
