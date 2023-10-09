@@ -29,6 +29,28 @@ in
       lsp-plugins
     ]);
 
+    # Upstream pipewire limits for realtime
+    security.pam.loginLimits = [
+      {
+        domain = "@users";
+        item = "rtprio";
+        type = "-";
+        value = "95";
+      }
+      {
+        domain = "@users";
+        item = "nice";
+        type = "-";
+        value = "-19";
+      }
+      {
+        domain = "@users";
+        item = "memlock";
+        type = "-";
+        value = "4194304";
+      }
+    ];
+
     # Disable annoying GUI password popup and console error message when using ssh
     programs.ssh.askPassword = "";
 
