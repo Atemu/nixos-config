@@ -40,12 +40,14 @@ in
     services.xserver.windowManager.i3.enable = true;
     services.xserver.windowManager.i3.extraPackages = with pkgs; [
       dmenu
+      i3lock
     ];
 
     programs.sway.enable = true;
     programs.sway.extraPackages = with pkgs; [
       bemenu
       qt5.qtwayland
+      swaylock
       xwayland
     ];
     programs.sway.extraSessionCommands = ''
