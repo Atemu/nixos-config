@@ -122,7 +122,7 @@ in
 
     services.xserver.wacom.enable = tablet;
 
-    fonts.fonts = with pkgs; [
+    fonts."${if versionAtLeast lib.trivial.release "23.11" then "packages" else "fonts"}" = with pkgs; [
       # My preferred monospace font
       hasklig # source-code-pro with ligatures
 
