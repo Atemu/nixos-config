@@ -27,7 +27,7 @@ with config.lib.custom;
   };
 
   nix.settings.extra-sandbox-paths = [
-    "/Volumes/Data/Ccache/"
+    "/var/cache/ccache=/Volumes/Data/Ccache/?"
   ];
 
   custom.zramSwap.enable = true;
