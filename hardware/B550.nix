@@ -25,7 +25,7 @@
 
   environment.systemPackages = with pkgs; [
     radeontop
-    rocm-smi
+    rocmPackages.rocm-smi
     umr
   ];
 
