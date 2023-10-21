@@ -6,7 +6,7 @@
 
     ./storage.nix
 
-    ../../hardware/B550.nix
+    ../../hardware/B650.nix
   ];
 
   custom.hostName = "HEPHAISTOS";
