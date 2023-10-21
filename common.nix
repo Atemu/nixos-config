@@ -14,6 +14,7 @@ in
     ./desktop.nix
     ./dnscrypt.nix
     ./fs.nix
+    ./gaming.nix
     ./lib.nix
     ./luks.nix
     ./overlays.nix

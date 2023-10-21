@@ -13,76 +13,18 @@
 
   custom.desktop.enable = true;
 
-  programs.steam.enable = true;
-  programs.steam.package = pkgs.steam-small.override {
-    extraEnv = {
-      MANGOHUD = true;
-      OBS_VKCAPTURE = true;
-      RADV_TEX_ANISO = 16;
-      DXVK_HUD = "compiler";
-      PULSE_SINK = "game_sink"; # For separate capture
-    };
-    extraLibraries = p: with p; [
-      atk
-      dbus
-      udev
-    ];
-  };
-
-  # TODO extract into a custom.gaming option
-  environment.systemPackages = with pkgs; let
-    obs = wrapOBS {
-      plugins = with obs-studio-plugins; [
-        obs-vkcapture
-        obs-gstreamer
-        wlrobs
-      ];
-    };
-  in [
-    # Gaming
-    BeatSaberModManager
-    discord
-    gnome.adwaita-icon-theme # fix lutris' missing icons
-    goverlay
-    libstrangle
-    lutris
-    mangohud
-    obs
-    piper
-    prismlauncher
-    protontricks
-    teamspeak_client
-    vulkan-tools
-    wineWowPackages.staging
-  ] ++ [
-    # Scanning
-    img2pdf
-  ];
-  custom.packages.allowedUnfree = [
-    "steam"
-    "steam-original"
-    "steam-run"
-    "discord"
-    "teamspeak-client"
-  ];
+  custom.gaming.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
-
-  boot.kernel.sysctl = {
-    # SteamOS/Fedora default, can help with performance.
-    "vm.max_map_count" = 2147483642;
-  };
-
-  services.xserver.videoDrivers = [ "amdgpu" ];
-  services.xserver.deviceSection = ''
-    Option "TearFree" "False"
-    Option "VariableRefresh" "True"
-  '';
 
   services.sshd.enable = true;
 
   # Scanner
+  # TODO refactor into module
   hardware.sane.enable = true;
+  environment.systemPackages = with pkgs; [
+    img2pdf
+  ];
 
   virtualisation.docker.enable = true;
 
