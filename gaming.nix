@@ -1,13 +1,16 @@
 { config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkIf optionals;
   this = config.custom.gaming;
 in
 
 {
   options.custom.gaming = {
     enable = mkEnableOption "my custom gaming setup";
+    amdgpu = mkEnableOption "my custom AMDGPU setup" // {
+      default = true;
+    };
   };
 
   config = mkIf this.enable {
@@ -52,6 +55,10 @@ in
       teamspeak_client
       vulkan-tools
       wineWowPackages.staging
+    ] ++ optionals this.amdgpu [
+      radeontop
+      rocmPackages.rocm-smi
+      umr
     ];
     custom.packages.allowedUnfree = [
       "steam"
@@ -66,11 +73,12 @@ in
       "vm.max_map_count" = 2147483642;
     };
 
-    services.xserver.videoDrivers = [ "amdgpu" ];
-    services.xserver.deviceSection = ''
+    services.xserver.videoDrivers = mkIf this.amdgpu [ "amdgpu" ];
+    services.xserver.deviceSection = mkIf this.amdgpu ''
       Option "TearFree" "False"
       Option "VariableRefresh" "True"
     '';
+    boot.initrd.kernelModules = mkIf this.amdgpu [ "amdgpu" ];
 
     programs.corectrl.enable = true;
 

@@ -6,7 +6,7 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" "amdgpu" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [
     "kvm-amd"
 
@@ -22,10 +22,4 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 
   hardware.cpu.amd.updateMicrocode = true;
-
-  environment.systemPackages = with pkgs; [
-    radeontop
-    rocmPackages.rocm-smi
-    umr
-  ];
 }
