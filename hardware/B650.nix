@@ -10,6 +10,10 @@
   boot.kernelModules = [
     "kvm-amd"
   ];
+  boot.kernelParams = [
+    "amd_iommu=on"
+    "amd_pstate=active"
+  ];
   boot.extraModulePackages = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
