@@ -78,6 +78,7 @@ in
     };
   };
 
+  services.openssh.settings.PasswordAuthentication = false;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.atemu = {
