@@ -9,14 +9,12 @@ let
   # Packages to always install.
   common = [
     acpi
-    aespipe
     aria2
     bash-completion
     bat
     bc
     bind
     borgbackup
-    brightnessctl
     btop
     btrfs-progs
     cifs-utils
@@ -30,7 +28,6 @@ let
     efibootmgr
     ethtool
     exiftool
-    f2fs-tools
     fd
     file
     git
@@ -40,18 +37,15 @@ let
     iftop
     iotop
     iperf
-    iw
     jc
     jq
     killall
     libarchive
     lm_sensors
     lsof
-    lsscsi
     lz4
     man-pages
     mediainfo
-    modemmanager
     mosh
     ncdu
     neofetch
@@ -60,14 +54,11 @@ let
     nix-bash-completions
     nix-index
     nix-init
-    nix-top
     nix-tree
     nixpkgs-fmt
     nixpkgs-review
     nmap
     nodePackages.insect
-    nomacs
-    ntfs3g
     onefetch
     p7zip
     pciutils
@@ -84,7 +75,6 @@ let
     sshfs
     stress
     sysstat
-    tigervnc
     traceroute
     tree
     unzip
@@ -104,7 +94,6 @@ let
   ]) ++ optionals (stdenv.targetPlatform.isx86) [
     ffmpeg-full
     haskellPackages.git-annex
-    shellcheck
   ] ++ optionals (stdenv.targetPlatform.isAarch32) [
     ffmpeg
   ];
@@ -128,11 +117,13 @@ let
     mlterm
     mozlz4a
     mpv
+    nomacs
     pavucontrol
     pulseaudio # For pactl when pipewire is enabled
     python3
     signal-desktop
     spotify
+    tigervnc
     tor-browser-bundle-bin
     virt-manager
     vlc
