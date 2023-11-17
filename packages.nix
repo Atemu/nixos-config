@@ -3,6 +3,9 @@
 with pkgs;
 
 let
+  inherit (lib) optionals mkIf mkOption getName;
+  inherit (lib.types) bool listOf str;
+
   # Packages to always install.
   common = [
     acpi
@@ -95,17 +98,14 @@ let
     youtube-dl
     zip
     zstd
-  ]
-  ++ (with config.boot.kernelPackages; [
+  ] ++ (with config.boot.kernelPackages; [
     cpupower
     perf
-  ])
-  ++ lib.optionals (stdenv.targetPlatform.isx86) [
+  ]) ++ optionals (stdenv.targetPlatform.isx86) [
     ffmpeg-full
     haskellPackages.git-annex
     shellcheck
-  ]
-  ++ lib.optionals (stdenv.targetPlatform.isAarch32) [
+  ] ++ optionals (stdenv.targetPlatform.isAarch32) [
     ffmpeg
   ];
 
@@ -139,25 +139,24 @@ let
     xclip
     xorg.xev
   ];
-in
-{
+in {
   options.custom.packages = {
-    enable = lib.mkOption {
+    enable = mkOption {
       description = "Whether to include my set of system packages.";
       default = true;
       example = false;
-      type = lib.types.bool;
+      type = bool;
     };
 
     allowedUnfree = lib.mkOption {
       description = "package names of unfree packages that are allowed";
       default = [ ];
-      type = with lib.types; listOf str;
+      type = listOf str;
     };
   };
 
   config = {
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.custom.packages.allowedUnfree;
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (getName pkg) config.custom.packages.allowedUnfree;
 
     # :(
     custom.packages.allowedUnfree = [
@@ -165,7 +164,7 @@ in
     ];
 
     # List of packages installed in system profile.
-    environment.systemPackages = lib.mkIf config.custom.packages.enable (
+    environment.systemPackages = mkIf config.custom.packages.enable (
       # If the host config enables X, X packages are also imported
       common ++ (if config.custom.desktop.enable then x else noX)
     );
