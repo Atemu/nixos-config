@@ -3,6 +3,8 @@
 let
   nixos-config = "/nix/var/nix/nixos-config";
   nixpkgs = "/nix/var/nix/nixpkgs";
+
+  inherit (lib) attrValues;
 in
 
 {
@@ -77,6 +79,7 @@ in
     };
   };
 
+  services.openssh.settings.PasswordAuthentication = false;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.atemu = {
@@ -86,6 +89,14 @@ in
     shell = pkgs.bash;
     initialPassword = "none";
     home = lib.mkIf config.custom.fs.btrfs.newLayout "/Users/atemu";
+    openssh.authorizedKeys.keys = let
+      hostKeys = {
+        HEPHAISTOS = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3J1F+a1lSq05KPiH0gdZkx9q5w8XHfwqB3JfCzSzAV atemu@HEPHAISTOS";
+        LYKOURGOS = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIcU6XG0H5Fs0jl9mHiPWwI3BdHz4Uf9CIAc94eklV9Y atemu@LYKOURGOS";
+        PLATON = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHK/Gx95TAvE5GmEuLwWgOQpwjkWNaVavprNlFOuCjFI atemu@PLATON";
+      };
+      # All keys but the host's own key
+    in attrValues (removeAttrs hostKeys [ config.custom.hostName ]);
   };
 
   nix.nixPath = [
