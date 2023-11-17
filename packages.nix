@@ -3,7 +3,7 @@
 with pkgs;
 
 let
-  inherit (lib) optionals mkIf mkOption getName;
+  inherit (lib) optionals mkIf mkEnableOption mkOption getName;
   inherit (lib.types) bool listOf str;
 
   # Packages to always install.
@@ -129,11 +129,8 @@ let
   ];
 in {
   options.custom.packages = {
-    enable = mkOption {
-      description = "Whether to include my set of system packages.";
+    enable = mkEnableOption "my set of system packages" // mkOption {
       default = true;
-      example = false;
-      type = bool;
     };
 
     allowedUnfree = lib.mkOption {
