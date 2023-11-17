@@ -29,6 +29,7 @@ let
     ethtool
     exiftool
     fd
+    ffmpeg
     file
     git
     gnupg
@@ -92,10 +93,7 @@ let
     cpupower
     perf
   ]) ++ optionals (stdenv.targetPlatform.isx86) [
-    ffmpeg-full
     haskellPackages.git-annex
-  ] ++ optionals (stdenv.targetPlatform.isAarch32) [
-    ffmpeg
   ];
 
   # Packages to install if X is not enabled.
