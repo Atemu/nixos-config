@@ -32,6 +32,7 @@ let
     ffmpeg
     file
     git
+    git-annex
     gnupg
     hdparm
     hyperfine
@@ -92,9 +93,7 @@ let
   ] ++ (with config.boot.kernelPackages; [
     cpupower
     perf
-  ]) ++ optionals (stdenv.targetPlatform.isx86) [
-    haskellPackages.git-annex
-  ];
+  ]);
 
   # Packages to install if X is not enabled.
   noX = [
