@@ -3,8 +3,9 @@
 with pkgs;
 
 let
-  inherit (lib) optionals mkIf mkEnableOption mkOption getName;
+  inherit (lib) optionals mkIf mkEnableOption mkOption getName versionAtLeast;
   inherit (lib.types) bool listOf str;
+  inherit (lib.trivial) release;
 
   # Packages to always install.
   common = [
@@ -60,7 +61,6 @@ let
     nixpkgs-fmt
     nixpkgs-review
     nmap
-    nodePackages.insect
     onefetch
     p7zip
     pciutils
@@ -93,7 +93,9 @@ let
   ] ++ (with config.boot.kernelPackages; [
     cpupower
     perf
-  ]);
+  ]) ++ optionals (versionAtLeast release "23.11") [
+    numbat
+  ];
 
   # Packages to install if X is not enabled.
   noX = [
