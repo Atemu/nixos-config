@@ -1,7 +1,7 @@
 { lib, ... }:
 
 let
-  inherit (lib) mkOption warn optionalString;
+  inherit (lib) mkOption warn optionalString concatStringsSep;
 in
 
 {
@@ -15,5 +15,7 @@ in
     mkPrivateOption = args: mkOption (args // {
       default = warn "Secret not applied, using default${optionalString (args ? default) " (${args.default})"}" args.default;
     });
+
+    concatDomain = concatStringsSep ".";
   };
 }

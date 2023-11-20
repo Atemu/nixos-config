@@ -20,6 +20,7 @@ in
     ./gaming.nix
     ./lib.nix
     ./luks.nix
+    ./nginx.nix
     ./overlays.nix
     ./packages.nix
     ./paperless.nix
