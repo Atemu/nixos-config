@@ -57,9 +57,12 @@ in
     };
   };
 
-  config = {
-    services.nginx.enable = this != { };
-    custom.acme.enable = this != { };
+  config = let
+    # Enable if there are hosts declared
+    enable = this != { };
+  in {
+    services.nginx.enable = enable;
+    custom.acme.enable = enable;
 
     services.nginx.virtualHosts = mapAttrs' (name: host: let
       domain = concatDomain [ host.subdomain host.baseDomain ];
@@ -73,6 +76,7 @@ in
         };
       }
     ) this;
+
     custom.acme.domains = mapAttrs' (name: host:
       nameValuePair (concatDomain [ host.subdomain host.baseDomain ]) (mkIf host.TLS.enable { })
     ) this;
