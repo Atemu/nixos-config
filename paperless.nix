@@ -38,7 +38,11 @@ in
       PAPERLESS_TASK_WORKERS = 4;
     };
 
-    networking.firewall.allowedTCPPorts = [ 28981 ];
+    networking.firewall.allowedTCPPorts = [ cfg.port ];
+
+    custom.virtualHosts.paperless = {
+      localPort = cfg.port;
+    };
 
     systemd.timers.paperless-exporter = mkIf this.autoExport {
       timerConfig = {
