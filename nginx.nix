@@ -64,6 +64,8 @@ in
     services.nginx.enable = enable;
     custom.acme.enable = enable;
 
+    networking.firewall.allowedTCPPorts = mkIf enable [ 80 443 ];
+
     services.nginx.virtualHosts = mapAttrs' (name: host: let
       domain = concatDomain [ host.subdomain host.baseDomain ];
     in
