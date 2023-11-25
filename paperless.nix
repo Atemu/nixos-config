@@ -36,6 +36,8 @@ in
 
       PAPERLESS_THREADS_PER_WORKER = 1;
       PAPERLESS_TASK_WORKERS = 4;
+
+      PAPERLESS_URL = "https://${config.custom.virtualHosts.paperless.domain}";
     };
 
     networking.firewall.allowedTCPPorts = [ cfg.port ];
