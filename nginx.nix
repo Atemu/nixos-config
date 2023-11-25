@@ -3,7 +3,7 @@
 let
   this = config.custom.virtualHosts;
 
-  inherit (lib) mkEnableOption mkOption mkIf mapAttrs' nameValuePair toLower;
+  inherit (lib) mkEnableOption mkOption mkIf filterAttrs mapAttrs' nameValuePair toLower;
   inherit (lib.types) attrsOf submodule nullOr int str;
   inherit (config.lib.custom) concatDomain;
   inherit (config.custom) hostName;
@@ -71,26 +71,25 @@ in
   };
 
   config = let
-    # Enable if there are hosts declared
-    enable = this != { };
-  in {
-    services.nginx.enable = mkIf enable true;
-    custom.acme.enable = enable;
+    validHosts = filterAttrs (name: host: host.TLS.enable || !host.onlyEnableTLS) this;
+  in mkIf (validHosts != { }) {
+    services.nginx.enable = true;
+    custom.acme.enable = true;
 
-    networking.firewall.allowedTCPPorts = mkIf enable [ 80 443 ];
+    networking.firewall.allowedTCPPorts = [ 80 443 ];
 
     services.nginx.virtualHosts = mapAttrs' (name: host:
-      nameValuePair host.domain (mkIf (host.TLS.enable || !host.onlyEnableTLS) {
+      nameValuePair host.domain {
         forceSSL = true;
         useACMEHost = host.domain;
         locations."/" = mkIf (!host.onlyEnableTLS) {
           proxyPass = "http://localhost:${toString host.localPort}";
         };
-      })
-    ) this;
+      }
+    ) validHosts;
 
     custom.acme.domains = mapAttrs' (name: host:
       nameValuePair host.domain (mkIf host.TLS.enable { })
-    ) this;
+    ) validHosts;
   };
 }
