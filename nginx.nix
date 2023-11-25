@@ -38,6 +38,14 @@ in
             );
           };
 
+          domain = mkOption {
+            default = concatDomain [ config.subdomain config.baseDomain ];
+            type = str;
+            description = ''
+              The full domain to use for this virtualHost. Should be left on default.
+            '';
+          };
+
           TLS = {
             enable = mkEnableOption "TLS certificates via ACME" // mkOption {
               default = true;
@@ -66,13 +74,11 @@ in
 
     networking.firewall.allowedTCPPorts = mkIf enable [ 80 443 ];
 
-    services.nginx.virtualHosts = mapAttrs' (name: host: let
-      domain = concatDomain [ host.subdomain host.baseDomain ];
-    in
-      nameValuePair domain {
+    services.nginx.virtualHosts = mapAttrs' (name: host:
+      nameValuePair host.domain {
         forceSSL = true;
         # enableACME = true;
-        useACMEHost = domain;
+        useACMEHost = host.domain;
         locations."/" = {
           proxyPass = "http://localhost:${toString host.localPort}";
         };
@@ -80,7 +86,7 @@ in
     ) this;
 
     custom.acme.domains = mapAttrs' (name: host:
-      nameValuePair (concatDomain [ host.subdomain host.baseDomain ]) (mkIf host.TLS.enable { })
+      nameValuePair host.domain (mkIf host.TLS.enable { })
     ) this;
   };
 }
