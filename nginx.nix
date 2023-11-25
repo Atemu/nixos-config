@@ -60,6 +60,11 @@ in
               If the service listens on `localhost:1234`, set this to `1234`.
             '';
           };
+
+          onlyEnableTLS = mkEnableOption ''
+            only enable TLS settings for this virtualHost.
+            This is useful to when using this module to override an external nginx configuration.
+          '';
         };
       }));
     };
@@ -69,20 +74,19 @@ in
     # Enable if there are hosts declared
     enable = this != { };
   in {
-    services.nginx.enable = enable;
+    services.nginx.enable = mkIf enable true;
     custom.acme.enable = enable;
 
     networking.firewall.allowedTCPPorts = mkIf enable [ 80 443 ];
 
     services.nginx.virtualHosts = mapAttrs' (name: host:
-      nameValuePair host.domain {
+      nameValuePair host.domain (mkIf (host.TLS.enable || !host.onlyEnableTLS) {
         forceSSL = true;
-        # enableACME = true;
         useACMEHost = host.domain;
-        locations."/" = {
+        locations."/" = mkIf (!host.onlyEnableTLS) {
           proxyPass = "http://localhost:${toString host.localPort}";
         };
-      }
+      })
     ) this;
 
     custom.acme.domains = mapAttrs' (name: host:
