@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 
 {
   imports = [
@@ -14,6 +14,14 @@
   services.openssh.enable = true;
 
   programs.mosh.enable = true;
+
+  custom.paperless.enable = true;
+  custom.paperless.autoExport = true;
+  # FIXME make virtualHost config accessible through as an option in custom.paperless
+  custom.virtualHosts.paperless.onPrimaryDomain = false;
+
+  custom.grocy.enable = true;
+  custom.virtualHosts.grocy.onPrimaryDomain = false;
 
   custom.vm.enable = true;
 

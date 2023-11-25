@@ -9,6 +9,7 @@ in
 
 {
   imports = [
+    ./acme.nix
     ./bootloader.nix
     ./btrbk.nix
     ./btrfs.nix
@@ -17,15 +18,21 @@ in
     ./dnscrypt.nix
     ./fs.nix
     ./gaming.nix
+    ./grocy.nix
     ./lib.nix
     ./luks.nix
+    ./nginx.nix
     ./overlays.nix
     ./packages.nix
     ./paperless.nix
     ./vm.nix
     ./zfs.nix
     ./zram.nix
-  ];
+  ] ++ (
+    if builtins.pathExists ./secrets.nix
+    then [ ./secrets.nix ]
+    else builtins.trace "Warning: Secrets not present. Options that use eval secrets will use test values." [ ]
+  );
 
   boot.loader.timeout = 1;
 

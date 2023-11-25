@@ -54,24 +54,12 @@
   custom.dnscrypt.enable = true;
   custom.dnscrypt.listen = true;
 
-  services.grocy = {
-    hostName = config.custom.hostName;
-    enable = true;
-    settings = {
-      currency = "EUR";
-      culture = "en";
-      calendar.firstDayOfWeek = 1; # Monday
-    };
-    nginx.enableSSL = false;
-  };
-  networking.firewall.allowedTCPPorts = [ 80 ];
-  # FIXME Grocy needs a PHP version with OpenSSL 1.1.1?
-  nixpkgs.config.permittedInsecurePackages = [
-    "openssl-1.1.1w"
-  ];
+  custom.grocy.enable = true;
+  custom.virtualHosts.grocy.onPrimaryDomain = true;
 
   custom.paperless.enable = true;
   custom.paperless.autoExport = true;
+  custom.virtualHosts.paperless.onPrimaryDomain = true;
 
   services.iperf3.enable = true;
   services.iperf3.openFirewall = true;
