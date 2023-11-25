@@ -18,6 +18,7 @@ in
     ./dnscrypt.nix
     ./fs.nix
     ./gaming.nix
+    ./grocy.nix
     ./lib.nix
     ./luks.nix
     ./nginx.nix
