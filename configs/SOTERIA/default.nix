@@ -55,9 +55,11 @@
   custom.dnscrypt.listen = true;
 
   custom.grocy.enable = true;
+  custom.virtualHosts.grocy.onPrimaryDomain = true;
 
   custom.paperless.enable = true;
   custom.paperless.autoExport = true;
+  custom.virtualHosts.paperless.onPrimaryDomain = true;
 
   services.iperf3.enable = true;
   services.iperf3.openFirewall = true;
