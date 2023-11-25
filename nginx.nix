@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   this = config.custom.virtualHosts;
@@ -74,9 +74,11 @@ in
     validHosts = filterAttrs (name: host: host.TLS.enable || !host.onlyEnableTLS) this;
   in mkIf (validHosts != { }) {
     services.nginx.enable = true;
+    services.nginx.package = pkgs.nginxQuic;
     custom.acme.enable = true;
 
     networking.firewall.allowedTCPPorts = [ 80 443 ];
+    networking.firewall.allowedUDPPorts = [ 80 443 ];
 
     services.nginx.virtualHosts = mapAttrs' (name: host:
       nameValuePair host.domain {
@@ -85,6 +87,9 @@ in
         locations."/" = mkIf (!host.onlyEnableTLS) {
           proxyPass = "http://localhost:${toString host.localPort}";
         };
+
+        # Optimisations
+        quic = true;
       }
     ) validHosts;
 
