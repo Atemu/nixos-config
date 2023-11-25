@@ -90,6 +90,7 @@ in
 
         # Optimisations
         quic = true;
+        kTLS = true;
       }
     ) validHosts;
 
