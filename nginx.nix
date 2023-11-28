@@ -4,7 +4,7 @@ let
   this = config.custom.virtualHosts;
 
   inherit (lib) mkEnableOption mkOption mkIf filterAttrs mapAttrs' nameValuePair toLower;
-  inherit (lib.types) attrsOf submodule nullOr int str;
+  inherit (lib.types) attrsOf submodule nullOr port str;
   inherit (config.lib.custom) concatDomain;
   inherit (config.custom) hostName;
   inherit (config.custom.acme) primaryDomain;
@@ -54,7 +54,7 @@ in
 
           localPort = mkOption {
             default = 80;
-            type = int;
+            type = port;
             description = ''
               Local port that should be addressed when this subdomain is called.
               If the service listens on `localhost:1234`, set this to `1234`.
