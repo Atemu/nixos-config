@@ -1,0 +1,23 @@
+{
+  imports = [
+    ./acme.nix
+    ./bootloader.nix
+    ./btrbk.nix
+    ./btrfs.nix
+    ./custom.nix
+    ./desktop.nix
+    ./dnscrypt.nix
+    ./fs.nix
+    ./gaming.nix
+    ./grocy.nix
+    ./lib.nix
+    ./luks.nix
+    ./nginx.nix
+    ./overlays.nix
+    ./packages.nix
+    ./paperless.nix
+    ./vm.nix
+    ./zfs.nix
+    ./zram.nix
+  ];
+}
