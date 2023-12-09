@@ -17,6 +17,8 @@
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
+  boot.initrd.systemd.enable = true;
+
   services.sshd.enable = true;
 
   # Scanner
