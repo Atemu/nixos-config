@@ -1,23 +1,23 @@
 {
-  imports = [
-    ./acme.nix
-    ./bootloader.nix
-    ./btrbk.nix
-    ./btrfs.nix
-    ./custom.nix
-    ./desktop.nix
-    ./dnscrypt.nix
-    ./fs.nix
-    ./gaming.nix
-    ./grocy.nix
-    ./lib.nix
-    ./luks.nix
-    ./nginx.nix
-    ./overlays.nix
-    ./packages.nix
-    ./paperless.nix
-    ./vm.nix
-    ./zfs.nix
-    ./zram.nix
+  imports = map (n: ./. + "/${n}/module.nix") [
+    "acme"
+    "bootloader"
+    "btrbk"
+    "btrfs"
+    "custom"
+    "desktop"
+    "dnscrypt"
+    "fs"
+    "gaming"
+    "grocy"
+    "lib"
+    "luks"
+    "nginx"
+    "overlays"
+    "packages"
+    "paperless"
+    "vm"
+    "zfs"
+    "zram"
   ];
 }
