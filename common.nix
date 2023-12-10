@@ -9,7 +9,7 @@ in
 
 {
   imports = [
-    ./modules/default.nix
+    ./modules.nix
   ] ++ (
     if builtins.pathExists ./secrets.nix
     then [ ./secrets.nix ]
