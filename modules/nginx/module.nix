@@ -87,6 +87,7 @@ in
         useACMEHost = host.domain;
         locations."/" = mkIf (!host.onlyEnableTLS) {
           proxyPass = "http://localhost:${toString host.localPort}";
+          proxyWebsockets = true; # This is off by default. Don't know why.
         };
 
         # Optimisations
