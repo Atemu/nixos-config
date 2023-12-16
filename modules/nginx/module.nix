@@ -75,6 +75,7 @@ in
   in mkIf (validHosts != { }) {
     services.nginx.enable = true;
     services.nginx.package = pkgs.nginxQuic;
+    services.nginx.clientMaxBodySize = "0";
     custom.acme.enable = true;
 
     networking.firewall.allowedTCPPorts = [ 80 443 ];
