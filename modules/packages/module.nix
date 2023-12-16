@@ -14,7 +14,6 @@ let
     bash-completion
     bat
     bc
-    bind
     borgbackup
     btop
     btrfs-progs
@@ -43,6 +42,7 @@ let
     jc
     jq
     killall
+    ldns # drill
     libarchive
     lm_sensors
     lsof
