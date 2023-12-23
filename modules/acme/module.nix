@@ -54,7 +54,7 @@ in
       );
       inherit (this) email;
 
-      dnsProvider = "hostingde";
+      dnsProvider = "desec";
       credentialsFile = "/etc/secrets/acme";
       reloadServices = [ "nginx" ];
       group = "nginx";
