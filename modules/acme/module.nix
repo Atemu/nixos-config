@@ -55,6 +55,9 @@ in
       inherit (this) email;
 
       dnsProvider = "desec";
+      # Use deSEC's own DNS server rather than the network's to minimise propagation time
+      dnsResolver = "ns1.desec.io:53";
+
       credentialsFile = "/etc/secrets/acme";
       reloadServices = [ "nginx" ];
       group = "nginx";
