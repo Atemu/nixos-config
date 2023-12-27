@@ -46,6 +46,15 @@ in
             '';
           };
 
+          ACMEHost = mkOption {
+            default = if config.onPrimaryDomain then config.domain else config.baseDomain;
+            defaultText = "A specific {option}`domain` if the host is {option}`onPrimaryDomain` or a wildcard on the host's {option}`baseDomain`.";
+            type = str;
+            description = ''
+              The host to use for the ACME cert.
+            '';
+          };
+
           TLS = {
             enable = mkEnableOption "TLS certificates via ACME" // mkOption {
               default = true;
@@ -84,7 +93,7 @@ in
     services.nginx.virtualHosts = mapAttrs' (name: host:
       nameValuePair host.domain {
         forceSSL = true;
-        useACMEHost = host.domain;
+        useACMEHost = host.ACMEHost;
         locations."/" = mkIf (!host.onlyEnableTLS) {
           proxyPass = "http://localhost:${toString host.localPort}";
           proxyWebsockets = true; # This is off by default. Don't know why.
@@ -97,7 +106,9 @@ in
     ) validHosts;
 
     custom.acme.domains = mapAttrs' (name: host:
-      nameValuePair host.domain (mkIf host.TLS.enable { })
+      nameValuePair host.ACMEHost (mkIf host.TLS.enable {
+        wildcard = mkIf (!host.onPrimaryDomain) true;
+      })
     ) validHosts;
   };
 }
