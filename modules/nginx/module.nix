@@ -28,7 +28,7 @@ in
             '';
           };
 
-          onPrimaryDomain = mkEnableOption "place this service on {option}`custom.primaryDomain}";
+          onPrimaryDomain = mkEnableOption "place this service on {option}`custom.primaryDomain`";
 
           baseDomain = mkOption {
             default = (
