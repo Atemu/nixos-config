@@ -24,7 +24,7 @@ in
             defaultText = "Use the <name>.";
             type = nullOr str;
             description = ''
-              The subdomain to place this service under.
+              The subdomain to place this service under. Set to `null` or `""` to configure the baseDomain.
             '';
           };
 

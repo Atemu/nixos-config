@@ -1,7 +1,7 @@
 { lib, ... }:
 
 let
-  inherit (lib) mkOption warn optionalString concatStringsSep;
+  inherit (lib) mkOption warn optionalString flip pipe filter concatStringsSep;
 in
 
 {
@@ -16,6 +16,9 @@ in
       default = warn "Secret not applied, using default${optionalString (args ? default) " (${args.default})"}" args.default;
     });
 
-    concatDomain = concatStringsSep ".";
+    concatDomain = flip pipe [
+      (filter (n: n != null && n != ""))
+      (concatStringsSep ".")
+    ];
   };
 }
