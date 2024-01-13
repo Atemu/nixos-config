@@ -61,6 +61,9 @@
   custom.paperless.autoExport = true;
   custom.virtualHosts.paperless.onPrimaryDomain = true;
 
+  custom.piped.enable = true;
+  custom.piped.onPrimaryDomain = true;
+
   services.iperf3.enable = true;
   services.iperf3.openFirewall = true;
 
