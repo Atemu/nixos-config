@@ -7,6 +7,11 @@ let
 
   baseDomain = config.custom.virtualHosts.piped.domain;
   serviceNames = [ "piped" "pipedapi" "pipedproxy" ];
+
+  hostnames = pipe config.custom.virtualHosts [
+    (filterAttrs (n: v: lib.elem n serviceNames))
+    (mapAttrs (n: v: v.domain))
+  ];
 in
 
 {
@@ -27,6 +32,8 @@ in
       description = "Path to store the database state in. Alternatively, you can use the `piped-data` docker volume.";
     };
 
+    feedFetchHack = mkEnableOption "a hack to force fetching feeds via polling to work around https://github.com/TeamPiped/Piped/issues/707";
+
     src = mkOption {
       internal = true;
       default = pkgs.fetchFromGitHub {
@@ -42,10 +49,6 @@ in
         volumesYAML = pkgs.writers.writeYAML "volumes.yml" {
           volumes = genAttrs ([ "piped-proxy" ] ++ (optional (this.DBLocation == "piped-data") "piped-data")) (n: { name = n; });
         };
-        hostnames = pipe config.custom.virtualHosts [
-          (filterAttrs (n: v: lib.elem n serviceNames))
-          (mapAttrs (n: v: v.domain))
-        ];
       in pkgs.runCommand "piped-docker-configured" { } ''
         cd ${this.src}
 
@@ -76,5 +79,16 @@ in
       localPort = 8080;
       inherit (this) onPrimaryDomain;
     });
+
+    systemd.services.piped-feed-fetch = mkIf this.feedFetchHack {
+      script = ''
+        ${lib.getExe pkgs.docker} exec -i postgres psql -U piped -d piped -qtAX -c 'select id from public.pubsub;' | while IFS= read -r line; do
+          ${lib.getExe pkgs.curl} -k "https://${hostnames.pipedapi}/channel/$line" &> /dev/null
+          sleep 1
+        done
+      '';
+
+      startAt = "hourly";
+    };
   };
 }
