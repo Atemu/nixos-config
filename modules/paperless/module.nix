@@ -46,13 +46,6 @@ in
       localPort = cfg.port;
     };
 
-    systemd.timers.paperless-exporter = mkIf this.autoExport {
-      timerConfig = {
-        OnCalendar = "daily";
-        Unit = "paperless-exporter.service";
-      };
-      wantedBy = [ "timers.target" ];
-    };
     systemd.services.paperless-exporter = mkIf this.autoExport {
       serviceConfig.User = config.services.paperless.user;
 
@@ -78,6 +71,8 @@ in
         find $exportDir -type f -exec chmod 640 {} +
         find $exportDir -type d -exec chmod 750 {} +
       '';
+
+      startAt = "daily";
     };
   };
 }
