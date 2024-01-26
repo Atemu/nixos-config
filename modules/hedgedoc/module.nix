@@ -13,10 +13,12 @@ in
   config = mkIf this.enable {
     services.hedgedoc.enable = true;
 
-    services.hedgedoc.settings.domain = config.custom.virtualHosts.hedgedoc.domain;
+    services.hedgedoc.settings = {
+      inherit (config.custom.virtualHosts.hedgedoc) domain;
 
-    # Required to use HTTPS through reverse proxy
-    services.hedgedoc.settings.protocolUseSSL = true;
+      # Required to use HTTPS through reverse proxy
+      protocolUseSSL = true;
+    };
 
     custom.virtualHosts.hedgedoc = {
       localPort = config.services.hedgedoc.settings.port;
