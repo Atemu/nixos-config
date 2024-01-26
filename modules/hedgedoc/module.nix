@@ -21,6 +21,9 @@ in
 
       # Allow creation of any custom hedgedoc URL
       allowFreeURL = true;
+
+      # Don't need it.
+      allowGravatar = false;
     };
 
     custom.virtualHosts.hedgedoc = {
