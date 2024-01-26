@@ -18,6 +18,9 @@ in
 
       # Required to use HTTPS through reverse proxy
       protocolUseSSL = true;
+
+      # Allow creation of any custom hedgedoc URL
+      allowFreeURL = true;
     };
 
     custom.virtualHosts.hedgedoc = {
