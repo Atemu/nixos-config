@@ -54,6 +54,9 @@
   custom.dnscrypt.enable = true;
   custom.dnscrypt.listen = true;
 
+  custom.hedgedoc.enable = true;
+  custom.virtualHosts.hedgedoc.onPrimaryDomain = true;
+
   custom.grocy.enable = true;
   custom.virtualHosts.grocy.onPrimaryDomain = true;
 

@@ -23,6 +23,8 @@
   custom.grocy.enable = true;
   custom.virtualHosts.grocy.onPrimaryDomain = false;
 
+  custom.hedgedoc.enable = true;
+
   custom.vm.enable = true;
 
   system.stateVersion = "22.11";
