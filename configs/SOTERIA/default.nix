@@ -68,6 +68,9 @@
   custom.piped.onPrimaryDomain = true;
   custom.piped.feedFetchHack = true;
 
+  custom.actualbudget.enable = true;
+  custom.virtualHosts.actualbudget.onPrimaryDomain = true;
+
   services.iperf3.enable = true;
   services.iperf3.openFirewall = true;
 
