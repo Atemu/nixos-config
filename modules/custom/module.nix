@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 let
-  inherit (lib) mkEnableOption mkOption types mkIf substring;
+  inherit (lib) mkEnableOption mkOption types mkIf substring mkDefault;
   this = config.custom;
 in
 
@@ -37,5 +37,9 @@ in
     custom.packages.enable = true;
     custom.overlays.enable = true;
     custom.bootloader.enable = true;
+
+    virtualisation.vmVariant = {
+      custom.vm.enable = true;
+    };
   };
 }
