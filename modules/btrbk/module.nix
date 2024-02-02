@@ -3,7 +3,7 @@
 let
   inherit (lib) mkEnableOption mkOption mkIf;
 
-  cfg = config.custom.btrbk;
+  this = config.custom.btrbk;
 in
 
 {
@@ -16,7 +16,7 @@ in
     };
   };
 
-  config.services.btrbk.instances."btrbk" = mkIf cfg.enable {
+  config.services.btrbk.instances."btrbk" = mkIf this.enable {
     onCalendar = "*:0/15"; # Every 15min
     settings = {
       timestamp_format = "long-iso"; # Most sensible of the bunch
@@ -29,7 +29,7 @@ in
       snapshot_create = "onchange"; # Only create snapshots if the subvol actually changed
       snapshot_dir = "Snapshots";
 
-      inherit (cfg) volume;
+      inherit (this) volume;
     };
   };
 }

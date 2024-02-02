@@ -3,7 +3,7 @@
 with lib;
 
 let
-  self = config.custom.zfs;
+  this = config.custom.zfs;
 in
 
 {
@@ -11,7 +11,7 @@ in
     enable = mkEnableOption "my preferred ZFS settings";
   };
 
-  config = mkIf self.enable {
+  config = mkIf this.enable {
     boot.supportedFilesystems = [ "zfs" ];
     boot.zfs.forceImportAll = false;
     boot.zfs.forceImportRoot = false;

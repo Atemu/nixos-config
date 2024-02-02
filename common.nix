@@ -16,7 +16,8 @@ in
     else builtins.trace "Warning: Secrets not present. Options that use eval secrets will use test values." [ ]
   );
 
-  boot.loader.timeout = 1;
+  # Enable my custom modules.
+  custom.enable = true;
 
   boot.initrd.availableKernelModules = [
     "hid_roccat_ryos" # One of my USB keyboards
@@ -109,8 +110,6 @@ in
     daemonIOSchedClass = "idle";
     # maybe set to batch on non-desktop
   };
-
-  custom.overlays.enable = true;
 
   # Don't need it and it takes quite a while to build.
   documentation.nixos.enable = false;

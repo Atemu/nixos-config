@@ -1,11 +1,16 @@
-{ lib, ... }:
+{ lib, config, ... }:
 
 let
-  inherit (lib) mkOption warn optionalString flip pipe filter concatStringsSep;
+  inherit (lib) mkEnableOption mkOption mkIf warn optionalString flip pipe filter concatStringsSep;
+  this = config.custom.lib;
 in
 
 {
-  config.lib.custom = {
+  options.custom.lib = {
+    enable = mkEnableOption "my custom library functions";
+  };
+
+  config.lib.custom = mkIf this.enable {
     # Makes a by-uuid device out of UUID
     mkUuid = uuid: "/dev/disk/by-uuid/${uuid}";
 

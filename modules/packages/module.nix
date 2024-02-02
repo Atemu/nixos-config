@@ -1,14 +1,14 @@
 { pkgs, config, lib, ... }:
 
-with pkgs;
-
 let
   inherit (lib) optionals mkIf mkEnableOption mkOption getName versionAtLeast;
   inherit (lib.types) bool listOf str;
   inherit (lib.trivial) release;
 
+  this = config.custom.packages;
+
   # Packages to always install.
-  common = [
+  common = with pkgs; [
     acpi
     aria2
     bash-completion
@@ -98,13 +98,13 @@ let
   ];
 
   # Packages to install if X is not enabled.
-  noX = [
+  noX = with pkgs; [
     emacs-nox # FIXME this needs to be handled in custom.emacs
     rxvt-unicode-unwrapped.terminfo
   ];
 
   # Packages to install if X is enabled.
-  x = [
+  x = with pkgs; [
     anki
     appimage-run
     config.custom.emacs
@@ -131,9 +131,7 @@ let
   ];
 in {
   options.custom.packages = {
-    enable = mkEnableOption "my set of system packages" // mkOption {
-      default = true;
-    };
+    enable = mkEnableOption "my set of system packages";
 
     allowedUnfree = lib.mkOption {
       description = "package names of unfree packages that are allowed";
@@ -142,7 +140,7 @@ in {
     };
   };
 
-  config = {
+  config = mkIf this.enable {
     nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (getName pkg) config.custom.packages.allowedUnfree;
 
     # :(
@@ -151,7 +149,7 @@ in {
     ];
 
     # List of packages installed in system profile.
-    environment.systemPackages = mkIf config.custom.packages.enable (
+    environment.systemPackages = (
       # If the host config enables X, X packages are also imported
       common ++ (if config.custom.desktop.enable then x else noX)
     );
