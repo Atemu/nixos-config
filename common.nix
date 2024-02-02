@@ -16,6 +16,9 @@ in
     else builtins.trace "Warning: Secrets not present. Options that use eval secrets will use test values." [ ]
   );
 
+  # Enable my custom modules.
+  custom.enable = true;
+
   boot.loader.timeout = 1;
 
   boot.initrd.availableKernelModules = [
@@ -88,10 +91,6 @@ in
     in attrValues (removeAttrs hostKeys [ config.custom.hostName ]);
   };
 
-  custom.packages.enable = true;
-
-  custom.lib.enable = true;
-
   nix.nixPath = [
     "nixpkgs=${nixpkgs}"
     "nixos-config=${nixos-config}"
@@ -113,10 +112,6 @@ in
     daemonIOSchedClass = "idle";
     # maybe set to batch on non-desktop
   };
-
-  custom.overlays.enable = true;
-
-  custom.bootloader.enable = true;
 
   # Don't need it and it takes quite a while to build.
   documentation.nixos.enable = false;
