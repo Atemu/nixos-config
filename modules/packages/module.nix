@@ -1,7 +1,5 @@
 { pkgs, config, lib, ... }:
 
-with pkgs;
-
 let
   inherit (lib) optionals mkIf mkEnableOption mkOption getName versionAtLeast;
   inherit (lib.types) bool listOf str;
@@ -10,7 +8,7 @@ let
   this = config.custom.packages;
 
   # Packages to always install.
-  common = [
+  common = with pkgs; [
     acpi
     aria2
     bash-completion
@@ -100,13 +98,13 @@ let
   ];
 
   # Packages to install if X is not enabled.
-  noX = [
+  noX = with pkgs; [
     emacs-nox # FIXME this needs to be handled in custom.emacs
     rxvt-unicode-unwrapped.terminfo
   ];
 
   # Packages to install if X is enabled.
-  x = [
+  x = with pkgs; [
     anki
     appimage-run
     config.custom.emacs
