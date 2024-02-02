@@ -7,6 +7,8 @@ let
   inherit (lib.types) bool listOf str;
   inherit (lib.trivial) release;
 
+  this = config.custom.packages;
+
   # Packages to always install.
   common = [
     acpi
@@ -140,7 +142,7 @@ in {
     };
   };
 
-  config = {
+  config = mkIf this.enable {
     nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (getName pkg) config.custom.packages.allowedUnfree;
 
     # :(
@@ -149,7 +151,7 @@ in {
     ];
 
     # List of packages installed in system profile.
-    environment.systemPackages = mkIf config.custom.packages.enable (
+    environment.systemPackages = (
       # If the host config enables X, X packages are also imported
       common ++ (if config.custom.desktop.enable then x else noX)
     );
