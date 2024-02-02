@@ -44,7 +44,7 @@ in
   programs.fuse.userAllowOther = true;
 
   services.tailscale.enable = true;
-  services.tailscale.useRoutingFeature = lib.mkDefault "client"; # May get overridden for a machine
+  services.tailscale.useRoutingFeatures = lib.mkDefault "client"; # May get overridden for a machine
   systemd.services.tailscaled.serviceConfig.LogLevelMax = 5; # Stop the info spam
   # FIXME https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1655787774
   networking.networkmanager.unmanaged = [ "tailscale0" ];

@@ -49,7 +49,7 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  services.tailscale.useRoutingFeature = "server"; # This is an exit node
+  services.tailscale.useRoutingFeatures = "server"; # This is an exit node
 
   custom.dnscrypt.enable = true;
   custom.dnscrypt.listen = true;
