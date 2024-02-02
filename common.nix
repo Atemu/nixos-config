@@ -88,6 +88,8 @@ in
     in attrValues (removeAttrs hostKeys [ config.custom.hostName ]);
   };
 
+  custom.packages.enable = true;
+
   nix.nixPath = [
     "nixpkgs=${nixpkgs}"
     "nixos-config=${nixos-config}"

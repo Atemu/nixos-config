@@ -131,9 +131,7 @@ let
   ];
 in {
   options.custom.packages = {
-    enable = mkEnableOption "my set of system packages" // mkOption {
-      default = true;
-    };
+    enable = mkEnableOption "my set of system packages";
 
     allowedUnfree = lib.mkOption {
       description = "package names of unfree packages that are allowed";
