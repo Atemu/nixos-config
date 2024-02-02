@@ -19,8 +19,6 @@ in
   # Enable my custom modules.
   custom.enable = true;
 
-  boot.loader.timeout = 1;
-
   boot.initrd.availableKernelModules = [
     "hid_roccat_ryos" # One of my USB keyboards
     "uas" # "USB Attached SATA", needed for booting off external USB drives
