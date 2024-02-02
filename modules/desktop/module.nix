@@ -3,7 +3,7 @@
 with lib;
 
 let
-  tablet = config.custom.desktop.tablet;
+  this = config.custom.desktop;
 in
 
 {
@@ -12,7 +12,7 @@ in
     tablet = mkEnableOption "tablet variant";
   };
 
-  config = mkIf config.custom.desktop.enable {
+  config = mkIf this.enable {
     boot.kernel.sysctl = { "kernel.sysrq" = 1; };
 
     sound.enable = true;
@@ -57,7 +57,7 @@ in
     services.xserver.enable = true;
     services.xserver.displayManager.gdm.enable = true;
 
-    services.xserver.displayManager.defaultSession = if tablet then "gnome" else "none+i3";
+    services.xserver.displayManager.defaultSession = if this.tablet then "gnome" else "none+i3";
 
     services.xserver.windowManager.i3.enable = true;
     services.xserver.windowManager.i3.extraPackages = with pkgs; [
@@ -76,15 +76,15 @@ in
       [ -e ~/.wprofile ] && source ~/.wprofile
     '';
 
-    services.xserver.desktopManager.gnome.enable = tablet;
+    services.xserver.desktopManager.gnome.enable = this.tablet;
     environment.gnome.excludePackages = with pkgs; [
       orca
     ];
 
-    environment.systemPackages = with pkgs; optionals tablet [
+    environment.systemPackages = with pkgs; optionals this.tablet [
       write_stylus
     ];
-    custom.packages.allowedUnfree = optionals tablet [
+    custom.packages.allowedUnfree = optionals this.tablet [
       "write_stylus"
     ];
 
@@ -120,7 +120,7 @@ in
       enable = true;
     };
 
-    services.xserver.wacom.enable = tablet;
+    services.xserver.wacom.enable = this.tablet;
 
     fonts."${if versionAtLeast lib.trivial.release "23.11" then "packages" else "fonts"}" = with pkgs; [
       # My preferred monospace font
