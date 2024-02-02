@@ -4,7 +4,7 @@
 with config.lib.custom;
 
 {
-  custom.bootloader = "systemd-boot";
+  custom.bootloader.choice = "systemd-boot";
 
   custom.luks.autoDevices = 3;
 

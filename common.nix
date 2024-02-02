@@ -114,6 +114,8 @@ in
 
   custom.overlays.enable = true;
 
+  custom.bootloader.enable = true;
+
   # Don't need it and it takes quite a while to build.
   documentation.nixos.enable = false;
 
