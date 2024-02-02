@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.custom.zramSwap;
+  this = config.custom.zramSwap;
 in
 
 {
@@ -19,9 +19,9 @@ in
     };
   };
 
-  config.zramSwap = mkIf cfg.enable {
+  config.zramSwap = mkIf this.enable {
     enable = true;
     algorithm = "lz4";
-    memoryPercent = cfg.percent;
+    memoryPercent = this.percent;
   };
 }
