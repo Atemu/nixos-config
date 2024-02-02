@@ -90,6 +90,8 @@ in
 
   custom.packages.enable = true;
 
+  custom.lib.enable = true;
+
   nix.nixPath = [
     "nixpkgs=${nixpkgs}"
     "nixos-config=${nixos-config}"
