@@ -10,11 +10,17 @@ in
   options.custom.immich = {
     enable = mkEnableOption "my Immich setup";
 
+    stateDirectory = mkOption {
+      default = "/var/lib/immich/";
+    };
+
     onPrimaryDomain = mkEnableOption "place piped services on primary domain";
   };
 
   config = mkIf this.enable {
     custom.docker-compose.immich = {
+      stateDirectory.enable = true;
+
       directory = let
         yml = pkgs.fetchurl {
           url = "https://github.com/immich-app/immich/releases/download/v1.93.3/docker-compose.yml";
@@ -25,8 +31,7 @@ in
           # You can find documentation for all the supported env variables at https://immich.app/docs/install/environment-variables
 
           # The location where your uploaded files are stored
-          # TODO do a proper one
-          UPLOAD_LOCATION = "/var/tmp/immich/";
+          UPLOAD_LOCATION = this.stateDirectory;
 
           # The Immich version to use. You can pin this to a specific version like "v1.71.0"
           IMMICH_VERSION = "release";
