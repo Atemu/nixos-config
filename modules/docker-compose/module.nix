@@ -3,7 +3,7 @@
 let
   this = config.custom.docker-compose;
 
-  inherit (lib) mkOption mkIf mapAttrs' nameValuePair mapAttrsToList;
+  inherit (lib) mkOption mkEnableOption mkIf mapAttrs' nameValuePair mapAttrsToList;
   inherit (lib.types) attrsOf submodule nullOr attrs path;
 in
 
@@ -49,6 +49,16 @@ in
           type = nullOr attrs;
           description = "An attrset representing a docker-compose.yml. The version `version` attribute is set to 3 by default.";
         };
+
+        stateDirectory = {
+          enable = mkEnableOption "a systemd service state directory for this service";
+
+          name = mkOption {
+            default = name;
+            defaultText = "The service's `name`";
+            description = "The name of the state directory";
+          };
+        };
       };
     }));
   };
@@ -87,6 +97,8 @@ in
           ExecStop = run "down";
 
           Restart = "on-failure";
+
+          StateDirectory = mkIf value.stateDirectory.enable value.stateDirectory.name;
         };
         path = [ pkgs.docker ];
 
