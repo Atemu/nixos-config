@@ -3,7 +3,7 @@
 let
   this = config.custom.docker-compose;
 
-  inherit (lib) mkOption mkIf mapAttrs' nameValuePair mapAttrsToList;
+  inherit (lib) mkOption mkEnableOption mkIf mapAttrs' nameValuePair mapAttrsToList;
   inherit (lib.types) attrsOf submodule nullOr attrs path;
 in
 
@@ -48,6 +48,16 @@ in
           apply = yml: if yml == null then null else { version = "3"; } // yml;
           type = nullOr attrs;
           description = "An attrset representing a docker-compose.yml. The version `version` attribute is set to 3 by default.";
+        };
+
+        stateDirectory = {
+          enable = mkEnableOption "a systemd service state directory for this service";
+
+          name = mkOption {
+            default = name;
+            defaultText = "The service's `name`";
+            description = "The name of the state directory";
+          };
         };
       };
     }));
@@ -94,6 +104,8 @@ in
 
           # It may take >15 minutes to pull large images
           TimeoutStartSec = 1000;
+
+          StateDirectory = mkIf value.stateDirectory.enable value.stateDirectory.name;
         };
         path = [ pkgs.docker ];
 
