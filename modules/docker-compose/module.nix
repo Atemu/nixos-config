@@ -40,7 +40,22 @@ in
     systemd.services = mapAttrs' (name: value:
       nameValuePair "docker-compose-${name}" {
         serviceConfig = let
-          run = command: "${lib.getExe pkgs.docker} compose -f ${value.directory}/docker-compose.yml ${command}";
+          # A jq query to transform the docker-compose.yml.
+          #
+          # Never restart these services; they should be ephemeral.
+          #
+          # Log driver needs to be json-file in order for the individual
+          # containers to not log to syslog but still have logs in the output
+          # of docker compose.
+          query = ''.services = (.services | map_values(.restart = "no") | map_values(.logging = { "driver": "json-file" }))'';
+          sanitised = pkgs.runCommand "docker-${name}-sanitised" { } ''
+            cp -rs ${value.directory} $out
+            chmod +w -R $out/
+            rm $out/docker-compose.yml
+
+            ${lib.getExe pkgs.yq} -Y '${query}' ${value.directory}/docker-compose.yml > $out/docker-compose.yml
+          '';
+          run = command: "${lib.getExe pkgs.docker} compose -f ${sanitised}/docker-compose.yml ${command}";
         in {
           # Stop services before in case they're running
           ExecStartPre = run "down";
