@@ -63,6 +63,11 @@ in
         substituteInPlace $out/config/docker-compose.*.yml \
           --replace "./data/db" ${this.DBLocation} \
 
+        # The nginx Docker image creates symlinks to stdout in the default locations
+        # TODO write to some persistent volume with log rotation instead
+        substituteInPlace $out/config/nginx.conf \
+          --replace "/var/log/nginx/access.log" "/var/log/nginx/access-actual.log" \
+
         # volumes: section is borderline broken and I need to add my own
         sed '/^volumes:/Q' $out/config/docker-compose.${this.reverseProxy}.yml > $out/docker-compose.yml
         cat ${volumesYAML} >> $out/docker-compose.yml
