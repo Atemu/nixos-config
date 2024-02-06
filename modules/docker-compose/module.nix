@@ -59,12 +59,11 @@ in
         in {
           # Stop services before in case they're running
           ExecStartPre = run "down";
-          # Run with -d to prevent double logs
-          ExecStart = run "up -d";
-          Type = "oneshot";
-          RemainAfterExit = "yes"; # Don't immediately run ExitStop
+          ExecStart = run "up --abort-on-container-exit";
 
           ExecStop = run "down";
+
+          Restart = "on-failure";
         };
         path = [ pkgs.docker ];
 
