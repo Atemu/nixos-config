@@ -71,7 +71,7 @@ in
         };
         path = [ pkgs.docker ];
 
-        requires = [ "docker.socket" ];
+        requires = [ "docker.service" ];
         wantedBy = [ "multi-user.target" ];
       }
     ) this;
