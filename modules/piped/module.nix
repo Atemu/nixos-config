@@ -72,7 +72,7 @@ in
 
   config = mkIf this.enable {
     custom.docker-compose.piped = {
-      file = "${this.piped-docker}/docker-compose.yml";
+      directory = this.piped-docker;
     };
 
     custom.virtualHosts = genAttrs serviceNames (n: {
