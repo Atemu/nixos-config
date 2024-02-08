@@ -18,9 +18,7 @@ in
   config = mkIf this.enable {
     # Basically the simply upstream docker-compose.yml
     # https://github.com/actualbudget/actual-server/blob/master/docker-compose.yml
-    custom.docker-compose.actualbudget.file = pkgs.writers.writeYAML "docker-compose.yml" {
-      version = "3";
-
+    custom.docker-compose.actualbudget.YAML = {
       services.actual_server = {
         image = "docker.io/actualbudget/actual-server:latest";
         ports = [ "${toString this.port}:5006" ];
