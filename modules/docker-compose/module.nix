@@ -22,8 +22,15 @@ in
             else
               throw "You must provide a docker-compose.yml (or directory containing it) for the ${name} docker-compose service."
           );
-          defaultText = "{option}`file if it is set.";
+          defaultText = "{option}`file` if it is set.";
           type = path;
+          description = ''
+            A directory containing a docker-compose.yml.
+
+            If the {option}`file` or {option}`YAML` options are used, this is set automatically.
+
+            If this is set, {option}`file` or {option}`YAML` will not have any effect.
+          '';
         };
         file = mkOption {
           default = (
@@ -34,13 +41,13 @@ in
           );
           defaultText = "A docker-compose.yml generated from {option}`YAML`.";
           type = nullOr path;
-          description = "The path to a docker-compose.yml.";
+          description = "The path to a docker-compose.yml. If this is set {option}`YAML` won't have an effect.";
         };
         YAML = mkOption {
           default = null;
           apply = yml: if yml == null then null else { version = "3"; } // yml;
           type = nullOr attrs;
-          description = "An attrset representing a docker-compose.yml. `version` is set to 3 by default.";
+          description = "An attrset representing a docker-compose.yml. The version `version` attribute is set to 3 by default.";
         };
       };
     }));
