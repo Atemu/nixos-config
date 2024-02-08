@@ -4,7 +4,7 @@ let
   this = config.custom.docker-compose;
 
   inherit (lib) mkOption mkIf mapAttrs' nameValuePair mapAttrsToList;
-  inherit (lib.types) attrsOf submodule nullOr path;
+  inherit (lib.types) attrsOf submodule nullOr attrs path;
 in
 
 {
@@ -26,9 +26,21 @@ in
           type = path;
         };
         file = mkOption {
-          default = null;
+          default = (
+            if config.YAML == null then
+              null
+            else
+              pkgs.writers.writeYAML "docker-compose.yml" config.YAML
+          );
+          defaultText = "A docker-compose.yml generated from {option}`YAML`.";
           type = nullOr path;
           description = "The path to a docker-compose.yml.";
+        };
+        YAML = mkOption {
+          default = null;
+          apply = yml: if yml == null then null else { version = "3"; } // yml;
+          type = nullOr attrs;
+          description = "An attrset representing a docker-compose.yml. `version` is set to 3 by default.";
         };
       };
     }));
