@@ -2,16 +2,18 @@
 
 let
   this = config.custom.immich;
-  inherit (lib) mkEnableOption mkOption types mkIf pipe filterAttrs mapAttrs genAttrs optional;
+  inherit (lib) mkEnableOption mkOption types mkIf pipe filterAttrs mapAttrs genAttrs optional mkAliasOptionModule;
   inherit (config.lib.custom) concatDomain;
 in
 
 {
   options.custom.immich = {
     enable = mkEnableOption "my Immich setup";
-
-    onPrimaryDomain = mkEnableOption "place piped services on primary domain";
   };
+
+  imports = [
+    (mkAliasOptionModule [ "custom" "immich" "virtualHost" ] [ "custom" "virtualHosts" "immich" ])
+  ];
 
   config = mkIf this.enable {
     custom.docker-compose.immich = {
@@ -54,7 +56,6 @@ in
 
     custom.virtualHosts.immich = {
       localPort = 2283;
-      inherit (this) onPrimaryDomain;
     };
   };
 }
