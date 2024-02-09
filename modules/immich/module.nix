@@ -10,10 +10,6 @@ in
   options.custom.immich = {
     enable = mkEnableOption "my Immich setup";
 
-    stateDirectory = mkOption {
-      default = "/var/lib/immich/";
-    };
-
     onPrimaryDomain = mkEnableOption "place piped services on primary domain";
   };
 
@@ -31,7 +27,7 @@ in
           # You can find documentation for all the supported env variables at https://immich.app/docs/install/environment-variables
 
           # The location where your uploaded files are stored
-          UPLOAD_LOCATION = this.stateDirectory;
+          UPLOAD_LOCATION = "/var/lib/immich/"; # The systemd StateDirectory
 
           # The Immich version to use. You can pin this to a specific version like "v1.71.0"
           IMMICH_VERSION = "release";
