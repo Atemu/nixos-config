@@ -50,6 +50,13 @@ in
           description = "An attrset representing a docker-compose.yml. The version `version` attribute is set to 3 by default.";
         };
 
+        override = mkOption {
+          default = null;
+          apply = yml: if yml == null then null else { version = "3"; } // yml;
+          type = nullOr attrs;
+          description = "An attrset representing a docker-compose.override.yml. The version `version` attribute is set to 3 by default.";
+        };
+
         stateDirectory = {
           enable = mkEnableOption "a systemd service state directory for this service";
 
@@ -73,13 +80,15 @@ in
     # of docker compose.
     query = ''.services = (.services | map_values(.restart = "no") | map_values(.logging = { "driver": "json-file" }))'';
 
-    sanitise = value: pkgs.runCommand "docker-compose-sanitised" { } ''
+    sanitise = value: pkgs.runCommand "docker-compose-sanitised" { } (''
       cp -rs ${value.directory} $out
       chmod +w -R $out/
       rm $out/docker-compose.yml
-
+    '' + lib.optionalString (value.override != null) ''
+      ln -sfn ${pkgs.writers.writeYAML "docker-compose.override.yml" value.override} $out/docker-compose.override.yml
+    '' + ''
       ${lib.getExe pkgs.yq} -Y '${query}' ${value.directory}/docker-compose.yml > $out/docker-compose.yml
-    '';
+    '');
 
     runConfig = value: command: "${lib.getExe pkgs.docker} compose --project-directory ${sanitise value} ${command}";
   in {
