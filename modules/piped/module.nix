@@ -78,6 +78,8 @@ in
   config = mkIf this.enable {
     custom.docker-compose.piped = {
       directory = this.piped-docker;
+      # Watchtower kills my services. STOP IT.
+      override.services.watchtower.deploy.replicas = 0;
     };
 
     custom.virtualHosts = genAttrs serviceNames (n: {
