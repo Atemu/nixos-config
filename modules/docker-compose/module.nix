@@ -73,22 +73,22 @@ in
     # of docker compose.
     query = ''.services = (.services | map_values(.restart = "no") | map_values(.logging = { "driver": "json-file" }))'';
 
-    sanitise = directory: pkgs.runCommand "docker-compose-sanitised" { } ''
-      cp -rs ${directory} $out
+    sanitise = value: pkgs.runCommand "docker-compose-sanitised" { } ''
+      cp -rs ${value.directory} $out
       chmod +w -R $out/
       rm $out/docker-compose.yml
 
-      ${lib.getExe pkgs.yq} -Y '${query}' ${directory}/docker-compose.yml > $out/docker-compose.yml
+      ${lib.getExe pkgs.yq} -Y '${query}' ${value.directory}/docker-compose.yml > $out/docker-compose.yml
     '';
 
-    runIn = directory: command: "${lib.getExe pkgs.docker} compose --project-directory ${sanitise directory} ${command}";
+    runConfig = value: command: "${lib.getExe pkgs.docker} compose --project-directory ${sanitise value} ${command}";
   in {
     virtualisation.docker.enable = true;
 
     systemd.services = mapAttrs' (name: value:
       nameValuePair "docker-compose-${name}" {
         serviceConfig = let
-          run = runIn value.directory;
+          run = runConfig value;
         in {
           # Stop services before in case they're running
           ExecStartPre = [
@@ -115,7 +115,7 @@ in
     ) this;
 
     environment.systemPackages = mapAttrsToList
-      (name: value: pkgs.writeShellScriptBin "docker-compose-${name}" (runIn value.directory ''"$@"''))
+      (name: value: pkgs.writeShellScriptBin "docker-compose-${name}" (runConfig value ''"$@"''))
       this;
   });
 }
