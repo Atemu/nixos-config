@@ -21,8 +21,8 @@ in
 
       directory = let
         yml = pkgs.fetchurl {
-          url = "https://github.com/immich-app/immich/releases/download/v1.93.3/docker-compose.yml";
-          hash = "sha256-EpEDmLI7VTxzg8opyyrvyYqKnF8b6D7NxtEQupdPu7g=";
+          url = "https://github.com/immich-app/immich/releases/download/v1.94.1/docker-compose.yml";
+          hash = "sha256-9TOOYCNWcQqBZGB1JBpUBSQuh21sjavNcoIJ7cfh9Js=";
         };
 
         env = pkgs.writeText "env" (lib.generators.toKeyValue { } {
