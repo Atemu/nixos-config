@@ -52,6 +52,14 @@ in
           ln -s ${yml} $out/docker-compose.yml
           ln -s ${env} $out/.env
         '';
+
+      override = {
+        services.database = {
+          volumes = [
+            "\${UPLOAD_LOCATION}/pgdata/:/var/lib/postgresql/data"
+          ];
+        };
+      };
     };
 
     custom.virtualHosts.immich = {
