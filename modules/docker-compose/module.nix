@@ -81,7 +81,7 @@ in
       ${lib.getExe pkgs.yq} -Y '${query}' ${directory}/docker-compose.yml > $out/docker-compose.yml
     '';
 
-    runIn = directory: command: "${lib.getExe pkgs.docker} compose -f ${sanitise directory}/docker-compose.yml ${command}";
+    runIn = directory: command: "${lib.getExe pkgs.docker} compose --project-directory ${sanitise directory} ${command}";
   in {
     virtualisation.docker.enable = true;
 
