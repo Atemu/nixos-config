@@ -81,7 +81,11 @@ in
           run = runIn value.directory;
         in {
           # Stop services before in case they're running
-          ExecStartPre = run "down";
+          ExecStartPre = [
+            (run "down")
+            # Causes logspam on pull but shows more accurate activating info
+            (run "create")
+          ];
           ExecStart = run "up --quiet-pull --abort-on-container-exit";
 
           ExecStop = run "down";
