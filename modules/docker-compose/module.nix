@@ -91,6 +91,9 @@ in
           ExecStop = run "down";
 
           Restart = "on-failure";
+
+          # It may take >15 minutes to pull large images
+          TimeoutStartSec = 1000;
         };
         path = [ pkgs.docker ];
 
