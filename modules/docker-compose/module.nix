@@ -82,7 +82,7 @@ in
         in {
           # Stop services before in case they're running
           ExecStartPre = run "down";
-          ExecStart = run "up --abort-on-container-exit";
+          ExecStart = run "up --quiet-pull --abort-on-container-exit";
 
           ExecStop = run "down";
 
