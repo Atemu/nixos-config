@@ -1,10 +1,11 @@
 { config, lib, ... }:
 
 with lib;
-with config.lib.custom;
 
 let
-  cfg = config.custom.fs;
+  this = config.custom.fs;
+
+  inherit (config.lib.custom) mkLabel;
 in
 
 {
@@ -43,7 +44,7 @@ in
 
       autoSnapshots = {
         enable = mkOption {
-          default = cfg.btrfs.newLayout;
+          default = this.btrfs.newLayout;
           defaultText = "`config.custom.btrfs.newLayout`";
           description = "Whether to enable automatic snapshotting";
         };
@@ -58,66 +59,68 @@ in
 
   };
 
-  config.fileSystems = mkIf cfg.enable {
-    "/tmp" = {
-      device = "tmpfs";
-      fsType = "tmpfs";
-      options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
-    };
-
-    "/boot" = {
-      device = cfg.boot;
-      fsType = "vfat";
-      options = [ "umask=077" ];
-    };
-  };
-
-  config.custom.btrfs.default.device = cfg.btrfs.device;
-  config.custom.btrfs.default.options = [ "space_cache=v2" "discard=async" ];
-  config.custom.btrfs.fileSystems = let
-    mkMount = subvol: {
-      inherit (cfg.btrfs) device;
-      inherit subvol;
-    };
-
-    oldLayout = {
-      "/" = mkMount "root";
-      "/nix" = mkMount "nix";
-      "/home" = mkMount "home";
-    };
-    newLayout = let
-      defaultVolumes = {
-        "/" = mkMount "Root";
-        "/nix" = mkMount "Nix Store";
-        "/Users" = mkMount "Users";
-        "/System/Volumes" = mkMount "";
+  config = mkIf this.enable {
+    fileSystems = {
+      "/tmp" = {
+        device = "tmpfs";
+        fsType = "tmpfs";
+        options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
       };
 
-      # TODO is there a cleaner way here? genAttrs doesn't quite work.
-      stateVolumes = map (name: { "/Volumes/${name}" = mkMount name; }) cfg.btrfs.stateVolumes;
-    in
-      mkMerge ([ defaultVolumes ] ++ stateVolumes);
-  in lib.mkIf cfg.btrfs.enable (if cfg.btrfs.newLayout then newLayout else oldLayout);
+      "/boot" = {
+        device = this.boot;
+        fsType = "vfat";
+        options = [ "umask=077" ];
+      };
+    };
 
-  # We want these to be additive, so we need to set these here rather than as
-  # the options' defaults which would get overridden when additional
-  # stateVolumes are set elsewhere
-  config.custom.fs.btrfs.stateVolumes = [ "Users" ];
-  config.custom.fs.btrfs.autoSnapshots.subvolumes = cfg.btrfs.stateVolumes;
+    custom.btrfs.default.device = this.btrfs.device;
+    custom.btrfs.default.options = [ "space_cache=v2" "discard=async" ];
+    custom.btrfs.fileSystems = let
+      mkMount = subvol: {
+        inherit (this.btrfs) device;
+        inherit subvol;
+      };
 
-  # Systemd tries to generate /home by default. It doesn't seem to conflict but better disable that
-  config.environment.etc."tmpfiles.d/home.conf" = lib.mkIf cfg.btrfs.newLayout { source = "/dev/null"; };
-  config.systemd.tmpfiles.rules = mkIf cfg.btrfs.newLayout [
-    # Create symlinks for backwards compatibility
-    "L+ /home - - - - /Users"
-    # macOS does this too
-    "L+ /Volumes/Root - - - - /"
-  ];
+      oldLayout = {
+        "/" = mkMount "root";
+        "/nix" = mkMount "nix";
+        "/home" = mkMount "home";
+      };
+      newLayout = let
+        defaultVolumes = {
+          "/" = mkMount "Root";
+          "/nix" = mkMount "Nix Store";
+          "/Users" = mkMount "Users";
+          "/System/Volumes" = mkMount "";
+        };
 
-  config.custom.btrbk = mkIf cfg.btrfs.autoSnapshots.enable {
-    enable = true;
+        # TODO is there a cleaner way here? genAttrs doesn't quite work.
+        stateVolumes = map (name: { "/Volumes/${name}" = mkMount name; }) this.btrfs.stateVolumes;
+      in
+        mkMerge ([ defaultVolumes ] ++ stateVolumes);
+    in lib.mkIf this.btrfs.enable (if this.btrfs.newLayout then newLayout else oldLayout);
 
-    # autoSnapshots.subvolumes = [ "Foo" "Bar" ] -> subvolume = { Foo = { }; Bar = { }; }
-    volume."/System/Volumes".subvolume = genAttrs cfg.btrfs.autoSnapshots.subvolumes (_: { });
+    # We want these to be additive, so we need to set these here rather than as
+    # the options' defaults which would get overridden when additional
+    # stateVolumes are set elsewhere
+    custom.fs.btrfs.stateVolumes = [ "Users" ];
+    custom.fs.btrfs.autoSnapshots.subvolumes = this.btrfs.stateVolumes;
+
+    # Systemd tries to generate /home by default. It doesn't seem to conflict but better disable that
+    environment.etc."tmpfiles.d/home.conf" = lib.mkIf this.btrfs.newLayout { source = "/dev/null"; };
+    systemd.tmpfiles.rules = mkIf this.btrfs.newLayout [
+      # Create symlinks for backwards compatibility
+      "L+ /home - - - - /Users"
+      # macOS does this too
+      "L+ /Volumes/Root - - - - /"
+    ];
+
+    custom.btrbk = mkIf this.btrfs.autoSnapshots.enable {
+      enable = true;
+
+      # autoSnapshots.subvolumes = [ "Foo" "Bar" ] -> subvolume = { Foo = { }; Bar = { }; }
+      volume."/System/Volumes".subvolume = genAttrs this.btrfs.autoSnapshots.subvolumes (_: { });
+    };
   };
 }
