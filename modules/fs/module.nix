@@ -12,15 +12,11 @@ in
   options.custom.fs = {
     enable = mkEnableOption "my default filesystems";
     boot = mkOption {
-      description = ''
-        Device to mount the boot partition from.
-      '';
+      description = "Device to mount the boot partition from.";
       default = mkLabel (substring 0 11 config.custom.hostName); # FAT32 is shit and only allows 11 chars
     };
     root = mkOption {
-      description = ''
-        Device to mount the root partition from.
-      '';
+      description = "Device to mount the root partition from.";
       default = mkLabel "${config.custom.hostName}-root";
     };
 
@@ -28,9 +24,7 @@ in
       enable = mkEnableOption "my default btrfs layout";
 
       device = mkOption {
-        description = ''
-          The device to mount the main pool from
-        '';
+        description = "The device to mount the main pool from ";
         default = config.custom.fs.root;
       };
 
