@@ -1,10 +1,9 @@
 { config, lib, ... }:
 
-with lib;
-
 let
   this = config.custom.fs;
 
+  inherit (lib) mkEnableOption mkOption mkIf genAttrs mkMerge substring;
   inherit (config.lib.custom) mkLabel;
 in
 
