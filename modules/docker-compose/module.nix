@@ -3,7 +3,7 @@
 let
   this = config.custom.docker-compose;
 
-  inherit (lib) mkOption mkIf mapAttrs' nameValuePair mapAttrsToList;
+  inherit (lib) mkOption mkEnableOption mkIf mapAttrs' nameValuePair mapAttrsToList;
   inherit (lib.types) attrsOf submodule nullOr attrs path;
 in
 
@@ -49,6 +49,23 @@ in
           type = nullOr attrs;
           description = "An attrset representing a docker-compose.yml. The version `version` attribute is set to 3 by default.";
         };
+
+        override = mkOption {
+          default = null;
+          apply = yml: if yml == null then null else { version = "3"; } // yml;
+          type = nullOr attrs;
+          description = "An attrset representing a docker-compose.override.yml. The version `version` attribute is set to 3 by default.";
+        };
+
+        stateDirectory = {
+          enable = mkEnableOption "a systemd service state directory for this service";
+
+          name = mkOption {
+            default = name;
+            defaultText = "The service's `name`";
+            description = "The name of the state directory";
+          };
+        };
       };
     }));
   };
@@ -63,22 +80,24 @@ in
     # of docker compose.
     query = ''.services = (.services | map_values(.restart = "no") | map_values(.logging = { "driver": "json-file" }))'';
 
-    sanitise = directory: pkgs.runCommand "docker-compose-sanitised" { } ''
-      cp -rs ${directory} $out
+    sanitise = value: pkgs.runCommand "docker-compose-sanitised" { } (''
+      cp -rs ${value.directory} $out
       chmod +w -R $out/
       rm $out/docker-compose.yml
+    '' + lib.optionalString (value.override != null) ''
+      ln -sfn ${pkgs.writers.writeYAML "docker-compose.override.yml" value.override} $out/docker-compose.override.yml
+    '' + ''
+      ${lib.getExe pkgs.yq} -Y '${query}' ${value.directory}/docker-compose.yml > $out/docker-compose.yml
+    '');
 
-      ${lib.getExe pkgs.yq} -Y '${query}' ${directory}/docker-compose.yml > $out/docker-compose.yml
-    '';
-
-    runIn = directory: command: "${lib.getExe pkgs.docker} compose -f ${sanitise directory}/docker-compose.yml ${command}";
+    runConfig = value: command: "${lib.getExe pkgs.docker} compose --project-directory ${sanitise value} ${command}";
   in {
     virtualisation.docker.enable = true;
 
     systemd.services = mapAttrs' (name: value:
       nameValuePair "docker-compose-${name}" {
         serviceConfig = let
-          run = runIn value.directory;
+          run = runConfig value;
         in {
           # Stop services before in case they're running
           ExecStartPre = [
@@ -94,6 +113,8 @@ in
 
           # It may take >15 minutes to pull large images
           TimeoutStartSec = 1000;
+
+          StateDirectory = mkIf value.stateDirectory.enable value.stateDirectory.name;
         };
         path = [ pkgs.docker ];
 
@@ -103,7 +124,7 @@ in
     ) this;
 
     environment.systemPackages = mapAttrsToList
-      (name: value: pkgs.writeShellScriptBin "docker-compose-${name}" (runIn value.directory ''"$@"''))
+      (name: value: pkgs.writeShellScriptBin "docker-compose-${name}" (runConfig value ''"$@"''))
       this;
   });
 }
