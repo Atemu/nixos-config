@@ -81,10 +81,10 @@ in
       orca
     ];
 
-    environment.systemPackages = with pkgs; optionals this.tablet [
+    environment.systemPackages = with pkgs; mkIf this.tablet [
       write_stylus
     ];
-    custom.packages.allowedUnfree = optionals this.tablet [
+    custom.packages.allowedUnfree = mkIf this.tablet [
       "write_stylus"
     ];
 
@@ -94,7 +94,7 @@ in
       enable = true;
       wlr.enable = true;
       # GNOME adds xdg-desktop-portal-gtk on its own which causes a collision
-      extraPortals = lib.optionals (!config.services.xserver.desktopManager.gnome.enable) [
+      extraPortals = mkIf (!config.services.xserver.desktopManager.gnome.enable) [
         # TODO I'd prefer to use `pkgs.xdg-desktop-portal-kde'. This currently
         # causes Firefox to go into a sort of QT compatibility mode which
         # disables my Emacs gtk key-theme however, so not an option
