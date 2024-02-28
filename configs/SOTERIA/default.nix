@@ -57,6 +57,9 @@
   custom.hedgedoc.enable = true;
   custom.virtualHosts.hedgedoc.onPrimaryDomain = true;
 
+  custom.mealie.enable = true;
+  custom.virtualHosts.mealie.onPrimaryDomain = true;
+
   custom.grocy.enable = true;
   custom.virtualHosts.grocy.onPrimaryDomain = true;
 
