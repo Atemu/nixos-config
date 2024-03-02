@@ -29,7 +29,7 @@ in
 
             If the {option}`file` or {option}`YAML` options are used, this is set automatically.
 
-            If this is set, {option}`file` or {option}`YAML` will not have any effect.
+            If this is set, {option}`file`, {option}`YAML` or {option}`env` will not have any effect.
           '';
         };
         file = mkOption {
@@ -48,6 +48,11 @@ in
           apply = yml: if yml == null then null else { version = "3"; } // yml;
           type = nullOr attrs;
           description = "An attrset representing a docker-compose.yml. The version `version` attribute is set to 3 by default.";
+        };
+        env = mkOption {
+          default = null;
+          type = nullOr attrs;
+          description = "An attrset representin a docker-compose `.env` file.";
         };
 
         override = mkOption {
@@ -86,6 +91,8 @@ in
       rm $out/docker-compose.yml
     '' + lib.optionalString (value.override != null) ''
       ln -sfn ${pkgs.writers.writeYAML "docker-compose.override.yml" value.override} $out/docker-compose.override.yml
+    '' + lib.optionalString (value.env != null) ''
+      ln -sfn ${(pkgs.formats.keyValue { }).generate ".env" value.env} $out/.env
     '' + ''
       ${lib.getExe pkgs.yq} -Y '${query}' ${value.directory}/docker-compose.yml > $out/docker-compose.yml
     '');
