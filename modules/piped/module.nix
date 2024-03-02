@@ -88,8 +88,11 @@ in
     });
 
     systemd.services.piped-feed-fetch = mkIf this.feedFetchHack {
-      script = ''
-        ${lib.getExe pkgs.docker} exec -i postgres psql -U piped -d piped -qtAX -c 'select id from public.pubsub;' | while IFS= read -r line; do
+      script = let
+        inherit (config.custom.docker-compose.piped) wrapperScript;
+        psql = cmd: "${lib.getExe wrapperScript} exec -i postgres psql -U piped -d piped -qtAX -c '${cmd}'";
+      in ''
+          ${psql "select id from public.pubsub;"} | while IFS= read -r line; do
           ${lib.getExe pkgs.curl} -k "https://${hostnames.pipedapi}/channel/$line" &> /dev/null
           sleep 1
         done
