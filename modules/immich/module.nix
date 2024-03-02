@@ -19,39 +19,31 @@ in
     custom.docker-compose.immich = {
       stateDirectory.enable = true;
 
-      directory = let
-        yml = pkgs.fetchurl {
-          url = "https://github.com/immich-app/immich/releases/download/v1.94.1/docker-compose.yml";
-          hash = "sha256-9TOOYCNWcQqBZGB1JBpUBSQuh21sjavNcoIJ7cfh9Js=";
-        };
+      env = {
+        # You can find documentation for all the supported env variables at https://immich.app/docs/install/environment-variables
 
-        env = pkgs.writeText "env" (lib.generators.toKeyValue { } {
-          # You can find documentation for all the supported env variables at https://immich.app/docs/install/environment-variables
+        # The location where your uploaded files are stored
+        UPLOAD_LOCATION = "/var/lib/immich/"; # The systemd StateDirectory
 
-          # The location where your uploaded files are stored
-          UPLOAD_LOCATION = "/var/lib/immich/"; # The systemd StateDirectory
+        # The Immich version to use. You can pin this to a specific version like "v1.71.0"
+        IMMICH_VERSION = "release";
 
-          # The Immich version to use. You can pin this to a specific version like "v1.71.0"
-          IMMICH_VERSION = "release";
+        # Connection secret for postgres. You should change it to a random password
+        DB_PASSWORD = "postgres";
 
-          # Connection secret for postgres. You should change it to a random password
-          DB_PASSWORD = "postgres";
+        # The values below this line do not need to be changed
+        ###################################################################################
+        DB_HOSTNAME = "immich_postgres";
+        DB_USERNAME = "postgres";
+        DB_DATABASE_NAME = "immich";
 
-          # The values below this line do not need to be changed
-          ###################################################################################
-          DB_HOSTNAME = "immich_postgres";
-          DB_USERNAME = "postgres";
-          DB_DATABASE_NAME = "immich";
+        REDIS_HOSTNAME = "immich_redis";
+      };
 
-          REDIS_HOSTNAME = "immich_redis";
-        });
-
-      in
-        pkgs.runCommand "immich-docker" { } ''
-          mkdir -p $out
-          ln -s ${yml} $out/docker-compose.yml
-          ln -s ${env} $out/.env
-        '';
+      file = pkgs.fetchurl {
+        url = "https://github.com/immich-app/immich/releases/download/v1.94.1/docker-compose.yml";
+        hash = "sha256-9TOOYCNWcQqBZGB1JBpUBSQuh21sjavNcoIJ7cfh9Js=";
+      };
 
       override = {
         services.database = {
