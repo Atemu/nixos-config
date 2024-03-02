@@ -5,6 +5,29 @@ let
 
   inherit (lib) mkOption mkEnableOption mkIf mapAttrs' nameValuePair mapAttrsToList;
   inherit (lib.types) attrsOf submodule nullOr attrs path;
+
+  # A jq query to transform the docker-compose.yml.
+  #
+  # Never restart these services; they should be ephemeral.
+  #
+  # Log driver needs to be json-file in order for the individual
+  # containers to not log to syslog but still have logs in the output
+  # of docker compose.
+  query = ''.services = (.services | map_values(.restart = "no") | map_values(.logging = { "driver": "json-file" }))'';
+
+  sanitise = value: pkgs.runCommand "docker-compose-sanitised" { } (''
+    cp -rs ${value.directory} $out
+    chmod +w -R $out/
+    rm $out/docker-compose.yml
+  '' + lib.optionalString (value.override != null) ''
+    ln -sfn ${pkgs.writers.writeYAML "docker-compose.override.yml" value.override} $out/docker-compose.override.yml
+  '' + lib.optionalString (value.env != null) ''
+    ln -sfn ${(pkgs.formats.keyValue { }).generate ".env" value.env} $out/.env
+  '' + ''
+    ${lib.getExe pkgs.yq} -Y '${query}' ${value.directory}/docker-compose.yml > $out/docker-compose.yml
+  '');
+
+  runConfig = value: command: "${lib.getExe pkgs.docker} compose --project-directory ${sanitise value} ${command}";
 in
 
 {
@@ -71,34 +94,16 @@ in
             description = "The name of the state directory";
           };
         };
+
+        wrapperScript = mkOption {
+          internal = true;
+          default = pkgs.writeShellScriptBin "docker-compose-${name}" (runConfig config ''"$@"'');
+        };
       };
     }));
   };
 
-  config = mkIf (this != { }) (let
-    # A jq query to transform the docker-compose.yml.
-    #
-    # Never restart these services; they should be ephemeral.
-    #
-    # Log driver needs to be json-file in order for the individual
-    # containers to not log to syslog but still have logs in the output
-    # of docker compose.
-    query = ''.services = (.services | map_values(.restart = "no") | map_values(.logging = { "driver": "json-file" }))'';
-
-    sanitise = value: pkgs.runCommand "docker-compose-sanitised" { } (''
-      cp -rs ${value.directory} $out
-      chmod +w -R $out/
-      rm $out/docker-compose.yml
-    '' + lib.optionalString (value.override != null) ''
-      ln -sfn ${pkgs.writers.writeYAML "docker-compose.override.yml" value.override} $out/docker-compose.override.yml
-    '' + lib.optionalString (value.env != null) ''
-      ln -sfn ${(pkgs.formats.keyValue { }).generate ".env" value.env} $out/.env
-    '' + ''
-      ${lib.getExe pkgs.yq} -Y '${query}' ${value.directory}/docker-compose.yml > $out/docker-compose.yml
-    '');
-
-    runConfig = value: command: "${lib.getExe pkgs.docker} compose --project-directory ${sanitise value} ${command}";
-  in {
+  config = mkIf (this != { }) {
     virtualisation.docker.enable = true;
 
     systemd.services = mapAttrs' (name: value:
@@ -130,8 +135,6 @@ in
       }
     ) this;
 
-    environment.systemPackages = mapAttrsToList
-      (name: value: pkgs.writeShellScriptBin "docker-compose-${name}" (runConfig value ''"$@"''))
-      this;
-  });
+    environment.systemPackages = mapAttrsToList (name: value: value.wrapperScript) this;
+  };
 }
