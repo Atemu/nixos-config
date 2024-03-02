@@ -104,7 +104,17 @@ in
       experimental-features = nix-command flakes
     '';
 
-    settings.require-sigs = false;
+    settings = {
+      # Would complicates copying between hosts.
+      # FIXME: Yes this is a security issue
+      require-sigs = false;
+      # Don't stop debugger on caught exceptions
+      ignore-try = true;
+      # If you're not receiving anything for 20s, just retry
+      stalled-download-timeout = 20;
+      # I do not care.
+      warn-dirty = false;
+    };
 
     daemonCPUSchedPolicy = "idle";
     daemonIOSchedClass = "idle";
