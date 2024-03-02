@@ -41,8 +41,8 @@ in
       };
 
       file = pkgs.fetchurl {
-        url = "https://github.com/immich-app/immich/releases/download/v1.94.1/docker-compose.yml";
-        hash = "sha256-9TOOYCNWcQqBZGB1JBpUBSQuh21sjavNcoIJ7cfh9Js=";
+        url = "https://github.com/immich-app/immich/releases/download/v1.97.0/docker-compose.yml";
+        hash = "sha256-onNPerC2a65Uy6sAXaU6WMhPJOnWOyq3HaTkL2oixx8=";
       };
 
       override = {
