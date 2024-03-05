@@ -55,6 +55,7 @@ in
       teamspeak_client
       vulkan-tools
       wineWowPackages.staging
+      yuzu-ea
     ] ++ optionals this.amdgpu [
       radeontop
       rocmPackages.rocm-smi
