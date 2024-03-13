@@ -58,7 +58,7 @@ let
     nix-index
     nix-init
     nix-tree
-    nixpkgs-fmt
+    nixfmt-rfc-style
     nixpkgs-review
     nmap
     onefetch
