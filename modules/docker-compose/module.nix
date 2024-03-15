@@ -105,6 +105,8 @@ in
 
   config = mkIf (this != { }) {
     virtualisation.docker.enable = true;
+    # Don't persist containers when docker daemon stops
+    virtualisation.docker.liveRestore = false;
 
     systemd.services = mapAttrs' (name: value:
       nameValuePair "docker-compose-${name}" {
