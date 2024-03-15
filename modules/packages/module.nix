@@ -58,7 +58,6 @@ let
     nix-index
     nix-init
     nix-tree
-    nixfmt-rfc-style
     nixpkgs-review
     nmap
     onefetch
@@ -95,6 +94,8 @@ let
     perf
   ]) ++ optionals (versionAtLeast release "23.11") [
     numbat
+  ] ++ optionals (versionAtLeast release "24.05") [
+    nixfmt-rfc-style
   ];
 
   # Packages to install if X is not enabled.
