@@ -88,6 +88,7 @@ let
     whois
     wol
     youtube-dl
+    yq
     zip
     zstd
   ] ++ (with config.boot.kernelPackages; [
