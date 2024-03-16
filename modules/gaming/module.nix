@@ -58,6 +58,7 @@ in
       wineWowPackages.staging
       yuzu-ea
     ] ++ optionals this.amdgpu [
+      lact
       radeontop
       rocmPackages.rocm-smi
       umr
@@ -68,6 +69,10 @@ in
       "steam-run"
       "discord"
       "teamspeak-client"
+    ];
+
+    systemd.packages = with pkgs; [
+      lact
     ];
 
     boot.kernel.sysctl = {
@@ -81,8 +86,6 @@ in
       Option "VariableRefresh" "True"
     '';
     boot.initrd.kernelModules = mkIf this.amdgpu [ "amdgpu" ];
-
-    programs.corectrl.enable = true;
 
     hardware.steam-hardware.enable = true;
 
