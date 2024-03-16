@@ -15,6 +15,7 @@ in
 
   config = mkIf this.enable {
     programs.steam.enable = true;
+    programs.steam.extraCompatPackages = [ pkgs.proton-ge-bin ];
     programs.steam.package = pkgs.steam-small.override {
       extraEnv = {
         MANGOHUD = true;
