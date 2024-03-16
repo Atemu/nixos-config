@@ -8,9 +8,7 @@ in
 {
   options.custom.gaming = {
     enable = mkEnableOption "my custom gaming setup";
-    amdgpu = mkEnableOption "my custom AMDGPU setup" // {
-      default = true;
-    };
+    amdgpu = mkEnableOption "my custom AMDGPU setup";
   };
 
   config = mkIf this.enable {
@@ -58,6 +56,7 @@ in
       wineWowPackages.staging
       yuzu-ea
     ] ++ optionals this.amdgpu [
+      lact
       radeontop
       rocmPackages.rocm-smi
       umr
@@ -82,7 +81,7 @@ in
     '';
     boot.initrd.kernelModules = mkIf this.amdgpu [ "amdgpu" ];
 
-    programs.corectrl.enable = true;
+    custom.lact.enable = this.amdgpu;
 
     hardware.steam-hardware.enable = true;
 
