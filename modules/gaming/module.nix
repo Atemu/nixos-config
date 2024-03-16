@@ -83,6 +83,8 @@ in
     '';
     boot.initrd.kernelModules = mkIf this.amdgpu [ "amdgpu" ];
 
+    custom.lact.enable = this.amdgpu;
+
     hardware.steam-hardware.enable = true;
 
     services.ratbagd.enable = true;
