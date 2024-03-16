@@ -57,6 +57,7 @@ let
     nix-bash-completions
     nix-index
     nix-init
+    nix-output-monitor
     nix-tree
     nixpkgs-review
     nmap
