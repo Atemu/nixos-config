@@ -1,0 +1,8 @@
+daemon:
+  log_level: info
+  admin_groups:
+  - wheel
+  - sudo
+  disable_clocks_cleanup: false
+apply_settings_timer: 5
+gpus: {}
