@@ -8,9 +8,7 @@ in
 {
   options.custom.gaming = {
     enable = mkEnableOption "my custom gaming setup";
-    amdgpu = mkEnableOption "my custom AMDGPU setup" // {
-      default = true;
-    };
+    amdgpu = mkEnableOption "my custom AMDGPU setup";
   };
 
   config = mkIf this.enable {

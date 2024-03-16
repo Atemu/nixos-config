@@ -25,6 +25,8 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  custom.gaming.amdgpu = true;
+
   custom.lact = {
     enable = true;
     settings = {
