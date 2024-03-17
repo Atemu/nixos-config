@@ -49,8 +49,8 @@
             # its own heat. The fans are not audible at such low RPM but keep it
             # quite a bit cooler.
             "0" = 0.27;
-            "60" = 0.27;
-            "70" = 0.3;
+            "40" = 0.27;
+            "50" = 0.4;
 
             # Beyond 40% the sound gets really annoying and 40% is good enough
             # to keep it under 90°C.
