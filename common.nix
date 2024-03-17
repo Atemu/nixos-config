@@ -128,4 +128,9 @@ in
 
   # Makes Docker socket activated, only starting it after I use it once
   systemd.services.docker.wantedBy = lib.mkIf config.virtualisation.docker.enable (lib.mkForce [ ]);
+
+  networking.hosts."23.137.248.133" = [
+    # archive.today and friends play dirty with DNS
+    "archive.today" "archive.fo" "archive.is" "archive.li" "archive.md" "archive.ph" "archive.vn"
+  ];
 }
