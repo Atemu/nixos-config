@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ lib, config, options, ... }:
 
 let
   this = config.custom.fs;
@@ -30,9 +30,8 @@ in
       newLayout = mkEnableOption "new root layout with /Users and /Volumes inspired by macOS";
 
       stateVolumes = mkOption {
-        description = "Subvolumes to create and mount that contain important state. Only works with newLayout.";
-        default = [ ]; # Implemented below
-        defaultText = ''`[ "Users" ]` (not overridden addititve when set, only added to)'';
+        description = "Subvolumes to create and mount that contain important state. Only works with newLayout and is additive.";
+        default = [ "Users" ];
       };
 
       autoSnapshots = {
@@ -44,8 +43,8 @@ in
 
         subvolumes = mkOption {
           description = "The list of subvolumes to auto-snapshot";
-          default = [ ]; # Implemented below
-          defaultText = "All stateVolumes; they are assumed to have state in them that is important enough to warrant snapshots.";
+          default = this.btrfs.stateVolumes;
+          defaultText = "{option}`config.custom.fs.btrfs.stateVolumes`; they are assumed to have state in them that is important enough to warrant snapshots.";
         };
       };
     };
@@ -97,8 +96,8 @@ in
     # We want these to be additive, so we need to set these here rather than as
     # the options' defaults which would get overridden when additional
     # stateVolumes are set elsewhere
-    custom.fs.btrfs.stateVolumes = [ "Users" ];
-    custom.fs.btrfs.autoSnapshots.subvolumes = this.btrfs.stateVolumes;
+    custom.fs.btrfs.stateVolumes = options.custom.fs.btrfs.stateVolumes.default;
+    custom.fs.btrfs.autoSnapshots.subvolumes = options.custom.fs.btrfs.autoSnapshots.subvolumes.default;
 
     # Systemd tries to generate /home by default. It doesn't seem to conflict but better disable that
     environment.etc."tmpfiles.d/home.conf" = lib.mkIf this.btrfs.newLayout { source = "/dev/null"; };
