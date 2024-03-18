@@ -31,7 +31,7 @@ in
 
       stateVolumes = mkOption {
         description = "Subvolumes to create and mount that contain important state. Only works with newLayout and is additive.";
-        default = [ "Users" ];
+        default = [ "Users" "Root" ]; # TODO Root should be stateless, a new var subvol should be here instead
       };
 
       autoSnapshots = {
