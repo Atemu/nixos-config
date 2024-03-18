@@ -87,10 +87,9 @@ in
           "/System/Volumes" = mkMount "";
         };
 
-        # TODO is there a cleaner way here? genAttrs doesn't quite work.
-        stateVolumes = map (name: { "/Volumes/${name}" = mkMount name; }) this.btrfs.stateVolumes;
+        stateVolumes = map (name: lib.nameValuePair "/Volumes/${name}" (mkMount name)) this.btrfs.stateVolumes;
       in
-        mkMerge ([ defaultVolumes ] ++ stateVolumes);
+        defaultVolumes // (lib.listToAttrs stateVolumes);
     in lib.mkIf this.btrfs.enable (if this.btrfs.newLayout then newLayout else oldLayout);
 
     # We want these to be additive, so we need to set these here rather than as
