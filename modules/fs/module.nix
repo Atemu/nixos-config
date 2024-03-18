@@ -37,7 +37,7 @@ in
       autoSnapshots = {
         enable = mkOption {
           default = this.btrfs.newLayout;
-          defaultText = "`config.custom.btrfs.newLayout`";
+          defaultText = "`config.custom.fs.btrfs.newLayout`";
           description = "Whether to enable automatic snapshotting";
         };
 
