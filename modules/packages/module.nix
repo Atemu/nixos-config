@@ -77,6 +77,7 @@ let
     sshfs
     stress
     sysstat
+    tmux # This should be configured via the module instead
     traceroute
     tree
     unzip
