@@ -38,10 +38,9 @@
     echo 'cryptsetup-askpass || echo "Unlock was successful; exiting SSH session" && exit 1' >> /root/.profile
   '';
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = true; # required for DHCP in boot.initrd.network!
+  # Uses systemd-networkd for basic DHCP purposes
+  networking.useDHCP = true;
+  networking.useNetworkd = true;
 
   services.openssh.enable = true;
 
@@ -50,9 +49,6 @@
   security.sudo.wheelNeedsPassword = false;
 
   services.tailscale.useRoutingFeatures = "server"; # This is an exit node
-
-  custom.dnscrypt.enable = true;
-  custom.dnscrypt.listen = true;
 
   custom.hedgedoc.enable = true;
   custom.virtualHosts.hedgedoc.onPrimaryDomain = true;

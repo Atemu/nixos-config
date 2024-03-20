@@ -11,6 +11,10 @@
 
   custom.hostName = "URANOS";
 
+  # systemd.network.enable = true;
+  networking.useDHCP = true;
+  networking.useNetworkd = true;
+
   services.openssh.enable = true;
 
   programs.mosh.enable = true;
