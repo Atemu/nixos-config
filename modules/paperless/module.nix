@@ -37,6 +37,9 @@ in
       PAPERLESS_THREADS_PER_WORKER = 1;
       PAPERLESS_TASK_WORKERS = 4;
 
+      # Works around https://github.com/NixOS/nixpkgs/issues/240591
+      OMP_NUM_THREADS = 1;
+
       PAPERLESS_URL = "https://${config.custom.virtualHosts.paperless.domain}";
     };
 
