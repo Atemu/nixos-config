@@ -35,6 +35,8 @@ in
     systemd.packages = with pkgs; [
       lact
     ];
+    systemd.services.lactd.wantedBy = [ "multi-user.target" ];
+
     environment.etc."lact/config.yaml" = mkIf (this.settings != { }) {
       source = configFile;
     };
