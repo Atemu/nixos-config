@@ -59,6 +59,7 @@ let
     nix-init
     nix-output-monitor
     nix-tree
+    nixd
     nixpkgs-review
     nmap
     onefetch
