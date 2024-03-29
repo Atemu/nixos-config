@@ -81,7 +81,10 @@ in
       orca
     ];
 
-    environment.systemPackages = with pkgs; mkIf this.tablet [
+    environment.systemPackages = with pkgs; [
+      brightnessctl
+    ]
+    ++ optionals this.tablet [
       write_stylus
     ];
     custom.packages.allowedUnfree = mkIf this.tablet [
