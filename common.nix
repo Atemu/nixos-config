@@ -42,6 +42,8 @@ in
 
   programs.screen.screenrc = "startup_message off";
 
+  programs.direnv.enable = true;
+
   programs.fuse.userAllowOther = true;
 
   services.tailscale.enable = true;
