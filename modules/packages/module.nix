@@ -94,6 +94,7 @@ let
     wol
     youtube-dl
     yq
+    ytcast
     zip
     zstd
   ] ++ (with config.boot.kernelPackages; [
