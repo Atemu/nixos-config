@@ -7,6 +7,8 @@ let
 
   this = config.custom.packages;
 
+  customEmacs = config.services.emacs.package;
+
   # Packages to always install.
   common = with pkgs; [
     acpi
@@ -21,6 +23,7 @@ let
     compsize
     cryptsetup
     curl
+    customEmacs
     ddrescue
     delta
     diceware
@@ -104,7 +107,6 @@ let
 
   # Packages to install if X is not enabled.
   noX = with pkgs; [
-    emacs-nox # FIXME this needs to be handled in custom.emacs
     rxvt-unicode-unwrapped.terminfo
   ];
 
@@ -112,7 +114,6 @@ let
   x = with pkgs; [
     anki
     appimage-run
-    config.custom.emacs
     direnv
     element-desktop
     firefox-pgo

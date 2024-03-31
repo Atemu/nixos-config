@@ -161,6 +161,5 @@ in
     networking.networkmanager.unmanaged = [ "docker0" "virbr0" "anbox0" ];
 
     services.emacs.enable = true;
-    services.emacs.package = config.custom.emacs;
   };
 }

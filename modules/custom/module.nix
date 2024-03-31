@@ -18,11 +18,9 @@ in
 
     emacs = mkOption {
       description = "Emacs package to use.";
-      # TODO Use { withGTK3 = false; } again
       default = pkgs.emacs29;
       example = pkgs.emacs-nox;
       type = types.package;
-      # implemented in packages.nix and desktop.nix
     };
   };
 
@@ -40,6 +38,10 @@ in
 
     virtualisation.vmVariant = {
       custom.vm.enable = true;
+    };
+
+    services.emacs.package = config.custom.emacs.override {
+      noGui = !config.custom.desktop.enable;
     };
   };
 }
