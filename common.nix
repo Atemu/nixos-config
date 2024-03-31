@@ -44,6 +44,8 @@ in
 
   programs.direnv.enable = true;
 
+  services.lorri.enable = true; # perhaps desktop-only?
+
   programs.fuse.userAllowOther = true;
 
   services.tailscale.enable = true;
