@@ -40,8 +40,12 @@ in
       custom.vm.enable = true;
     };
 
-    services.emacs.package = config.custom.emacs.override {
+    services.emacs.package = (config.custom.emacs.override {
       noGui = !config.custom.desktop.enable;
-    };
+    }).pkgs.withPackages (ep: with ep; [
+      # Require native code
+      vterm
+      pdf-tools
+    ]);
   };
 }
