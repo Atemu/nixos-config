@@ -9,6 +9,8 @@ let
 
   customEmacs = config.services.emacs.package;
 
+  customHunspell = pkgs.hunspellWithDicts (with pkgs.hunspellDicts; [ en_GB-large de_DE ]);
+
   # Packages to always install.
   common = with pkgs; [
     acpi
@@ -24,6 +26,7 @@ let
     cryptsetup
     curl
     customEmacs
+    customHunspell
     ddrescue
     delta
     diceware
