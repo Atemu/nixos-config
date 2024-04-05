@@ -40,5 +40,8 @@
 
   programs.adb.enable = true;
 
+  custom.remotebuild.enable = true;
+  custom.remotebuild.builders.cccda = true;
+
   system.stateVersion = "19.09"; # Did you read the comment?
 }
