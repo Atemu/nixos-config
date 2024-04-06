@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  nixos-config = "/nix/var/nix/nixos-config";
-  nixpkgs = "/nix/var/nix/nixpkgs";
+  nixfiles = "/nix/var/nix/nixfiles";
 
   inherit (lib) attrValues;
 in
@@ -94,12 +93,10 @@ in
   };
 
   nix.nixPath = [
-    "nixpkgs=${nixpkgs}"
-    "nixos-config=${nixos-config}"
-    "nixos=${nixpkgs}"
+    "nixpkgs=${nixfiles}/nixpkgs"
+    "nixos-config=${nixfiles}/nixos-config"
     "/nix/var/nix/profiles/per-user/root/channels"
   ];
-  environment.variables.NIXOS_CONFIG_DIR = "${nixos-config}";
 
   systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp/";
 
