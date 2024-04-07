@@ -9,7 +9,18 @@ let
 
   customEmacs = config.services.emacs.package;
 
-  customHunspell = pkgs.hunspellWithDicts (with pkgs.hunspellDicts; [ en_GB-large de_DE ]);
+  customHunspell = pkgs.hunspellWithDicts (
+    with pkgs.hunspellDicts;
+    [
+      (en_GB-large.overrideAttrs (prev: {
+        # Make dict able to detect contractions (I've, doesn't etc.) as words
+        postInstall = ''
+          substituteInPlace $out/share/hunspell/en_GB.aff --replace "WORDCHARS 0123456789" "WORDCHARS 0123456789'"
+        '';
+      }))
+      de_DE
+    ]
+  );
 
   # Packages to always install.
   common = with pkgs; [
