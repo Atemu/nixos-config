@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 let
-  inherit (lib) mkEnableOption mkOption types mkIf substring mkDefault;
+  inherit (lib) mkEnableOption mkOption types mkIf;
   this = config.custom;
 in
 
@@ -9,6 +9,7 @@ in
   options.custom = {
     enable = mkEnableOption "my custom modules";
 
+    # TODO move to emacs module
     emacs = mkOption {
       description = "Emacs package to use.";
       default = pkgs.emacs29;
@@ -18,9 +19,6 @@ in
   };
 
   config = mkIf this.enable {
-    # The hostId is set to the first 8 chars of the sha256 of the hostName
-    networking.hostId = substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
-
     # Enable default-on custom modules
     custom.lib.enable = true;
     custom.packages.enable = true;

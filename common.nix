@@ -3,7 +3,7 @@
 let
   nixfiles = "/nix/var/nix/nixfiles";
 
-  inherit (lib) attrValues;
+  inherit (lib) attrValues substring;
 in
 
 {
@@ -55,6 +55,9 @@ in
 
   # Stop log spam from my SOHO router's amazingly helpful port scanning
   networking.firewall.logRefusedConnections = false;
+
+  # The hostId is set to the first 8 chars of the sha256 of the hostName
+  networking.hostId = substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
 
   services.avahi = {
     enable = true;
