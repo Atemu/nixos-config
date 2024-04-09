@@ -68,9 +68,6 @@ in
         substituteInPlace $out/config/nginx.conf \
           --replace "/var/log/nginx/access.log" "/var/log/nginx/access-actual.log" \
 
-        # Workaround for https://github.com/TeamPiped/Piped/issues/2915
-        patch $out/config/pipedapi.conf < ${./pipedapi.patch}
-
         # volumes: section is borderline broken and I need to add my own
         sed '/^volumes:/Q' $out/config/docker-compose.${this.reverseProxy}.yml > $out/docker-compose.yml
         cat ${volumesYAML} >> $out/docker-compose.yml
