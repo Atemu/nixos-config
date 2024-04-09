@@ -9,7 +9,7 @@
     ../../hardware/J4105M.nix
   ];
 
-  custom.hostName = "SOTERIA";
+  networking.hostName = "SOTERIA";
 
   boot.initrd.network.enable = true;
   boot.initrd.network.udhcpc.extraArgs = [ "-t" "20" ];

@@ -7,7 +7,7 @@
     ../../hardware/RPI2.nix
   ];
 
-  custom.hostName = "LELANTOS";
+  networking.hostName = "LELANTOS";
 
   services.openssh.enable = true;
   programs.mosh.enable = true;

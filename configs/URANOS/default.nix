@@ -9,7 +9,7 @@
     ../../hardware/UTM.nix
   ];
 
-  custom.hostName = "URANOS";
+  networking.hostName = "URANOS";
 
   # systemd.network.enable = true;
   networking.useDHCP = true;

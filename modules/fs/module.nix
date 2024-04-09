@@ -12,11 +12,11 @@ in
     enable = mkEnableOption "my default filesystems";
     boot = mkOption {
       description = "Device to mount the boot partition from.";
-      default = mkLabel (substring 0 11 config.custom.hostName); # FAT32 is shit and only allows 11 chars
+      default = mkLabel (substring 0 11 config.networking.hostName); # FAT32 is shit and only allows 11 chars
     };
     root = mkOption {
       description = "Device to mount the root partition from.";
-      default = mkLabel "${config.custom.hostName}-root";
+      default = mkLabel "${config.networking.hostName}-root";
     };
 
     btrfs = {

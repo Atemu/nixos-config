@@ -9,7 +9,7 @@
     ../../hardware/Q775.nix
   ];
 
-  custom.hostName = "PLATON";
+  networking.hostName = "PLATON";
 
   custom.desktop.enable = true;
   custom.desktop.tablet = true;

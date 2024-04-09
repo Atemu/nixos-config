@@ -33,7 +33,7 @@ in
         digits = toString labelNumber;
         twoDigits = if labelNumber < 10 then "0${digits}" else digits;
       in
-        "${config.custom.hostName}-crypt${twoDigits}";
+        "${config.networking.hostName}-crypt${twoDigits}";
       names = lib.genList nameForNumber cfg.autoDevices ++ map nameForNumber cfg.devices;
     in
       lib.genAttrs names (name: {

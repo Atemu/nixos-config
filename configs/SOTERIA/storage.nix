@@ -16,7 +16,7 @@ with config.lib.custom;
     # TODO refactor fs.nix such that custom.btrfs can be configured for multiple volumes
     "/Volumes/Data" = {
       subvol = "/";
-      device = mkLabel "${config.custom.hostName}-data";
+      device = mkLabel "${config.networking.hostName}-data";
     };
   };
 }

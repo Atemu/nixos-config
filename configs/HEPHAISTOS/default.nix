@@ -9,7 +9,7 @@
     ../../hardware/B650.nix
   ];
 
-  custom.hostName = "HEPHAISTOS";
+  networking.hostName = "HEPHAISTOS";
 
   custom.desktop.enable = true;
 

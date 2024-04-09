@@ -89,7 +89,7 @@ in
         PLATON = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHK/Gx95TAvE5GmEuLwWgOQpwjkWNaVavprNlFOuCjFI atemu@PLATON";
       };
       # All keys but the host's own key
-    in attrValues (removeAttrs hostKeys [ config.custom.hostName ]);
+    in attrValues (removeAttrs hostKeys [ config.networking.hostName ]);
   };
 
   nix.nixPath = [
