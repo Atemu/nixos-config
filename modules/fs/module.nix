@@ -84,7 +84,7 @@ in
           "/" = mkMount "Root";
           "/nix" = mkMount "Nix Store";
           "/Users" = mkMount "Users";
-          "/System/Volumes" = mkMount "";
+          "/System/Volumes" = mkMount "/";
         };
 
         stateVolumes = map (name: lib.nameValuePair "/Volumes/${name}" (mkMount name)) this.btrfs.stateVolumes;
