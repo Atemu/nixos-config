@@ -50,12 +50,15 @@
             # quite a bit cooler.
             "0" = 0.27;
             "40" = 0.27;
+            "49" = 0.27;
+            # I want a quick jump rather than a ramp here
             "50" = 0.4;
 
             # Beyond 40% the sound gets really annoying and 40% is good enough
             # to keep it under 90°C.
             "80" = 0.4;
             "90" = 0.4;
+            "94" = 0.4;
 
             # If it's not, COOL TF DOWN.
             "95" = 0.6;
