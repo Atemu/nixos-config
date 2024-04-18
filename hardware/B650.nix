@@ -43,26 +43,30 @@
           # I only care about Tj
           temperature_key = "junction";
           interval_ms = 500;
-          curve = {
-            # Don't turn the fans off! This would cause the GPU to accumulate
-            # heat over time and actually affect the CPU's ability to dissipate
-            # its own heat. The fans are not audible at such low RPM but keep it
-            # quite a bit cooler.
-            "0" = 0.27;
-            "40" = 0.27;
-            "54" = 0.27;
-            # I want a quick jump rather than a ramp here
-            "55" = 0.45;
-
-            # The card has many resonant frequencies; ramping the fan speed will
-            # hit all of them which is quite audible. 45% is not resonant and
+          curve = let
+            # The fans are not audible at such low RPM but keep it quite a bit
+            # cooler.
+            idle = 0.27;
+            # The card has many resonant frequencies. 45% is not resonant and
             # provides ample cooling while gaming; keeping the card a good bit
             # below 90°C which is a bit better than the default fan curve even.
-            "80" = 0.45;
-            "90" = 0.45;
-            "94" = 0.45;
+            operating = 0.45;
+          in {
+            # Don't turn the fans off! This would cause the GPU to accumulate
+            # heat over time and impact the CPU's ability to dissipate its heat.
+            "0" = idle;
+            "40" = idle;
+            "54" = idle;
+            # I want a quick jump to operating speed rather than a ramp here to
+            # avoid hitting resonant frequencies which are quite audible
+            "55" = operating;
 
-            # If it's not, COOL TF DOWN.
+            "80" = operating;
+            "90" = operating;
+
+            "94" = operating;
+            # If we're hot, COOL TF DOWN.
+            # Please still don't ramp though
             "95" = 0.6;
             "100" = 1.0;
           };
