@@ -52,13 +52,15 @@
             "40" = 0.27;
             "54" = 0.27;
             # I want a quick jump rather than a ramp here
-            "55" = 0.4;
+            "55" = 0.45;
 
-            # Beyond 40% the sound gets really annoying and 40% is good enough
-            # to keep it under 90°C.
-            "80" = 0.4;
-            "90" = 0.4;
-            "94" = 0.4;
+            # The card has many resonant frequencies; ramping the fan speed will
+            # hit all of them which is quite audible. 45% is not resonant and
+            # provides ample cooling while gaming; keeping the card a good bit
+            # below 90°C which is a bit better than the default fan curve even.
+            "80" = 0.45;
+            "90" = 0.45;
+            "94" = 0.45;
 
             # If it's not, COOL TF DOWN.
             "95" = 0.6;
