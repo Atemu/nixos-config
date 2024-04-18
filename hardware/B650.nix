@@ -55,15 +55,15 @@
             # Don't turn the fans off! This would cause the GPU to accumulate
             # heat over time and impact the CPU's ability to dissipate its heat.
             "0" = idle;
-            "40" = idle;
+            # This is the idle range. I technically don't need the fan speeds to
+            # be in the operating range until it's at 80-something but I don't
+            # want the speeds to jump up and down during loading screens or
+            # other short downtimes or ramp up during very light load.
             "54" = idle;
             # I want a quick jump to operating speed rather than a ramp here to
             # avoid hitting resonant frequencies which are quite audible
             "55" = operating;
-
-            "80" = operating;
-            "90" = operating;
-
+            # This is the operating temperature range
             "94" = operating;
             # If we're hot, COOL TF DOWN.
             # Please still don't ramp though
