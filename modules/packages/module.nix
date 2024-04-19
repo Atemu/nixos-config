@@ -66,6 +66,7 @@ let
     lz4
     man-pages
     mediainfo
+    memtest_vulkan
     mosh
     ncdu
     neofetch
