@@ -126,12 +126,19 @@ let
   ];
 
   # Packages to install if X is enabled.
-  x = with pkgs; [
+  x = with pkgs; let
+    customFirefox = firefox-pgo.override (prev: {
+      cfg = prev.cfg or { } // {
+        # No 700MiB mbrola-voices in my closure please
+        speechSynthesisSupport = false;
+      };
+    });
+  in [
     anki
     appimage-run
+    customFirefox
     direnv
     element-desktop
-    firefox-pgo
     gimp
     lxrandr
     mlterm
