@@ -66,7 +66,6 @@ let
     lz4
     man-pages
     mediainfo
-    memtest_vulkan
     mosh
     ncdu
     neofetch
@@ -118,6 +117,7 @@ let
   ]) ++ optionals (versionAtLeast release "23.11") [
     numbat
   ] ++ optionals (versionAtLeast release "24.05") [
+    memtest_vulkan
     nixfmt-rfc-style
   ];
 
