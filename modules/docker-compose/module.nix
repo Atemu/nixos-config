@@ -114,6 +114,7 @@ in
           run = runConfig value;
         in {
           # Stop services before in case they're running
+          # TODO Remove containers too!
           ExecStartPre = [
             (run "down")
             # Causes logspam on pull but shows more accurate activating info
@@ -137,6 +138,6 @@ in
       }
     ) this;
 
-    environment.systemPackages = mapAttrsToList (name: value: value.wrapperScript) this;
+    environment.systemPackages = mapAttrsToList (_: value: value.wrapperScript) this;
   };
 }
