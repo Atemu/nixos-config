@@ -1,8 +1,8 @@
 { pkgs, config, lib, ... }:
 
 let
-  inherit (lib) optionals mkIf mkEnableOption mkOption getName versionAtLeast;
-  inherit (lib.types) bool listOf str;
+  inherit (lib) optionals mkIf mkEnableOption getName versionAtLeast;
+  inherit (lib.types) listOf str;
   inherit (lib.trivial) release;
 
   this = config.custom.packages;
@@ -14,7 +14,7 @@ let
     [
       (en_GB-large.overrideAttrs (prev: {
         # Make dict able to detect contractions (I've, doesn't etc.) as words
-        postInstall = ''
+        postInstall = prev.postInstall or "" + ''
           substituteInPlace $out/share/hunspell/en_GB.aff --replace "WORDCHARS 0123456789" "WORDCHARS 0123456789'"
         '';
       }))
