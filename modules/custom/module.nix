@@ -35,6 +35,9 @@ in
       # Require native code
       vterm
       pdf-tools
+      (treesit-grammars.with-grammars (grammars: with grammars; [
+        tree-sitter-nix
+      ]))
     ]);
   };
 }
