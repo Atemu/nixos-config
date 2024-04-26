@@ -43,6 +43,9 @@
           # I only care about Tj
           temperature_key = "junction";
           interval_ms = 500;
+          # Only spin down after 30s. This is in order to prevent jumps during a
+          # loading screen or other short periods of less GPU activity.
+          spindown_delay_ms = 30000;
           curve = let
             # The fans are not audible at such low RPM but keep it quite a bit
             # cooler.
