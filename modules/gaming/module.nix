@@ -81,9 +81,7 @@ in
       "vm.max_map_count" = 2147483642;
     };
 
-    services.xserver.videoDrivers = mkIf this.amdgpu [ "amdgpu" ];
     services.xserver.deviceSection = mkIf this.amdgpu ''
-      Option "TearFree" "False"
       Option "VariableRefresh" "True"
     '';
     boot.initrd.kernelModules = mkIf this.amdgpu [ "amdgpu" ];
