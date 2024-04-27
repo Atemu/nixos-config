@@ -79,6 +79,10 @@ in
     boot.kernel.sysctl = {
       # SteamOS/Fedora default, can help with performance.
       "vm.max_map_count" = 2147483642;
+
+      # Not part of my threat model and I'd rather not have performance tank in
+      # poorly coded games.
+      "kernel.split_lock_mitigate" = 0;
     };
 
     services.xserver.deviceSection = mkIf this.amdgpu ''
