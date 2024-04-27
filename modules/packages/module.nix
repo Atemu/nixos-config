@@ -42,6 +42,7 @@ let
     delta
     diceware
     dos2unix
+    duf
     efibootmgr
     ethtool
     exiftool
