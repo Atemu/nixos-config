@@ -134,6 +134,7 @@ in
         path = [ pkgs.docker ];
 
         requires = [ "docker.service" ];
+        after = [ "docker.service" ];
         wantedBy = [ "multi-user.target" ];
       }
     ) this;
