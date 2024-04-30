@@ -147,6 +147,13 @@ in
     "w /sys/fs/bcache/*/congested_write_threshold_us - - - - 20000" # default: 20000
   ];
 
+  boot.kernel.sysctl = {
+    # Prefer caching directory and inode info over inode content as querying
+    # metadata requires random IO and it's usually tiny.
+    # TODO test which value is actually appropriate here; this is just a guess
+    "vm.vfs_cache_pressure" = 30;
+  };
+
   networking.hosts."23.137.248.133" = [
     # archive.today and friends play dirty with DNS
     "archive.today" "archive.fo" "archive.is" "archive.li" "archive.md" "archive.ph" "archive.vn"
