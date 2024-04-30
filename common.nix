@@ -140,6 +140,13 @@ in
     DefaultTimeoutStopSec=30s
   '';
 
+  systemd.tmpfiles.rules = [
+    # Congestion threshold is set incredibly low by default causing bcache to
+    # have nearly no effect.
+    "w /sys/fs/bcache/*/congested_read_threshold_us  - - - - 20000" # default: 2000
+    "w /sys/fs/bcache/*/congested_write_threshold_us - - - - 20000" # default: 20000
+  ];
+
   networking.hosts."23.137.248.133" = [
     # archive.today and friends play dirty with DNS
     "archive.today" "archive.fo" "archive.is" "archive.li" "archive.md" "archive.ph" "archive.vn"
