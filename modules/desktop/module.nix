@@ -11,6 +11,9 @@ in
     enable = mkEnableOption "my custom desktop";
     tablet = mkEnableOption "tablet variant";
   };
+  options.programs = lib.optionalAttrs (lib.versionOlder lib.trivial.release "24.05") {
+    appimage = lib.mkSinkUndeclaredOptions { };
+  };
 
   config = mkIf this.enable {
     boot.kernel.sysctl = { "kernel.sysrq" = 1; };
