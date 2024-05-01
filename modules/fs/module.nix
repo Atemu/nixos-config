@@ -73,6 +73,9 @@ in
       # This discards freed extents asynchronously in the background.
       # No noticeable impact on performance and obviates weekly trims.
       "discard=async"
+      # Would update a dir's atime whenever its contents are listed.
+      # I don't have a need for that.
+      "nodiratime"
     ];
     custom.btrfs.fileSystems = let
       mkMount = subvol: {
