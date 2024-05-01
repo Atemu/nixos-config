@@ -67,7 +67,13 @@ in
     };
 
     custom.btrfs.default.device = this.btrfs.device;
-    custom.btrfs.default.options = [ "space_cache=v2" "discard=async" ];
+    custom.btrfs.default.options = [
+      # Is the default nowadays but ensure it
+      "space_cache=v2"
+      # This discards freed extents asynchronously in the background.
+      # No noticeable impact on performance and obviates weekly trims.
+      "discard=async"
+    ];
     custom.btrfs.fileSystems = let
       mkMount = subvol: {
         inherit (this.btrfs) device;
