@@ -18,8 +18,13 @@ with config.lib.custom;
     "zfs"
   ];
   services.nfs.server.enable = true;
+  # These are media shares intended to be consume by a hacky libreelec setup I inherited.
+  # /share/media is a USB-attached zpool with a media library I also inherited.
+  # /Volumes/Data/Movies is my Movies and shows library.
+  # TODO Rework the network they're exposed to better, it breaks with Tailscale currently.
   services.nfs.server.exports = ''
     /share/media 192.168.178.0/24(ro)
+    /Volumes/Data/Movies/ 192.168.178.0/24(ro)
   '';
   networking.firewall = {
     # It needs one or some of these ports AFAICT
