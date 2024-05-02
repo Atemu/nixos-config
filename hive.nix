@@ -31,7 +31,7 @@ in
     # machinesFile = ./machines.client-a;
   };
 
-  defaults = { name, ... }: {
+  defaults = { lib, config, name, ... }: {
     # This module will be imported by all hosts
     imports = [
       ./common.nix
@@ -39,6 +39,19 @@ in
     # The name and nodes parameters are supported in Colmena,
     # allowing you to reference configurations in other nodes.
     networking.hostName = name;
+
+    # I can't imagine a scenario where I wouldn't want the closure to be built
+    # on the machine itself.
+    deployment.buildOnTarget = true;
+
+    # Allow desktop machines to be managed locally
+    deployment.allowLocalDeployment = config.custom.desktop.enable;
+
+    deployment.targetUser = null; # Don't specify
+    deployment.targetHost = config.lib.custom.concatDomain [
+      (lib.toLower name)
+      config.custom.acme.primaryDomain
+    ];
 
     # By default, Colmena will replace unknown remote profile
     # (unknown means the profile isn't in the nix store on the
