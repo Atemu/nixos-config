@@ -96,6 +96,7 @@ let
     sshfs
     stress
     sysstat
+    systemctl-tui
     tmux # This should be configured via the module instead
     traceroute
     tree
