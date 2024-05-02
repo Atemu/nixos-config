@@ -35,6 +35,20 @@ in
   console.earlySetup = true;
 
   i18n.defaultLocale = "en_GB.UTF-8";
+  i18n.extraLocaleSettings = lib.mapAttrs (n: v: "${v}.UTF-8") {
+    LC_ADDRESS = "de_DE"; # Street names etc.
+    # LC_COLLATE and LC_CTYPE are unset
+    LC_IDENTIFICATION = "en_GB"; # What this custom locale generally identifies as
+    LC_MEASUREMENT = "de_DE"; # I live in the rest of the world where we use sensible units.
+    LC_MESSAGES = "en_GB"; # y/n in prompts
+    LC_MONETARY = "en_IE"; # 1,000.00€
+    LC_NAME = "en_GB"; # Mr/Mrs etc.
+    LC_NUMERIC = "en_GB"; # 1,000.00
+    LC_PAPER = "de_DE";# DIN A4!
+    LC_TELEPHONE = "de_DE"; # Default prefix (+49) and how telephone numbers should be formatted?
+    LC_TIME = "en_DK"; # ISO 8601
+  };
+
   console.keyMap = "us";
 
   time.timeZone = "Europe/Berlin";
