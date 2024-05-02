@@ -13,17 +13,16 @@ if args != { } then {
   ];
 }
 else let
-  pkgs = import <nixpkgs> { };
-  configs = import ./configs { inherit (pkgs) lib; };
+  configs = import ./configs;
   nixosFor = configuration: import <nixpkgs/nixos> {
     inherit configuration;
   };
-  nixosVmWithoutPackages = configuration: (nixosFor {
+  nixosVmWithoutPackages = configuration: (nixosFor ({ pkgs, ... }: {
     imports = [
       configuration
     ];
     custom.packages.enable = pkgs.lib.mkForce false;
-  }).vm;
+  })).vm;
 
   # Makes an attrset of all my nixos configurations.
   # Try `nix-build -A TAB TAB`. Pretty neat, huh?
