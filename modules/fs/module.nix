@@ -112,8 +112,6 @@ in
     systemd.tmpfiles.rules = mkIf this.btrfs.newLayout [
       # Create symlinks for backwards compatibility
       "L+ /home - - - - /Users"
-      # macOS does this too
-      "L+ /Volumes/Root - - - - /"
     ];
 
     custom.btrbk = mkIf this.btrfs.autoSnapshots.enable {
