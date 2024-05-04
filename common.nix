@@ -64,6 +64,14 @@ in
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = lib.mkDefault "client"; # May get overridden for a machine
   systemd.services.tailscaled.serviceConfig.LogLevelMax = 5; # Stop the info spam
+  services.tailscale.package = pkgs.tailscale.overrideAttrs (prevAttrs: {
+    patches = prevAttrs.patches or [ ] ++ [
+      (pkgs.fetchpatch2 {
+        url = "https://github.com/Atemu/tailscale/commit/ecaa38f85750adab9f51a5353766f2b135cd017a.patch";
+        hash = "sha256-yJ+mbBupLp4sXrgFS5yQaKNynZ87tnnwhreQ88HazVM=";
+      })
+    ];
+  });
 
   # FIXME https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1655787774
   networking.networkmanager.unmanaged = [ "tailscale0" "lo" ];
