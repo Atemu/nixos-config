@@ -33,6 +33,7 @@ let
     btop
     btrfs-progs
     cifs-utils
+    colmena
     compsize
     cryptsetup
     curl
