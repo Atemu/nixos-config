@@ -138,7 +138,6 @@ let
       };
     });
   in [
-    anki
     appimage-run
     customFirefox
     direnv
