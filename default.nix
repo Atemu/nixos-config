@@ -1,4 +1,7 @@
-args@{ ... }:
+args@{
+  nixpkgsPath ? <nixpkgs>,
+  ...
+}:
 
 # HACK allow usage with both nixos-rebuild and nix-build
 #
@@ -13,7 +16,7 @@ if args ? specialArgs then {
 }
 else let
   configs = import ./configs;
-  nixosFor = configuration: import <nixpkgs/nixos> {
+  nixosFor = configuration: import (nixpkgsPath + /nixos) {
     inherit configuration;
   };
   nixosVmWithoutPackages = configuration: (nixosFor ({ pkgs, ... }: {
