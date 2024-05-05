@@ -138,7 +138,6 @@ let
       };
     });
   in [
-    appimage-run
     customFirefox
     direnv
     element-desktop
