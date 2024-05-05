@@ -2,7 +2,7 @@
 
 let
   this = config.custom.desktop;
-  inherit (lib) mkEnableOption mkIf versionAtLeast optionals;
+  inherit (lib) mkEnableOption mkIf versionAtLeast optionals optionalAttrs;
 in
 
 {
@@ -10,11 +10,8 @@ in
     enable = mkEnableOption "my custom desktop";
     tablet = mkEnableOption "tablet variant";
   };
-  options.programs = lib.optionalAttrs (lib.versionOlder lib.trivial.release "24.05") {
-    appimage = lib.mkSinkUndeclaredOptions { };
-  };
 
-  config = mkIf this.enable {
+  config = mkIf this.enable (optionalAttrs (versionAtLeast lib.trivial.release "24.05") {
     boot.kernel.sysctl = { "kernel.sysrq" = 1; };
 
     sound.enable = true;
@@ -170,5 +167,5 @@ in
     networking.networkmanager.unmanaged = [ "docker0" "virbr0" "anbox0" ];
 
     services.emacs.enable = true;
-  };
+  });
 }
