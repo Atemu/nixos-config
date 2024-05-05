@@ -56,7 +56,7 @@ in
     services.xserver.enable = true;
     services.xserver.displayManager.gdm.enable = true;
 
-    services.xserver.displayManager.defaultSession = if this.tablet then "gnome" else "none+i3";
+    services.displayManager.defaultSession = if this.tablet then "gnome" else "none+i3";
 
     services.xserver.windowManager.i3.enable = true;
     services.xserver.windowManager.i3.extraPackages = with pkgs; [
@@ -105,15 +105,15 @@ in
       ];
     };
 
-    services.xserver.layout = "us";
-    services.xserver.xkbVariant = "altgr-intl";
+    services.xserver.xkb.layout = "us";
+    services.xserver.xkb.variant = "altgr-intl";
 
-    services.xserver.xkbOptions = "caps:escape";
+    services.xserver.xkb.options = "caps:escape";
 
     services.xserver.autoRepeatDelay = 224;
     services.xserver.autoRepeatInterval = 24;
 
-    services.xserver.libinput = {
+    services.libinput = {
       touchpad.naturalScrolling = false;
       touchpad.disableWhileTyping = true;
       touchpad.accelProfile = "flat";
