@@ -1,9 +1,8 @@
 { config, pkgs, lib, ... }:
 
-with lib;
-
 let
   this = config.custom.desktop;
+  inherit (lib) mkEnableOption mkIf versionAtLeast optionals;
 in
 
 {
