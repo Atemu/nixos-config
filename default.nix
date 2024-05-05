@@ -2,12 +2,11 @@ args@{ ... }:
 
 # HACK allow usage with both nixos-rebuild and nix-build
 #
-# NixOS calls this function with a certain set of arguments by default but
-# calling nix-build only does that when supplied with --arg. This allows us to
-# differentiate where we're called from.
-#
-# Yes, this a hack. No there's no better way, I tried.
-if args != { } then {
+# NixOS calls this function with a certain set of arguments by default,
+# including specialArgs which is pretty uniquely exclusive to NixOS modules.
+# This allows us to differentiate what we're being called from; a module or
+# nix-instantiate/nix-build.
+if args ? specialArgs then {
   imports = [
     ./current-config.nix
   ];
