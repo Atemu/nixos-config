@@ -28,6 +28,16 @@
     USB_EXCLUDE_AUDIO = 0;
   };
 
+  hardware.sensor.iio.enable = true;
+  # TODO move to desktop? wluma needs to be sufficiently robust w.r.t. config
+  # before I do that though...
+  services.udev.packages = with pkgs; [
+    wluma
+  ];
+  systemd.packages = with pkgs; [
+    wluma
+  ];
+
   services.xserver.inputClassSections = [
     ''
       Identifier      "calibration"
