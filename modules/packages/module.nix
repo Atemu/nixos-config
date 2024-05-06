@@ -30,6 +30,7 @@ let
     bat
     bc
     borgbackup
+    btdu
     btop
     btrfs-progs
     cifs-utils
