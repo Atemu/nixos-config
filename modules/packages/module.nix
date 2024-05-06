@@ -106,6 +106,7 @@ let
     usbutils
     vim
     vmtouch
+    wakeonlan
     wget
     which
     whois
