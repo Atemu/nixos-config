@@ -6,7 +6,7 @@ with config.lib.custom;
 {
   custom.bootloader.choice = "systemd-boot";
 
-  custom.luks.autoDevices = 3;
+  custom.luks.autoDevices = 4;
 
   custom.fs.enable = true;
   custom.fs.btrfs.enable = true;
