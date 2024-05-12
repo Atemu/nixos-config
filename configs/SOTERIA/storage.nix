@@ -12,11 +12,6 @@ with config.lib.custom;
   custom.fs.btrfs.enable = true;
   custom.fs.btrfs.newLayout = true;
 
-  # The zpool is managed imperatively and the network address is hard-coded for now
-  # as this is a temporary setup
-  boot.supportedFilesystems = [
-    "zfs"
-  ];
   services.nfs.server.enable = true;
   # These are media shares intended to be consume by a hacky libreelec setup I inherited.
   # /Volumes/Data/Media is a media library I also inherited.
