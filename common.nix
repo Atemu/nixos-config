@@ -141,6 +141,8 @@ in
       stalled-download-timeout = 20;
       # I do not care.
       warn-dirty = false;
+      # Builders should substitute from cache.nixos.org
+      builders-use-substitutes = true;
     };
 
     daemonCPUSchedPolicy = "idle";
