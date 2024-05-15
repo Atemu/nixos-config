@@ -75,6 +75,7 @@ let
     netcat-gnu
     nethogs
     nix-bash-completions
+    nix-diff
     nix-index
     nix-init
     nix-output-monitor
