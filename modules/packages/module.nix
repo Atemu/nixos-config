@@ -83,6 +83,7 @@ let
     nixd
     nixpkgs-review
     nmap
+    nushell
     onefetch
     p7zip
     pciutils
