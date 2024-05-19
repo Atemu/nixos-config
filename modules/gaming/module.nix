@@ -35,37 +35,44 @@ in
     };
 
     # TODO extract into a custom.gaming option
-    environment.systemPackages = with pkgs; let
-      obs = wrapOBS {
-        plugins = with obs-studio-plugins; [
-          obs-vkcapture
-          obs-gstreamer
-          wlrobs
+    environment.systemPackages =
+      let
+        general = with pkgs; [
+          BeatSaberModManager
+          discord
+          gnome.adwaita-icon-theme # fix lutris' missing icons
+          goverlay
+          libstrangle
+          lutris
+          mangohud
+          piper
+          prismlauncher
+          protontricks
+          teamspeak_client
+          vulkan-tools
+          wineWowPackages.staging
+          yuzu-ea
         ];
-      };
-    in [
-      # Gaming
-      BeatSaberModManager
-      discord
-      gnome.adwaita-icon-theme # fix lutris' missing icons
-      goverlay
-      libstrangle
-      lutris
-      mangohud
-      obs
-      piper
-      prismlauncher
-      protontricks
-      teamspeak_client
-      vulkan-tools
-      wineWowPackages.staging
-      yuzu-ea
-    ] ++ optionals this.amdgpu [
-      lact
-      radeontop
-      rocmPackages.rocm-smi
-      umr
-    ];
+        amdgpu = with pkgs; [
+          lact
+          radeontop
+          rocmPackages.rocm-smi
+          umr
+        ];
+
+        obs = pkgs.wrapOBS {
+          plugins = with pkgs.obs-studio-plugins; [
+            obs-vkcapture
+            obs-gstreamer
+            wlrobs
+          ];
+        };
+      in
+      general
+      ++ optionals this.amdgpu amdgpu
+      ++ [
+        obs
+      ];
     custom.packages.allowedUnfree = [
       "steam"
       "steam-original"
