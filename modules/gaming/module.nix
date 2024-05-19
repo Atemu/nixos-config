@@ -51,7 +51,6 @@ in
           teamspeak_client
           vulkan-tools
           wineWowPackages.staging
-          yuzu-ea
         ];
         amdgpu = with pkgs; [
           lact
@@ -70,6 +69,10 @@ in
       in
       general
       ++ optionals this.amdgpu amdgpu
+        # Was removed upstream but I still have it in my Nixpkgs fork. This is a
+        # little hack for making it possible to at least eval the rest of my
+        # config with nixpkgs trees that do not have yuzu.
+      ++ lib.optional (builtins.tryEval pkgs.yuzu-ea).success pkgs.yuzu-ea
       ++ [
         obs
       ];
