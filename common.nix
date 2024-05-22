@@ -53,8 +53,6 @@ in
 
   time.timeZone = "Europe/Berlin";
 
-  programs.screen.screenrc = "startup_message off";
-
   programs.direnv.enable = true;
 
   services.lorri.enable = true; # perhaps desktop-only?
