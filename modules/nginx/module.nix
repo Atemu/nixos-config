@@ -6,7 +6,7 @@ let
   inherit (lib) mkEnableOption mkOption mkIf filterAttrs mapAttrs' nameValuePair toLower;
   inherit (lib.types) attrsOf submodule nullOr port str;
   inherit (config.lib.custom) concatDomain;
-  inherit (config.custom) hostName;
+  inherit (config.networking) hostName;
   inherit (config.custom.acme) primaryDomain;
 in
 
