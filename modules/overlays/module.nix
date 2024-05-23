@@ -31,7 +31,7 @@ in
         ];
       });
 
-      nixd = prev.nixd.overrideAttrs (old: {
+      nixd = if (lib.versionOlder lib.trivial.release "24.05") then prev.nixd else (prev.nixd.overrideAttrs (old: {
         patches = old.patches or [ ] ++ [
           (final.fetchpatch2 {
             # https://github.com/nix-community/nixd/pull/502
@@ -39,7 +39,7 @@ in
             hash = "sha256-qeBIGwoR1NKwN/56n4s+pg98Blw/Dj/TzW2rN+5EoDA=";
           })
         ];
-      });
+      }));
 
       youtube-dl = (
         if final ? yt-dlp
