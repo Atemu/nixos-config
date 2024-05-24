@@ -33,6 +33,7 @@ in
         udev
       ];
     };
+    programs.steam.protontricks.enable = true;
 
     # TODO extract into a custom.gaming option
     environment.systemPackages =
@@ -47,7 +48,6 @@ in
           mangohud
           piper
           prismlauncher
-          protontricks
           teamspeak_client
           vulkan-tools
           wineWowPackages.staging
