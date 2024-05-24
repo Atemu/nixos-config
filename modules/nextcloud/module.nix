@@ -45,6 +45,11 @@ in
         # This is set to maxUploadSize but if it's 0, well....
         memory_limit = lib.mkForce "2G";
       };
+
+      extraAppsEnable = true;
+      extraApps = {
+        inherit (config.services.nextcloud.package.packages.apps) richdocuments;
+      };
     };
 
     custom.virtualHosts.nextcloud = {
