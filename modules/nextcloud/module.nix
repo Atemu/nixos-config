@@ -38,6 +38,7 @@ in
       config = {
         adminpassFile = toString (pkgs.writeText "password" "none");
       };
+      maxUploadSize = "0"; # Don't limit it.
     };
 
     custom.virtualHosts.nextcloud = {
