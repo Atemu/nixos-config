@@ -117,8 +117,7 @@ in
           # TODO Remove containers too!
           ExecStartPre = [
             (run "down")
-            # Causes logspam on pull but shows more accurate activating info
-            (run "create")
+            (run "create ${with lib; optionalString (versionAtLeast trivial.release "24.05") "--quiet-pull"}")
           ];
           ExecStart = run "up --quiet-pull --abort-on-container-exit";
 
