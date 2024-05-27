@@ -102,7 +102,7 @@ in
     networking.firewall.allowedTCPPorts = [ 80 443 ];
     networking.firewall.allowedUDPPorts = [ 80 443 ];
 
-    services.nginx.virtualHosts = mapAttrs' (name: host:
+    services.nginx.virtualHosts = (mapAttrs' (name: host:
       nameValuePair host.domain {
         forceSSL = true;
         useACMEHost = host.ACMEHost;
@@ -115,7 +115,19 @@ in
         quic = true;
         kTLS = true;
       }
-    ) validHosts;
+    ) validHosts) // {
+      # Provide a default virtualHost that captures all misguided requests
+      "default" = {
+        default = true;
+        serverName = "_"; # invalid
+
+        # Required in order to also set the default for HTTPS
+        rejectSSL = true;
+        quic = true;
+
+        locations."/".return = "404"; # FIXME int after 24.05
+      };
+    };
 
     custom.acme.domains = mapAttrs' (name: host:
       nameValuePair host.ACMEHost (mkIf host.TLS.enable {
