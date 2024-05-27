@@ -11,12 +11,7 @@ in
     amdgpu = mkEnableOption "my custom AMDGPU setup";
   };
 
-  # Sink this option when under 24.05
-  options.programs.steam = lib.optionalAttrs (lib.versionOlder lib.trivial.release "24.05") {
-    extraCompatPackages = lib.mkSinkUndeclaredOptions { };
-  };
-
-  config = mkIf this.enable {
+  config = mkIf this.enable (lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "24.05") {
     programs.steam.enable = true;
     programs.steam.extraCompatPackages = [ pkgs.proton-ge-bin ];
     programs.steam.package = pkgs.steam-small.override {
@@ -105,5 +100,5 @@ in
     hardware.steam-hardware.enable = true;
 
     services.ratbagd.enable = true;
-  };
+  });
 }
