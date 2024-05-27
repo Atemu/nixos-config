@@ -73,6 +73,10 @@
   custom.immich.enable = true;
   custom.immich.virtualHost.onPrimaryDomain = true;
 
+  custom.nextcloud.enable = true;
+  custom.nextcloud.code.enable = true;
+  custom.nextcloud.virtualHost.onPrimaryDomain = true;
+
   services.iperf3.enable = true;
   services.iperf3.openFirewall = true;
 
