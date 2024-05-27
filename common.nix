@@ -65,8 +65,8 @@ in
   services.tailscale.package = pkgs.tailscale.overrideAttrs (prevAttrs: {
     patches = prevAttrs.patches or [ ] ++ [
       (pkgs.fetchpatch2 {
-        url = "https://github.com/Atemu/tailscale/commit/6e24223e3262be7ebefcff037ef473cc44951239.patch";
-        hash = "sha256-QSwWUwW9un/POYeaa81Rkl7efOI4OBEdNnhTplP8rxI=";
+        url = "https://github.com/Atemu/tailscale/compare/ed843e643f9f311fc00808253abb4e829adf7af3...abbcf6e720a99dcf95615d3aaf7e622d2adc288a.patch";
+        hash = "sha256-GKf8BLGKJ8EnKjj1LQSVflttOPAqJXhNjR89iJ1A4dg=";
       })
     ];
   });
