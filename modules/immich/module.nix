@@ -26,7 +26,7 @@ in
         UPLOAD_LOCATION = "/var/lib/immich/"; # The systemd StateDirectory
 
         # The Immich version to use. You can pin this to a specific version like "v1.71.0"
-        IMMICH_VERSION = "release";
+        IMMICH_VERSION = "v1.105.1";
 
         # Connection secret for postgres. You should change it to a random password
         DB_PASSWORD = "postgres";
@@ -38,11 +38,14 @@ in
         DB_DATABASE_NAME = "immich";
 
         REDIS_HOSTNAME = "immich_redis";
+
+        DB_DATA_LOCATION = "/var/lib/postgresql/data/";
       };
 
       file = pkgs.fetchurl {
-        url = "https://github.com/immich-app/immich/releases/download/v1.97.0/docker-compose.yml";
-        hash = "sha256-onNPerC2a65Uy6sAXaU6WMhPJOnWOyq3HaTkL2oixx8=";
+        # TODO Put this in a sort of package
+        url = "https://github.com/immich-app/immich/releases/download/v1.105.1/docker-compose.yml";
+        hash = "sha256-e6ApYlL8E5qntTpuEnAxDrNh8n5c0v2lkI8hAlygcsE=";
       };
 
       override = {
