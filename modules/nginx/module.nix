@@ -85,6 +85,14 @@ in
     services.nginx.enable = true;
     services.nginx.package = pkgs.nginxQuic;
     services.nginx.clientMaxBodySize = "0";
+    # Don't see why I shouldn't have these on. If something crops up, I can
+    # always disable them individually.
+    services.nginx.recommendedProxySettings = true;
+    services.nginx.recommendedTlsSettings = true;
+    services.nginx.recommendedOptimisation = true;
+    services.nginx.recommendedGzipSettings = true;
+    services.nginx.recommendedBrotliSettings = true;
+    services.nginx.recommendedZstdSettings = true;
     custom.acme.enable = true;
 
     networking.firewall.allowedTCPPorts = [ 80 443 ];
@@ -97,7 +105,6 @@ in
         locations."/" = mkIf (!host.onlyEnableTLS) {
           proxyPass = "http://localhost:${toString host.localPort}";
           proxyWebsockets = true; # This is off by default. Don't know why.
-          recommendedProxySettings = true;
         };
 
         # Optimisations
