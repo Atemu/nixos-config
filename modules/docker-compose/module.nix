@@ -75,7 +75,7 @@ in
         env = mkOption {
           default = null;
           type = nullOr attrs;
-          description = "An attrset representin a docker-compose `.env` file.";
+          description = "An attrset representing a docker-compose `.env` file.";
         };
 
         override = mkOption {
