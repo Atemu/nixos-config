@@ -26,6 +26,12 @@ in
         # Doesn't do anything because GhostScript compresses down to q=95
         # anyways; this serves to not degrade quality further
         jpeg_quality = 100;
+
+        # Paperless refuses to handle signed PDFs (i.e. Docusign) by default
+        # because its OCR would invalidate the signature. Since paperless keeps
+        # originals however, this is of no relevance to me.
+        # https://github.com/paperless-ngx/paperless-ngx/discussions/4830
+        invalidate_digital_signatures = true;
       };
 
       PAPERLESS_OCR_OUTPUT_TYPE = "pdfa-3";
