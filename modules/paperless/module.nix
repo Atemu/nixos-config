@@ -46,8 +46,6 @@ in
       PAPERLESS_URL = "https://${config.custom.virtualHosts.paperless.domain}";
     };
 
-    networking.firewall.allowedTCPPorts = [ cfg.port ];
-
     custom.virtualHosts.paperless = {
       localPort = cfg.port;
     };
