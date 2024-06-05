@@ -43,7 +43,7 @@ in
       maxUploadSize = "0"; # Don't limit it.
       phpOptions = {
         # This is set to maxUploadSize but if it's 0, well....
-        memory_limit = lib.mkForce "2G";
+        memory_limit = lib.mkForce "512M"; # Recommended limit
       };
 
       extraAppsEnable = true;
