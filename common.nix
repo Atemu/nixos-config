@@ -125,6 +125,8 @@ in
   systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp/";
 
   nix = {
+    package = lib.mkIf (lib.versionAtLeast lib.trivial.release "24.05") pkgs.lix;
+
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
