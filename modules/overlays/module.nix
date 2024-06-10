@@ -31,16 +31,6 @@ in
         ];
       });
 
-      nixd = prev.nixd.overrideAttrs (old: {
-        patches = old.patches or [ ] ++ [
-          (final.fetchpatch2 {
-            # https://github.com/nix-community/nixd/pull/502
-            url = "https://github.com/nix-community/nixd/commit/918d312374bb4e35d34260e3dc22b354ba41ca4e.patch";
-            hash = "sha256-qeBIGwoR1NKwN/56n4s+pg98Blw/Dj/TzW2rN+5EoDA=";
-          })
-        ];
-      });
-
       youtube-dl = (
         if final ? yt-dlp
         then final.yt-dlp.override { withAlias = true; }
