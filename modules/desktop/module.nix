@@ -67,7 +67,7 @@ in
     programs.sway.enable = true;
     programs.sway.extraPackages = with pkgs; [
       bemenu
-      mako
+      dunst
       qt5.qtwayland
       swaylock
       xwayland
