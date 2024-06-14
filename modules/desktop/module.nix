@@ -93,6 +93,8 @@ in
 
     services.dbus.enable = true;
 
+    services.logind.extraConfig = "HandlePowerKey=suspend";
+
     xdg.portal = {
       enable = true;
       wlr.enable = true;
