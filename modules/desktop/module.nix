@@ -83,6 +83,7 @@ in
     '';
 
     programs.hyprland.enable = this.hypr.enable;
+    services.hypridle.enable = this.hypr.enable;
 
     services.xserver.desktopManager.gnome.enable = this.tablet;
     environment.gnome.excludePackages = with pkgs; [
