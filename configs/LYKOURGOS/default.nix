@@ -9,6 +9,7 @@
   networking.hostName = "LYKOURGOS";
 
   custom.desktop.enable = true;
+  custom.desktop.hypr.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
