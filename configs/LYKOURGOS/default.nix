@@ -30,5 +30,7 @@
   custom.fs.btrfs.enable = true;
   custom.fs.btrfs.newLayout = true;
 
+  custom.zramSwap.enable = true;
+
   system.stateVersion = "24.11";
 }
