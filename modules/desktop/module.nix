@@ -9,6 +9,7 @@ in
   options.custom.desktop = {
     enable = mkEnableOption "my custom desktop";
     tablet = mkEnableOption "tablet variant";
+    hypr.enable = mkEnableOption "hyprland variant";
   };
 
   config = mkIf this.enable (optionalAttrs (versionAtLeast lib.trivial.release "24.05") {
@@ -56,7 +57,12 @@ in
     services.xserver.enable = true;
     services.xserver.displayManager.gdm.enable = true;
 
-    services.displayManager.defaultSession = if this.tablet then "gnome" else "none+i3";
+    services.displayManager.defaultSession =
+      if this.hypr.enable
+      then "hyprland"
+      else if this.tablet
+      then "gnome"
+      else "none+i3";
 
     services.xserver.windowManager.i3.enable = true;
     services.xserver.windowManager.i3.extraPackages = with pkgs; [
@@ -75,6 +81,8 @@ in
     programs.sway.extraSessionCommands = ''
       [ -e ~/.wprofile ] && source ~/.wprofile
     '';
+
+    programs.hyprland.enable = this.hypr.enable;
 
     services.xserver.desktopManager.gnome.enable = this.tablet;
     environment.gnome.excludePackages = with pkgs; [
@@ -97,7 +105,8 @@ in
 
     xdg.portal = {
       enable = true;
-      wlr.enable = true;
+      # Hyprland doesn't like wlr being present
+      wlr.enable = if this.hypr.enable then lib.mkForce false else true;
       # GNOME adds xdg-desktop-portal-gtk on its own which causes a collision
       extraPortals = mkIf (!config.services.xserver.desktopManager.gnome.enable) [
         # TODO I'd prefer to use `pkgs.xdg-desktop-portal-kde'. This currently
