@@ -91,6 +91,7 @@ in
 
     environment.systemPackages = with pkgs; [
       brightnessctl
+      wofi
     ]
     ++ optionals this.tablet [
       write_stylus
