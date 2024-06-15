@@ -9,6 +9,16 @@ in
   options.custom.gaming = {
     enable = mkEnableOption "my custom gaming setup";
     amdgpu = mkEnableOption "my custom AMDGPU setup";
+
+    steamvr.unprivilegedHighPriorityQueue = mkEnableOption ''
+      whether to allow any unprivileged process to create a high priority queue.
+      This is a workaround required for SteamVR's asynchronous projection to
+      function properly within the Nix Steam FHS container.
+
+      Note that enabling this has security implications as it'd allow any
+      process to deny service of the system (DOS). This should however not be
+      a critical vulnerability on a typical single-user desktop machine.
+    '';
   };
 
   config = mkIf this.enable (lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "24.05") {
@@ -94,6 +104,16 @@ in
       Option "VariableRefresh" "True"
     '';
     boot.initrd.kernelModules = mkIf this.amdgpu [ "amdgpu" ];
+
+    boot.kernelPatches = mkIf (this.steamvr.unprivilegedHighPriorityQueue) [
+      {
+        name = "cap_sys_nice_begone";
+        patch = pkgs.fetchpatch2 {
+          url = "https://github.com/Frogging-Family/community-patches/raw/a6a468420c0df18d51342ac6864ecd3f99f7011e/linux61-tkg/cap_sys_nice_begone.mypatch";
+          hash = "sha256-1wUIeBrUfmRSADH963Ax/kXgm9x7ea6K6hQ+bStniIY=";
+        };
+      }
+    ];
 
     custom.lact.enable = this.amdgpu;
 

@@ -14,6 +14,7 @@
   custom.desktop.enable = true;
 
   custom.gaming.enable = true;
+  custom.gaming.steamvr.unprivilegedHighPriorityQueue = true;
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
