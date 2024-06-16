@@ -19,6 +19,7 @@
   boot.kernelModules = [ "kvm-amd" ];
 
   services.fprintd.enable = true;
+  services.fwupd.enable = true;
 
   services.power-profiles-daemon.enable = true;
 
