@@ -37,6 +37,14 @@ in
         dbus
         udev
       ];
+      # My games library is mounted at /Volumes/Games/. Starting SteamVR with it
+      # sylinked to steamapps/common causes steamwebhelper to crash continually
+      # while SteamVR is running. Interestingly, this does not happen when the
+      # symlink target is /tmp and a few other specific locations. I guess my
+      # library is at "/tmp/Games" now.
+      extraBwrapArgs = [
+        "--bind /Volumes/Games/ /tmp/Games/"
+      ];
     };
     programs.steam.protontricks.enable = true;
 
