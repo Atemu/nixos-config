@@ -113,14 +113,16 @@ in
     '';
     boot.initrd.kernelModules = mkIf this.amdgpu [ "amdgpu" ];
 
-    boot.kernelPatches = mkIf (this.steamvr.unprivilegedHighPriorityQueue) [
-      {
-        name = "cap_sys_nice_begone";
-        patch = pkgs.fetchpatch2 {
-          url = "https://github.com/Frogging-Family/community-patches/raw/a6a468420c0df18d51342ac6864ecd3f99f7011e/linux61-tkg/cap_sys_nice_begone.mypatch";
-          hash = "sha256-1wUIeBrUfmRSADH963Ax/kXgm9x7ea6K6hQ+bStniIY=";
-        };
-      }
+    boot.extraModulePackages = mkIf (this.steamvr.unprivilegedHighPriorityQueue) [
+      (pkgs.callPackage ./amdgpu-module.nix {
+        inherit (config.boot.kernelPackages) kernel;
+        patches = [
+          (pkgs.fetchpatch2 {
+            url = "https://github.com/Frogging-Family/community-patches/raw/a6a468420c0df18d51342ac6864ecd3f99f7011e/linux61-tkg/cap_sys_nice_begone.mypatch";
+            hash = "sha256-1wUIeBrUfmRSADH963Ax/kXgm9x7ea6K6hQ+bStniIY=";
+          })
+        ];
+      })
     ];
 
     custom.lact.enable = this.amdgpu;
