@@ -6,7 +6,7 @@
     ../../hardware/FW16.nix
   ];
 
-  networking.hostName = "LYKOURGOS";
+  networking.hostName = "THESEUS";
 
   custom.desktop.enable = true;
   custom.desktop.hypr.enable = true;
