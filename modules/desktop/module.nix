@@ -15,8 +15,6 @@ in
   config = mkIf this.enable (optionalAttrs (versionAtLeast lib.trivial.release "24.05") {
     boot.kernel.sysctl = { "kernel.sysrq" = 1; };
 
-    sound.enable = true;
-
     hardware.pulseaudio.enable = false;
     services.pipewire.enable = true;
     services.pipewire.pulse.enable = true;
