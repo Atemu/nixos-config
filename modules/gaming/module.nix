@@ -21,7 +21,7 @@ in
     '';
   };
 
-  config = mkIf this.enable (lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "24.05") {
+  config = mkIf this.enable (lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "24.11") {
     programs.steam.enable = true;
     programs.steam.extraCompatPackages = [ pkgs.proton-ge-bin ];
     programs.steam.package = pkgs.steam-small.override {
