@@ -6,9 +6,10 @@
     ../../hardware/FW16.nix
   ];
 
-  networking.hostName = "LYKOURGOS";
+  networking.hostName = "THESEUS";
 
   custom.desktop.enable = true;
+  custom.desktop.hypr.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
@@ -29,6 +30,8 @@
   custom.fs.enable = true;
   custom.fs.btrfs.enable = true;
   custom.fs.btrfs.newLayout = true;
+
+  custom.zramSwap.enable = true;
 
   system.stateVersion = "24.11";
 }
