@@ -5,7 +5,7 @@ let
     then nixfiles."${thing}"
     else builtins.trace "warning: nixfiles not present, using ${thing} from $NIX_PATH!" (builtins.findFile builtins.nixPath thing);
   nixpkgs = getFromNixfiles "nixpkgs";
-  nixpkgs-2311 = getFromNixfiles "nixpkgs-23.11";
+  nixpkgs-2405 = getFromNixfiles "nixpkgs-24.05";
 in
 {
   meta = {
@@ -18,7 +18,7 @@ in
 
     # You can also override Nixpkgs by node!
     nodeNixpkgs = {
-      SOTERIA = nixpkgs-2311;
+      SOTERIA = nixpkgs-2405;
     };
 
     # If your Colmena host has nix configured to allow for remote builds
