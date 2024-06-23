@@ -1,7 +1,9 @@
 # This file contains the configuration of disks and storage
 { config, ... }:
 
-with config.lib.custom;
+let
+  inherit (config.lib.custom) mkLabel;
+in
 
 {
   custom.bootloader.choice = "systemd-boot";
