@@ -100,7 +100,7 @@ in
   users.users.atemu = {
     isNormalUser = true;
     # TODO set these in the respective modules
-    extraGroups = [ "wheel" "networkmanager" "docker" "video" "libvirtd" "corectrl" "paperless" "scanner" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "video" "paperless" "scanner" ];
     shell = pkgs.bash;
     initialPassword = "none";
     home = lib.mkIf config.custom.fs.btrfs.newLayout "/Users/atemu";
