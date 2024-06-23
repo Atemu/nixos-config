@@ -88,6 +88,8 @@ in
       orca
     ];
 
+    hardware.brillo.enable = true;
+
     environment.systemPackages = with pkgs; [
       brightnessctl
       wofi
