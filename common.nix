@@ -1,8 +1,6 @@
 { config, lib, pkgs, ... }:
 
 let
-  nixfiles = "/nix/var/nix/nixfiles";
-
   inherit (lib) attrValues substring;
 in
 
@@ -117,8 +115,7 @@ in
   };
 
   nix.nixPath = [
-    "nixpkgs=${nixfiles}/nixpkgs"
-    "nixos-config=${nixfiles}/nixos-config"
+    "nixpkgs=/nix/var/nix/nixpkgs"
     "/nix/var/nix/profiles/per-user/root/channels"
   ];
 
