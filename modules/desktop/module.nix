@@ -139,6 +139,8 @@ in
 
     services.xserver.wacom.enable = this.tablet;
 
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
     programs.ausweisapp.enable = true;
     programs.ausweisapp.openFirewall = true;
 
