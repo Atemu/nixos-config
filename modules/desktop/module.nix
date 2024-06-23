@@ -72,6 +72,7 @@ in
     programs.sway.extraPackages = with pkgs; [
       bemenu
       dunst
+      foot
       qt5.qtwayland
       swaylock
       xwayland
