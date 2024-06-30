@@ -32,6 +32,7 @@ stdenv.mkDerivation {
       INSTALL_MOD_PATH="$out" \
       XZ="xz -T$NIX_BUILD_CORES" \
       M="$modulePath" \
+      INSTALL_MOD_STRIP=1 \
       modules_install
   '';
 
