@@ -17,7 +17,7 @@ in
     services.paperless.enable = true;
     services.paperless.address = "0.0.0.0";
     services.paperless.passwordFile = builtins.toFile "password" "none";
-    services.paperless.extraConfig = {
+    services.paperless.settings = {
       PAPERLESS_OCR_LANGUAGE = "deu";
 
       PAPERLESS_OCR_USER_ARGS = builtins.toJSON {
