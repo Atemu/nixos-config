@@ -2,7 +2,12 @@
 
 let
   this = config.custom.remotebuild;
-  inherit (lib) mkEnableOption mkOption mkIf mkMerge;
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    mkMerge
+    ;
 in
 
 {
@@ -13,9 +18,7 @@ in
       cccda = mkEnableOption "cccda remote builders";
     };
 
-    sshKey = mkOption {
-      default = "${config.users.users.atemu.home}/.ssh/id_ed25519";
-    };
+    sshKey = mkOption { default = "${config.users.users.atemu.home}/.ssh/id_ed25519"; };
   };
 
   config = mkIf this.enable (mkMerge [
@@ -30,77 +33,36 @@ in
 
       nix = {
         distributedBuilds = true;
-        buildMachines = [
-          {
-            hostName = "build1.darmstadt.ccc.de";
-            protocol = "ssh";
-            sshUser = "atemu";
-            inherit (this) sshKey;
-            systems = [
-              "i686-linux"
-              "x86_64-linux"
-            ];
-            maxJobs = 4;
-            speedFactor = 6;
-            supportedFeatures = [
-              "big-parallel"
-              "kvm"
-              "nixos-test"
-            ];
-          }
-          {
-            hostName = "build2.darmstadt.ccc.de";
-            protocol = "ssh";
-            sshUser = "atemu";
-            inherit (this) sshKey;
-            systems = [
-              "i686-linux"
-              "x86_64-linux"
-            ];
-            maxJobs = 4;
-            speedFactor = 6;
-            supportedFeatures = [
-              "big-parallel"
-              "kvm"
-              "nixos-test"
-            ];
-          }
-          {
-            hostName = "build3.darmstadt.ccc.de";
-            protocol = "ssh";
-            sshUser = "atemu";
-            inherit (this) sshKey;
-            systems = [
-              "i686-linux"
-              "x86_64-linux"
-            ];
-            maxJobs = 4;
-            speedFactor = 6;
-            supportedFeatures = [
-              "big-parallel"
-              "kvm"
-              "nixos-test"
-            ];
-          }
-          {
-            hostName = "build4.darmstadt.ccc.de";
-            protocol = "ssh";
-            sshUser = "atemu";
-            inherit (this) sshKey;
-            systems = [
-              "i686-linux"
-              "x86_64-linux"
-            ];
-            # this node has half the cpu of the others
-            maxJobs = 2;
-            speedFactor = 6;
-            supportedFeatures = [
-              "big-parallel"
-              "kvm"
-              "nixos-test"
-            ];
-          }
-        ];
+        buildMachines =
+          let
+            common = {
+              protocol = "ssh";
+              sshUser = "atemu";
+              inherit (this) sshKey;
+              systems = [
+                "i686-linux"
+                "x86_64-linux"
+              ];
+              maxJobs = 4;
+              speedFactor = 6;
+              supportedFeatures = [
+                "big-parallel"
+                "kvm"
+                "nixos-test"
+              ];
+            };
+          in
+          map (builder: common // builder) [
+            { hostName = "build1.darmstadt.ccc.de"; }
+            { hostName = "build2.darmstadt.ccc.de"; }
+            { hostName = "build3.darmstadt.ccc.de"; }
+            {
+              hostName = "build4.darmstadt.ccc.de";
+              # this node has half the cpu of the others
+              maxJobs = 2;
+              speedFactor = 6;
+            }
+          ];
       };
     })
   ]);
