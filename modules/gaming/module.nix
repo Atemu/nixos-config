@@ -68,7 +68,6 @@ in
         amdgpu = with pkgs; [
           lact
           radeontop
-          rocmPackages.rocm-smi
           umr
         ];
 
