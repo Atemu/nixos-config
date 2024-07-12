@@ -11,6 +11,8 @@
   custom.desktop.enable = true;
   custom.desktop.hypr.enable = true;
 
+  boot.kernelPackages = pkgs.linuxPackages_6_9;
+
   boot.initrd.systemd.enable = true;
 
   services.sshd.enable = true;
