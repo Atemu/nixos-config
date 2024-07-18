@@ -33,7 +33,6 @@
 
   programs.adb.enable = true;
 
-  services.taler.enable = true;
   services.taler.exchange.enable = true;
   services.taler.exchange.debug = true;
   services.taler.exchange.denominationConfig = ''
@@ -49,8 +48,9 @@
     RSA_KEYSIZE = 2048
     CIPHER = RSA
   '';
+  # services.taler.enable = true;
   services.taler.settings.taler.CURRENCY = "KUDOS";
-  services.taler.settings.exchange = {
+  services.taler.exchange.settings.exchange = {
     MASTER_PUBLIC_KEY = "Q6KCV81R9T3SC41T5FCACC2D084ACVH5A25FH44S6M5WXWZAA8P0";
   };
   # TODO make abstraction for this
@@ -67,14 +67,14 @@
     USERNAME = "exchange";
     PASSWORD = "exchange";
   };
-  services.taler.settings.libeufin-bank = {
+
+  services.libeufin.bank.enable = true;
+  services.libeufin.bank.debug = true;
+  services.libeufin.bank.settings.libeufin-bank = {
     SUGGESTED_WITHDRAWAL_EXCHANGE = "https://${config.custom.virtualHosts.exchange.domain}/";
 
     WIRE_TYPE = "x-taler-bank";
   };
-
-  services.taler.libeufin.bank.enable = true;
-  services.taler.libeufin.bank.debug = true;
 
   custom.virtualHosts.exchange.localPort = 8081;
   custom.virtualHosts.bank.localPort = 8082;
