@@ -53,6 +53,7 @@ let
     file
     git
     git-annex
+    git-remote-gcrypt
     gnupg
     hdparm
     hyperfine
