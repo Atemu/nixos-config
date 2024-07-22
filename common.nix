@@ -142,7 +142,7 @@ in
       builders-use-substitutes = true;
     };
 
-    daemonCPUSchedPolicy = "idle";
+    daemonCPUSchedPolicy = "batch";
     daemonIOSchedClass = "idle";
     # maybe set to batch on non-desktop
   };
