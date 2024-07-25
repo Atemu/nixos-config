@@ -142,6 +142,8 @@ in
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
+    services.printing.enable = true;
+
     programs.ausweisapp.enable = true;
     programs.ausweisapp.openFirewall = true;
 
