@@ -4,6 +4,7 @@ let
   this = config.custom.immich;
   inherit (lib) mkEnableOption mkOption types mkIf pipe filterAttrs mapAttrs genAttrs optional mkAliasOptionModule;
   inherit (config.lib.custom) concatDomain;
+  version = "v1.108.0";
 in
 
 {
@@ -16,6 +17,16 @@ in
   ];
 
   config = mkIf this.enable {
+    assertions = [
+        {
+          assertion = lib.versionAtLeast config.virtualisation.docker.package.version "25.0";
+          message = ''
+            Docker engine >= 25 is required for Immich
+          '';
+        }
+    ];
+    virtualisation.docker.package = lib.mkDefault pkgs.docker_25;
+
     custom.docker-compose.immich = {
       stateDirectory.enable = true;
 
@@ -26,7 +37,7 @@ in
         UPLOAD_LOCATION = "/var/lib/immich/"; # The systemd StateDirectory
 
         # The Immich version to use. You can pin this to a specific version like "v1.71.0"
-        IMMICH_VERSION = "v1.105.1";
+        IMMICH_VERSION = version;
 
         # Connection secret for postgres. You should change it to a random password
         DB_PASSWORD = "postgres";
@@ -44,8 +55,8 @@ in
 
       file = pkgs.fetchurl {
         # TODO Put this in a sort of package
-        url = "https://github.com/immich-app/immich/releases/download/v1.105.1/docker-compose.yml";
-        hash = "sha256-e6ApYlL8E5qntTpuEnAxDrNh8n5c0v2lkI8hAlygcsE=";
+        url = "https://github.com/immich-app/immich/releases/download/${version}/docker-compose.yml";
+        hash = "sha256-3+EjbLG53HNJLw26wjEvogiz4vzfnr7/WiDR70s46is=";
       };
 
       override = {
