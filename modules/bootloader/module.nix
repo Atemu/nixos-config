@@ -2,20 +2,19 @@
 
 let
   this = config.custom.bootloader;
-  inherit (lib) mkEnableOption mkOption types mkIf;
 in
 
 {
   options.custom.bootloader = {
-    enable = mkEnableOption "my bootloader abstraction";
-    choice = mkOption {
+    enable = lib.mkEnableOption "my bootloader abstraction";
+    choice = lib.mkOption {
       default = "systemd-boot";
-      type = types.enum [ "systemd-boot" ];
+      type = lib.types.enum [ "systemd-boot" ];
       description = "The bootloader to use. Currently, only systemd-boot is supported";
     };
   };
 
-  config = mkIf (this.enable && this.choice == "systemd-boot") {
+  config = lib.mkIf (this.enable && this.choice == "systemd-boot") {
     boot.loader.grub.enable = false;
     boot.loader.systemd-boot.enable = true;
     boot.loader.systemd-boot.consoleMode = "auto";

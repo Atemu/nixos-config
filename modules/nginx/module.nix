@@ -3,8 +3,6 @@
 let
   this = config.custom.virtualHosts;
 
-  inherit (lib) mkEnableOption mkOption mkIf filterAttrs mapAttrs' nameValuePair toLower;
-  inherit (lib.types) attrsOf submodule nullOr port str;
   inherit (config.lib.custom) concatDomain;
   inherit (config.networking) hostName;
   inherit (config.custom.acme) primaryDomain;
@@ -12,65 +10,65 @@ in
 
 {
   options.custom = {
-    virtualHosts = mkOption {
+    virtualHosts = lib.mkOption {
       description = ''
         A declaration of virtual hosts provided on this machine.
       '';
       default = { };
-      type = attrsOf (submodule ({ name, config, ... }: {
+      type = lib.types.attrsOf (lib.types.submodule ({ name, config, ... }: {
         options = {
-          subdomain = mkOption {
+          subdomain = lib.mkOption {
             default = name;
             defaultText = "Use the <name>.";
-            type = nullOr str;
+            type = with lib.types; nullOr str;
             description = ''
               The subdomain to place this service under. Set to `null` or `""` to configure the baseDomain.
             '';
           };
 
-          onPrimaryDomain = mkEnableOption "place this service on {option}`custom.primaryDomain`";
+          onPrimaryDomain = lib.mkEnableOption "place this service on {option}`custom.primaryDomain`";
 
-          baseDomain = mkOption {
+          baseDomain = lib.mkOption {
             default = (
               if config.onPrimaryDomain
               then primaryDomain
-              else concatDomain [ (toLower hostName) primaryDomain ]
+              else concatDomain [ (lib.toLower hostName) primaryDomain ]
             );
           };
 
-          domain = mkOption {
+          domain = lib.mkOption {
             default = concatDomain [ config.subdomain config.baseDomain ];
-            type = str;
+            type = lib.types.str;
             description = ''
               The full domain to use for this virtualHost. Should be left on default.
             '';
           };
 
-          ACMEHost = mkOption {
+          ACMEHost = lib.mkOption {
             default = if config.onPrimaryDomain then config.domain else config.baseDomain;
             defaultText = "A specific {option}`domain` if the host is {option}`onPrimaryDomain` or a wildcard on the host's {option}`baseDomain`.";
-            type = str;
+            type = lib.types.str;
             description = ''
               The host to use for the ACME cert.
             '';
           };
 
           TLS = {
-            enable = mkEnableOption "TLS certificates via ACME" // mkOption {
+            enable = lib.mkEnableOption "TLS certificates via ACME" // lib.mkOption {
               default = true;
             };
           };
 
-          localPort = mkOption {
+          localPort = lib.mkOption {
             default = 80;
-            type = port;
+            type = lib.types.port;
             description = ''
               Local port that should be addressed when this subdomain is called.
               If the service listens on `localhost:1234`, set this to `1234`.
             '';
           };
 
-          onlyEnableTLS = mkEnableOption ''
+          onlyEnableTLS = lib.mkEnableOption ''
             only enable TLS settings for this virtualHost.
             This is useful to when using this module to override an external nginx configuration.
           '';
@@ -80,8 +78,8 @@ in
   };
 
   config = let
-    validHosts = filterAttrs (name: host: host.TLS.enable || !host.onlyEnableTLS) this;
-  in mkIf (validHosts != { }) {
+    validHosts = lib.filterAttrs (name: host: host.TLS.enable || !host.onlyEnableTLS) this;
+  in lib.mkIf (validHosts != { }) {
     services.nginx.enable = true;
     services.nginx.package = pkgs.nginxQuic;
     services.nginx.clientMaxBodySize = "0";
@@ -102,11 +100,11 @@ in
     networking.firewall.allowedTCPPorts = [ 80 443 ];
     networking.firewall.allowedUDPPorts = [ 80 443 ];
 
-    services.nginx.virtualHosts = (mapAttrs' (name: host:
-      nameValuePair host.domain {
+    services.nginx.virtualHosts = (lib.mapAttrs' (name: host:
+      lib.nameValuePair host.domain {
         forceSSL = true;
         useACMEHost = host.ACMEHost;
-        locations."/" = mkIf (!host.onlyEnableTLS) {
+        locations."/" = lib.mkIf (!host.onlyEnableTLS) {
           proxyPass = "http://localhost:${toString host.localPort}";
           proxyWebsockets = true; # This is off by default. Don't know why.
         };
@@ -129,9 +127,9 @@ in
       };
     };
 
-    custom.acme.domains = mapAttrs' (name: host:
-      nameValuePair host.ACMEHost (mkIf host.TLS.enable {
-        wildcard = mkIf (!host.onPrimaryDomain) true;
+    custom.acme.domains = lib.mapAttrs' (name: host:
+      lib.nameValuePair host.ACMEHost (lib.mkIf host.TLS.enable {
+        wildcard = lib.mkIf (!host.onPrimaryDomain) true;
       })
     ) validHosts;
   };

@@ -1,5 +1,5 @@
 # This file contains the configuration of disks and storage
-{ config, ... }:
+{ ... }:
 
 {
   # TODO externalise

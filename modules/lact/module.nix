@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkEnableOption mkOption mkIf;
   this = config.custom.lact;
 
   configFile = pkgs.runCommand "lact-config.yaml" {
@@ -16,8 +15,8 @@ in
 
 {
   options.custom.lact = {
-    enable = mkEnableOption "my LACT module";
-    settings = mkOption {
+    enable = lib.mkEnableOption "my LACT module";
+    settings = lib.mkOption {
       default = { };
       type = lib.types.submodule {
         freeformType = (pkgs.formats.yaml { }).type;
@@ -31,18 +30,18 @@ in
     };
   };
 
-  config = mkIf this.enable {
+  config = lib.mkIf this.enable {
     systemd.packages = with pkgs; [
       lact
     ];
     systemd.services.lactd.wantedBy = [ "multi-user.target" ];
 
-    environment.etc."lact/config.yaml" = mkIf (this.settings != { }) {
+    environment.etc."lact/config.yaml" = lib.mkIf (this.settings != { }) {
       source = configFile;
     };
     systemd.services.lactd = {
       # Restart if config changed
-      restartTriggers = mkIf (this.settings != { }) [ configFile ];
+      restartTriggers = lib.mkIf (this.settings != { }) [ configFile ];
     };
   };
 }

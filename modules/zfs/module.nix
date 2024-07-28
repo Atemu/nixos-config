@@ -1,17 +1,15 @@
 { lib, config, ... }:
 
-with lib;
-
 let
   this = config.custom.zfs;
 in
 
 {
   options.custom.zfs = {
-    enable = mkEnableOption "my preferred ZFS settings";
+    enable = lib.mkEnableOption "my preferred ZFS settings";
   };
 
-  config = mkIf this.enable {
+  config = lib.mkIf this.enable {
     boot.supportedFilesystems = [ "zfs" ];
     boot.zfs.forceImportAll = false;
     boot.zfs.forceImportRoot = false;

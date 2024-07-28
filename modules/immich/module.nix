@@ -2,21 +2,19 @@
 
 let
   this = config.custom.immich;
-  inherit (lib) mkEnableOption mkOption types mkIf pipe filterAttrs mapAttrs genAttrs optional mkAliasOptionModule;
-  inherit (config.lib.custom) concatDomain;
   version = "v1.108.0";
 in
 
 {
   options.custom.immich = {
-    enable = mkEnableOption "my Immich setup";
+    enable = lib.mkEnableOption "my Immich setup";
   };
 
   imports = [
-    (mkAliasOptionModule [ "custom" "immich" "virtualHost" ] [ "custom" "virtualHosts" "immich" ])
+    (lib.mkAliasOptionModule [ "custom" "immich" "virtualHost" ] [ "custom" "virtualHosts" "immich" ])
   ];
 
-  config = mkIf this.enable {
+  config = lib.mkIf this.enable {
     assertions = [
         {
           assertion = lib.versionAtLeast config.virtualisation.docker.package.version "25.0";

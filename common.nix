@@ -1,9 +1,5 @@
 { config, lib, pkgs, ... }:
 
-let
-  inherit (lib) attrValues substring;
-in
-
 {
   imports = [
     ./modules.nix
@@ -76,7 +72,7 @@ in
   networking.firewall.logRefusedConnections = false;
 
   # The hostId is set to the first 8 chars of the sha256 of the hostName
-  networking.hostId = substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
+  networking.hostId = lib.substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
 
   services.avahi = {
     enable = true;
@@ -112,7 +108,7 @@ in
         PLATON = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHK/Gx95TAvE5GmEuLwWgOQpwjkWNaVavprNlFOuCjFI atemu@PLATON";
       };
       # All keys but the host's own key
-    in attrValues (removeAttrs hostKeys [ config.networking.hostName ]);
+    in lib.attrValues (removeAttrs hostKeys [ config.networking.hostName ]);
   };
 
   nix.nixPath = [

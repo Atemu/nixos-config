@@ -2,23 +2,22 @@
 
 let
   this = config.custom.dnscrypt;
-  inherit (lib) mkEnableOption mkOption mkIf recursiveUpdate;
 in
 
 {
   options.custom.dnscrypt = {
-    enable = mkEnableOption "my custom dnscrypt-proxy config";
+    enable = lib.mkEnableOption "my custom dnscrypt-proxy config";
 
-    passthru = mkOption {
+    passthru = lib.mkOption {
       description = "options to pass through to the regular services.dnscrypt-proxy2";
       default = { };
     };
 
-    listen = mkEnableOption "dnscrypt-proxy should listen on port 53";
+    listen = lib.mkEnableOption "dnscrypt-proxy should listen on port 53";
   };
 
-  config = mkIf this.enable {
-    services.dnscrypt-proxy2 = (recursiveUpdate {
+  config = lib.mkIf this.enable {
+    services.dnscrypt-proxy2 = (lib.recursiveUpdate {
       enable = true;
 
       settings = {
@@ -44,6 +43,6 @@ in
       '';
     } this.passthru);
 
-    networking.firewall.allowedUDPPorts = mkIf this.listen [ 53 ];
+    networking.firewall.allowedUDPPorts = lib.mkIf this.listen [ 53 ];
   };
 }

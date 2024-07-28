@@ -2,17 +2,16 @@
 
 let
   this = config.custom.desktop;
-  inherit (lib) mkEnableOption mkIf versionAtLeast optionals optionalAttrs;
 in
 
 {
   options.custom.desktop = {
-    enable = mkEnableOption "my custom desktop";
-    tablet = mkEnableOption "tablet variant";
-    hypr.enable = mkEnableOption "hyprland variant";
+    enable = lib.mkEnableOption "my custom desktop";
+    tablet = lib.mkEnableOption "tablet variant";
+    hypr.enable = lib.mkEnableOption "hyprland variant";
   };
 
-  config = mkIf this.enable (optionalAttrs (versionAtLeast lib.trivial.release "24.05") {
+  config = lib.mkIf this.enable (lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "24.05") {
     boot.kernel.sysctl = { "kernel.sysrq" = 1; };
 
     hardware.pulseaudio.enable = false;
@@ -91,15 +90,15 @@ in
 
     hardware.brillo.enable = true;
 
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages = (with pkgs; [
       brightnessctl
       wofi
       wev
-    ]
-    ++ optionals this.tablet [
+    ])
+    ++ lib.optionals this.tablet (with pkgs; [
       write_stylus
-    ];
-    custom.packages.allowedUnfree = mkIf this.tablet [
+    ]);
+    custom.packages.allowedUnfree = lib.mkIf this.tablet [
       "write_stylus"
     ];
 
@@ -112,7 +111,7 @@ in
       # Hyprland doesn't like wlr being present
       wlr.enable = if this.hypr.enable then lib.mkForce false else true;
       # GNOME adds xdg-desktop-portal-gtk on its own which causes a collision
-      extraPortals = mkIf (!config.services.xserver.desktopManager.gnome.enable) [
+      extraPortals = lib.mkIf (!config.services.xserver.desktopManager.gnome.enable) [
         # TODO I'd prefer to use `pkgs.xdg-desktop-portal-kde'. This currently
         # causes Firefox to go into a sort of QT compatibility mode which
         # disables my Emacs gtk key-theme however, so not an option

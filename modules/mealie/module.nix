@@ -2,19 +2,18 @@
 
 let
   this = config.custom.mealie;
-  inherit (lib) mkEnableOption mkAliasOptionModule mkIf;
 in
 
 {
   options.custom.mealie = {
-    enable = mkEnableOption "my mealie setup";
+    enable = lib.mkEnableOption "my mealie setup";
   };
 
   imports = [
-    (mkAliasOptionModule [ "custom" "mealie" "virtualHost" ] [ "custom" "virtualHosts" "mealie" ])
+    (lib.mkAliasOptionModule [ "custom" "mealie" "virtualHost" ] [ "custom" "virtualHosts" "mealie" ])
   ];
 
-  config = mkIf this.enable {
+  config = lib.mkIf this.enable {
     services.mealie.enable = true;
 
     custom.virtualHosts.mealie = {

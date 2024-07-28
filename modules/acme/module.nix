@@ -2,8 +2,6 @@
 
 let
   this = config.custom.acme;
-  inherit (lib) mkIf mkEnableOption mkOption warn mapAttrs' nameValuePair;
-  inherit (lib.types) attrsOf submodule;
   inherit (config.lib.custom) mkPrivateOption concatDomain;
 
   example = {
@@ -14,7 +12,7 @@ in
 
 {
   options.custom.acme = {
-    enable = mkEnableOption "SSL certs via ACME";
+    enable = lib.mkEnableOption "SSL certs via ACME";
 
     primaryDomain = mkPrivateOption {
       default = example.primaryDomain;
@@ -32,23 +30,23 @@ in
       '';
     };
 
-    domains = mkOption {
+    domains = lib.mkOption {
       default = { };
-      type = attrsOf (submodule {
+      type = lib.types.attrsOf (lib.types.submodule {
         options = {
-          wildcard = mkEnableOption "a wildcard cert for this subdomain";
+          wildcard = lib.mkEnableOption "a wildcard cert for this subdomain";
         };
       });
     };
   };
 
-  config = mkIf this.enable {
+  config = lib.mkIf this.enable {
     security.acme.acceptTerms = true;
     security.acme.defaults = {
       # Use staging server if test values are used
       server = let
         isTestValues = this.primaryDomain == example.primaryDomain || this.email == example.email;
-      in mkIf (isTestValues) (warn
+      in lib.mkIf isTestValues (lib.warn
         "ACME test values were used, using staging ACME server."
         "https://acme-staging-v02.api.letsencrypt.org/directory"
       );
@@ -63,8 +61,8 @@ in
       group = "nginx";
     };
 
-    security.acme.certs = mapAttrs' (name: subdomain:
-      nameValuePair name {
+    security.acme.certs = lib.mapAttrs' (name: subdomain:
+      lib.nameValuePair name {
         domain = if subdomain.wildcard then concatDomain [ "*" name ] else name;
       }
     ) this.domains;

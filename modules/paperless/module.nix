@@ -1,19 +1,18 @@
 { lib, config, pkgs, ... }:
 
 let
-  inherit (lib) mkEnableOption mkOption mkIf getBin;
   this = config.custom.paperless;
   cfg = config.services.paperless;
 in
 
 {
   options.custom.paperless = {
-    enable = mkEnableOption "my custom paperless config";
+    enable = lib.mkEnableOption "my custom paperless config";
 
-    autoExport = mkEnableOption "efficient export of paperless content to the `export` directory under {option}`services.paperless.dataDir`";
+    autoExport = lib.mkEnableOption "efficient export of paperless content to the `export` directory under {option}`services.paperless.dataDir`";
   };
 
-  config = mkIf this.enable {
+  config = lib.mkIf this.enable {
     services.paperless.enable = true;
     services.paperless.address = "0.0.0.0";
     services.paperless.passwordFile = builtins.toFile "password" "none";
@@ -50,14 +49,14 @@ in
       localPort = cfg.port;
     };
 
-    systemd.services.paperless-exporter = mkIf this.autoExport {
+    systemd.services.paperless-exporter = lib.mkIf this.autoExport {
       serviceConfig.User = config.services.paperless.user;
 
       script = ''
         exportDir="${cfg.dataDir}/export"
 
         # Create hardlinks of all documents
-        ${getBin pkgs.coreutils}/bin/cp --link --archive --update ${cfg.mediaDir}/documents/originals/. $exportDir
+        ${lib.getBin pkgs.coreutils}/bin/cp --link --archive --update ${cfg.mediaDir}/documents/originals/. $exportDir
 
         # Run the exporter
         cmd=(

@@ -2,15 +2,14 @@
 
 let
   this = config.custom.overlays;
-  inherit (lib) mkEnableOption mkIf;
 in
 
 {
   options.custom.overlays = {
-    enable = mkEnableOption "my custom overlays";
+    enable = lib.mkEnableOption "my custom overlays";
   };
 
-  config.nixpkgs.overlays = mkIf this.enable [
+  config.nixpkgs.overlays = lib.mkIf this.enable [
     (final: prev: {
       # A firefox with PGO, enabled in regular from-source firefox since 22.05
       firefox-pgo = if lib.versionAtLeast lib.trivial.version "22.05" then final.firefox else final.firefox-bin;

@@ -6,8 +6,8 @@ let
 in
 
 {
-  options.custom.luks = with lib; {
-    autoDevices = mkOption {
+  options.custom.luks = {
+    autoDevices = lib.mkOption {
       type = labelNumber;
       default = 0;
       description = ''
@@ -16,8 +16,8 @@ in
         Generates from number = 01 onwards in the pattern of "''${hostName}-crypt''${number}"
       '';
     };
-    devices = mkOption {
-      type = types.listOf (labelNumber);
+    devices = lib.mkOption {
+      type = lib.types.listOf labelNumber;
       default = [ ];
       description = ''
         Same as `autoDevices` but with manually specified numbers. Union-merged with `autoDevices` when both are declared.

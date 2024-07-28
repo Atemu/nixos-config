@@ -1,21 +1,20 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 
 let
-  inherit (lib) mkEnableOption mkOption mkIf;
   this = config.custom.actualbudget;
 in
 
 {
   options.custom.actualbudget = {
-    enable = mkEnableOption "my custom actualbudget";
+    enable = lib.mkEnableOption "my custom actualbudget";
 
-    port = mkOption {
+    port = lib.mkOption {
       default = 5006;
       type = lib.types.port;
     };
   };
 
-  config = mkIf this.enable {
+  config = lib.mkIf this.enable {
     # Basically the simply upstream docker-compose.yml
     # https://github.com/actualbudget/actual-server/blob/master/docker-compose.yml
     custom.docker-compose.actualbudget.YAML = {

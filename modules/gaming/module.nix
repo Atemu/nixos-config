@@ -1,16 +1,15 @@
 { config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkEnableOption mkIf optionals;
   this = config.custom.gaming;
 in
 
 {
   options.custom.gaming = {
-    enable = mkEnableOption "my custom gaming setup";
-    amdgpu = mkEnableOption "my custom AMDGPU setup";
+    enable = lib.mkEnableOption "my custom gaming setup";
+    amdgpu = lib.mkEnableOption "my custom AMDGPU setup";
 
-    steamvr.unprivilegedHighPriorityQueue = mkEnableOption ''
+    steamvr.unprivilegedHighPriorityQueue = lib.mkEnableOption ''
       whether to allow any unprivileged process to create a high priority queue.
       This is a workaround required for SteamVR's asynchronous projection to
       function properly within the Nix Steam FHS container.
@@ -21,7 +20,7 @@ in
     '';
   };
 
-  config = mkIf this.enable (lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "24.11") {
+  config = lib.mkIf this.enable (lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "24.11") {
     programs.steam.enable = true;
     programs.steam.extraCompatPackages = [ pkgs.proton-ge-bin ];
     programs.steam.package = pkgs.steam-small.override {
@@ -80,7 +79,7 @@ in
         };
       in
       general
-      ++ optionals this.amdgpu amdgpu
+      ++ lib.optionals this.amdgpu amdgpu
         # Was removed upstream but I still have it in my Nixpkgs fork. This is a
         # little hack for making it possible to at least eval the rest of my
         # config with nixpkgs trees that do not have yuzu.
@@ -107,10 +106,10 @@ in
       "kernel.split_lock_mitigate" = 0;
     };
 
-    services.xserver.deviceSection = mkIf this.amdgpu ''
+    services.xserver.deviceSection = lib.mkIf this.amdgpu ''
       Option "VariableRefresh" "True"
     '';
-    boot.initrd.kernelModules = mkIf this.amdgpu [ "amdgpu" ];
+    boot.initrd.kernelModules = lib.mkIf this.amdgpu [ "amdgpu" ];
 
     custom.amdgpu.kernelModule.patches = [
       (pkgs.fetchpatch2 {

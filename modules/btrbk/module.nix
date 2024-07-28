@@ -1,22 +1,20 @@
 { config, lib, ... }:
 
 let
-  inherit (lib) mkEnableOption mkOption mkIf;
-
   this = config.custom.btrbk;
 in
 
 {
   options.custom.btrbk = {
-    enable = mkEnableOption "automatic snapshots using btrbk";
+    enable = lib.mkEnableOption "automatic snapshots using btrbk";
 
-    volume = mkOption {
+    volume = lib.mkOption {
       description = "Btrbk volumes declarations";
       default = { };
     };
   };
 
-  config.services.btrbk.instances."btrbk" = mkIf this.enable {
+  config.services.btrbk.instances."btrbk" = lib.mkIf this.enable {
     onCalendar = "*:0/15"; # Every 15min
     settings = {
       timestamp_format = "long-iso"; # Most sensible of the bunch

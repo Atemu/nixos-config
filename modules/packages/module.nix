@@ -1,10 +1,6 @@
 { pkgs, config, lib, ... }:
 
 let
-  inherit (lib) optionals mkIf mkEnableOption getName versionAtLeast;
-  inherit (lib.types) listOf str;
-  inherit (lib.trivial) release;
-
   this = config.custom.packages;
 
   customEmacs = config.services.emacs.package;
@@ -23,7 +19,10 @@ let
   );
 
   # Packages to always install.
-  common = with pkgs; [
+  common = [
+    customEmacs
+    customHunspell
+  ] ++ (with pkgs; [
     acpi
     aria2
     bash-completion
@@ -38,8 +37,6 @@ let
     compsize
     cryptsetup
     curl
-    customEmacs
-    customHunspell
     ddrescue
     delta
     diceware
@@ -82,8 +79,10 @@ let
     nix-output-monitor
     nix-tree
     nixd
+    nixfmt-rfc-style
     nixpkgs-review
     nmap
+    numbat
     nushell
     onefetch
     p7zip
@@ -120,15 +119,12 @@ let
     ytcast
     zip
     zstd
-  ] ++ (with config.boot.kernelPackages; [
+  ]) ++ (with config.boot.kernelPackages; [
     cpupower
     perf
-  ]) ++ optionals (versionAtLeast release "23.11") [
-    numbat
-  ] ++ optionals (versionAtLeast release "24.05") [
+  ]) ++ lib.optionals pkgs.stdenv.hostPlatform.isx86 (with pkgs; [
     memtest_vulkan
-    nixfmt-rfc-style
-  ];
+  ]);
 
   # Packages to install if X is not enabled.
   noX = with pkgs; [
@@ -169,17 +165,17 @@ let
   ];
 in {
   options.custom.packages = {
-    enable = mkEnableOption "my set of system packages";
+    enable = lib.mkEnableOption "my set of system packages";
 
     allowedUnfree = lib.mkOption {
       description = "package names of unfree packages that are allowed";
       default = [ ];
-      type = listOf str;
+      type = with lib.types; listOf str;
     };
   };
 
-  config = mkIf this.enable {
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (getName pkg) config.custom.packages.allowedUnfree;
+  config = lib.mkIf this.enable {
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.custom.packages.allowedUnfree;
 
     # :(
     custom.packages.allowedUnfree = [

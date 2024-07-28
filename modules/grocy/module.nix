@@ -2,15 +2,14 @@
 
 let
   this = config.custom.grocy;
-  inherit (lib) mkEnableOption mkIf versionOlder;
 in
 
 {
   options.custom.grocy = {
-    enable = mkEnableOption "my custom Grocy setup";
+    enable = lib.mkEnableOption "my custom Grocy setup";
   };
 
-  config = mkIf this.enable {
+  config = lib.mkIf this.enable {
     services.grocy = {
       enable = true;
       hostName = config.custom.virtualHosts.grocy.domain;
@@ -28,7 +27,7 @@ in
     };
 
     # FIXME Grocy needs a PHP version with OpenSSL 1.1.1?
-    nixpkgs.config.permittedInsecurePackages = mkIf (versionOlder lib.trivial.release "23.11") [
+    nixpkgs.config.permittedInsecurePackages = lib.mkIf (lib.versionOlder lib.trivial.release "23.11") [
       "openssl-1.1.1w"
     ];
   };

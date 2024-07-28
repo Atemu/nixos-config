@@ -2,13 +2,12 @@
 
 let
   this = config.custom.vm;
-  inherit (lib) mkEnableOption mkMerge mkIf;
 in
 
 {
-  options.custom.vm.enable = mkEnableOption "sensible defaults for use in a VM for testing";
+  options.custom.vm.enable = lib.mkEnableOption "sensible defaults for use in a VM for testing";
 
-  config = mkIf this.enable {
+  config = lib.mkIf this.enable {
     users.users.atemu.initialHashedPassword = "";
     users.users.root.initialHashedPassword = "";
 

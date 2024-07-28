@@ -2,27 +2,21 @@
 
 let
   this = config.custom.remotebuild;
-  inherit (lib)
-    mkEnableOption
-    mkOption
-    mkIf
-    mkMerge
-    ;
 in
 
 {
   options.custom.remotebuild = {
-    enable = mkEnableOption "remote builds";
+    enable = lib.mkEnableOption "remote builds";
 
     builders = {
-      cccda = mkEnableOption "cccda remote builders";
+      cccda = lib.mkEnableOption "cccda remote builders";
     };
 
-    sshKey = mkOption { default = "${config.users.users.atemu.home}/.ssh/id_ed25519"; };
+    sshKey = lib.mkOption { default = "${config.users.users.atemu.home}/.ssh/id_ed25519"; };
   };
 
-  config = mkIf this.enable (mkMerge [
-    (mkIf this.builders.cccda {
+  config = lib.mkIf this.enable (lib.mkMerge [
+    (lib.mkIf this.builders.cccda {
       # https://git.darmstadt.ccc.de/noc/builders-nix#configuring-your-computer-for-remote-builds
       programs.ssh.knownHosts = {
         "build1.darmstadt.ccc.de".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE/oyJPRwW3bJoWKtXSrVOiqMaKq+9yd03+N2PuCbMKv";

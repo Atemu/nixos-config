@@ -3,45 +3,44 @@
 let
   this = config.custom.fs;
 
-  inherit (lib) mkEnableOption mkOption mkIf genAttrs mkMerge substring;
   inherit (config.lib.custom) mkLabel;
 in
 
 {
   options.custom.fs = {
-    enable = mkEnableOption "my default filesystems";
-    boot = mkOption {
+    enable = lib.mkEnableOption "my default filesystems";
+    boot = lib.mkOption {
       description = "Device to mount the boot partition from.";
-      default = mkLabel (substring 0 11 config.networking.hostName); # FAT32 is shit and only allows 11 chars
+      default = mkLabel (lib.substring 0 11 config.networking.hostName); # FAT32 is shit and only allows 11 chars
     };
-    root = mkOption {
+    root = lib.mkOption {
       description = "Device to mount the root partition from.";
       default = mkLabel "${config.networking.hostName}-root";
     };
 
     btrfs = {
-      enable = mkEnableOption "my default btrfs layout";
+      enable = lib.mkEnableOption "my default btrfs layout";
 
-      device = mkOption {
+      device = lib.mkOption {
         description = "The device to mount the main pool from ";
         default = config.custom.fs.root;
       };
 
-      newLayout = mkEnableOption "new root layout with /Users and /Volumes inspired by macOS";
+      newLayout = lib.mkEnableOption "new root layout with /Users and /Volumes inspired by macOS";
 
-      stateVolumes = mkOption {
+      stateVolumes = lib.mkOption {
         description = "Subvolumes to create and mount that contain important state. Only works with newLayout and is additive.";
         default = [ "Users" "Root" ]; # TODO Root should be stateless, a new var subvol should be here instead
       };
 
       autoSnapshots = {
-        enable = mkOption {
+        enable = lib.mkOption {
           default = this.btrfs.newLayout;
           defaultText = "`config.custom.fs.btrfs.newLayout`";
           description = "Whether to enable automatic snapshotting";
         };
 
-        subvolumes = mkOption {
+        subvolumes = lib.mkOption {
           description = "The list of subvolumes to auto-snapshot";
           default = this.btrfs.stateVolumes;
           defaultText = "{option}`config.custom.fs.btrfs.stateVolumes`; they are assumed to have state in them that is important enough to warrant snapshots.";
@@ -51,7 +50,7 @@ in
 
   };
 
-  config = mkIf this.enable {
+  config = lib.mkIf this.enable {
     fileSystems = {
       "/tmp" = {
         device = "tmpfs";
@@ -109,16 +108,16 @@ in
 
     # Systemd tries to generate /home by default. It doesn't seem to conflict but better disable that
     environment.etc."tmpfiles.d/home.conf" = lib.mkIf this.btrfs.newLayout { source = "/dev/null"; };
-    systemd.tmpfiles.rules = mkIf this.btrfs.newLayout [
+    systemd.tmpfiles.rules = lib.mkIf this.btrfs.newLayout [
       # Create symlinks for backwards compatibility
       "L+ /home - - - - /Users"
     ];
 
-    custom.btrbk = mkIf this.btrfs.autoSnapshots.enable {
+    custom.btrbk = lib.mkIf this.btrfs.autoSnapshots.enable {
       enable = true;
 
       # autoSnapshots.subvolumes = [ "Foo" "Bar" ] -> subvolume = { Foo = { }; Bar = { }; }
-      volume."/System/Volumes".subvolume = genAttrs this.btrfs.autoSnapshots.subvolumes (_: { });
+      volume."/System/Volumes".subvolume = lib.genAttrs this.btrfs.autoSnapshots.subvolumes (_: { });
     };
   };
 }

@@ -1,7 +1,5 @@
 { config, lib, ... }:
 
-with lib;
-
 let
   cfg = config.custom.btrfs;
 in
@@ -10,7 +8,7 @@ in
   options.custom.btrfs = {
     # TODO Make this a submodule like all the others that serves as the default for them
     default = {
-      device = mkOption {
+      device = lib.mkOption {
         description = ''
           The default device to use if none is declared.
         '';
@@ -22,7 +20,7 @@ in
         '';
       };
 
-      options = mkOption {
+      options = lib.mkOption {
         description = ''
           The mount options to use if none are declared.
         '';
@@ -30,10 +28,10 @@ in
       };
     };
 
-    fileSystems = mkOption {
-      type = types.attrsOf (types.submodule {
+    fileSystems = lib.mkOption {
+      type = lib.types.attrsOf (lib.types.submodule {
         options = {
-          device = mkOption {
+          device = lib.mkOption {
             description = ''
               The device to mount
             '';
@@ -47,28 +45,28 @@ in
 
           compress = {
             # TODO Make this on by default
-            enable = mkOption {
+            enable = lib.mkOption {
               description = ''
                 Whether to enabe btrfs filesystem compression
               '';
               default = true;
             };
 
-            algorithm = mkOption {
+            algorithm = lib.mkOption {
               description = ''
                 The compression algorith to use
               '';
               default = "zstd";
             };
 
-            level = mkOption {
+            level = lib.mkOption {
               description = ''
                 The compression level to use
               '';
               default = 1;
             };
 
-            force = mkOption {
+            force = lib.mkOption {
               description = ''
                 Whether to force compression or leave btrfs to decide what's compressible and what isn't
               '';
@@ -76,13 +74,13 @@ in
             };
           };
 
-          subvol = mkOption {
+          subvol = lib.mkOption {
             description = ''
               Subvolume to mount. Null means default subvol
             '';
             default = null;
           };
-          options = mkOption {
+          options = lib.mkOption {
             description = ''
               Mount options too add on
             '';
@@ -91,7 +89,7 @@ in
         };
       });
       default = { };
-      example = literalExample ''
+      example = lib.literalExample ''
         {
           "/data" = {
             device = "/dev/disk/by-id/ata-foo";
@@ -115,15 +113,17 @@ in
     };
   };
 
-  config.fileSystems = mapAttrs (_: fileSystem: {
+  config.fileSystems = lib.mapAttrs (_: fileSystem: {
     fsType = "btrfs";
 
     inherit (fileSystem) device;
 
-    options = with fileSystem; let
-      compressArg = with compress;
-        optional enable "compress${optionalString force "-force"}=${algorithm + optionalString (level != null) ":${toString level}"}";
-      subvolArg = optional (subvol != null) "subvol=${subvol}";
+    options = let
+      inherit (fileSystem.compress) enable force algorithm level;
+      param = "compress" + lib.optionalString force "-force";
+      argument = algorithm + lib.optionalString (level != null) ":${toString level}";
+      compressArg = lib.optional enable "${param}=${argument}";
+      subvolArg = lib.optional (fileSystem.subvol != null) "subvol=${fileSystem.subvol}";
     in compressArg ++ subvolArg ++ fileSystem.options;
   }) cfg.fileSystems;
 }

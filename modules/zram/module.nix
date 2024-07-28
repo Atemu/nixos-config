@@ -1,15 +1,13 @@
 { lib, config, ... }:
 
-with lib;
-
 let
   this = config.custom.zramSwap;
 in
 
 {
   options.custom.zramSwap = {
-    enable = mkEnableOption "my custom ZRAM Swap config";
-    percent = mkOption {
+    enable = lib.mkEnableOption "my custom ZRAM Swap config";
+    percent = lib.mkOption {
       description = ''
         How much of the total system memory to use for zram swap.
 
@@ -19,7 +17,7 @@ in
     };
   };
 
-  config.zramSwap = mkIf this.enable {
+  config.zramSwap = lib.mkIf this.enable {
     enable = true;
     algorithm = "lz4";
     memoryPercent = this.percent;

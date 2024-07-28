@@ -3,9 +3,6 @@
 let
   this = config.custom.docker-compose;
 
-  inherit (lib) mkOption mkEnableOption mkIf mapAttrs' nameValuePair mapAttrsToList;
-  inherit (lib.types) attrsOf submodule nullOr attrs path;
-
   # A jq query to transform the docker-compose.yml.
   #
   # Never restart these services; they should be ephemeral.
@@ -31,11 +28,11 @@ let
 in
 
 {
-  options.custom.docker-compose = mkOption {
+  options.custom.docker-compose = lib.mkOption {
     default = { };
-    type = attrsOf (submodule ({ name, config, ... }: {
+    type = lib.types.attrsOf (lib.types.submodule ({ name, config, ... }: {
       options = {
-        directory = mkOption {
+        directory = lib.mkOption {
           default = (
             if config.file != null then
               pkgs.runCommand "docker-compose-${name}" { } ''
@@ -46,7 +43,7 @@ in
               throw "You must provide a docker-compose.yml (or directory containing it) for the ${name} docker-compose service."
           );
           defaultText = "{option}`file` if it is set.";
-          type = path;
+          type = lib.types.path;
           description = ''
             A directory containing a docker-compose.yml.
 
@@ -55,7 +52,7 @@ in
             If this is set, {option}`file`, {option}`YAML` or {option}`env` will not have any effect.
           '';
         };
-        file = mkOption {
+        file = lib.mkOption {
           default = (
             if config.YAML == null then
               null
@@ -63,39 +60,39 @@ in
               pkgs.writers.writeYAML "docker-compose.yml" config.YAML
           );
           defaultText = "A docker-compose.yml generated from {option}`YAML`.";
-          type = nullOr path;
+          type = with lib.types; nullOr path;
           description = "The path to a docker-compose.yml. If this is set {option}`YAML` won't have an effect.";
         };
-        YAML = mkOption {
+        YAML = lib.mkOption {
           default = null;
           apply = yml: if yml == null then null else { version = "3"; } // yml;
-          type = nullOr attrs;
+          type = with lib.types; nullOr attrs;
           description = "An attrset representing a docker-compose.yml. The version `version` attribute is set to 3 by default.";
         };
-        env = mkOption {
+        env = lib.mkOption {
           default = null;
-          type = nullOr attrs;
+          type = with lib.types; nullOr attrs;
           description = "An attrset representing a docker-compose `.env` file.";
         };
 
-        override = mkOption {
+        override = lib.mkOption {
           default = null;
           apply = yml: if yml == null then null else { version = "3"; } // yml;
-          type = nullOr attrs;
+          type = with lib.types; nullOr attrs;
           description = "An attrset representing a docker-compose.override.yml. The version `version` attribute is set to 3 by default.";
         };
 
         stateDirectory = {
-          enable = mkEnableOption "a systemd service state directory for this service";
+          enable = lib.mkEnableOption "a systemd service state directory for this service";
 
-          name = mkOption {
+          name = lib.mkOption {
             default = name;
             defaultText = "The service's `name`";
             description = "The name of the state directory";
           };
         };
 
-        wrapperScript = mkOption {
+        wrapperScript = lib.mkOption {
           internal = true;
           default = pkgs.writeShellScriptBin "docker-compose-${name}" (runConfig config ''"$@"'');
         };
@@ -103,13 +100,13 @@ in
     }));
   };
 
-  config = mkIf (this != { }) {
+  config = lib.mkIf (this != { }) {
     virtualisation.docker.enable = true;
     # Don't persist containers when docker daemon stops
     virtualisation.docker.liveRestore = false;
 
-    systemd.services = mapAttrs' (name: value:
-      nameValuePair "docker-compose-${name}" {
+    systemd.services = lib.mapAttrs' (name: value:
+      lib.nameValuePair "docker-compose-${name}" {
         serviceConfig = let
           run = runConfig value;
         in {
@@ -128,7 +125,7 @@ in
           # It may take >15 minutes to pull large images
           TimeoutStartSec = 1000;
 
-          StateDirectory = mkIf value.stateDirectory.enable value.stateDirectory.name;
+          StateDirectory = lib.mkIf value.stateDirectory.enable value.stateDirectory.name;
         };
         path = [ pkgs.docker ];
 
@@ -138,6 +135,6 @@ in
       }
     ) this;
 
-    environment.systemPackages = mapAttrsToList (_: value: value.wrapperScript) this;
+    environment.systemPackages = lib.mapAttrsToList (_: value: value.wrapperScript) this;
   };
 }
