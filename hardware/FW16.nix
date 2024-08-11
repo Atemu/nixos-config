@@ -19,6 +19,8 @@
   ];
   boot.kernelModules = [ "kvm-amd" ];
 
+  boot.kernelPackages = pkgs.linuxPackages_6_10;
+
   custom.amdgpu.kernelModule.patches = [
     (pkgs.fetchpatch2 {
       url = "https://lore.kernel.org/lkml/20240610-amdgpu-min-backlight-quirk-v1-1-8459895a5b2a@weissschuh.net/raw";
