@@ -26,6 +26,12 @@ in
       lsp-plugins
     ]);
 
+    services.pipewire.wireplumber.extraConfig.bluetooth-no-hw-volume = {
+      "monitor.bluez.properties" = {
+        "bluez5.enable-hw-volume" = false;
+      };
+    };
+
     # Upstream pipewire limits for realtime
     security.pam.loginLimits = [
       {
