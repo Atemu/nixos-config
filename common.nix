@@ -49,7 +49,8 @@
 
   programs.direnv.enable = true;
 
-  services.lorri.enable = true; # perhaps desktop-only?
+  # FIXME Disabled temporarily until https://github.com/nix-community/lorri/pull/132 lands in Nixpkgs
+  services.lorri.enable = false; # perhaps desktop-only?
 
   programs.fuse.userAllowOther = true;
 
