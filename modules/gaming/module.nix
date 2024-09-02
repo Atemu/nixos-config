@@ -54,10 +54,8 @@ in
       let
         general = with pkgs; [
           BeatSaberModManager
+          adwaita-icon-theme # fix lutris' missing icons
           discord
-          gnome.adwaita-icon-theme # fix lutris' missing icons
-          goverlay
-          libstrangle
           lutris
           mangohud
           piper
