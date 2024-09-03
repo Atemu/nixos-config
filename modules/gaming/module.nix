@@ -22,7 +22,10 @@ in
 
   config = lib.mkIf this.enable (lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "24.11") {
     programs.steam.enable = true;
-    programs.steam.extraCompatPackages = [ pkgs.proton-ge-bin ];
+    programs.steam.extraCompatPackages = with pkgs; [
+      proton-ge-bin
+      steamtinkerlaunch
+    ];
     programs.steam.package = pkgs.steam-small.override {
       extraEnv = {
         MANGOHUD = true;
@@ -60,6 +63,7 @@ in
           mangohud
           piper
           prismlauncher
+          steamtinkerlaunch
           teamspeak_client
           vulkan-tools
           wineWowPackages.staging
