@@ -8,6 +8,16 @@ in
 {
   options.custom.immich = {
     enable = lib.mkEnableOption "my Immich setup";
+
+    libraryDir = lib.mkOption {
+      type = with lib.types; nullOr str;
+      default = null;
+      description = ''
+        Where the library data should be stored. The location will be bind-mounted.
+
+        Set to null to not set a library directory.
+      '';
+    };
   };
 
   imports = [
@@ -68,6 +78,11 @@ in
 
     custom.virtualHosts.immich = {
       localPort = 2283;
+    };
+
+    fileSystems."/var/lib/immich/library" = lib.mkIf (this.libraryDir != null) {
+      device = this.libraryDir;
+      options = [ "bind" ];
     };
   };
 }
