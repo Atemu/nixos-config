@@ -74,6 +74,8 @@ in
           ];
         };
       };
+
+      service.unitConfig.RequiresMountsFor = lib.mkIf (this.libraryDir != null) [ this.libraryDir ];
     };
 
     custom.virtualHosts.immich = {
