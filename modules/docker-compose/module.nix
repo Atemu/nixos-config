@@ -96,6 +96,12 @@ in
           internal = true;
           default = pkgs.writeShellScriptBin "docker-compose-${name}" (runConfig config ''"$@"'');
         };
+
+        service = lib.mkOption {
+          type = with lib.types; attrsOf anything;
+          default = { };
+          description = "config to pass through to the systemd service.";
+        };
       };
     }));
   };
@@ -105,34 +111,42 @@ in
     # Don't persist containers when docker daemon stops
     virtualisation.docker.liveRestore = false;
 
-    systemd.services = lib.mapAttrs' (name: value:
-      lib.nameValuePair "docker-compose-${name}" {
-        serviceConfig = let
-          run = runConfig value;
-        in {
-          # Stop services before in case they're running
-          # TODO Remove containers too!
-          ExecStartPre = [
-            (run "down")
-            (run "create ${with lib; optionalString (versionAtLeast trivial.release "24.05") "--quiet-pull"}")
-          ];
-          ExecStart = run "up --quiet-pull --abort-on-container-exit";
+    systemd.services = lib.mapAttrs' (
+      name: value:
+      lib.nameValuePair "docker-compose-${name}" (
+        lib.mkMerge [
+          value.service
+          {
+            serviceConfig =
+              let
+                run = runConfig value;
+              in
+              {
+                # Stop services before in case they're running
+                # TODO Remove containers too!
+                ExecStartPre = [
+                  (run "down")
+                  (run "create ${with lib; optionalString (versionAtLeast trivial.release "24.05") "--quiet-pull"}")
+                ];
+                ExecStart = run "up --quiet-pull --abort-on-container-exit";
 
-          ExecStop = run "down";
+                ExecStop = run "down";
 
-          Restart = "on-failure";
+                Restart = "on-failure";
 
-          # It may take >15 minutes to pull large images
-          TimeoutStartSec = 1000;
+                # It may take >15 minutes to pull large images
+                TimeoutStartSec = 1000;
 
-          StateDirectory = lib.mkIf value.stateDirectory.enable value.stateDirectory.name;
-        };
-        path = [ pkgs.docker ];
+                StateDirectory = lib.mkIf value.stateDirectory.enable value.stateDirectory.name;
+              };
+            path = [ pkgs.docker ];
 
-        requires = [ "docker.service" ];
-        after = [ "docker.service" ];
-        wantedBy = [ "multi-user.target" ];
-      }
+            requires = [ "docker.service" ];
+            after = [ "docker.service" ];
+            wantedBy = [ "multi-user.target" ];
+          }
+        ]
+      )
     ) this;
 
     environment.systemPackages = lib.mapAttrsToList (_: value: value.wrapperScript) this;
