@@ -75,6 +75,11 @@
 
   custom.immich.enable = true;
   custom.immich.virtualHost.onPrimaryDomain = true;
+  # Images assets are stored on Data disks
+  fileSystems."/var/lib/immich/library" = {
+    device = "/Volumes/Data/Immich/library/";
+    options = [ "bind" ];
+  };
 
   custom.nextcloud.enable = true;
   custom.nextcloud.code.enable = true;
