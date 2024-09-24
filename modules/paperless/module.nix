@@ -3,6 +3,13 @@
 let
   this = config.custom.paperless;
   cfg = config.services.paperless;
+
+  services = [
+    "paperless-consumer.service"
+    "paperless-scheduler.service"
+    "paperless-task-queue.service"
+    "paperless-web.service"
+  ];
 in
 
 {
@@ -51,6 +58,15 @@ in
 
     systemd.services.paperless-exporter = lib.mkIf this.autoExport {
       serviceConfig.User = config.services.paperless.user;
+
+      unitConfig = {
+        # Shut down the paperless services while the exporter runs
+        Conflicts = services;
+        After = services;
+        # Bring them back up afterwards, regardless of pass/fail
+        OnFailure = services;
+        OnSuccess = services;
+      };
 
       script = ''
         exportDir="${cfg.dataDir}/export"
