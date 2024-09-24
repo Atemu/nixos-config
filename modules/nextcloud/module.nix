@@ -52,6 +52,7 @@ in
           (config.services.nextcloud.package.packages.apps)
           richdocuments
           calendar
+          contacts
         ;
       };
     };
