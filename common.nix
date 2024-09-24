@@ -66,7 +66,6 @@
     ];
   });
 
-  # FIXME https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1655787774
   networking.networkmanager.unmanaged = [ "tailscale0" "lo" ];
 
   # Stop log spam from my SOHO router's amazingly helpful port scanning

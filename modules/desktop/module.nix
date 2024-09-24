@@ -190,9 +190,8 @@ in
     networking.networkmanager.wifi.scanRandMacAddress = true; # default
     networking.networkmanager.unmanaged = [ "docker0" "virbr0" "anbox0" ];
 
-    # Just utterly broken. See
-    # https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1660635001
-    systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
+    # Speculative fix for https://github.com/NixOS/nixpkgs/issues/180175
+    systemd.services.tailscaled.after = [ "NetworkManager-wait-online.service" ];
 
     services.emacs.enable = true;
   });
