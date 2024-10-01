@@ -66,7 +66,11 @@
     ];
   });
 
-  networking.networkmanager.unmanaged = [ "tailscale0" "lo" "podman0" ];
+  networking.networkmanager.unmanaged = lib.mkIf config.networking.networkmanager.enable [
+    "tailscale0"
+    "lo"
+    "podman0"
+  ];
 
   # Stop log spam from my SOHO router's amazingly helpful port scanning
   networking.firewall.logRefusedConnections = false;
