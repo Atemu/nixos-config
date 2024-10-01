@@ -2,7 +2,7 @@
 
 let
   this = config.custom.immich;
-  version = "v1.108.0";
+  version = "v1.116.2";
 in
 
 {
@@ -64,7 +64,7 @@ in
       file = pkgs.fetchurl {
         # TODO Put this in a sort of package
         url = "https://github.com/immich-app/immich/releases/download/${version}/docker-compose.yml";
-        hash = "sha256-3+EjbLG53HNJLw26wjEvogiz4vzfnr7/WiDR70s46is=";
+        hash = "sha256-axp3iW9KcO5RT8SbDdzIR7rIT+vlrf8dmUHGrfIOxws=";
       };
 
       override = {
