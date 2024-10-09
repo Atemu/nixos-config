@@ -18,10 +18,18 @@ let
     ]
   );
 
+  cyme-lsusb = pkgs.writeShellApplication {
+    name = "lsusb";
+    text = ''
+      exec ${lib.getExe pkgs.cyme} --lsusb "$@"
+    '';
+  };
+
   # Packages to always install.
   common = [
     customEmacs
     customHunspell
+    cyme-lsusb
   ] ++ (with pkgs; [
     acpi
     aria2
@@ -107,7 +115,6 @@ let
     traceroute
     tree
     unzip
-    usbutils
     vim
     vmtouch
     wakeonlan
