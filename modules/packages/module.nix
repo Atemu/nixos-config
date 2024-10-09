@@ -37,6 +37,7 @@ let
     compsize
     cryptsetup
     curl
+    cyme
     ddrescue
     delta
     diceware
