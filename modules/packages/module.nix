@@ -75,7 +75,7 @@ let
     nix-bash-completions
     nix-diff
     nix-index
-    # nix-init # FIXME currently broken, see https://github.com/NixOS/nixpkgs/pull/334545
+    nix-init
     nix-output-monitor
     nix-tree
     nixd
