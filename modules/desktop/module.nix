@@ -87,12 +87,25 @@ in
     '';
 
     programs.hyprland.enable = this.hypr.enable;
-    services.hypridle.enable = this.hypr.enable;
     systemd.user.targets.hypr-session = {
       bindsTo = [ "graphical-session.target" ];
       wants = [ "graphical-session-pre.target" ];
       after = [ "graphical-session-pre.target" ];
+    };
+    systemd.user.services.hypridle = {
+      serviceConfig = {
+        ExecStart = lib.getExe config.services.hypridle.package;
       };
+      path = with pkgs; [
+        bash
+        brightnessctl
+        config.programs.hyprland.package
+        procps
+        swaylock
+      ];
+      partOf = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      wantedBy = [ "hypr-session.target" ];
     };
 
     services.xserver.desktopManager.gnome.enable = this.tablet;
