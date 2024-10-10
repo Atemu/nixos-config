@@ -115,7 +115,11 @@ in
       };
       path = [ config.services.power-profiles-daemon.package ];
       partOf = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
+      after = [
+        "graphical-session.target"
+        # Let the regular hypridle register itself first to avoid any issues/races
+        "hypridle.service"
+      ];
       wantedBy = [ "hypr-session.target" ];
     };
 
