@@ -110,7 +110,8 @@ in
     # A second hypridle daemon that activates power savings after 2s of idle
     systemd.user.services.hypridle-power = {
       serviceConfig = {
-        ExecStart = "${lib.getExe config.services.hypridle.package} -c ${./hypridle-power.conf}";
+        # Quiet because I don't care about logging these actions and they're very frequent
+        ExecStart = "${lib.getExe config.services.hypridle.package} -c ${./hypridle-power.conf} --quiet";
       };
       path = [ config.services.power-profiles-daemon.package ];
       partOf = [ "graphical-session.target" ];
