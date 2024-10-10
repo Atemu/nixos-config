@@ -107,6 +107,16 @@ in
       after = [ "graphical-session.target" ];
       wantedBy = [ "hypr-session.target" ];
     };
+    # A second hypridle daemon that activates power savings after 2s of idle
+    systemd.user.services.hypridle-power = {
+      serviceConfig = {
+        ExecStart = "${lib.getExe config.services.hypridle.package} -c ${./hypridle-power.conf}";
+      };
+      path = [ config.services.power-profiles-daemon.package ];
+      partOf = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      wantedBy = [ "hypr-session.target" ];
+    };
 
     services.xserver.desktopManager.gnome.enable = this.tablet;
     environment.gnome.excludePackages = with pkgs; [
