@@ -88,6 +88,12 @@ in
 
     programs.hyprland.enable = this.hypr.enable;
     services.hypridle.enable = this.hypr.enable;
+    systemd.user.targets.hypr-session = {
+      bindsTo = [ "graphical-session.target" ];
+      wants = [ "graphical-session-pre.target" ];
+      after = [ "graphical-session-pre.target" ];
+      };
+    };
 
     services.xserver.desktopManager.gnome.enable = this.tablet;
     environment.gnome.excludePackages = with pkgs; [
