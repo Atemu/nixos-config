@@ -78,7 +78,7 @@ in
         override = lib.mkOption {
           default = null;
           apply = yml: if yml == null then null else { version = "3"; } // yml;
-          type = with lib.types; nullOr attrs;
+          inherit (pkgs.formats.yaml {}) type;
           description = "An attrset representing a docker-compose.override.yml. The version `version` attribute is set to 3 by default.";
         };
 
