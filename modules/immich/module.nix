@@ -18,6 +18,16 @@ in
         Set to null to not set a library directory.
       '';
     };
+
+    externalLibraryDir = lib.mkOption {
+      type = with lib.types; nullOr str;
+      default = null;
+      description = ''
+        Where the external libraries should be stored. The location will be bind-mounted.
+
+        Set to null to not set an external library directory.
+      '';
+    };
   };
 
   imports = [
@@ -71,6 +81,11 @@ in
         services.database = {
           volumes = [
             "\${UPLOAD_LOCATION}/pgdata/:/var/lib/postgresql/data"
+          ];
+        };
+        services.immich-server = lib.mkIf (this.externalLibraryDir != null) {
+          volumes = [
+            "${this.externalLibraryDir}:/external/"
           ];
         };
       };
