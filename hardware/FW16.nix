@@ -34,6 +34,7 @@
   services.fwupd.enable = true;
 
   services.power-profiles-daemon.enable = true;
+  custom.desktop.hypr.hypridle-power = true;
 
   hardware.bluetooth.enable = true;
 

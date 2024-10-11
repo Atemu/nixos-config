@@ -9,6 +9,10 @@ in
     enable = lib.mkEnableOption "my custom desktop";
     tablet = lib.mkEnableOption "tablet variant";
     hypr.enable = lib.mkEnableOption "hyprland variant";
+    hypr.hypridle-power = lib.mkEnableOption ''
+      a hypridle daemon that sets the power-profiles-daemon power profile to
+      `power-saver` on 2s idle and restores it to `performance` when not idle.
+    '';
   };
 
   config = lib.mkIf this.enable (lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "24.05") {
@@ -126,7 +130,7 @@ in
       wantedBy = [ "hypr-session.target" ];
     };
     # A second hypridle daemon that activates power savings after 2s of idle
-    systemd.user.services.hypridle-power = {
+    systemd.user.services.hypridle-power = lib.mkIf this.hypr.hypridle-power {
       serviceConfig = {
         # Quiet because I don't care about logging these actions and they're very frequent
         ExecStart = "${lib.getExe config.services.hypridle.package} -c ${./hypridle-power.conf} --quiet";
@@ -140,6 +144,12 @@ in
       ];
       wantedBy = [ "hypr-session.target" ];
     };
+    assertions = [
+      {
+        assertion = this.hypr.hypridle-power -> config.services.power-profiles-daemon.enable;
+        message = "custom.desktop.hypr.hypridle-power requires power-profiles-deamon";
+      }
+    ];
 
     services.xserver.desktopManager.gnome.enable = this.tablet;
     environment.gnome.excludePackages = with pkgs; [
