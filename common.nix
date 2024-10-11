@@ -162,6 +162,8 @@
   systemd.extraConfig = ''
     DefaultTimeoutStopSec=30s
   '';
+  # This overrides the default with 120s by default. Stop it.
+  systemd.services."user@".serviceConfig.TimeoutStopSec = "30s";
 
   systemd.tmpfiles.rules = [
     # Congestion threshold is set incredibly low by default causing bcache to
