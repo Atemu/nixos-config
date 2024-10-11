@@ -24,7 +24,7 @@ let
     ${lib.getExe pkgs.yq} -Y '${query}' ${value.directory}/docker-compose.yml > $out/docker-compose.yml
   '');
 
-  runConfig = value: command: "${lib.getExe pkgs.docker} compose --project-directory ${sanitise value} ${command}";
+  runConfig = projectDir: command: "${lib.getExe pkgs.docker} compose --project-directory ${projectDir} ${command}";
 in
 
 {
@@ -92,9 +92,16 @@ in
           };
         };
 
-        wrapperScript = lib.mkOption {
+        sanitised = lib.mkOption {
+          default = sanitise config;
           internal = true;
-          default = pkgs.writeShellScriptBin "docker-compose-${name}" (runConfig config ''"$@"'');
+          readOnly = true;
+        };
+
+        wrapperScript = lib.mkOption {
+          default = pkgs.writeShellScriptBin "docker-compose-${name}" (runConfig config.sanitised ''"$@"'');
+          internal = true;
+          readOnly = true;
         };
 
         service = lib.mkOption {
@@ -119,7 +126,7 @@ in
           {
             serviceConfig =
               let
-                run = runConfig value;
+                run = runConfig value.sanitised;
               in
               {
                 # Stop services before in case they're running
