@@ -1,11 +1,14 @@
 { lib, config, ... }:
 
 let
-  this = config.custom.zramSwap;
+  this = config.custom.swap.zram;
 in
 
 {
-  options.custom.zramSwap = {
+  imports = [
+    (lib.mkAliasOptionModule [ "custom" "zramSwap" ] [ "custom" "swap" "zram" ])
+  ];
+  options.custom.swap.zram = {
     enable = lib.mkEnableOption "my custom ZRAM Swap config";
     percent = lib.mkOption {
       description = ''
@@ -17,7 +20,8 @@ in
     };
   };
 
-  config.zramSwap = lib.mkIf this.enable {
+  config.
+    zramSwap = lib.mkIf this.enable {
     enable = true;
     algorithm = "lz4";
     memoryPercent = this.percent;
