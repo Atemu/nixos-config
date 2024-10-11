@@ -42,6 +42,10 @@
     fw-ectool
   ];
 
+  custom.swap.devices.primary = {
+    partUUID = "097f36ea-d602-48c3-b732-5c176bdc0512";
+  };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

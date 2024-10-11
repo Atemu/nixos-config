@@ -29,7 +29,8 @@
   custom.fs.btrfs.enable = true;
   custom.fs.btrfs.newLayout = true;
 
-  custom.zramSwap.enable = true;
+  # Device name must be provided by hardware config for now
+  custom.swap.devices.primary.enable = true;
 
   system.stateVersion = "24.11";
 }
