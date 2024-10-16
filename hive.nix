@@ -1,11 +1,6 @@
 let
-  nixfiles = with builtins; mapAttrs (n: v: ../${n}) (builtins.readDir ../.);
-  getFromNixfiles = thing:
-    if builtins.hasAttr thing nixfiles
-    then nixfiles."${thing}"
-    else builtins.trace "warning: nixfiles not present, using ${thing} from $NIX_PATH!" (builtins.findFile builtins.nixPath thing);
-  nixpkgs = getFromNixfiles "nixpkgs";
-  nixpkgs-2405 = getFromNixfiles "nixpkgs-24.05";
+  selectNixpkgs = import ./select-nixpkgs.nix;
+  nixpkgsConfig = import ./nixpkgs-config.nix;
 in
 {
   meta = {
@@ -14,12 +9,10 @@ in
     # - A path to a Nixpkgs checkout
     # - The Nixpkgs lambda (e.g., import <nixpkgs>)
     # - An initialized Nixpkgs attribute set
-    inherit nixpkgs;
+    nixpkgs = selectNixpkgs nixpkgsConfig.default;
 
     # You can also override Nixpkgs by node!
-    nodeNixpkgs = {
-      SOTERIA = nixpkgs-2405;
-    };
+    nodeNixpkgs = builtins.mapAttrs (n: v: selectNixpkgs v) nixpkgsConfig;
 
     # If your Colmena host has nix configured to allow for remote builds
     # (for nix-daemon, your user being included in trusted-users)

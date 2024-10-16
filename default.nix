@@ -1,5 +1,4 @@
 args@{
-  nixpkgsPath ? <nixpkgs>,
   ...
 }:
 
@@ -16,10 +15,18 @@ if args ? specialArgs then {
 }
 else let
   configs = import ./configs;
-  nixosFor = configuration: import (nixpkgsPath + /nixos) {
+  nixpkgsConfig = import ./nixpkgs-config.nix;
+  selectNixpkgs = import ./select-nixpkgs.nix;
+  nixosFor = hostname: configuration: let
+    nixpkgs =
+      if args ? nixpkgsPath then
+        args.nixpkgsPath
+      else
+        selectNixpkgs nixpkgsConfig.${hostname} or nixpkgsConfig.default;
+  in import nixpkgs {
     inherit configuration;
   };
-  nixosVmWithoutPackages = configuration: (nixosFor ({ pkgs, ... }: {
+  nixosVmWithoutPackages = hostname: configuration: (nixosFor hostname ({ pkgs, ... }: {
     imports = [
       configuration
     ];
@@ -29,7 +36,7 @@ else let
   # Makes an attrset of all my nixos configurations.
   # Try `nix-build -A TAB TAB`. Pretty neat, huh?
 in builtins.mapAttrs
-  (_: config: nixosFor config // {
-    vmWithoutPackages = nixosVmWithoutPackages config;
-    vmWithPackages = (nixosFor config).vm;
+  (name: config: nixosFor name config // {
+    vmWithoutPackages = nixosVmWithoutPackages name config;
+    vmWithPackages = (nixosFor name config).vm;
   }) configs
