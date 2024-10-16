@@ -1,5 +1,5 @@
 let
-  selectNixpkgs = import ./select-nixpkgs.nix;
+  selectNixfile = import ./select-nixfile.nix;
   nixpkgsConfig = import ./nixpkgs-config.nix;
 in
 {
@@ -9,10 +9,10 @@ in
     # - A path to a Nixpkgs checkout
     # - The Nixpkgs lambda (e.g., import <nixpkgs>)
     # - An initialized Nixpkgs attribute set
-    nixpkgs = selectNixpkgs nixpkgsConfig.default;
+    nixpkgs = selectNixfile nixpkgsConfig.default;
 
     # You can also override Nixpkgs by node!
-    nodeNixpkgs = builtins.mapAttrs (n: v: selectNixpkgs v) nixpkgsConfig;
+    nodeNixpkgs = builtins.mapAttrs (n: v: selectNixfile v) nixpkgsConfig;
 
     # If your Colmena host has nix configured to allow for remote builds
     # (for nix-daemon, your user being included in trusted-users)

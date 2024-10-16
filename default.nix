@@ -16,13 +16,13 @@ if args ? specialArgs then {
 else let
   configs = import ./configs;
   nixpkgsConfig = import ./nixpkgs-config.nix;
-  selectNixpkgs = import ./select-nixpkgs.nix;
+  selectNixfile = import ./select-nixfile.nix;
   nixosFor = hostname: configuration: let
     nixpkgs =
       if args ? nixpkgsPath then
         args.nixpkgsPath
       else
-        selectNixpkgs nixpkgsConfig.${hostname} or nixpkgsConfig.default;
+        selectNixfile nixpkgsConfig.${hostname} or nixpkgsConfig.default;
   in import nixpkgs {
     inherit configuration;
   };
