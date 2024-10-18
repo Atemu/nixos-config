@@ -5,6 +5,7 @@
 - [`configs`](./configs/) contain the configs of my various hosts:
   - HEPHAISTOS is a desktop gaming computer and workstation
   - SOTERIA is my home server, hosting various services and holding my hot data
+  - THESEUS is my portable laptop computer (a https://frame.work laptop, get it?)
   - PLATON is a portable pen tablet convertible laptop
 - [`hardware`](./hardware/) contain configuration specific to certain hardware systems of mine. The individual `configs` include them, depending on which machines they're used on.
 - [`modules`](./modules/) contain NixOS modules for configuring certain aspects of my system. These usually only have effects when their `enable` option is set but some are always active such as my packages module.
