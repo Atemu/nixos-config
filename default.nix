@@ -23,7 +23,7 @@ else let
         args.nixpkgsPath
       else
         selectNixfile nixpkgsConfig.${hostname} or nixpkgsConfig.default;
-  in import nixpkgs {
+  in import (nixpkgs + /nixos) {
     inherit configuration;
   };
   nixosVmWithoutPackages = hostname: configuration: (nixosFor hostname ({ pkgs, ... }: {
