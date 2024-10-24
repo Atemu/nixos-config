@@ -93,8 +93,7 @@ in
       ];
     custom.packages.allowedUnfree = [
       "steam"
-      "steam-original"
-      "steam-run"
+      "steam-unwrapped"
       "discord"
       "teamspeak-client"
     ];
