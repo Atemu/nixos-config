@@ -115,7 +115,7 @@ in
     '';
     boot.initrd.kernelModules = lib.mkIf this.amdgpu [ "amdgpu" ];
 
-    custom.amdgpu.kernelModule.patches = [
+    custom.amdgpu.kernelModule.patches = lib.mkIf this.steamvr.unprivilegedHighPriorityQueue [
       (pkgs.fetchpatch2 {
         url = "https://github.com/Frogging-Family/community-patches/raw/a6a468420c0df18d51342ac6864ecd3f99f7011e/linux61-tkg/cap_sys_nice_begone.mypatch";
         hash = "sha256-1wUIeBrUfmRSADH963Ax/kXgm9x7ea6K6hQ+bStniIY=";
