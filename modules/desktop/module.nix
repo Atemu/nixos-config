@@ -91,12 +91,12 @@ in
     '';
 
     programs.hyprland.enable = this.hypr.enable;
-    systemd.user.targets.hypr-session = {
+    systemd.user.targets.hypr-session = lib.mkIf this.hypr.enable {
       bindsTo = [ "graphical-session.target" ];
       wants = [ "graphical-session-pre.target" ];
       after = [ "graphical-session-pre.target" ];
     };
-    systemd.user.services.hypridle = {
+    systemd.user.services.hypridle = lib.mkIf this.hypr.enable {
       serviceConfig = {
         ExecStart = lib.getExe config.services.hypridle.package;
       };
