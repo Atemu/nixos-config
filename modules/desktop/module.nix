@@ -96,24 +96,6 @@ in
       wants = [ "graphical-session-pre.target" ];
       after = [ "graphical-session-pre.target" ];
     };
-
-    services.hypridle.package =
-      if lib.versionOlder pkgs.hypridle.version "2.1.8" || pkgs.hypridle.version == "2.1.8" then
-        # Unreleased version that supports systemd-inhibit
-        pkgs.hypridle.overrideAttrs (old: {
-          src = pkgs.fetchFromGitHub {
-            owner = "hyprwm";
-            repo = "hypridle";
-            rev = "cc23f97836adbba1abc8edd48169fb1f1f698c32";
-            hash = "sha256-b/j875k6RrxQLtbW+NCLw7NLToMd9KDYywjtUoihpq4=";
-          };
-          version = "2.1.8-unstable-2024-09-25";
-          buildInputs = old.buildInputs ++ [
-            pkgs.hyprutils
-          ];
-        })
-      else
-        pkgs.hypridle;
     systemd.user.services.hypridle = {
       serviceConfig = {
         ExecStart = lib.getExe config.services.hypridle.package;
