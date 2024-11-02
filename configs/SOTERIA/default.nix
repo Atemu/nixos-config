@@ -42,6 +42,13 @@
   networking.useDHCP = true;
   networking.useNetworkd = true;
 
+  # Set the metric to < 1000 so that my tailscale patch works properly.
+  # FIXME make the tailscale patch install the routes with metric > 1024
+  systemd.network.networks."99-ethernet-default-dhcp" = {
+    dhcpV4Config.RouteMetric = 925;
+    ipv6AcceptRAConfig.RouteMetric = 925;
+  };
+
   services.openssh.enable = true;
 
   programs.mosh.enable = true;
