@@ -51,6 +51,9 @@
 
   services.openssh.enable = true;
 
+  # TODO do this for all machines
+  systemd.targets.rescue.wants = [ "sshd.service" ];
+
   programs.mosh.enable = true;
 
   security.sudo.wheelNeedsPassword = false;
