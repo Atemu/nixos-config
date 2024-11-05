@@ -75,6 +75,10 @@ in
       # Would update a dir's atime whenever its contents are listed.
       # I don't have a need for that.
       "nodiratime"
+      # Makes buffered writes commit as part of the current commit. This might
+      # impact performance but guarantees consistency from the view of
+      # applications.
+      "flushoncommit"
     ];
     custom.btrfs.fileSystems = let
       mkMount = subvol: {
