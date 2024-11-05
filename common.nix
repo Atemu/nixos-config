@@ -170,6 +170,9 @@
     # have nearly no effect.
     "w /sys/fs/bcache/*/congested_read_threshold_us  - - - - 20000" # default: 2000
     "w /sys/fs/bcache/*/congested_write_threshold_us - - - - 20000" # default: 20000
+    # If you're handling large chunks, you might as well have a sequential workload.
+    # TODO I could not find numbers on this online, benchmark this!
+    "w /sys/block/bcache*/bcache/sequential_cutoff - - - - 131071" # 128KiB - 1B, defaults to 4MiB
   ];
 
   boot.kernel.sysctl = {
