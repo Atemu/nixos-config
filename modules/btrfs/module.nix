@@ -29,7 +29,7 @@ in
     };
 
     fileSystems = lib.mkOption {
-      type = lib.types.attrsOf (lib.types.submodule {
+      type = lib.types.attrsOf (lib.types.submodule ({ options, ... }: {
         options = {
           device = lib.mkOption {
             description = ''
@@ -87,7 +87,10 @@ in
             default = cfg.default.options;
           };
         };
-      });
+        config = {
+          options = options.options.default;
+        };
+      }));
       default = { };
       example = lib.literalExample ''
         {
