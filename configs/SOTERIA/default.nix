@@ -52,7 +52,7 @@
   services.openssh.enable = true;
 
   # TODO do this for all machines
-  systemd.targets.rescue.wants = [ "sshd.service" ];
+  systemd.targets.rescue.wants = [ "sshd.service" "network.target" ];
 
   programs.mosh.enable = true;
 
