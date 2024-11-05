@@ -34,6 +34,10 @@ in
     "/Volumes/Data" = {
       subvol = "/";
       device = mkLabel "${config.networking.hostName}-data";
+      options = [
+        # Mounting the primary disk array can take quite a while without a hot bcache.
+        "x-systemd.mount-timeout=1000"
+      ];
     };
   };
 }
