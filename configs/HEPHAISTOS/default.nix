@@ -29,8 +29,6 @@
     img2pdf
   ];
 
-  virtualisation.docker.enable = true;
-
   programs.adb.enable = true;
 
   custom.dnscrypt.enable = true;
