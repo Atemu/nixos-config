@@ -165,7 +165,6 @@ let
     spotify
     tigervnc
     tor-browser-bundle-bin
-    virt-manager
     vlc
     xclip
     xorg.xev
