@@ -150,7 +150,6 @@ let
   in [
     customFirefox
     direnv
-    element-desktop
     gimp
     lxrandr
     mlterm
