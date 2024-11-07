@@ -163,7 +163,6 @@ let
     scrcpy
     signal-desktop
     spotify
-    tigervnc
     tor-browser-bundle-bin
     vlc
     xclip
