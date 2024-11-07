@@ -64,7 +64,6 @@ in
           steamtinkerlaunch
           teamspeak_client
           vulkan-tools
-          wineWowPackages.staging
         ];
         amdgpu = with pkgs; [
           lact
