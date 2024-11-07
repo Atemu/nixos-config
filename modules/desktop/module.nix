@@ -242,5 +242,8 @@ in
     # Emacs likes to get itself stuck waiting on user input or some shit on the
     # rather explicit (kill-emacs) command. Let's not tolerate that.
     systemd.user.services.emacs.serviceConfig.TimeoutStopSec = "10s";
+
+    # No friggin 600MB mbrola!
+    services.speechd.enable = false;
   });
 }
