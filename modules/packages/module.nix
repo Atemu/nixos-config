@@ -122,7 +122,7 @@ let
     which
     whois
     wol
-    youtube-dl
+    yt-dlp
     yq
     ytcast
     zip
