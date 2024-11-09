@@ -66,7 +66,7 @@ in
 
     services.displayManager.defaultSession =
       if this.hypr.enable
-      then "hyprland"
+      then "Hyprland-uwsm"
       else if this.tablet
       then "gnome"
       else "none+i3";
@@ -91,11 +91,13 @@ in
     '';
 
     programs.hyprland.enable = this.hypr.enable;
-    systemd.user.targets.hypr-session = lib.mkIf this.hypr.enable {
-      bindsTo = [ "graphical-session.target" ];
-      wants = [ "graphical-session-pre.target" ];
-      after = [ "graphical-session-pre.target" ];
+
+    programs.uwsm.enable = true;
+    programs.uwsm.waylandCompositors.Hyprland = {
+      binPath = lib.getExe config.programs.hyprland.package;
+      prettyName = "Hyprland";
     };
+
     systemd.user.services.hypridle = lib.mkIf this.hypr.enable {
       serviceConfig = {
         ExecStart = lib.getExe config.services.hypridle.package;
@@ -107,10 +109,12 @@ in
         procps
         swaylock
       ];
-      partOf = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
-      wantedBy = [ "hypr-session.target" ];
+      wantedBy = [ "wayland-session@Hyprland.target" ];
+      after = [ "wayland-wm@Hyprland.service" ]; # TODO should this be wayland-wm-env@Hyprland.service instead?
+      before = [ "wayland-session@Hyprland.target" ];
+      partOf = [ "wayland-session@Hyprland.target" ];
     };
+
     # A second hypridle daemon that activates power savings after 2s of idle
     systemd.user.services.hypridle-power = lib.mkIf this.hypr.hypridle-power {
       serviceConfig = {
@@ -118,13 +122,14 @@ in
         ExecStart = "${lib.getExe config.services.hypridle.package} -c ${./hypridle-power.conf} --quiet";
       };
       path = [ config.services.power-profiles-daemon.package ];
-      partOf = [ "graphical-session.target" ];
+      wantedBy = [ "wayland-session@Hyprland.target" ];
       after = [
-        "graphical-session.target"
+        "wayland-wm@Hyprland.service"
         # Let the regular hypridle register itself first to avoid any issues/races
         "hypridle.service"
       ];
-      wantedBy = [ "hypr-session.target" ];
+      before = [ "wayland-session@Hyprland.target" ];
+      partOf = [ "wayland-session@Hyprland.target" ];
     };
     assertions = [
       {
