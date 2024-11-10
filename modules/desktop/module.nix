@@ -2,6 +2,18 @@
 
 let
   this = config.custom.desktop;
+
+  # Create a service that is part of the hyprland session
+  # TODO this should probably be a generic option instead
+  mkHyprSessionService = conf: lib.mkMerge [
+    conf
+    {
+      wantedBy = [ "wayland-session@Hyprland.target" ];
+      after = [ "wayland-wm@Hyprland.service" ]; # TODO should this be wayland-wm-env@Hyprland.service instead?
+      before = [ "wayland-session@Hyprland.target" ];
+      partOf = [ "wayland-session@Hyprland.target" ];
+    }
+  ];
 in
 
 {
@@ -98,7 +110,7 @@ in
       prettyName = "Hyprland";
     };
 
-    systemd.user.services.hypridle = lib.mkIf this.hypr.enable {
+    systemd.user.services.hypridle = lib.mkIf this.hypr.enable (mkHyprSessionService {
       serviceConfig = {
         ExecStart = lib.getExe config.services.hypridle.package;
       };
@@ -109,28 +121,18 @@ in
         procps
         swaylock
       ];
-      wantedBy = [ "wayland-session@Hyprland.target" ];
-      after = [ "wayland-wm@Hyprland.service" ]; # TODO should this be wayland-wm-env@Hyprland.service instead?
-      before = [ "wayland-session@Hyprland.target" ];
-      partOf = [ "wayland-session@Hyprland.target" ];
-    };
+    });
 
     # A second hypridle daemon that activates power savings after 2s of idle
-    systemd.user.services.hypridle-power = lib.mkIf this.hypr.hypridle-power {
+    systemd.user.services.hypridle-power = lib.mkIf this.hypr.hypridle-power (mkHyprSessionService {
       serviceConfig = {
         # Quiet because I don't care about logging these actions and they're very frequent
         ExecStart = "${lib.getExe config.services.hypridle.package} -c ${./hypridle-power.conf} --quiet";
       };
-      path = [ config.services.power-profiles-daemon.package ];
-      wantedBy = [ "wayland-session@Hyprland.target" ];
-      after = [
-        "wayland-wm@Hyprland.service"
-        # Let the regular hypridle register itself first to avoid any issues/races
-        "hypridle.service"
-      ];
-      before = [ "wayland-session@Hyprland.target" ];
-      partOf = [ "wayland-session@Hyprland.target" ];
-    };
+      path = lib.mkForce [ config.services.power-profiles-daemon.package ];
+      # Let the regular hypridle register itself first to avoid any issues/races
+      after = [ "hypridle.service" ];
+    });
     assertions = [
       {
         assertion = this.hypr.hypridle-power -> config.services.power-profiles-daemon.enable;
