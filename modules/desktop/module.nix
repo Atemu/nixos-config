@@ -234,6 +234,9 @@ in
       ];
     };
 
+    programs.direnv.enable = true;
+    services.lorri.enable = true;
+
     networking.networkmanager.enable = true;
 
     networking.networkmanager.logLevel = "INFO"; # Prints useful info to journalctl
