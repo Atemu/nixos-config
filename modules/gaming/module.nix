@@ -60,7 +60,6 @@ in
           discord
           mangohud
           piper
-          prismlauncher
           steamtinkerlaunch
           teamspeak_client
           vulkan-tools
@@ -78,6 +77,10 @@ in
             wlrobs
           ];
         };
+        prismlauncher = pkgs.prismlauncher.override {
+          # I don't need 3 JDKs.
+          jdks = [ pkgs.jdk17 ];
+        };
       in
       general
       ++ lib.optionals this.amdgpu amdgpu
@@ -87,6 +90,7 @@ in
       ++ lib.optional (pkgs ? yuzu-ea && (builtins.tryEval pkgs.yuzu-ea).success) pkgs.yuzu-ea
       ++ [
         obs
+        prismlauncher
       ];
     custom.packages.allowedUnfree = [
       "steam"
