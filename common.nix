@@ -126,10 +126,13 @@
     package = pkgs.lix;
 
     extraOptions = ''
-      experimental-features = nix-command flakes
     '';
 
     settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes" # Ugh
+      ];
       # Would complicates copying between hosts.
       # FIXME: Yes this is a security issue
       require-sigs = false;
