@@ -151,7 +151,6 @@ let
   in [
     customFirefox
     direnv
-    gimp
     lxrandr
     mlterm
     mozlz4a
