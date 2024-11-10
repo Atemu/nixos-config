@@ -42,6 +42,7 @@ let
     btrfs-progs
     cifs-utils
     colmena
+    complete-alias
     compsize
     cryptsetup
     curl
