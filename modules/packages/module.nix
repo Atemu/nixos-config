@@ -156,7 +156,6 @@ let
     mlterm
     mozlz4a
     mpv
-    nomacs
     pavucontrol
     protonvpn-gui
     pulseaudio # For pactl when pipewire is enabled
