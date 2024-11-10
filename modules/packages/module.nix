@@ -164,7 +164,6 @@ let
     signal-desktop
     spotify
     tor-browser-bundle-bin
-    vlc
     xclip
     xorg.xev
   ];
