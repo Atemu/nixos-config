@@ -122,8 +122,8 @@ let
     which
     whois
     wol
-    yt-dlp
     yq
+    yt-dlp
     ytcast
     zip
     zstd
