@@ -41,6 +41,8 @@
   environment.systemPackages = with pkgs; [
     # Can change things like fan speed and charge limit
     fw-ectool
+    # For EQ'in the speakers; they really need it
+    easyeffects
   ];
 
   custom.swap.devices.primary = {
