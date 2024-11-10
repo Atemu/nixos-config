@@ -27,7 +27,7 @@ in
     '';
   };
 
-  config = lib.mkIf this.enable (lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "24.05") {
+  config = lib.mkIf this.enable (lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "24.11") {
     boot.kernel.sysctl = { "kernel.sysrq" = 1; };
 
     hardware.pulseaudio.enable = false;
