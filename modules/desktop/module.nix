@@ -149,7 +149,7 @@ in
 
     environment.systemPackages = (with pkgs; [
       brightnessctl
-      wofi
+      rofi-wayland
       wev
     ])
     ++ lib.optionals this.tablet (with pkgs; [
