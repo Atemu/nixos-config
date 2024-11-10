@@ -12,6 +12,7 @@
   networking.hostName = "HEPHAISTOS";
 
   custom.desktop.enable = true;
+  custom.desktop.hypr.enable = true;
 
   custom.gaming.enable = true;
   custom.gaming.steamvr.unprivilegedHighPriorityQueue = true;
