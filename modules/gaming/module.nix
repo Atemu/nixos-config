@@ -70,13 +70,6 @@ in
           umr
         ];
 
-        obs = pkgs.wrapOBS {
-          plugins = with pkgs.obs-studio-plugins; [
-            obs-vkcapture
-            obs-gstreamer
-            wlrobs
-          ];
-        };
         prismlauncher = pkgs.prismlauncher.override {
           # I don't need 3 JDKs.
           jdks = [ pkgs.jdk17 ];
@@ -89,7 +82,6 @@ in
         # config with nixpkgs trees that do not have yuzu.
       ++ lib.optional (pkgs ? yuzu-ea && (builtins.tryEval pkgs.yuzu-ea).success) pkgs.yuzu-ea
       ++ [
-        obs
         prismlauncher
       ];
     custom.packages.allowedUnfree = [
@@ -97,6 +89,12 @@ in
       "steam-unwrapped"
       "discord"
       "teamspeak-client"
+    ];
+    programs.obs-studio.enable = true;
+    programs.obs-studio.plugins = with pkgs.obs-studio-plugins; [
+      obs-vkcapture
+      obs-gstreamer
+      wlrobs
     ];
 
     programs.gamemode.enable = true;
