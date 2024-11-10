@@ -23,6 +23,10 @@ in
         });
         isJBIDE = pkg: lib.isDerivation pkg && !lib.hasPrefix "jetbrains-jdk" pkg.name;
       in lib.mapAttrs (n: v: if isJBIDE v then mkUnset v else v) prev.jetbrains;
+
+      networkmanager-openconnect = final.empty // {
+        networkManagerPlugin = "openconnect";
+      };
     })
   ];
 }
