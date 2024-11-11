@@ -1,0 +1,136 @@
+diff --git a/include/helper.h b/include/helper.h
+index ed161931..6e9a28f1 100644
+--- a/include/helper.h
++++ b/include/helper.h
+@@ -330,6 +330,23 @@ gboolean helper_execute_command(const char *wd, const char *cmd,
+                                 gboolean run_in_term,
+                                 RofiHelperExecuteContext *context);
+ 
++/**
++ * @param wd The work directory (optional)
++ * @param cmd The cmd to execute
++ * @param run_in_term Indicate if command should be run in a terminal
++ * @param context The startup notification context, if any
++ * @param ... tuples of extra parameters the string can search/replace
++ *
++ * Execute command.
++ * If needed members of context are NULL, they will be filled.
++ * Pass {cmd} into the va-arg list.
++ *
++ * @returns FALSE On failure, TRUE on success
++ */
++gboolean helper_execute_command_full(const char *wd, const char *cmd,
++                                     gboolean run_in_term,
++                                     RofiHelperExecuteContext *context, ...);
++
+ /**
+  * @param file The file path
+  * @param height The wanted height
+diff --git a/source/helper.c b/source/helper.c
+index 53f366bf..0bf417c6 100644
+--- a/source/helper.c
++++ b/source/helper.c
+@@ -72,7 +72,8 @@ void cmd_set_arguments(int argc, char **argv) {
+   stored_argv = argv;
+ }
+ 
+-int helper_parse_setup(char *string, char ***output, int *length, ...) {
++static int helper_parse_setup_v(char *string, char ***output, int *length,
++                                va_list ap) {
+   GError *error = NULL;
+   GHashTable *h;
+   h = g_hash_table_new(g_str_hash, g_str_equal);
+@@ -80,8 +81,6 @@ int helper_parse_setup(char *string, char ***output, int *length, ...) {
+   g_hash_table_insert(h, "{terminal}", config.terminal_emulator);
+   g_hash_table_insert(h, "{ssh-client}", config.ssh_client);
+   // Add list from variable arguments.
+-  va_list ap;
+-  va_start(ap, length);
+   while (1) {
+     char *key = va_arg(ap, char *);
+     if (key == (char *)0) {
+@@ -93,7 +92,6 @@ int helper_parse_setup(char *string, char ***output, int *length, ...) {
+     }
+     g_hash_table_insert(h, key, value);
+   }
+-  va_end(ap);
+ 
+   char *res = helper_string_replace_if_exists_v(string, h);
+   // Destroy key-value storage.
+@@ -115,6 +113,13 @@ int helper_parse_setup(char *string, char ***output, int *length, ...) {
+   }
+   return FALSE;
+ }
++int helper_parse_setup(char *string, char ***output, int *length, ...) {
++  va_list ap;
++  va_start(ap, length);
++  int retv = helper_parse_setup_v(string, output, length, ap);
++  va_end(ap);
++  return retv;
++}
+ 
+ void helper_tokenize_free(rofi_int_matcher **tokens) {
+   for (size_t i = 0; tokens && tokens[i]; i++) {
+@@ -1027,15 +1032,21 @@ gboolean helper_execute(const char *wd, char **args, const char *error_precmd,
+ gboolean helper_execute_command(const char *wd, const char *cmd,
+                                 gboolean run_in_term,
+                                 RofiHelperExecuteContext *context) {
++  return helper_execute_command_full(wd, cmd, run_in_term, context, "{cmd}",
++                                     cmd, (char *)0);
++}
++
++static gboolean helper_execute_command_full_v(const char *wd, const char *cmd,
++                                              gboolean run_in_term,
++                                              RofiHelperExecuteContext *context,
++                                              va_list ap) {
+   char **args = NULL;
+   int argc = 0;
+ 
+   if (run_in_term) {
+-    helper_parse_setup(config.run_shell_command, &args, &argc, "{cmd}", cmd,
+-                       (char *)0);
++    helper_parse_setup_v(config.run_shell_command, &args, &argc, ap);
+   } else {
+-    helper_parse_setup(config.run_command, &args, &argc, "{cmd}", cmd,
+-                       (char *)0);
++    helper_parse_setup_v(config.run_command, &args, &argc, ap);
+   }
+ 
+   if (args == NULL) {
+@@ -1063,10 +1074,19 @@ gboolean helper_execute_command(const char *wd, const char *cmd,
+ 
+   return helper_execute(wd, args, "", cmd, context);
+ }
++gboolean helper_execute_command_full(const char *wd, const char *cmd,
++                                     gboolean run_in_term,
++                                     RofiHelperExecuteContext *context, ...) {
++  va_list ap;
++  va_start(ap, context);
++  gboolean retv =
++      helper_execute_command_full_v(wd, cmd, run_in_term, context, ap);
++  va_end(ap);
++  return retv;
++}
+ 
+ char *helper_get_theme_path(const char *file, const char **ext,
+                             const char *parent_file) {
+-
+   char *filename = rofi_expand_path(file);
+   g_debug("Opening theme, testing: %s\n", filename);
+   if (g_path_is_absolute(filename)) {
+diff --git a/source/modes/drun.c b/source/modes/drun.c
+index c18d8f95..bdfebfb9 100644
+--- a/source/modes/drun.c
++++ b/source/modes/drun.c
+@@ -402,7 +402,10 @@ static void exec_cmd_entry(DRunModeEntry *e, const char *path) {
+   // terminal.
+   gboolean terminal =
+       g_key_file_get_boolean(e->key_file, e->action, "Terminal", NULL);
+-  if (helper_execute_command(exec_path, fp, terminal, sn ? &context : NULL)) {
++  if (helper_execute_command_full(exec_path, fp, terminal, sn ? &context : NULL,
++                                  "{cmd}", fp, "{desktop_file_path}", e->path,
++                                  "{app_id}", e->app_id, "{desktop_id}",
++                                  e->desktop_id, (char *)0)) {
+     char *drun_cach_path = g_build_filename(cache_dir, DRUN_CACHE_FILE, NULL);
+     // Store it based on the unique identifiers (desktop_id).
+     history_set(drun_cach_path, e->desktop_id);

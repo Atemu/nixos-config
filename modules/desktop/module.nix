@@ -152,7 +152,15 @@ in
 
     environment.systemPackages = (with pkgs; [
       brightnessctl
-      rofi-wayland
+      (rofi-wayland.override {
+        rofi-unwrapped = pkgs.rofi-wayland-unwrapped.overrideAttrs (old: {
+          patches = old.patches or [ ] ++ [
+            # Makes {app_id} available in -run-command.
+            # https://github.com/davatorium/rofi/pull/2048#issuecomment-2466841262
+            ./rofi-desktop-app-id.patch
+          ];
+        });
+      })
       wev
     ])
     ++ lib.optionals this.tablet (with pkgs; [
