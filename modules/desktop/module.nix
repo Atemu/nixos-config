@@ -12,6 +12,9 @@ let
       after = [ "wayland-wm@Hyprland.service" ]; # TODO should this be wayland-wm-env@Hyprland.service instead?
       before = [ "wayland-session@Hyprland.target" ];
       partOf = [ "wayland-session@Hyprland.target" ];
+      serviceConfig = {
+        Slice = [ "session.slice" ];
+      };
     }
   ];
 in
