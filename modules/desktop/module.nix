@@ -280,5 +280,10 @@ in
       overrideStrategy = "asDropin";
       serviceConfig.Slice = [ "session.slice" ];
     };
+    # https://gitlab.gnome.org/GNOME/dconf/-/issues/87
+    systemd.user.services.dconf = {
+      overrideStrategy = "asDropin";
+      serviceConfig.Slice = [ "session.slice" ];
+    };
   });
 }
