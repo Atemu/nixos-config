@@ -155,6 +155,9 @@
   # Makes Docker socket activated, only starting it after I use it once
   systemd.services.docker.wantedBy = lib.mkIf config.virtualisation.docker.enable (lib.mkForce [ ]);
 
+  # I don't want random systemPackages' autostart units, TYVM.
+  xdg.autostart.enable = lib.mkForce false;
+
   # This configures the time after which SIGTERM will be sent aswell as the time
   # after that before SIGKILL will be sent.
   # I don't have any sort of service that needs to stop for longer than a few seconds.
