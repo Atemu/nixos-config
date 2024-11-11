@@ -53,6 +53,7 @@ in
           richdocuments
           calendar
           contacts
+          tasks
         ;
       };
     };
