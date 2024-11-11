@@ -269,5 +269,11 @@ in
 
     # No friggin 600MB mbrola!
     services.speechd.enable = false;
+
+    # https://github.com/flatpak/xdg-desktop-portal-gtk/pull/504
+    systemd.user.services.xdg-desktop-portal-gtk = {
+      overrideStrategy = "asDropin";
+      serviceConfig.Slice = [ "session.slice" ];
+    };
   });
 }
