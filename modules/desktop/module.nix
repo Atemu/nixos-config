@@ -275,5 +275,10 @@ in
       overrideStrategy = "asDropin";
       serviceConfig.Slice = [ "session.slice" ];
     };
+    # https://github.com/dunst-project/dunst/pull/1397
+    systemd.user.services.dunst = {
+      overrideStrategy = "asDropin";
+      serviceConfig.Slice = [ "session.slice" ];
+    };
   });
 }
