@@ -245,6 +245,11 @@ in
       ];
     };
 
+    environment.etc."wallpaper/lockscreen.svg".source = pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/f07707cecfd89bc1459d5dad76a3a4c5315efba1/wallpapers/nix-wallpaper-nineish-dark-gray.svg";
+      hash = "sha256-Pul1zS78O0e4IkZL9lwgPwd+3vPlwvUlt/HbGj5fi7k=";
+    };
+
     programs.direnv.enable = true;
     services.lorri.enable = true;
 
