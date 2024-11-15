@@ -109,7 +109,25 @@ in
     };
   };
 
+  imports = [
+    ./borg.nix # The borg implementation of replication
+  ];
+
   config = lib.mkIf this.enable {
+    custom.replication.borg = lib.mkIf (client != null && client.method == methods.borg) {
+      enable = true;
+      target.repo =
+        let
+          domain = config.lib.custom.concatDomain [
+            (lib.toLower client.to)
+            config.custom.acme.primaryDomain
+          ];
+          replicationPath = replicationPaths.${client.to};
+        in
+        "ssh://${client.user}@${domain}${replicationPath}/${config.networking.hostName}/Borg";
+      key = config.custom.secrets.replication.path;
+    };
+
     custom.secrets.replication = lib.mkIf (client != null) { };
 
     services.borgbackup.repos =
