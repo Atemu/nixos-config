@@ -1,10 +1,15 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   this = config.custom.borg;
 
   # TODO
-  name = "test";
+  name = "Root";
 in
 
 {
@@ -15,15 +20,31 @@ in
       description = ''
         The path to back up relative to.
       '';
+      apply = lib.removePrefix "/";
     };
   };
 
   config = lib.mkIf this.enable {
     services.borgbackup.jobs.${name} = {
       paths = [ "." ];
-      preHook = ''
-        pushd ${this.path}
-      '';
+      preHook =
+        let
+          regex = "^.* snapshot_subvolume='(/.*?/Root\..*?)' .*$";
+          # Parses the `btrbk list --format=raw` output and returns the snapshot paths in order.
+          filterSnapshots = lib.concatStringsSep " " [
+            (lib.getExe pkgs.ripgrep)
+            (lib.escapeShellArgs [
+              regex
+              # Print the capture
+              "--replace"
+              "$1"
+            ])
+          ];
+        in
+        ''
+          snapshot="$(${lib.getExe pkgs.btrbk} list --format=raw | ${filterSnapshots} | tail -n 1)"
+          pushd "$snapshot/${this.path}"
+        '';
 
       repo = "/var/lib/borg/";
 
