@@ -21,6 +21,17 @@ in
       preHook = ''
         pushd ${this.path}
       '';
+
+      repo = "/var/lib/borg/";
+
+      exclude = [
+        "immich"
+        "docker"
+        "containers"
+        "borg"
+      ];
+
+      encryption.mode = "none";
     };
   };
 }
