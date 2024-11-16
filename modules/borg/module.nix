@@ -2,6 +2,9 @@
 
 let
   this = config.custom.borg;
+
+  # TODO
+  name = "test";
 in
 
 {
@@ -16,7 +19,7 @@ in
   };
 
   config = lib.mkIf this.enable {
-    services.borgbackup.jobs.test = {
+    services.borgbackup.jobs.${name} = {
       paths = [ "." ];
       preHook = ''
         pushd ${this.path}
@@ -32,6 +35,14 @@ in
       ];
 
       encryption.mode = "none";
+    };
+
+    systemd.services."borgbackup-job-${name}" = {
+      # Create btrbk snapshots before
+      wants = [
+        # TODO what's the name mapping here? Is there not one btrbk service per snapshot declaration?
+        "btrbk-btrbk.service"
+      ];
     };
   };
 }
