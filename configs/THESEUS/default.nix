@@ -29,6 +29,9 @@
   custom.fs.btrfs.enable = true;
   custom.fs.btrfs.newLayout = true;
 
+  custom.borg.enable = true;
+  custom.borg.path = "/var/lib/";
+
   # Device name must be provided by hardware config for now
   custom.swap.devices.primary.enable = true;
 
