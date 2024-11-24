@@ -51,6 +51,7 @@ in
       ];
     };
     programs.steam.protontricks.enable = true;
+    programs.steam.localNetworkGameTransfers.openFirewall = true;
 
     # TODO extract into a custom.gaming option
     environment.systemPackages =
