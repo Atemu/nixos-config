@@ -128,6 +128,7 @@
       experimental-features = [
         "nix-command"
         "flakes" # Ugh
+        "pipe-operator"
       ];
       # Would complicates copying between hosts.
       # FIXME: Yes this is a security issue
