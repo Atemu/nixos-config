@@ -11,9 +11,14 @@ in
 
   config.nixpkgs.overlays = lib.mkIf this.enable [
     (final: prev: {
-      colmena = prev.colmena.override {
-        nix = final.lix;
-      };
+      colmena =
+        if lib.versionAtLeast lib.trivial.version "24.11" then
+          prev.colmena.override {
+            nix = final.lix;
+          }
+        else
+          prev.colmena;
+
       # A firefox with PGO, enabled in regular from-source firefox since 22.05
       firefox-pgo = if lib.versionAtLeast lib.trivial.version "22.05" then final.firefox else final.firefox-bin;
 
