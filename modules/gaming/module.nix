@@ -89,7 +89,7 @@ in
       "steam"
       "steam-unwrapped"
       "discord"
-      "teamspeak-client"
+      "teamspeak3"
     ];
     # BSMM depends on old SDKs...
     # https://github.com/NixOS/nixpkgs/pull/339370
