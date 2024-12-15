@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -20,6 +20,10 @@
   programs.adb.enable = true;
 
   custom.dnscrypt.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    prusa-slicer
+  ];
 
   custom.bootloader.choice = "systemd-boot";
 
