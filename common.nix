@@ -129,6 +129,7 @@
         "nix-command"
         "flakes" # Ugh
         "pipe-operator"
+        "no-url-literals" # Bit me in the ass once already
       ];
       # Would complicates copying between hosts.
       # FIXME: Yes this is a security issue
