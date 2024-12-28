@@ -20,8 +20,8 @@ in
   # /Volumes/Data/Movies is my Movies and shows library.
   # TODO Rework the network they're exposed to better, it breaks with Tailscale currently.
   services.nfs.server.exports = ''
-    /Volumes/Data/Media/ 192.168.178.0/24(ro)
-    /Volumes/Data/Movies/ 192.168.178.0/24(ro)
+    /Volumes/Data/Media/ 192.168.178.0/24(ro,insecure)
+    /Volumes/Data/Movies/ 192.168.178.0/24(ro,insecure)
   '';
   networking.firewall = {
     # It needs one or some of these ports AFAICT
