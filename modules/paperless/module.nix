@@ -1,15 +1,14 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  ...
+}:
 
 let
   this = config.custom.paperless;
   cfg = config.services.paperless;
 
-  services = [
-    "paperless-consumer.service"
-    "paperless-scheduler.service"
-    "paperless-task-queue.service"
-    "paperless-web.service"
-  ];
+  exportDir = cfg.exporter.directory;
 in
 
 {
@@ -51,47 +50,35 @@ in
 
       PAPERLESS_URL = "https://${config.custom.virtualHosts.paperless.domain}";
     };
+    services.paperless.exporter = lib.mkIf this.autoExport {
+      enable = true;
+
+      directory = cfg.dataDir + "/export";
+
+      onCalendar = "daily";
+
+      options = lib.genAttrs [
+        "compare-checksums"
+        "delete"
+        "no-archive"
+        "no-thumbnail"
+        "use-filename-format"
+        "split-manifest"
+      ] (_: true);
+
+      # Create hardlinks of all documents
+      preScript = ''
+        cp --link --archive --update ${cfg.mediaDir}/documents/originals/. ${exportDir}
+      '';
+      # Allow users of the paperless groups to inspect the backup
+      postScript = ''
+        find ${exportDir} -type f -exec chmod 640 {} +
+        find ${exportDir} -type d -exec chmod 750 {} +
+      '';
+    };
 
     custom.virtualHosts.paperless = {
       localPort = cfg.port;
-    };
-
-    systemd.services.paperless-exporter = lib.mkIf this.autoExport {
-      serviceConfig.User = config.services.paperless.user;
-
-      unitConfig = {
-        # Shut down the paperless services while the exporter runs
-        Conflicts = services;
-        After = services;
-        # Bring them back up afterwards, regardless of pass/fail
-        OnFailure = services;
-        OnSuccess = services;
-      };
-
-      script = ''
-        exportDir="${cfg.dataDir}/export"
-
-        # Create hardlinks of all documents
-        ${lib.getBin pkgs.coreutils}/bin/cp --link --archive --update ${cfg.mediaDir}/documents/originals/. $exportDir
-
-        # Run the exporter
-        cmd=(
-          ${cfg.dataDir}/paperless-manage document_exporter
-          --compare-checksums
-          --delete
-          --no-archive
-          --no-thumbnail
-          --use-filename-format
-          --split-manifest
-          $exportDir
-        ); "''${cmd[@]}"
-
-        # Allow users of the paperless groups to inspect the backup
-        find $exportDir -type f -exec chmod 640 {} +
-        find $exportDir -type d -exec chmod 750 {} +
-      '';
-
-      startAt = "daily";
     };
   };
 }
