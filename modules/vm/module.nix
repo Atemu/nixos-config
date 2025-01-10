@@ -17,5 +17,6 @@ in
   } // lib.optionalAttrs (options.virtualisation ? memorySize) {
     # These options don't exist unless you are in the VM profile
     virtualisation.diskSize = 10 * 1024; # Create 10GiB disk by default
+    virtualisation.memorySize = 4 * 1024; # 4GiB memory rather than the meager 1GiB
   };
 }
