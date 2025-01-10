@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, options, ... }:
 
 let
   this = config.custom.vm;
@@ -14,5 +14,8 @@ in
     security.sudo.wheelNeedsPassword = lib.mkForce false;
 
     services.getty.autologinUser = "atemu";
+  } // lib.optionalAttrs (options.virtualisation ? memorySize) {
+    # These options don't exist unless you are in the VM profile
+    virtualisation.diskSize = 10 * 1024; # Create 10GiB disk by default
   };
 }
