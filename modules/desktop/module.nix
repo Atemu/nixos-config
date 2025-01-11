@@ -99,6 +99,7 @@ in
       foot
       qt5.qtwayland
       swaylock
+      wl-clipboard
       xwayland
     ];
     programs.sway.extraSessionCommands = ''
