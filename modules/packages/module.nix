@@ -58,6 +58,7 @@ let
     fd
     ffmpeg
     file
+    gh
     git
     git-annex
     git-remote-gcrypt
