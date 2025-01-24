@@ -162,7 +162,7 @@ in
 
                 StateDirectory = lib.mkIf value.stateDirectory.enable value.stateDirectory.name;
               };
-            path = [ pkgs.docker ];
+            path = [ config.virtualisation.docker.package ];
 
             requires = [ "docker.service" ];
             after = [ "docker.service" ];
