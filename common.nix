@@ -167,6 +167,7 @@
   # This overrides the default with 120s by default. Stop it.
   systemd.services."user@".serviceConfig.TimeoutStopSec = "30s";
 
+  # FIXME setting sys values like this should be a module; probably using udev instead
   systemd.tmpfiles.rules = [
     # Congestion threshold is set incredibly low by default causing bcache to
     # have nearly no effect.
