@@ -98,7 +98,6 @@ let
     onefetch
     p7zip
     pciutils
-    protonvpn-cli
     pstree
     pv
     qrencode
