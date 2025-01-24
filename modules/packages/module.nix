@@ -150,7 +150,6 @@ let
     direnv
     lxrandr
     mlterm
-    mozlz4a
     mpv
     pavucontrol
     protonvpn-gui
