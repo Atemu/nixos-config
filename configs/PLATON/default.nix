@@ -34,8 +34,6 @@
 
   custom.dnscrypt.enable = true;
 
-  programs.adb.enable = true;
-
   custom.remotebuild.enable = true;
   custom.remotebuild.builders.cccda = true;
 

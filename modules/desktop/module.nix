@@ -224,6 +224,8 @@ in
     programs.appimage.enable = true;
     programs.appimage.binfmt = true;
 
+    programs.adb.enable = true;
+
     fonts.packages = with pkgs; [
       # My preferred monospace font
       hasklig # source-code-pro with ligatures
