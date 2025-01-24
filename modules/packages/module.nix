@@ -103,7 +103,6 @@ let
     qrencode
     ripgrep
     rsync
-    screen
     smartmontools
     smem
     sshfs
