@@ -102,7 +102,6 @@ let
     pv
     qrencode
     ranger
-    rclone
     ripgrep
     rsync
     screen
