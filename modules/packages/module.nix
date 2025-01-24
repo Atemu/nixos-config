@@ -153,7 +153,6 @@ let
     mpv
     pavucontrol
     protonvpn-gui
-    pulseaudio # For pactl when pipewire is enabled
     python3
     scrcpy
     signal-desktop
