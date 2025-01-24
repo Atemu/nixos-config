@@ -122,9 +122,6 @@
   nix = {
     package = pkgs.lix;
 
-    extraOptions = ''
-    '';
-
     settings = {
       experimental-features = [
         "nix-command"
