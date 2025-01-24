@@ -21,8 +21,6 @@
 
   boot.initrd.systemd.enable = true;
 
-  services.sshd.enable = true;
-
   # Scanner
   # TODO refactor into module
   hardware.sane.enable = true;

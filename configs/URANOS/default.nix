@@ -15,8 +15,6 @@
   networking.useDHCP = true;
   networking.useNetworkd = true;
 
-  services.openssh.enable = true;
-
   programs.mosh.enable = true;
 
   custom.paperless.enable = true;

@@ -49,8 +49,6 @@
     ipv6AcceptRAConfig.RouteMetric = 925;
   };
 
-  services.openssh.enable = true;
-
   # TODO do this for all machines
   systemd.targets.rescue.wants = [ "sshd.service" "network.target" ];
 

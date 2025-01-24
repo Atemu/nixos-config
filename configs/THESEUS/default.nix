@@ -13,8 +13,6 @@
 
   boot.initrd.systemd.enable = true;
 
-  services.sshd.enable = true;
-
   virtualisation.docker.enable = true;
 
   programs.adb.enable = true;

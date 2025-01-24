@@ -26,8 +26,6 @@
   systemd.services.undervolt.wantedBy = [ "post-resume.target" "multi-user.target" ];
   systemd.services.undervolt.after = [ "post-resume.target" ];
 
-  services.sshd.enable = true;
-
   networking.networkmanager.wifi.powersave = true;
 
   systemd.services.ModemManager.wantedBy = [ "network.target" ];
