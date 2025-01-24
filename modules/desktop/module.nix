@@ -151,22 +151,27 @@ in
 
     hardware.brillo.enable = true;
 
-    environment.systemPackages = (with pkgs; [
-      brightnessctl
-      (rofi-wayland.override {
-        rofi-unwrapped = pkgs.rofi-wayland-unwrapped.overrideAttrs (old: {
-          patches = old.patches or [ ] ++ [
-            # Makes {app_id} available in -run-command.
-            # https://github.com/davatorium/rofi/pull/2048#issuecomment-2466841262
-            ./rofi-desktop-app-id.patch
-          ];
-        });
-      })
-      wev
-    ])
-    ++ lib.optionals this.tablet (with pkgs; [
-      write_stylus
-    ]);
+    environment.systemPackages = lib.mkMerge [
+      (with pkgs; [
+        brightnessctl
+        (rofi-wayland.override {
+          rofi-unwrapped = pkgs.rofi-wayland-unwrapped.overrideAttrs (old: {
+            patches = old.patches or [ ] ++ [
+              # Makes {app_id} available in -run-command.
+              # https://github.com/davatorium/rofi/pull/2048#issuecomment-2466841262
+              ./rofi-desktop-app-id.patch
+            ];
+          });
+        })
+        wev
+      ])
+      (lib.mkIf this.tablet (
+        with pkgs;
+        [
+          write_stylus
+        ]
+      ))
+    ];
     custom.packages.allowedUnfree = lib.mkIf this.tablet [
       "styluslabs-write-bin"
     ];
