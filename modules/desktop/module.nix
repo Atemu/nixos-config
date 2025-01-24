@@ -168,12 +168,9 @@ in
       (lib.mkIf this.tablet (
         with pkgs;
         [
-          write_stylus
+          styluslabs-write
         ]
       ))
-    ];
-    custom.packages.allowedUnfree = lib.mkIf this.tablet [
-      "styluslabs-write-bin"
     ];
 
     services.dbus.enable = true;
