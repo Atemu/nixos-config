@@ -76,14 +76,14 @@ in
           jdks = [ pkgs.jdk17 ];
         };
       in
-      general
-      ++ lib.optionals this.amdgpu amdgpu
+      lib.mkMerge [
+        general
+        (lib.mkIf this.amdgpu amdgpu)
         # Was removed upstream but I still have it in my Nixpkgs fork. This is a
         # little hack for making it possible to at least eval the rest of my
         # config with nixpkgs trees that do not have yuzu.
-      ++ lib.optional (pkgs ? yuzu-ea && (builtins.tryEval pkgs.yuzu-ea).success) pkgs.yuzu-ea
-      ++ [
-        prismlauncher
+        (lib.mkIf (pkgs ? yuzu-ea && (builtins.tryEval pkgs.yuzu-ea).success) [ pkgs.yuzu-ea ])
+        [ prismlauncher ]
       ];
     custom.packages.allowedUnfree = [
       "steam"
