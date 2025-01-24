@@ -101,7 +101,6 @@ let
     pstree
     pv
     qrencode
-    ranger
     ripgrep
     rsync
     screen
