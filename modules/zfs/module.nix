@@ -15,7 +15,7 @@ in
     boot.zfs.forceImportRoot = false;
 
     services.zfs.trim.enable = true;
-    services.zfs.trim.interval = "weekly"; #default
+    services.zfs.trim.interval = "weekly"; # default
 
     services.zfs.autoSnapshot.enable = true;
 

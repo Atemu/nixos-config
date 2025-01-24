@@ -1,11 +1,21 @@
-{ config, lib, modulesPath, ... }:
+{
+  config,
+  lib,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "usbhid"
+    "sd_mod"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [
     "kvm-amd"
@@ -46,33 +56,35 @@
           # Only spin down after 30s. This is in order to prevent jumps during a
           # loading screen or other short periods of less GPU activity.
           spindown_delay_ms = 30000;
-          curve = let
-            # The fans are not audible at such low RPM but keep it quite a bit
-            # cooler.
-            idle = 0.27;
-            # The card has many resonant frequencies. 45% is not resonant and
-            # provides ample cooling while gaming; keeping the card a good bit
-            # below 90°C which is a bit better than the default fan curve even.
-            operating = 0.45;
-          in {
-            # Don't turn the fans off! This would cause the GPU to accumulate
-            # heat over time and impact the CPU's ability to dissipate its heat.
-            "0" = idle;
-            # This is the idle range. I technically don't need the fan speeds to
-            # be in the operating range until it's at 80-something but I don't
-            # want the speeds to jump up and down during loading screens or
-            # other short downtimes or ramp up during very light load.
-            "79" = idle;
-            # I want a quick jump to operating speed rather than a ramp here to
-            # avoid hitting resonant frequencies which are quite audible
-            "80" = operating;
-            # This is the operating temperature range
-            "94" = operating;
-            # If we're hot, COOL TF DOWN.
-            # Please still don't ramp though
-            "95" = 0.6;
-            "100" = 1.0;
-          };
+          curve =
+            let
+              # The fans are not audible at such low RPM but keep it quite a bit
+              # cooler.
+              idle = 0.27;
+              # The card has many resonant frequencies. 45% is not resonant and
+              # provides ample cooling while gaming; keeping the card a good bit
+              # below 90°C which is a bit better than the default fan curve even.
+              operating = 0.45;
+            in
+            {
+              # Don't turn the fans off! This would cause the GPU to accumulate
+              # heat over time and impact the CPU's ability to dissipate its heat.
+              "0" = idle;
+              # This is the idle range. I technically don't need the fan speeds to
+              # be in the operating range until it's at 80-something but I don't
+              # want the speeds to jump up and down during loading screens or
+              # other short downtimes or ramp up during very light load.
+              "79" = idle;
+              # I want a quick jump to operating speed rather than a ramp here to
+              # avoid hitting resonant frequencies which are quite audible
+              "80" = operating;
+              # This is the operating temperature range
+              "94" = operating;
+              # If we're hot, COOL TF DOWN.
+              # Please still don't ramp though
+              "95" = 0.6;
+              "100" = 1.0;
+            };
         };
       };
     };

@@ -1,9 +1,18 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   this = config.custom.piped;
 
-  serviceNames = [ "piped" "pipedapi" "pipedproxy" ];
+  serviceNames = [
+    "piped"
+    "pipedapi"
+    "pipedproxy"
+  ];
 
   hostnames = lib.pipe config.custom.virtualHosts [
     (lib.filterAttrs (n: v: lib.elem n serviceNames))
@@ -19,13 +28,19 @@ in
 
     reverseProxy = lib.mkOption {
       default = "nginx";
-      type = lib.types.enum [ "nginx" "caddy" ];
+      type = lib.types.enum [
+        "nginx"
+        "caddy"
+      ];
       description = "Which reverse proxy to use internally.";
     };
 
     DBLocation = lib.mkOption {
       default = "piped-data";
-      type = lib.types.oneOf [ (lib.types.enum [ "piped-data" ]) lib.types.path ];
+      type = lib.types.oneOf [
+        (lib.types.enum [ "piped-data" ])
+        lib.types.path
+      ];
       description = "Path to store the database state in. Alternatively, you can use the `piped-data` docker volume.";
     };
 
@@ -42,33 +57,39 @@ in
     };
     piped-docker = lib.mkOption {
       internal = true;
-      default = let
-        volumesYAML = pkgs.writers.writeYAML "volumes.yml" {
-          volumes = lib.genAttrs ([ "piped-proxy" ] ++ (lib.optional (this.DBLocation == "piped-data") "piped-data")) (n: { name = n; });
-        };
-      in pkgs.runCommand "piped-docker-configured" { } ''
-        cd ${this.src}
+      default =
+        let
+          volumesYAML = pkgs.writers.writeYAML "volumes.yml" {
+            volumes =
+              lib.genAttrs ([ "piped-proxy" ] ++ (lib.optional (this.DBLocation == "piped-data") "piped-data"))
+                (n: {
+                  name = n;
+                });
+          };
+        in
+        pkgs.runCommand "piped-docker-configured" { } ''
+          cd ${this.src}
 
-        mkdir -p $out/config/
-        cp -r template/. $out/config/
+          mkdir -p $out/config/
+          cp -r template/. $out/config/
 
-        substituteInPlace $out/config/* \
-          --replace FRONTEND_HOSTNAME ${hostnames.piped} \
-          --replace BACKEND_HOSTNAME ${hostnames.pipedapi} \
-          --replace PROXY_HOSTNAME ${hostnames.pipedproxy} \
+          substituteInPlace $out/config/* \
+            --replace FRONTEND_HOSTNAME ${hostnames.piped} \
+            --replace BACKEND_HOSTNAME ${hostnames.pipedapi} \
+            --replace PROXY_HOSTNAME ${hostnames.pipedproxy} \
 
-        substituteInPlace $out/config/docker-compose.*.yml \
-          --replace "./data/db" ${this.DBLocation} \
+          substituteInPlace $out/config/docker-compose.*.yml \
+            --replace "./data/db" ${this.DBLocation} \
 
-        # The nginx Docker image creates symlinks to stdout in the default locations
-        # TODO write to some persistent volume with log rotation instead
-        substituteInPlace $out/config/nginx.conf \
-          --replace "/var/log/nginx/access.log" "/var/log/nginx/access-actual.log" \
+          # The nginx Docker image creates symlinks to stdout in the default locations
+          # TODO write to some persistent volume with log rotation instead
+          substituteInPlace $out/config/nginx.conf \
+            --replace "/var/log/nginx/access.log" "/var/log/nginx/access-actual.log" \
 
-        # volumes: section is borderline broken and I need to add my own
-        sed '/^volumes:/Q' $out/config/docker-compose.${this.reverseProxy}.yml > $out/docker-compose.yml
-        cat ${volumesYAML} >> $out/docker-compose.yml
-      '';
+          # volumes: section is borderline broken and I need to add my own
+          sed '/^volumes:/Q' $out/config/docker-compose.${this.reverseProxy}.yml > $out/docker-compose.yml
+          cat ${volumesYAML} >> $out/docker-compose.yml
+        '';
     };
   };
 
@@ -85,15 +106,17 @@ in
     });
 
     systemd.services.piped-feed-fetch = lib.mkIf this.feedFetchHack {
-      script = let
-        inherit (config.custom.docker-compose.piped) wrapperScript;
-        psql = cmd: "${lib.getExe wrapperScript} exec -i postgres psql -U piped -d piped -qtAX -c '${cmd}'";
-      in ''
-          ${psql "select id from public.pubsub;"} | while IFS= read -r line; do
-          ${lib.getExe pkgs.curl} -k "https://${hostnames.pipedapi}/channel/$line" &> /dev/null
-          sleep 1
-        done
-      '';
+      script =
+        let
+          inherit (config.custom.docker-compose.piped) wrapperScript;
+          psql = cmd: "${lib.getExe wrapperScript} exec -i postgres psql -U piped -d piped -qtAX -c '${cmd}'";
+        in
+        ''
+            ${psql "select id from public.pubsub;"} | while IFS= read -r line; do
+            ${lib.getExe pkgs.curl} -k "https://${hostnames.pipedapi}/channel/$line" &> /dev/null
+            sleep 1
+          done
+        '';
 
       startAt = "hourly";
     };

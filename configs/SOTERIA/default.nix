@@ -12,7 +12,10 @@
   networking.hostName = "SOTERIA";
 
   boot.initrd.network.enable = true;
-  boot.initrd.network.udhcpc.extraArgs = [ "-t" "20" ];
+  boot.initrd.network.udhcpc.extraArgs = [
+    "-t"
+    "20"
+  ];
   boot.initrd.network.ssh.enable = true;
 
   # mkdir /etc/secrets/initrd -p
@@ -50,7 +53,10 @@
   };
 
   # TODO do this for all machines
-  systemd.targets.rescue.wants = [ "sshd.service" "network.target" ];
+  systemd.targets.rescue.wants = [
+    "sshd.service"
+    "network.target"
+  ];
 
   programs.mosh.enable = true;
 
@@ -98,4 +104,3 @@
 
   system.stateVersion = "19.09"; # Did you read the comment?
 }
-

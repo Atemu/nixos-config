@@ -16,9 +16,14 @@ in
     # Makes a by-label device out of label
     mkLabel = label: "/dev/disk/by-label/${label}";
 
-    mkPrivateOption = args: lib.mkOption (args // {
-      default = lib.warn "Secret not applied, using default${lib.optionalString (args ? default) " (${args.default})"}" args.default;
-    });
+    mkPrivateOption =
+      args:
+      lib.mkOption (
+        args
+        // {
+          default = lib.warn "Secret not applied, using default${lib.optionalString (args ? default) " (${args.default})"}" args.default;
+        }
+      );
 
     concatDomain = lib.flip lib.pipe [
       (lib.filter (n: n != null && n != ""))

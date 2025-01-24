@@ -1,4 +1,9 @@
-{ lib, config, options, ... }:
+{
+  lib,
+  config,
+  options,
+  ...
+}:
 
 let
   this = config.custom.fs;
@@ -30,7 +35,10 @@ in
 
       stateVolumes = lib.mkOption {
         description = "Subvolumes to create and mount that contain important state. Only works with newLayout and is additive.";
-        default = [ "Users" "Root" ]; # TODO Root should be stateless, a new var subvol should be here instead
+        default = [
+          "Users"
+          "Root"
+        ]; # TODO Root should be stateless, a new var subvol should be here instead
       };
 
       autoSnapshots = {
@@ -55,7 +63,13 @@ in
       "/tmp" = {
         device = "tmpfs";
         fsType = "tmpfs";
-        options = [ "size=50%" "nosuid" "nodev" "nodev" "mode=1777" ]; # systemd default security options
+        options = [
+          "size=50%"
+          "nosuid"
+          "nodev"
+          "nodev"
+          "mode=1777"
+        ]; # systemd default security options
       };
 
       "/boot" = {
@@ -80,29 +94,34 @@ in
       # applications.
       "flushoncommit"
     ];
-    custom.btrfs.fileSystems = let
-      mkMount = subvol: {
-        inherit (this.btrfs) device;
-        inherit subvol;
-      };
-
-      oldLayout = {
-        "/" = mkMount "root";
-        "/nix" = mkMount "nix";
-        "/home" = mkMount "home";
-      };
-      newLayout = let
-        defaultVolumes = {
-          "/" = mkMount "Root";
-          "/nix" = mkMount "Nix Store";
-          "/Users" = mkMount "Users";
-          "/System/Volumes" = mkMount "/";
+    custom.btrfs.fileSystems =
+      let
+        mkMount = subvol: {
+          inherit (this.btrfs) device;
+          inherit subvol;
         };
 
-        stateVolumes = map (name: lib.nameValuePair "/Volumes/${name}" (mkMount name)) this.btrfs.stateVolumes;
+        oldLayout = {
+          "/" = mkMount "root";
+          "/nix" = mkMount "nix";
+          "/home" = mkMount "home";
+        };
+        newLayout =
+          let
+            defaultVolumes = {
+              "/" = mkMount "Root";
+              "/nix" = mkMount "Nix Store";
+              "/Users" = mkMount "Users";
+              "/System/Volumes" = mkMount "/";
+            };
+
+            stateVolumes = map (
+              name: lib.nameValuePair "/Volumes/${name}" (mkMount name)
+            ) this.btrfs.stateVolumes;
+          in
+          defaultVolumes // (lib.listToAttrs stateVolumes);
       in
-        defaultVolumes // (lib.listToAttrs stateVolumes);
-    in lib.mkIf this.btrfs.enable (if this.btrfs.newLayout then newLayout else oldLayout);
+      lib.mkIf this.btrfs.enable (if this.btrfs.newLayout then newLayout else oldLayout);
 
     # We want these to be additive, so we need to set these here rather than as
     # the options' defaults which would get overridden when additional

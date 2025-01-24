@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   this = config.custom.immich;
@@ -36,12 +41,12 @@ in
 
   config = lib.mkIf this.enable {
     assertions = [
-        {
-          assertion = lib.versionAtLeast config.virtualisation.docker.package.version "25.0";
-          message = ''
-            Docker engine >= 25 is required for Immich
-          '';
-        }
+      {
+        assertion = lib.versionAtLeast config.virtualisation.docker.package.version "25.0";
+        message = ''
+          Docker engine >= 25 is required for Immich
+        '';
+      }
     ];
     virtualisation.docker.package = lib.mkDefault pkgs.docker_25;
 

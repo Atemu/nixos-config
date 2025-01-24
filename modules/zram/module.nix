@@ -20,8 +20,7 @@ in
     };
   };
 
-  config.
-    zramSwap = lib.mkIf this.enable {
+  config.zramSwap = lib.mkIf this.enable {
     enable = true;
     algorithm = "lz4";
     memoryPercent = this.percent;

@@ -1,13 +1,22 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  imports = [
-    ./modules.nix
-  ] ++ (
-    if builtins.pathExists ./secrets.nix
-    then [ ./secrets.nix ]
-    else builtins.trace "Warning: Secrets not present. Options that use eval secrets will use test values." [ ]
-  );
+  imports =
+    [
+      ./modules.nix
+    ]
+    ++ (
+      if builtins.pathExists ./secrets.nix then
+        [ ./secrets.nix ]
+      else
+        builtins.trace "Warning: Secrets not present. Options that use eval secrets will use test values."
+          [ ]
+    );
 
   # Enable my custom modules.
   custom.enable = true;
@@ -38,7 +47,7 @@
     LC_MONETARY = "en_IE"; # 1,000.00€
     LC_NAME = "en_GB"; # Mr/Mrs etc.
     LC_NUMERIC = "en_GB"; # 1,000.00
-    LC_PAPER = "de_DE";# DIN A4!
+    LC_PAPER = "de_DE"; # DIN A4!
     LC_TELEPHONE = "de_DE"; # Default prefix (+49) and how telephone numbers should be formatted?
     LC_TIME = "en_DK"; # ISO 8601
   };
@@ -98,18 +107,27 @@
   users.users.atemu = {
     isNormalUser = true;
     # TODO set these in the respective modules
-    extraGroups = [ "wheel" "networkmanager" "docker" "video" "paperless" "scanner" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+      "video"
+      "paperless"
+      "scanner"
+    ];
     shell = pkgs.bash;
     initialPassword = "none";
     home = lib.mkIf config.custom.fs.btrfs.newLayout "/Users/atemu";
-    openssh.authorizedKeys.keys = let
-      hostKeys = {
-        HEPHAISTOS = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3J1F+a1lSq05KPiH0gdZkx9q5w8XHfwqB3JfCzSzAV atemu@HEPHAISTOS";
-        THESEUS = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIcU6XG0H5Fs0jl9mHiPWwI3BdHz4Uf9CIAc94eklV9Y atemu@THESEUS";
-        PLATON = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHK/Gx95TAvE5GmEuLwWgOQpwjkWNaVavprNlFOuCjFI atemu@PLATON";
-      };
+    openssh.authorizedKeys.keys =
+      let
+        hostKeys = {
+          HEPHAISTOS = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3J1F+a1lSq05KPiH0gdZkx9q5w8XHfwqB3JfCzSzAV atemu@HEPHAISTOS";
+          THESEUS = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIcU6XG0H5Fs0jl9mHiPWwI3BdHz4Uf9CIAc94eklV9Y atemu@THESEUS";
+          PLATON = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHK/Gx95TAvE5GmEuLwWgOQpwjkWNaVavprNlFOuCjFI atemu@PLATON";
+        };
+      in
       # All keys but the host's own key
-    in lib.attrValues (removeAttrs hostKeys [ config.networking.hostName ]);
+      lib.attrValues (removeAttrs hostKeys [ config.networking.hostName ]);
   };
 
   nix.nixPath = [
@@ -184,6 +202,12 @@
 
   networking.hosts."23.137.248.133" = [
     # archive.today and friends play dirty with DNS
-    "archive.today" "archive.fo" "archive.is" "archive.li" "archive.md" "archive.ph" "archive.vn"
+    "archive.today"
+    "archive.fo"
+    "archive.is"
+    "archive.li"
+    "archive.md"
+    "archive.ph"
+    "archive.vn"
   ];
 }

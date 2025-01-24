@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   this = config.custom;
@@ -28,15 +33,21 @@ in
       custom.vm.enable = true;
     };
 
-    services.emacs.package = (config.custom.emacs.override {
-      noGui = !config.custom.desktop.enable;
-    }).pkgs.withPackages (ep: with ep; [
-      # Require native code
-      vterm
-      pdf-tools
-      (treesit-grammars.with-grammars (grammars: with grammars; [
-        tree-sitter-nix
-      ]))
-    ]);
+    services.emacs.package =
+      (config.custom.emacs.override {
+        noGui = !config.custom.desktop.enable;
+      }).pkgs.withPackages
+        (
+          ep: with ep; [
+            # Require native code
+            vterm
+            pdf-tools
+            (treesit-grammars.with-grammars (
+              grammars: with grammars; [
+                tree-sitter-nix
+              ]
+            ))
+          ]
+        );
   };
 }

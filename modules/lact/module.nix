@@ -1,16 +1,24 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   this = config.custom.lact;
 
-  configFile = pkgs.runCommand "lact-config.yaml" {
-    json = pkgs.writers.writeJSON "lact-config.json" this.settings;
-  } ''
-    # Merge with the defaults
-    ${lib.getExe pkgs.yq} -s '.[0] * .[1]' $json ${./lact-default-config.yaml} > config.json
-    # Convert keys to numeric values where possible. It depends on this for some reason.
-    ${lib.getExe pkgs.yj} -jy -k < config.json > $out
-  '';
+  configFile =
+    pkgs.runCommand "lact-config.yaml"
+      {
+        json = pkgs.writers.writeJSON "lact-config.json" this.settings;
+      }
+      ''
+        # Merge with the defaults
+        ${lib.getExe pkgs.yq} -s '.[0] * .[1]' $json ${./lact-default-config.yaml} > config.json
+        # Convert keys to numeric values where possible. It depends on this for some reason.
+        ${lib.getExe pkgs.yj} -jy -k < config.json > $out
+      '';
 in
 
 {
@@ -45,4 +53,3 @@ in
     };
   };
 }
-

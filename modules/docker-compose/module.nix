@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   this = config.custom.docker-compose;
@@ -12,105 +17,116 @@ let
   # of docker compose.
   query = ''.services = (.services | map_values(.restart = "no") | map_values(.logging = { "driver": "json-file" }))'';
 
-  sanitise = value: pkgs.runCommand "docker-compose-sanitised" { } (''
-    cp -rs ${value.directory} $out
-    chmod +w -R $out/
-    rm $out/docker-compose.yml
-  '' + lib.optionalString (value.override != null) ''
-    ln -sfn ${pkgs.writers.writeYAML "docker-compose.override.yml" value.override} $out/docker-compose.override.yml
-  '' + lib.optionalString (value.env != null) ''
-    ln -sfn ${(pkgs.formats.keyValue { }).generate ".env" value.env} $out/.env
-  '' + ''
-    ${lib.getExe pkgs.yq} -Y '${query}' ${value.directory}/docker-compose.yml > $out/docker-compose.yml
-  '');
+  sanitise =
+    value:
+    pkgs.runCommand "docker-compose-sanitised" { } (
+      ''
+        cp -rs ${value.directory} $out
+        chmod +w -R $out/
+        rm $out/docker-compose.yml
+      ''
+      + lib.optionalString (value.override != null) ''
+        ln -sfn ${pkgs.writers.writeYAML "docker-compose.override.yml" value.override} $out/docker-compose.override.yml
+      ''
+      + lib.optionalString (value.env != null) ''
+        ln -sfn ${(pkgs.formats.keyValue { }).generate ".env" value.env} $out/.env
+      ''
+      + ''
+        ${lib.getExe pkgs.yq} -Y '${query}' ${value.directory}/docker-compose.yml > $out/docker-compose.yml
+      ''
+    );
 
-  runConfig = projectDir: command: "${lib.getExe pkgs.docker} compose --project-directory ${projectDir} ${command}";
+  runConfig =
+    projectDir: command:
+    "${lib.getExe pkgs.docker} compose --project-directory ${projectDir} ${command}";
 in
 
 {
   options.custom.docker-compose = lib.mkOption {
     default = { };
-    type = lib.types.attrsOf (lib.types.submodule ({ name, config, ... }: {
-      options = {
-        directory = lib.mkOption {
-          default = (
-            if config.file != null then
-              pkgs.runCommand "docker-compose-${name}" { } ''
-                mkdir -p $out/
-                ln -s ${config.file} $out/docker-compose.yml
-              ''
-            else
-              throw "You must provide a docker-compose.yml (or directory containing it) for the ${name} docker-compose service."
-          );
-          defaultText = "{option}`file` if it is set.";
-          type = lib.types.path;
-          description = ''
-            A directory containing a docker-compose.yml.
+    type = lib.types.attrsOf (
+      lib.types.submodule (
+        { name, config, ... }:
+        {
+          options = {
+            directory = lib.mkOption {
+              default = (
+                if config.file != null then
+                  pkgs.runCommand "docker-compose-${name}" { } ''
+                    mkdir -p $out/
+                    ln -s ${config.file} $out/docker-compose.yml
+                  ''
+                else
+                  throw "You must provide a docker-compose.yml (or directory containing it) for the ${name} docker-compose service."
+              );
+              defaultText = "{option}`file` if it is set.";
+              type = lib.types.path;
+              description = ''
+                A directory containing a docker-compose.yml.
 
-            If the {option}`file` or {option}`YAML` options are used, this is set automatically.
+                If the {option}`file` or {option}`YAML` options are used, this is set automatically.
 
-            If this is set, {option}`file`, {option}`YAML` or {option}`env` will not have any effect.
-          '';
-        };
-        file = lib.mkOption {
-          default = (
-            if config.YAML == null then
-              null
-            else
-              pkgs.writers.writeYAML "docker-compose.yml" config.YAML
-          );
-          defaultText = "A docker-compose.yml generated from {option}`YAML`.";
-          type = with lib.types; nullOr path;
-          description = "The path to a docker-compose.yml. If this is set {option}`YAML` won't have an effect.";
-        };
-        YAML = lib.mkOption {
-          default = null;
-          apply = yml: if yml == null then null else { version = "3"; } // yml;
-          type = with lib.types; nullOr attrs;
-          description = "An attrset representing a docker-compose.yml. The version `version` attribute is set to 3 by default.";
-        };
-        env = lib.mkOption {
-          default = null;
-          type = with lib.types; nullOr attrs;
-          description = "An attrset representing a docker-compose `.env` file.";
-        };
+                If this is set, {option}`file`, {option}`YAML` or {option}`env` will not have any effect.
+              '';
+            };
+            file = lib.mkOption {
+              default = (
+                if config.YAML == null then null else pkgs.writers.writeYAML "docker-compose.yml" config.YAML
+              );
+              defaultText = "A docker-compose.yml generated from {option}`YAML`.";
+              type = with lib.types; nullOr path;
+              description = "The path to a docker-compose.yml. If this is set {option}`YAML` won't have an effect.";
+            };
+            YAML = lib.mkOption {
+              default = null;
+              apply = yml: if yml == null then null else { version = "3"; } // yml;
+              type = with lib.types; nullOr attrs;
+              description = "An attrset representing a docker-compose.yml. The version `version` attribute is set to 3 by default.";
+            };
+            env = lib.mkOption {
+              default = null;
+              type = with lib.types; nullOr attrs;
+              description = "An attrset representing a docker-compose `.env` file.";
+            };
 
-        override = lib.mkOption {
-          default = null;
-          apply = yml: if yml == null then null else { version = "3"; } // yml;
-          inherit (pkgs.formats.yaml {}) type;
-          description = "An attrset representing a docker-compose.override.yml. The version `version` attribute is set to 3 by default.";
-        };
+            override = lib.mkOption {
+              default = null;
+              apply = yml: if yml == null then null else { version = "3"; } // yml;
+              inherit (pkgs.formats.yaml { }) type;
+              description = "An attrset representing a docker-compose.override.yml. The version `version` attribute is set to 3 by default.";
+            };
 
-        stateDirectory = {
-          enable = lib.mkEnableOption "a systemd service state directory for this service";
+            stateDirectory = {
+              enable = lib.mkEnableOption "a systemd service state directory for this service";
 
-          name = lib.mkOption {
-            default = name;
-            defaultText = "The service's `name`";
-            description = "The name of the state directory";
+              name = lib.mkOption {
+                default = name;
+                defaultText = "The service's `name`";
+                description = "The name of the state directory";
+              };
+            };
+
+            sanitised = lib.mkOption {
+              default = sanitise config;
+              internal = true;
+              readOnly = true;
+            };
+
+            wrapperScript = lib.mkOption {
+              default = pkgs.writeShellScriptBin "docker-compose-${name}" (runConfig config.sanitised ''"$@"'');
+              internal = true;
+              readOnly = true;
+            };
+
+            service = lib.mkOption {
+              type = with lib.types; attrsOf anything;
+              default = { };
+              description = "config to pass through to the systemd service.";
+            };
           };
-        };
-
-        sanitised = lib.mkOption {
-          default = sanitise config;
-          internal = true;
-          readOnly = true;
-        };
-
-        wrapperScript = lib.mkOption {
-          default = pkgs.writeShellScriptBin "docker-compose-${name}" (runConfig config.sanitised ''"$@"'');
-          internal = true;
-          readOnly = true;
-        };
-
-        service = lib.mkOption {
-          type = with lib.types; attrsOf anything;
-          default = { };
-          description = "config to pass through to the systemd service.";
-        };
-      };
-    }));
+        }
+      )
+    );
   };
 
   config = lib.mkIf (this != { }) {

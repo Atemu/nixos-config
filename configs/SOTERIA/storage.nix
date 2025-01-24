@@ -25,8 +25,22 @@ in
   '';
   networking.firewall = {
     # It needs one or some of these ports AFAICT
-    allowedTCPPorts = [ 111 2049 4000 4001 4002 20048 ];
-    allowedUDPPorts = [ 111 2049 4000 4001 4002 20048 ];
+    allowedTCPPorts = [
+      111
+      2049
+      4000
+      4001
+      4002
+      20048
+    ];
+    allowedUDPPorts = [
+      111
+      2049
+      4000
+      4001
+      4002
+      20048
+    ];
   };
 
   custom.btrfs.fileSystems = {

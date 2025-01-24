@@ -24,39 +24,53 @@ in
     # machinesFile = ./machines.client-a;
   };
 
-  defaults = { lib, config, name, ... }: {
-    # This module will be imported by all hosts
-    imports = [
-      ./common.nix
-    ];
-    # The name and nodes parameters are supported in Colmena,
-    # allowing you to reference configurations in other nodes.
-    networking.hostName = name;
+  defaults =
+    {
+      lib,
+      config,
+      name,
+      ...
+    }:
+    {
+      # This module will be imported by all hosts
+      imports = [
+        ./common.nix
+      ];
+      # The name and nodes parameters are supported in Colmena,
+      # allowing you to reference configurations in other nodes.
+      networking.hostName = name;
 
-    # I can't imagine a scenario where I wouldn't want the closure to be built
-    # on the machine itself.
-    deployment.buildOnTarget = true;
+      # I can't imagine a scenario where I wouldn't want the closure to be built
+      # on the machine itself.
+      deployment.buildOnTarget = true;
 
-    # Allow desktop machines to be managed locally
-    deployment.allowLocalDeployment = config.custom.desktop.enable;
+      # Allow desktop machines to be managed locally
+      deployment.allowLocalDeployment = config.custom.desktop.enable;
 
-    deployment.targetUser = null; # Don't specify
-    deployment.targetHost = config.lib.custom.concatDomain [
-      (lib.toLower name)
-      config.custom.acme.primaryDomain
-    ];
+      deployment.targetUser = null; # Don't specify
+      deployment.targetHost = config.lib.custom.concatDomain [
+        (lib.toLower name)
+        config.custom.acme.primaryDomain
+      ];
 
-    # By default, Colmena will replace unknown remote profile
-    # (unknown means the profile isn't in the nix store on the
-    # host running Colmena) during apply (with the default goal,
-    # boot, and switch).
-    # If you share a hive with others, or use multiple machines,
-    # and are not careful to always commit/push/pull changes
-    # you can accidentaly overwrite a remote profile so in those
-    # scenarios you might want to change this default to false.
-    # deployment.replaceUnknownProfiles = true;
-  };
+      # By default, Colmena will replace unknown remote profile
+      # (unknown means the profile isn't in the nix store on the
+      # host running Colmena) during apply (with the default goal,
+      # boot, and switch).
+      # If you share a hive with others, or use multiple machines,
+      # and are not careful to always commit/push/pull changes
+      # you can accidentaly overwrite a remote profile so in those
+      # scenarios you might want to change this default to false.
+      # deployment.replaceUnknownProfiles = true;
+    };
 }
-// builtins.mapAttrs
-  (n: v: { ... }: { imports = [ v ]; }) # TODO set deployment.targetHost based on hostname # actually, do that in some custom module, you have the name input anyways
-  (import ./configs)
+//
+  builtins.mapAttrs
+    (
+      n: v:
+      { ... }:
+      {
+        imports = [ v ];
+      }
+    ) # TODO set deployment.targetHost based on hostname # actually, do that in some custom module, you have the name input anyways
+    (import ./configs)

@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 
 let
   this = config.custom.packages;
@@ -10,9 +15,11 @@ let
     [
       (en_GB-large.overrideAttrs (prev: {
         # Make dict able to detect contractions (I've, doesn't etc.) as words
-        postInstall = prev.postInstall or "" + ''
-          substituteInPlace $out/share/hunspell/en_GB.aff --replace-fail "WORDCHARS 0123456789" "WORDCHARS 0123456789'"
-        '';
+        postInstall =
+          prev.postInstall or ""
+          + ''
+            substituteInPlace $out/share/hunspell/en_GB.aff --replace-fail "WORDCHARS 0123456789" "WORDCHARS 0123456789'"
+          '';
       }))
       de_DE
     ]
@@ -26,111 +33,118 @@ let
   };
 
   # Packages to always install.
-  common = [
-    customEmacs
-    customHunspell
-    cyme-lsusb
-  ] ++ (with pkgs; [
-    acpi
-    aria2
-    bash-completion
-    bat
-    bc
-    borgbackup
-    btdu
-    btop
-    btrfs-progs
-    cifs-utils
-    colmena
-    complete-alias
-    compsize
-    cryptsetup
-    curl
-    cyme
-    ddrescue
-    delta
-    diceware
-    dos2unix
-    duf
-    efibootmgr
-    ethtool
-    exiftool
-    fd
-    ffmpeg
-    file
-    gh
-    git
-    git-annex
-    git-remote-gcrypt
-    gnupg
-    hdparm
-    hyperfine
-    iftop
-    iotop
-    iperf
-    jc
-    jq
-    killall
-    ldns # drill
-    libarchive
-    lm_sensors
-    lsof
-    lz4
-    man-pages
-    mediainfo
-    mosh
-    ncdu
-    neofetch
-    netcat-gnu
-    nethogs
-    nix-bash-completions
-    nix-diff
-    nix-index
-    nix-init
-    nix-output-monitor
-    nix-tree
-    nixd
-    nixfmt-rfc-style
-    nixpkgs-review
-    nmap
-    numbat
-    nushell
-    onefetch
-    p7zip
-    pciutils
-    pstree
-    pv
-    qrencode
-    ripgrep
-    rsync
-    smartmontools
-    smem
-    sshfs
-    stress
-    sysstat
-    systemctl-tui
-    tmux # This should be configured via the module instead
-    traceroute
-    tree
-    unzip
-    vim
-    vmtouch
-    wakeonlan
-    wget
-    which
-    whois
-    wol
-    yq
-    yt-dlp
-    ytcast
-    zip
-    zstd
-  ]) ++ (with config.boot.kernelPackages; [
-    cpupower
-    perf
-  ]) ++ lib.optionals pkgs.stdenv.hostPlatform.isx86 (with pkgs; [
-    memtest_vulkan
-  ]);
+  common =
+    [
+      customEmacs
+      customHunspell
+      cyme-lsusb
+    ]
+    ++ (with pkgs; [
+      acpi
+      aria2
+      bash-completion
+      bat
+      bc
+      borgbackup
+      btdu
+      btop
+      btrfs-progs
+      cifs-utils
+      colmena
+      complete-alias
+      compsize
+      cryptsetup
+      curl
+      cyme
+      ddrescue
+      delta
+      diceware
+      dos2unix
+      duf
+      efibootmgr
+      ethtool
+      exiftool
+      fd
+      ffmpeg
+      file
+      gh
+      git
+      git-annex
+      git-remote-gcrypt
+      gnupg
+      hdparm
+      hyperfine
+      iftop
+      iotop
+      iperf
+      jc
+      jq
+      killall
+      ldns # drill
+      libarchive
+      lm_sensors
+      lsof
+      lz4
+      man-pages
+      mediainfo
+      mosh
+      ncdu
+      neofetch
+      netcat-gnu
+      nethogs
+      nix-bash-completions
+      nix-diff
+      nix-index
+      nix-init
+      nix-output-monitor
+      nix-tree
+      nixd
+      nixfmt-rfc-style
+      nixpkgs-review
+      nmap
+      numbat
+      nushell
+      onefetch
+      p7zip
+      pciutils
+      pstree
+      pv
+      qrencode
+      ripgrep
+      rsync
+      smartmontools
+      smem
+      sshfs
+      stress
+      sysstat
+      systemctl-tui
+      tmux # This should be configured via the module instead
+      traceroute
+      tree
+      unzip
+      vim
+      vmtouch
+      wakeonlan
+      wget
+      which
+      whois
+      wol
+      yq
+      yt-dlp
+      ytcast
+      zip
+      zstd
+    ])
+    ++ (with config.boot.kernelPackages; [
+      cpupower
+      perf
+    ])
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isx86 (
+      with pkgs;
+      [
+        memtest_vulkan
+      ]
+    );
 
   # Packages to install if X is not enabled.
   noX = with pkgs; [
@@ -138,30 +152,34 @@ let
   ];
 
   # Packages to install if X is enabled.
-  x = with pkgs; let
-    customFirefox = firefox-pgo.override (prev: {
-      cfg = prev.cfg or { } // {
-        # No 700MiB mbrola-voices in my closure please
-        speechSynthesisSupport = false;
-      };
-    });
-  in [
-    customFirefox
-    direnv
-    lxrandr
-    mlterm
-    mpv
-    pavucontrol
-    protonvpn-gui
-    python3
-    scrcpy
-    signal-desktop
-    spotify
-    tor-browser-bundle-bin
-    xclip
-    xorg.xev
-  ];
-in {
+  x =
+    with pkgs;
+    let
+      customFirefox = firefox-pgo.override (prev: {
+        cfg = prev.cfg or { } // {
+          # No 700MiB mbrola-voices in my closure please
+          speechSynthesisSupport = false;
+        };
+      });
+    in
+    [
+      customFirefox
+      direnv
+      lxrandr
+      mlterm
+      mpv
+      pavucontrol
+      protonvpn-gui
+      python3
+      scrcpy
+      signal-desktop
+      spotify
+      tor-browser-bundle-bin
+      xclip
+      xorg.xev
+    ];
+in
+{
   options.custom.packages = {
     enable = lib.mkEnableOption "my set of system packages";
 
@@ -173,7 +191,8 @@ in {
   };
 
   config = lib.mkIf this.enable {
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.custom.packages.allowedUnfree;
+    nixpkgs.config.allowUnfreePredicate =
+      pkg: builtins.elem (lib.getName pkg) config.custom.packages.allowedUnfree;
 
     # :(
     custom.packages.allowedUnfree = [

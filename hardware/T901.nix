@@ -1,11 +1,18 @@
 { config, lib, ... }:
 
 {
-  imports =
-    [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    ];
+  imports = [
+    <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+  ];
 
-  boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "sd_mod" "sdhci_pci" ];
+  boot.initrd.availableKernelModules = [
+    "ehci_pci"
+    "ahci"
+    "xhci_pci"
+    "usb_storage"
+    "sd_mod"
+    "sdhci_pci"
+  ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
@@ -23,18 +30,18 @@
   services.xserver.wacom.enable = true;
   services.xserver.inputClassSections = [
     ''
-    Identifier "Disable rfkill button"
-    MatchProduct  "FUJ02E3"
-    Option  "Ignore"  "true"
+      Identifier "Disable rfkill button"
+      MatchProduct  "FUJ02E3"
+      Option  "Ignore"  "true"
     ''
     # Disable wacom gestures, stolen from the Gentoo wiki
     ''
-    Identifier "Wacom class"
-    MatchProduct "Wacom|WACOM|Hanwang|PTK-540WL|ISDv4|ISD-V4|ISDV4"
-    MatchDevicePath "/dev/input/event*"
+      Identifier "Wacom class"
+      MatchProduct "Wacom|WACOM|Hanwang|PTK-540WL|ISDv4|ISD-V4|ISDV4"
+      MatchDevicePath "/dev/input/event*"
 
-    Driver "wacom"
-    Option "Gesture" "off"
+      Driver "wacom"
+      Option "Gesture" "off"
     ''
   ];
 

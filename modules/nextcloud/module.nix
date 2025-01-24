@@ -48,13 +48,12 @@ in
 
       extraAppsEnable = true;
       extraApps = {
-        inherit
-          (config.services.nextcloud.package.packages.apps)
+        inherit (config.services.nextcloud.package.packages.apps)
           richdocuments
           calendar
           contacts
           tasks
-        ;
+          ;
 
         # TODO upstream this into nextcloudPackages when it's a bit more mature
         dav_push = pkgs.fetchFromGitHub {
