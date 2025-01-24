@@ -87,7 +87,7 @@
     };
 
     extraServiceFiles = {
-      ssh = lib.mkIf config.services.sshd.enable "${pkgs.avahi}/etc/avahi/services/ssh.service";
+      ssh = lib.mkIf config.services.openssh.enable "${pkgs.avahi}/etc/avahi/services/ssh.service";
     };
   };
 
