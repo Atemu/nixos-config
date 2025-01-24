@@ -168,7 +168,7 @@ in
       write_stylus
     ]);
     custom.packages.allowedUnfree = lib.mkIf this.tablet [
-      "write_stylus"
+      "styluslabs-write-bin"
     ];
 
     services.dbus.enable = true;
