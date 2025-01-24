@@ -13,8 +13,6 @@
 
   boot.initrd.systemd.enable = true;
 
-  virtualisation.docker.enable = true;
-
   custom.dnscrypt.enable = true;
 
   environment.systemPackages = with pkgs; [
