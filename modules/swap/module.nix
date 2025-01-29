@@ -56,13 +56,13 @@ in
           # boost though, so speed is more important I think.
           compressor = "lz4";
 
-          # AFAIK zsmalloc has memory fragmentation issues because it concatenates
-          # compressed pages with no regard for page boundaries. Reading a single
-          # page from compressed memory might require reading many pages. z3fold
-          # does not have such issues and a 3:1 compression ratio is good enough for
-          # me; the same point about me merely considering zswap an efficiency
-          # booster applies here.
-          zpool = "z3fold";
+          # z3fold is deprecated and it looks like zbud is on the chopping block
+          # too. AFAIK zsmalloc has memory fragmentation issues because it
+          # concatenates compressed pages with no regard for page boundaries.
+          # Reading a single page from compressed memory might require reading
+          # many pages. Apparently z3fold has "latent bugs" though and the
+          # latency difference was also marginal. zsmalloc it is.
+          zpool = "zsmalloc";
 
           # This controls how much of the system RAM may be taken up by swap. On the
           # one hand, you might think one wants this as high as possible but you
