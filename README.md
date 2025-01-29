@@ -13,6 +13,10 @@
 
 ## Usage
 
+I deploy my systems using [colmena](https://github.com/zhaofengli/colmena/). See my [colmena configuration](./hive.nix) for the details.
+
+Alternatively, it is also possible to:
+
     nix-build -A HOSTNAME.system
 
 or
