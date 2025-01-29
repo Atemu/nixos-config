@@ -191,6 +191,25 @@ in
 
       services.dbus.enable = true;
 
+      services.gnome.gnome-keyring.enable = true;
+      nixpkgs.overlays = [
+        (final: prev: {
+          # As is tradition, gnome-keyring is annoying and the only
+          # upstream-intended method of starting it is explicitly gated to only
+          # work in GNOME, MATE and Unity. Starting it through other means is
+          # extremely annoying due to the PAM integration and whatnot. This
+          # allows it to work in any desktop.
+          gnome-keyring = final.runCommand "gnome-keyring-all-desktops" { } ''
+            cp -rs ${prev.gnome-keyring} $out
+            for file in $out/etc/xdg/autostart/*.desktop ; do
+              chmod +w $(dirname $file)
+              cp --remove-destination "$(readlink "$file")" "$file"
+              sed -i '/OnlyShowIn/d' "$file"
+            done
+          '';
+        })
+      ];
+
       services.logind.extraConfig = "HandlePowerKey=suspend";
 
       xdg.portal = {
