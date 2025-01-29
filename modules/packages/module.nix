@@ -165,6 +165,7 @@ let
     [
       customFirefox
       direnv
+      fractal
       lxrandr
       mlterm
       mpv
