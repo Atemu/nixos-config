@@ -159,6 +159,17 @@ in
           message = "custom.desktop.hypr.hypridle-power requires power-profiles-deamon";
         }
       ];
+      # power-profiles-daemon writes its state to disk every time it changes.
+      # When it changes every few seconds, that's quite a lot of data it writes;
+      # amplified by filesystem commit overhead.
+      fileSystems."/var/lib/power-profiles-daemon" = lib.mkIf this.hypr.hypridle-power {
+        device = "tmpfs";
+        fsType = "tmpfs";
+        options = [
+          # Just a few dozen bytes large state file
+          "size=1M"
+        ];
+      };
 
       services.xserver.desktopManager.gnome.enable = this.tablet;
       environment.gnome.excludePackages = with pkgs; [
