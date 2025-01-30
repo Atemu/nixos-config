@@ -56,6 +56,7 @@
   systemd.targets.rescue.wants = [
     "sshd.service"
     "network.target"
+    "tailscaled.service"
   ];
 
   programs.mosh.enable = true;
