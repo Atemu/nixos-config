@@ -59,8 +59,8 @@ in
         dav_push = pkgs.fetchFromGitHub {
           owner = "bitfireAT";
           repo = "nc_ext_dav_push";
-          rev = "c0f400fa9436f25aaa116f67b100e90f84695334";
-          hash = "sha256-M+v+CotE9ClmmRwAilmC5G/AmymKMSHt436KTVBq/HI=";
+          tag = "v0.0.2";
+          hash = "sha256-W/WWl8dYdkq0gUEJ/IZXAc25xXbemxllJjYtU1LmJpo=";
         };
       };
     };
