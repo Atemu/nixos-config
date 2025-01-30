@@ -34,7 +34,7 @@ in
   config = lib.mkIf this.enable {
     services.nextcloud = {
       enable = true;
-      package = pkgs.nextcloud29;
+      package = pkgs.nextcloud30;
       hostName = ncDomain;
       https = true;
       config = {
