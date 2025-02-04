@@ -51,6 +51,9 @@ in
       options = [
         # Mounting the primary disk array can take quite a while without a hot bcache.
         "x-systemd.mount-timeout=1000"
+        # btrfs detects the bcache device as non-rotational and applies SSD
+        # optimisations by default. These disks are spinning rust.
+        "nossd"
       ];
     };
   };
