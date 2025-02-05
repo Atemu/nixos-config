@@ -74,9 +74,6 @@
   custom.mealie.enable = true;
   custom.virtualHosts.mealie.onPrimaryDomain = true;
 
-  custom.grocy.enable = true;
-  custom.virtualHosts.grocy.onPrimaryDomain = true;
-
   custom.paperless.enable = true;
   custom.paperless.autoExport = true;
   custom.virtualHosts.paperless.onPrimaryDomain = true;
