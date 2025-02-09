@@ -49,7 +49,7 @@ in
 
       PAPERLESS_NUMBER_OF_SUGGESTED_DATES = 42; # All the dates please
 
-      PAPERLESS_FILENAME_FORMAT = "{correspondent}/{created} {title}";
+      PAPERLESS_FILENAME_FORMAT = "{{correspondent}}/{{created}} {{title}}";
 
       PAPERLESS_THREADS_PER_WORKER = 1;
       PAPERLESS_TASK_WORKERS = 4;
