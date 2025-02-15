@@ -163,6 +163,7 @@ let
       });
     in
     [
+      calibre
       customFirefox
       direnv
       fractal
