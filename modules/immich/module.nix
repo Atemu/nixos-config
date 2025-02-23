@@ -7,7 +7,7 @@
 
 let
   this = config.custom.immich;
-  version = "v1.125.7";
+  version = "v1.126.1";
   composeHash = "sha256-mYFBzceSbU854cP6tqdC5/dizoZ0s89ne+pFtIIdaiI=";
 in
 
