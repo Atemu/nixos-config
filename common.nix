@@ -174,6 +174,8 @@
       # performance. Use the least fancy scheduling that still supports IO
       # priorities.
       "nvme*" = "mq-deadline";
+      # I probably don't want a nested queue?
+      "loop*" = "none";
     };
   };
 
