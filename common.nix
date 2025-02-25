@@ -165,6 +165,18 @@
     # maybe set to batch on non-desktop
   };
 
+  # Use bfq iosched for everything except NVMe and loop devs
+  hardware.block = {
+    defaultScheduler = "bfq";
+    defaultSchedulerRotational = "bfq";
+    scheduler = {
+      # AFAIK NVME drives are so fast that fancy scheduling might hurt
+      # performance. Use the least fancy scheduling that still supports IO
+      # priorities.
+      "nvme*" = "mq-deadline";
+    };
+  };
+
   # Don't need it and it takes quite a while to build.
   documentation.nixos.enable = false;
 
