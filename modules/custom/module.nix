@@ -16,7 +16,7 @@ in
     # TODO move to emacs module
     emacs = lib.mkOption {
       description = "Emacs package to use.";
-      default = pkgs.emacs29;
+      default = pkgs.emacs;
       example = pkgs.emacs-nox;
       type = lib.types.package;
     };
