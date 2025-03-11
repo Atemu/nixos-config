@@ -163,6 +163,7 @@ let
       });
     in
     [
+      anki
       calibre
       customFirefox
       direnv
