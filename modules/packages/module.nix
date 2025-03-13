@@ -164,6 +164,7 @@ let
     in
     [
       anki
+      bluetuith
       calibre
       customFirefox
       direnv
