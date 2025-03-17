@@ -114,6 +114,7 @@ let
       rsync
       smartmontools
       smem
+      sqlite-interactive
       sshfs
       stress
       sysstat
