@@ -176,6 +176,7 @@ let
       protonvpn-gui
       python3
       scrcpy
+      shellcheck
       signal-desktop
       spotify
       tor-browser-bundle-bin
