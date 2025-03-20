@@ -164,6 +164,7 @@ let
       });
     in
     [
+      alacritty
       anki
       bluetuith
       calibre
