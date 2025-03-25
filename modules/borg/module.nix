@@ -9,17 +9,26 @@ let
   this = config.custom.borg;
 
   # TODO
-  name = "Root";
+  name = "Test";
+
+  snapshotDir = "/System/Volumes/Snapshots/Temp";
 in
 
 {
   options.custom.borg = {
     enable = lib.mkEnableOption "my custom borg setup";
     # TODO multiple
+    subvol = lib.mkOption {
+      description = ''
+        The path of the subvolume to replicate.
+      '';
+      default = "/System/Volumes/${name}";
+    };
     path = lib.mkOption {
       description = ''
-        The path to back up relative to.
+        The path under the subvolume to replicate
       '';
+      default = "";
       apply = lib.removePrefix "/";
     };
   };
@@ -28,22 +37,17 @@ in
     services.borgbackup.jobs.${name} = {
       paths = [ "." ];
       preHook =
-        let
-          regex = "^.* snapshot_subvolume='(/.*?/Root\..*?)' .*$";
-          # Parses the `btrbk list --format=raw` output and returns the snapshot paths in order.
-          filterSnapshots = lib.concatStringsSep " " [
-            (lib.getExe pkgs.ripgrep)
-            (lib.escapeShellArgs [
-              regex
-              # Print the capture
-              "--replace"
-              "$1"
-            ])
-          ];
-        in
         ''
-          snapshot="$(${lib.getExe pkgs.btrbk} list --format=raw | ${filterSnapshots} | tail -n 1)"
-          pushd "$snapshot/${this.path}"
+          tmpsnapshot="${snapshotDir}/${name}"
+
+          if [ -e $tmpsnapshot ]; then
+            # The previous run must have been interrupted; delete and try again
+            ${lib.getExe' pkgs.btrfs-progs "btrfs"} subvolume delete $tmpsnapshot
+          fi
+
+          ${lib.getExe' pkgs.btrfs-progs "btrfs"} subvolume snapshot -r ${this.subvol} $tmpsnapshot
+
+          pushd "$tmpsnapshot/${this.path}"
         '';
 
       repo = "/var/lib/borg/";
@@ -55,15 +59,9 @@ in
         "borg"
       ];
 
-      encryption.mode = "none";
-    };
+      readWritePaths = [ snapshotDir ];
 
-    systemd.services."borgbackup-job-${name}" = {
-      # Create btrbk snapshots before
-      wants = [
-        # TODO what's the name mapping here? Is there not one btrbk service per snapshot declaration?
-        "btrbk-btrbk.service"
-      ];
+      encryption.mode = "none";
     };
   };
 }
