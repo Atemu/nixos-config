@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   this = config.custom.overlays;
@@ -13,9 +18,24 @@ in
     (final: prev: {
       colmena =
         if lib.versionAtLeast lib.trivial.version "24.11" then
-          prev.colmena.override {
+          (prev.colmena.override {
             nix = final.lix;
-          }
+          }).overrideAttrs
+            (
+              {
+                postPatch ? "",
+                ...
+              }:
+              {
+                # https://github.com/zhaofengli/colmena/pull/268/
+                postPatch =
+                  postPatch
+                  + ''
+                    substituteInPlace src/command/repl.rs \
+                      --replace-fail "--experimental-features" "--extra-experimental-features"
+                  '';
+              }
+            )
         else
           prev.colmena;
 
