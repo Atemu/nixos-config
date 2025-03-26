@@ -45,6 +45,7 @@ let
       bash-completion
       bat
       bc
+      binutils # strings
       borgbackup
       btdu
       btop
