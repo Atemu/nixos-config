@@ -44,6 +44,19 @@
     easyeffects
   ];
 
+  # TODO abstract into module where you can specify which program to use
+  # internally
+  security.wrappers.powerlimit = {
+    owner = "root";
+    group = "root";
+    setuid = true; # TODO figure out why this doesn't actually suid?!?
+    source = lib.getExe <| pkgs.writeShellApplication {
+      name = "powerlimit";
+      text = ./powerlimit.sh;
+      runtimeInputs = [ pkgs.fw-ectool ];
+    };
+  };
+
   custom.swap.devices.primary = {
     partUUID = "097f36ea-d602-48c3-b732-5c176bdc0512";
   };
