@@ -38,12 +38,12 @@ in
   };
 
   config = lib.mkIf this.enable (
-    lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "24.11") {
+    lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "25.05") {
       boot.kernel.sysctl = {
         "kernel.sysrq" = 1;
       };
 
-      hardware.pulseaudio.enable = false;
+      services.pulseaudio.enable = false;
       services.pipewire.enable = true;
       services.pipewire.pulse.enable = true;
       services.pipewire.alsa.enable = true;
