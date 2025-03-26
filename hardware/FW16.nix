@@ -50,10 +50,26 @@
     owner = "root";
     group = "root";
     setuid = true; # TODO figure out why this doesn't actually suid?!?
-    source = lib.getExe <| pkgs.writeShellApplication {
+    # Cannot use writeShellApplication because bash drops privileges gained via
+    # SUID. Thanks a bunch. We need to use dash.
+    source = pkgs.writeTextFile {
       name = "powerlimit";
-      text = lib.readFile ./powerlimit.sh;
-      runtimeInputs = [ pkgs.fw-ectool ];
+      text = ''
+        #!${lib.getExe pkgs.dash}
+
+        export PATH="${
+          lib.makeBinPath (
+            with pkgs;
+            [
+              coreutils
+              fw-ectool
+            ]
+          )
+        }"
+
+        ${lib.readFile ./powerlimit.sh}
+      '';
+      executable = true;
     };
     program = "pl";
   };
