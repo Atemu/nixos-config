@@ -52,7 +52,7 @@
     setuid = true; # TODO figure out why this doesn't actually suid?!?
     source = lib.getExe <| pkgs.writeShellApplication {
       name = "powerlimit";
-      text = ./powerlimit.sh;
+      text = lib.readFile ./powerlimit.sh;
       runtimeInputs = [ pkgs.fw-ectool ];
     };
     program = "pl";
