@@ -55,6 +55,7 @@
       text = ./powerlimit.sh;
       runtimeInputs = [ pkgs.fw-ectool ];
     };
+    program = "pl";
   };
 
   custom.swap.devices.primary = {
