@@ -1,6 +1,7 @@
 limit="${1:-}"
 
 DEFAULT_LIMIT=80
+UNLIMITED=100
 
 case "$limit" in
     "" | "get")
@@ -8,17 +9,17 @@ case "$limit" in
         ;;
     "toggle")
         current="$(ectool fwchargelimit)"
-        if [ "$current" = 100 ]; then
+        if [ "$current" = "$UNLIMITED" ]; then
             limit="$DEFAULT_LIMIT"
         else
-            limit=100
+            limit="$UNLIMITED"
         fi
         ;;
     "on")
         limit="$DEFAULT_LIMIT"
         ;;
     "off")
-        limit=100
+        limit="$UNLIMITED"
         ;;
 esac
 
