@@ -125,10 +125,10 @@ in
       served
       |> lib.filterAttrs (n: v: v.method == methods.borg)
       |> lib.mapAttrs (
-        n: v: {
-          path = "${replicationPaths.${config.networking.hostName}}/${n}/Borg/";
-          inherit (v) user;
-          authorizedKeys = [ v.keys.public ];
+        name: host: {
+          path = "${replicationPaths.${config.networking.hostName}}/${name}/Borg/";
+          inherit (host) user;
+          authorizedKeys = [ host.keys.public ];
           allowSubRepos = true; # Each host can have multiple replicated volumes
         }
       );
