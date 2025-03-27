@@ -17,10 +17,12 @@ let
   };
   this = config.custom.replication;
   host = this.mapping.${config.networking.hostName};
-  methods = lib.genAttrs lib.id [ "borg" ];
+  methods = lib.genAttrs [ "borg" ] lib.id;
   # The replications served by this host
   served =
-    lib.filterAttrs (n: v: v.to == config.networking.hostName) |> lib.mapAttrs (n: v: v.method);
+    mapping
+    |> lib.filterAttrs (n: v: v.to == config.networking.hostName)
+    |> lib.mapAttrs (n: v: v.method);
 in
 {
   options.custom.replication = {
