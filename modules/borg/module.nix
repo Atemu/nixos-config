@@ -49,6 +49,10 @@ in
             pushd "$tmpsnapshot/${replication.path}"
           '';
 
+          postHook = ''
+            ${lib.getExe' pkgs.btrfs-progs "btrfs"} subvolume delete $tmpsnapshot
+          '';
+
           repo = "${this.target.repo}/${name}";
 
           environment.BORG_RSH = "ssh -i ${this.key}";
