@@ -18,6 +18,9 @@ let
   this = config.custom.replication;
   host = this.mapping.${config.networking.hostName};
   methods = lib.genAttrs lib.id [ "borg" ];
+  # The replications served by this host
+  served =
+    lib.filterAttrs (n: v: v.to == config.networking.hostName) |> lib.mapAttrs (n: v: v.method);
 in
 {
   options.custom.replication = {
@@ -45,5 +48,17 @@ in
       host = host.to;
       key = host.keys.private;
     };
+
+    services.borgbackup.repos =
+      served
+      |> lib.filterAttrs (n: v: v.method == methods.borg)
+      |> lib.mapAttrs (
+        n: v: {
+          path = "/Volumes/Data/Replication/${n}/Borg/"; # TODO replication path as some sort of static mapping?
+          user = "borg-${n}";
+          authorizedKeys = [ v.keys.public ];
+          allowSubRepos = true; # Each host can have multiple replicated volumes
+        }
+      );
   };
 }
