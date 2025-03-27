@@ -65,7 +65,7 @@ in
         pushd "$tmpsnapshot/${this.path}"
       '';
 
-      repo = "/var/lib/borg/";
+      inherit (this.target) repo;
 
       exclude = [
         "immich"
