@@ -32,6 +32,28 @@ in
       apply = lib.removePrefix "/";
     };
     target = {
+      host = lib.mkOption {
+        description = ''
+          The name of the host on which the Borg repo to be replicated to lies.
+        '';
+        default = "soteria";
+        type = lib.types.str;
+      };
+      replicationDir = lib.mkOption {
+        description = ''
+          The path of the directory to which should be replicated
+        '';
+        default = "soteria";
+        type = lib.types.str;
+      };
+      path = lib.mkOption {
+        description = ''
+          The path to the borg repo on the host
+        '';
+        default = "${this.target.replicationDir}";
+        type = lib.types.str;
+        internal = true;
+      };
       repo = lib.mkOption {
         default =
           let
