@@ -33,14 +33,6 @@ in
     };
     target = {
       repo = lib.mkOption {
-        default =
-          let
-            domain = config.lib.custom.concatDomain [
-              "soteria"
-              config.custom.acme.primaryDomain
-            ];
-          in
-          "ssh://${domain}/Volumes/Data/Replication/${config.networking.hostName}/Borg/${name}";
         description = ''
           The Borg repo to replicated to.
         '';
