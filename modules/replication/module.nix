@@ -7,25 +7,57 @@
 let
   mapping = {
     THESEUS = {
-      to = "SOTERIA";
-      method = "borg";
       keys = {
         public = lib.readFile ./THESEUS.pub;
         private = "/var/lib/borg/THESEUS"; # TODO secret
       };
-      user = "borg-THESEUS"; # TODO submodule
     };
   };
   this = config.custom.replication;
   host = this.mapping.${config.networking.hostName} or null;
   methods = lib.genAttrs [ "borg" ] lib.id;
   # The replications served by this host
-  served = mapping |> lib.filterAttrs (n: v: v.to == config.networking.hostName);
+  served = this.mapping |> lib.filterAttrs (n: v: v.to == config.networking.hostName);
 in
 {
   options.custom.replication = {
     enable = lib.mkEnableOption "replication for this host";
+
     mapping = lib.mkOption {
+      type =
+        lib.types.attrsOf
+        <| lib.types.submodule (
+          { name, ... }:
+          {
+            options = {
+              to = lib.mkOption { default = "SOTERIA"; };
+              method = lib.mkOption {
+                type = lib.types.enum <| lib.attrValues methods;
+                default = "borg";
+              };
+              user = lib.mkOption {
+                type = lib.types.str;
+                default = "borg-${name}"; # TODO replication
+              };
+              keys = {
+                public = lib.mkOption {
+                  type = lib.types.str;
+                  description = ''
+                    Path to the public key file for the borg key of this host.
+                  '';
+                };
+                private = lib.mkOption {
+                  type = lib.types.str;
+                  description = ''
+                    Path to the public key file for the borg key of this host.
+
+                    This must only be readable by the {option}`user`.
+                  '';
+                };
+              };
+            };
+          }
+        );
       default = mapping;
       readOnly = true;
     };
