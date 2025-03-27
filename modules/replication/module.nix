@@ -65,8 +65,6 @@ in
   };
 
   config = lib.mkIf this.enable {
-    # TODO assert host exists in mapping
-    # TODO multiple hosts
     custom.replication.borg = lib.mkIf (host != null && host.method == methods.borg) {
       enable = true;
       target.repo =
