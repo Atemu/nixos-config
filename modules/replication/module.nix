@@ -26,6 +26,15 @@ in
       default = mapping;
       readOnly = true;
     };
+    replications = lib.mkOption {
+      description = ''
+        The volumes to replicate. They will be populated under the host's target directory.
+
+        These are *not* part of the mapping and can be set by the host's modules arbitrarily.
+      '';
+      type = with lib.types; attrsOf str; # TODO submodule?
+      default = { };
+    };
   };
 
   config = lib.mkIf this.enable {
