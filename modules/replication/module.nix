@@ -5,7 +5,7 @@
 }:
 
 let
-  mapping = {
+  hostMapping = {
     THESEUS = {
       keys = {
         public = lib.readFile ./THESEUS.pub;
@@ -58,7 +58,7 @@ in
             };
           }
         );
-      default = mapping;
+      default = hostMapping;
       readOnly = true;
     };
 
