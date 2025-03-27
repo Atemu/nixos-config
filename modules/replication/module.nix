@@ -102,7 +102,7 @@ in
       target.repo =
         let
           domain = config.lib.custom.concatDomain [
-            host.to
+            (lib.toLower host.to)
             config.custom.acme.primaryDomain
           ];
         in
