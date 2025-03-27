@@ -181,23 +181,7 @@ in
       environment.systemPackages = lib.mkMerge [
         (with pkgs; [
           brightnessctl
-          (rofi-wayland.override {
-            rofi-unwrapped = pkgs.rofi-wayland-unwrapped.overrideAttrs (old: rec {
-              version = "1.7.5+wayland3";
-              src = fetchFromGitHub {
-                owner = "lbonn";
-                repo = "rofi";
-                tag = version;
-                fetchSubmodules = true;
-                hash = "sha256-pKxraG3fhBh53m+bLPzCigRr6dBcH/A9vbdf67CO2d8=";
-              };
-              patches = old.patches or [ ] ++ [
-                # Makes {app_id} available in -run-command.
-                # https://github.com/davatorium/rofi/pull/2048#issuecomment-2466841262
-                ./rofi-desktop-app-id.patch
-              ];
-            });
-          })
+          rofi-wayland-custom
           wev
         ])
         (lib.mkIf this.tablet (
