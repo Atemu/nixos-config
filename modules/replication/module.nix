@@ -16,6 +16,11 @@ let
     };
   };
 
+  # The top-level path under which replications are stored
+  replicationPaths = {
+    SOTERIA = "/Volumes/Data/Replication";
+  };
+
   # The methods for replication. Currently, only borg is supported.
   methods = lib.genAttrs [ "borg" ] lib.id;
 
@@ -110,9 +115,9 @@ in
             (lib.toLower host.to)
             config.custom.acme.primaryDomain
           ];
+          replicationPath = replicationPaths.${host.to};
         in
-        # TODO path under domain static
-        "ssh://${host.user}@${domain}/Volumes/Data/Replication/${config.networking.hostName}/Borg";
+        "ssh://${host.user}@${domain}${replicationPath}/${config.networking.hostName}/Borg";
       key = host.keys.private;
     };
 
@@ -121,7 +126,7 @@ in
       |> lib.filterAttrs (n: v: v.method == methods.borg)
       |> lib.mapAttrs (
         n: v: {
-          path = "/Volumes/Data/Replication/${n}/Borg/"; # TODO replication path as some sort of static mapping?
+          path = "${replicationPaths.${config.networking.hostName}}/${n}/Borg/";
           inherit (v) user;
           authorizedKeys = [ v.keys.public ];
           allowSubRepos = true; # Each host can have multiple replicated volumes
