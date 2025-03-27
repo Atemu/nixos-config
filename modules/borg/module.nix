@@ -15,7 +15,7 @@ let
 in
 
 {
-  options.custom.borg = {
+  options.custom.replication.borg = {
     enable = lib.mkEnableOption "my custom borg setup";
     # TODO multiple
     subvol = lib.mkOption {
