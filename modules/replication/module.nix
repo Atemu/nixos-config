@@ -20,9 +20,7 @@ let
   host = this.mapping.${config.networking.hostName} or null;
   methods = lib.genAttrs [ "borg" ] lib.id;
   # The replications served by this host
-  served =
-    mapping
-    |> lib.filterAttrs (n: v: v.to == config.networking.hostName);
+  served = mapping |> lib.filterAttrs (n: v: v.to == config.networking.hostName);
 in
 {
   options.custom.replication = {
@@ -31,13 +29,37 @@ in
       default = mapping;
       readOnly = true;
     };
+
     replications = lib.mkOption {
       description = ''
         The volumes to replicate. They will be populated under the host's target directory.
 
         These are *not* part of the mapping and can be set by the host's modules arbitrarily.
       '';
-      type = with lib.types; attrsOf str; # TODO submodule?
+      type =
+        lib.types.attrsOf
+        <| lib.types.submodule (
+          { name, ... }:
+          {
+            options = {
+              enable = lib.mkEnableOption "this volume for replication" // lib.mkOption { default = true; };
+
+              subvol = lib.mkOption {
+                description = ''
+                  The path of the subvolume to replicate.
+                '';
+                default = "/System/Volumes/${name}";
+              };
+              path = lib.mkOption {
+                description = ''
+                  The path under the subvolume to replicate
+                '';
+                default = "";
+                apply = lib.removePrefix "/";
+              };
+            };
+          }
+        );
       default = { };
     };
   };
