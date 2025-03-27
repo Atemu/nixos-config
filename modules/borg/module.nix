@@ -62,7 +62,7 @@ in
         pushd "$tmpsnapshot/${this.path}"
       '';
 
-      inherit (this.target) repo;
+      repo = "${this.target.repo}/${name}";
 
       environment.BORG_RSH = "ssh -i ${this.key}";
 
