@@ -5,6 +5,8 @@
 }:
 
 let
+  this = config.custom.replication;
+
   hostMapping = {
     THESEUS = {
       keys = {
@@ -13,9 +15,12 @@ let
       };
     };
   };
-  this = config.custom.replication;
-  host = this.mapping.${config.networking.hostName} or null;
+
+  # The methods for replication. Currently, only borg is supported.
   methods = lib.genAttrs [ "borg" ] lib.id;
+
+  host = this.mapping.${config.networking.hostName} or null;
+
   # The replications served by this host
   served = this.mapping |> lib.filterAttrs (n: v: v.to == config.networking.hostName);
 in
