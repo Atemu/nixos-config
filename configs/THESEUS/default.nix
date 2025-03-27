@@ -29,6 +29,7 @@
 
   custom.borg.enable = true;
   custom.borg.path = "/var/lib/";
+  custom.borg.target.repo = "/var/lib/borg/";
 
   # Device name must be provided by hardware config for now
   custom.swap.devices.primary.enable = true;
