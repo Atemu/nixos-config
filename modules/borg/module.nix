@@ -31,6 +31,22 @@ in
       default = "";
       apply = lib.removePrefix "/";
     };
+    target = {
+      repo = lib.mkOption {
+        default =
+          let
+            domain = config.lib.custom.concatDomain [
+              this.target.host
+              config.custom.acme.primaryDomain
+            ];
+          in
+          "ssh://${domain}/Volumes/Data/Replication/${config.networking.hostName}/${name}";
+        description = ''
+          The Borg repo to replicated to.
+        '';
+        type = lib.types.str;
+      };
+    };
   };
 
   config = lib.mkIf this.enable {
