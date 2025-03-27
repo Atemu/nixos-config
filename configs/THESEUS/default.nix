@@ -29,9 +29,8 @@
   custom.fs.btrfs.enable = true;
   custom.fs.btrfs.newLayout = true;
 
-  custom.borg.enable = true;
-  custom.borg.path = "/var/lib/";
-  custom.borg.target.repo = "/var/lib/borg/";
+  custom.replication.enable = true;
+  custom.replication.replications.Test.enable = true;
 
   # Device name must be provided by hardware config for now
   custom.swap.devices.primary.enable = true;
