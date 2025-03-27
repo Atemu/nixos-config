@@ -11,7 +11,7 @@ let
       method = "borg";
       keys = {
         public = lib.readFile ./THESEUS.pub;
-        private = ./THESEUS; # TODO secret
+        private = "/var/lib/borg/THESEUS"; # TODO secret
       };
       user = "borg-THESEUS"; # TODO submodule
     };
