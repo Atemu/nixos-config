@@ -40,7 +40,7 @@ in
               config.custom.acme.primaryDomain
             ];
           in
-          "ssh://${domain}/Volumes/Data/Replication/${config.networking.hostName}/${name}";
+          "ssh://${domain}/Volumes/Data/Replication/${config.networking.hostName}/Borg/${name}";
         description = ''
           The Borg repo to replicated to.
         '';
