@@ -37,7 +37,7 @@ in
               };
               user = lib.mkOption {
                 type = lib.types.str;
-                default = "borg-${name}"; # TODO replication
+                default = "${name}-replication";
               };
               keys = {
                 public = lib.mkOption {
