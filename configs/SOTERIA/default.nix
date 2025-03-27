@@ -100,5 +100,7 @@
 
   virtualisation.docker.enable = true;
 
+  custom.replication.enable = true;
+
   system.stateVersion = "19.09"; # Did you read the comment?
 }
