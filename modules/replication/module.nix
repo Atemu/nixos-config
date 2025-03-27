@@ -47,7 +47,15 @@ in
     # TODO multiple hosts
     custom.replication.borg = lib.mkIf (host.method == methods.borg) {
       enable = true;
-      host = host.to;
+      target.repo =
+        let
+          domain = config.lib.custom.concatDomain [
+            host.to
+            config.custom.acme.primaryDomain
+          ];
+        in
+        # TODO path under domain static
+        "ssh://${domain}/Volumes/Data/Replication/${config.networking.hostName}/Borg/";
       key = host.keys.private;
     };
 
