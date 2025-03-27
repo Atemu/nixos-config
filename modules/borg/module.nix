@@ -36,7 +36,7 @@ in
         default =
           let
             domain = config.lib.custom.concatDomain [
-              this.target.host
+              "soteria"
               config.custom.acme.primaryDomain
             ];
           in
