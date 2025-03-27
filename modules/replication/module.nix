@@ -13,6 +13,7 @@ let
         public = lib.readFile ./THESEUS.pub;
         private = ./THESEUS; # TODO secret
       };
+      user = "borg-THESEUS"; # TODO submodule
     };
   };
   this = config.custom.replication;
@@ -64,7 +65,7 @@ in
       |> lib.mapAttrs (
         n: v: {
           path = "/Volumes/Data/Replication/${n}/Borg/"; # TODO replication path as some sort of static mapping?
-          user = "borg-${n}";
+          inherit (v) user;
           authorizedKeys = [ v.keys.public ];
           allowSubRepos = true; # Each host can have multiple replicated volumes
         }
