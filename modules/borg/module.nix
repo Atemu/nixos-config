@@ -6,7 +6,7 @@
 }:
 
 let
-  this = config.custom.borg;
+  this = config.custom.replication.borg;
 
   # TODO
   name = "Test";
