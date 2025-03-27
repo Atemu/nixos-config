@@ -74,6 +74,7 @@ in
             fetchSubmodules = true;
             hash = "sha256-pKxraG3fhBh53m+bLPzCigRr6dBcH/A9vbdf67CO2d8=";
           };
+          mesonFlags = lib.remove "-Dimdkit=true" old.mesonFlags;
           patches = old.patches or [ ] ++ [
             # Makes {app_id} available in -run-command.
             # https://github.com/davatorium/rofi/pull/2048#issuecomment-2466841262
