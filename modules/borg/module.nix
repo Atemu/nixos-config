@@ -39,6 +39,11 @@ in
         type = lib.types.str;
       };
     };
+    key = lib.mkOption {
+      description = ''
+        The SSH keyfile to use to connect to the chosen replication remote
+      '';
+    };
   };
 
   config = lib.mkIf this.enable {
@@ -58,6 +63,8 @@ in
       '';
 
       inherit (this.target) repo;
+
+      environment.BORG_RSH = "ssh -i ${this.key}";
 
       exclude = [
         "immich"
