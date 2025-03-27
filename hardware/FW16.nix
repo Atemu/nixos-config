@@ -49,7 +49,7 @@
   security.wrappers.powerlimit = {
     owner = "root";
     group = "root";
-    setuid = true; # TODO figure out why this doesn't actually suid?!?
+    setuid = true;
     # Cannot use writeShellApplication because bash drops privileges gained via
     # SUID. Thanks a bunch. We need to use dash.
     source = pkgs.writeTextFile {
