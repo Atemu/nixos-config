@@ -36,19 +36,18 @@ in
   config = lib.mkIf this.enable {
     services.borgbackup.jobs.${name} = {
       paths = [ "." ];
-      preHook =
-        ''
-          tmpsnapshot="${snapshotDir}/${name}"
+      preHook = ''
+        tmpsnapshot="${snapshotDir}/${name}"
 
-          if [ -e $tmpsnapshot ]; then
-            # The previous run must have been interrupted; delete and try again
-            ${lib.getExe' pkgs.btrfs-progs "btrfs"} subvolume delete $tmpsnapshot
-          fi
+        if [ -e $tmpsnapshot ]; then
+          # The previous run must have been interrupted; delete and try again
+          ${lib.getExe' pkgs.btrfs-progs "btrfs"} subvolume delete $tmpsnapshot
+        fi
 
-          ${lib.getExe' pkgs.btrfs-progs "btrfs"} subvolume snapshot -r ${this.subvol} $tmpsnapshot
+        ${lib.getExe' pkgs.btrfs-progs "btrfs"} subvolume snapshot -r ${this.subvol} $tmpsnapshot
 
-          pushd "$tmpsnapshot/${this.path}"
-        '';
+        pushd "$tmpsnapshot/${this.path}"
+      '';
 
       repo = "/var/lib/borg/";
 
