@@ -10,8 +10,8 @@ let
       to = "SOTERIA";
       method = "borg";
       keys = {
-        public = "";
-        private = ""; # TODO secret
+        public = ./THESEUS.pub;
+        private = ./THESEUS; # TODO secret
       };
     };
   };
