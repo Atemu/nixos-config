@@ -10,19 +10,18 @@ let
       to = "SOTERIA";
       method = "borg";
       keys = {
-        public = ./THESEUS.pub;
+        public = lib.readFile ./THESEUS.pub;
         private = ./THESEUS; # TODO secret
       };
     };
   };
   this = config.custom.replication;
-  host = this.mapping.${config.networking.hostName};
+  host = this.mapping.${config.networking.hostName} or null;
   methods = lib.genAttrs [ "borg" ] lib.id;
   # The replications served by this host
   served =
     mapping
-    |> lib.filterAttrs (n: v: v.to == config.networking.hostName)
-    |> lib.mapAttrs (n: v: v.method);
+    |> lib.filterAttrs (n: v: v.to == config.networking.hostName);
 in
 {
   options.custom.replication = {
@@ -45,7 +44,7 @@ in
   config = lib.mkIf this.enable {
     # TODO assert host exists in mapping
     # TODO multiple hosts
-    custom.replication.borg = lib.mkIf (host.method == methods.borg) {
+    custom.replication.borg = lib.mkIf (host != null && host.method == methods.borg) {
       enable = true;
       target.repo =
         let
