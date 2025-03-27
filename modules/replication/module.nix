@@ -55,7 +55,7 @@ in
           ];
         in
         # TODO path under domain static
-        "ssh://${host.user}@${domain}/Volumes/Data/Replication/${config.networking.hostName}/Borg/";
+        "ssh://${host.user}@${domain}/Volumes/Data/Replication/${config.networking.hostName}/Borg";
       key = host.keys.private;
     };
 
