@@ -18,11 +18,6 @@
     "sd_mod"
   ];
   boot.kernelModules = [ "kvm-amd" ];
-  boot.kernelParams = [
-    # Fixes graphical glitches with mesa 25. Don't know what this actually
-    # affects though.
-    "amdgpu.sg_display=0"
-  ];
 
   # I don't trust newer kernel to not introduce nasty bugs
   boot.kernelPackages = pkgs.linuxPackages_6_6;
