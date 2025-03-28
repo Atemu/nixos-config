@@ -8,6 +8,8 @@
 
   networking.hostName = "THESEUS";
 
+  custom.secretPassword = true;
+
   custom.desktop.enable = true;
   custom.desktop.hypr.enable = true;
 
