@@ -35,10 +35,7 @@ in
 
       stateVolumes = lib.mkOption {
         description = "Subvolumes to create and mount that contain important state. Only works with newLayout and is additive.";
-        default = [
-          "Users"
-          "Root"
-        ]; # TODO Root should be stateless, a new var subvol should be here instead
+        default = [ ];
       };
 
       autoSnapshots = {
@@ -123,10 +120,9 @@ in
       in
       lib.mkIf this.btrfs.enable (if this.btrfs.newLayout then newLayout else oldLayout);
 
-    # We want these to be additive, so we need to set these here rather than as
-    # the options' defaults which would get overridden when additional
-    # stateVolumes are set elsewhere
-    custom.fs.btrfs.stateVolumes = options.custom.fs.btrfs.stateVolumes.default;
+    # We want this to be additive, so we need to set these here rather than as
+    # the options' defaults which would get overridden when additional snapshots
+    # are set elsewhere
     custom.fs.btrfs.autoSnapshots.subvolumes = options.custom.fs.btrfs.autoSnapshots.subvolumes.default;
 
     # Systemd tries to generate /home by default. It doesn't seem to conflict but better disable that

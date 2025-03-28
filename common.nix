@@ -214,6 +214,12 @@
     "vm.vfs_cache_pressure" = 30;
   };
 
+  custom.fs.btrfs.stateVolumes = [
+    "Users"
+    # TODO Root should be stateless, a new var subvol should be here instead
+    "Root"
+  ];
+
   custom.replication.mapping = {
     THESEUS = {
       key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH31PM/v7xrXll1kJgUagpQgMczJiKsxQz4PuVbUd2Ke atemu@THESEUS";
