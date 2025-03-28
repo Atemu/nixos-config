@@ -7,15 +7,6 @@
 let
   this = config.custom.replication;
 
-  hostMapping = {
-    THESEUS = {
-      keys = {
-        public = lib.readFile ./THESEUS.pub;
-        private = "/var/lib/borg/THESEUS"; # TODO secret
-      };
-    };
-  };
-
   # The top-level path under which replications are stored
   replicationPaths = {
     SOTERIA = "/Volumes/Data/Replication";
@@ -68,8 +59,7 @@ in
             };
           }
         );
-      default = hostMapping;
-      readOnly = true;
+      default = { };
     };
 
     replications = lib.mkOption {

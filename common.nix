@@ -214,6 +214,15 @@
     "vm.vfs_cache_pressure" = 30;
   };
 
+  custom.replication.mapping = {
+    THESEUS = {
+      keys = {
+        public = lib.readFile ./THESEUS.pub;
+        private = "/var/lib/borg/THESEUS"; # TODO secret
+      };
+    };
+  };
+
   networking.hosts."23.137.248.133" = [
     # archive.today and friends play dirty with DNS
     "archive.today"
