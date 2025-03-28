@@ -216,10 +216,7 @@
 
   custom.replication.mapping = {
     THESEUS = {
-      keys = {
-        public = lib.readFile ./THESEUS.pub;
-        private = "/var/lib/borg/THESEUS"; # TODO secret
-      };
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH31PM/v7xrXll1kJgUagpQgMczJiKsxQz4PuVbUd2Ke atemu@THESEUS";
     };
   };
 
