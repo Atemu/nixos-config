@@ -40,21 +40,11 @@ in
                 type = lib.types.str;
                 default = "${name}-replication";
               };
-              keys = {
-                public = lib.mkOption {
-                  type = lib.types.str;
-                  description = ''
-                    Path to the public key file for the borg key of this host.
-                  '';
-                };
-                private = lib.mkOption {
-                  type = lib.types.str;
-                  description = ''
-                    Path to the public key file for the borg key of this host.
-
-                    This must only be readable by the {option}`user`.
-                  '';
-                };
+              key = lib.mkOption {
+                type = lib.types.str;
+                description = ''
+                  The the public part of the replication key of this host.
+                '';
               };
             };
           }
@@ -108,8 +98,10 @@ in
           replicationPath = replicationPaths.${host.to};
         in
         "ssh://${host.user}@${domain}${replicationPath}/${config.networking.hostName}/Borg";
-      key = host.keys.private;
+      key = config.custom.secrets.replication.path;
     };
+
+    custom.secrets.replication = lib.mkIf (host != null) { };
 
     services.borgbackup.repos =
       served
@@ -118,7 +110,7 @@ in
         name: host: {
           path = "${replicationPaths.${config.networking.hostName}}/${name}/Borg/";
           inherit (host) user;
-          authorizedKeys = [ host.keys.public ];
+          authorizedKeys = [ host.key ];
           allowSubRepos = true; # Each host can have multiple replicated volumes
         }
       );
