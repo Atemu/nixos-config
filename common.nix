@@ -116,7 +116,7 @@
       "scanner"
     ];
     shell = pkgs.bash;
-    initialPassword = "none";
+    initialPassword = lib.mkIf (config.users.users.atemu.hashedPasswordFile == null) "none";
     home = lib.mkIf config.custom.fs.btrfs.newLayout "/Users/atemu";
     openssh.authorizedKeys.keys =
       let

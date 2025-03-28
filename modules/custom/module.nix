@@ -20,6 +20,9 @@ in
       example = pkgs.emacs-nox;
       type = lib.types.package;
     };
+
+    # TODO should be enabled by default once all hosts are migrated
+    secretPassword = lib.mkEnableOption "password provided by secrets module";
   };
 
   config = lib.mkIf this.enable {
@@ -32,6 +35,20 @@ in
     virtualisation.vmVariant = {
       custom.vm.enable = true;
     };
+
+    custom.secrets =
+      lib.mkIf this.secretPassword
+      <| lib.listToAttrs
+      <| map (user: lib.nameValuePair "${user}/hashedPassword" { }) [
+        "atemu"
+        "root"
+      ];
+    users.users =
+      lib.mkIf this.secretPassword
+      <| lib.genAttrs [ "atemu" "root" ] (user: {
+        hashedPasswordFile = config.custom.secrets."${user}/hashedPassword".path;
+      });
+    users.mutableUsers = lib.mkIf this.secretPassword false;
 
     services.emacs.package =
       (config.custom.emacs.override {
