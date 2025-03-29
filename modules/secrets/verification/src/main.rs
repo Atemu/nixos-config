@@ -16,6 +16,6 @@ fn main() {
 
     let contents = fs::read_to_string(spec_file)
         .expect("Should have been able to read the file");
-    let secret: Secret = serde_json::from_str(&contents).unwrap();
-    println!("{:?}", secret);
+    let spec: Vec<Secret> = serde_json::from_str(&contents).unwrap();
+    println!("{:?}", spec);
 }
