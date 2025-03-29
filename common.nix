@@ -222,7 +222,7 @@
 
   custom.replication.mapping = {
     THESEUS = {
-      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH31PM/v7xrXll1kJgUagpQgMczJiKsxQz4PuVbUd2Ke atemu@THESEUS";
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFgAF6PCcdjAFmimGMZp+qNUTqjYyQK4zY5QJBab1TiR root@THESEUS";
     };
   };
 
