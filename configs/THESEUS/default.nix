@@ -29,6 +29,28 @@
   custom.fs.btrfs.enable = true;
   custom.fs.btrfs.newLayout = true;
 
+  custom.replication.enable = true;
+  custom.replication.replications.Root = {
+    enable = true;
+    exclude = [
+      # Don't care about container storage on this host
+      "var/lib/docker"
+      "var/lib/containers"
+      # Only for test purposes
+      "var/lib/immich"
+      "var/lib/postgresql"
+
+      "var/lib/systemd/coredump"
+      "var/lib/borg"
+
+      # TODO separate volume
+      "Volumes/Games"
+
+      "var/cache"
+      "var/tmp"
+    ];
+  };
+
   # Device name must be provided by hardware config for now
   custom.swap.devices.primary.enable = true;
 
