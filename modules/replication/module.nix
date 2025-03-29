@@ -79,6 +79,15 @@ in
                 default = "";
                 apply = lib.removePrefix "/";
               };
+              exclude = lib.mkOption {
+                type = with lib.types; listOf str;
+                description = ''
+                  Paths to exclude from replication.
+
+                  This only has an effect when the chosen replication method supports excludes and the interpretation also depends on the chosen replication method.
+                '';
+                default = [ ];
+              };
             };
           }
         );

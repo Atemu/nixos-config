@@ -57,12 +57,7 @@ in
 
           environment.BORG_RSH = "ssh -i ${this.key}";
 
-          exclude = [
-            "immich"
-            "docker"
-            "containers"
-            "borg"
-          ];
+          inherit (replication) exclude;
 
           readWritePaths = [ snapshotDir ];
 
