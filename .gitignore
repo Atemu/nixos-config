@@ -1,4 +1,5 @@
 current-config.nix
 secrets.nix
 private.nix
+result*
 *.qcow2
