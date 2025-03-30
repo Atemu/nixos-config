@@ -11,10 +11,10 @@
       ./modules.nix
     ]
     ++ (
-      if builtins.pathExists ./secrets.nix then
-        [ ./secrets.nix ]
+      if builtins.pathExists ./private.nix then
+        [ ./private.nix ]
       else
-        builtins.trace "Warning: Secrets not present. Options that use eval secrets will use test values."
+        builtins.trace "Warning: Private data not present. Private options will use test values."
           [ ]
     );
 
