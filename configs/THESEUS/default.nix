@@ -52,7 +52,8 @@
   };
   custom.replication.replications.Users = {
     enable = true;
-    exclude = map (it: "atemu/${it}") [
+    path = "atemu";
+    exclude = [
       ".cache"
       ".local/share/Steam"
       ".local/share/Trash"
