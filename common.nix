@@ -214,6 +214,12 @@
     "vm.vfs_cache_pressure" = 30;
   };
 
+  custom.replication.mapping = {
+    THESEUS = {
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFgAF6PCcdjAFmimGMZp+qNUTqjYyQK4zY5QJBab1TiR root@THESEUS";
+    };
+  };
+
   networking.hosts."23.137.248.133" = [
     # archive.today and friends play dirty with DNS
     "archive.today"
