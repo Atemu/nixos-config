@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::env;
 use std::fs;
 use std::os::unix::fs::MetadataExt;
-use std::path::Path;
+use std::path::PathBuf;
 use std::process;
 use thiserror::Error;
 mod mode;
@@ -11,7 +11,7 @@ use mode::Mode;
 
 #[derive(Deserialize, Debug)]
 struct Secret {
-    path: String, // TODO path type
+    path: PathBuf,
     user: String,
     group: String,
     mode: Mode, // TODO more abstract type?
@@ -24,10 +24,8 @@ struct ModeMismatchError {
     found: Mode,
 }
 fn verify_mode(secret: &Secret) -> Result<(), ModeMismatchError> {
-    let path = Path::new(&secret.path);
-
     let spec_mode = &secret.mode;
-    let metadata = fs::metadata(path).unwrap(); // Don't care about permission issues, this is supposed to be run as root
+    let metadata = fs::metadata(&secret.path).unwrap(); // Don't care about permission issues, this is supposed to be run as root
     let mode = Mode::from_u32(metadata.mode());
     if mode != *spec_mode {
         return Err(ModeMismatchError {
@@ -50,19 +48,25 @@ fn main() {
     for (name, secret) in spec {
         let mut is_err = false;
 
-        if !Path::new(&secret.path).exists() {
+        if !secret.path.exists() {
             any_err = true;
-            println!("Secret '{name}' does not exist at '{}'.", secret.path);
+            println!(
+                "Secret '{name}' does not exist at '{}'.",
+                secret.path.display()
+            );
             continue;
         }
 
         let mode_result = verify_mode(&secret);
         if mode_result.is_err() {
             is_err = true;
-            print!("Secret '{name}' at '{}' has wrong mode: ", secret.path);
+            print!(
+                "Secret '{name}' at '{}' has wrong mode: ",
+                secret.path.display()
+            );
             println!("{}.", mode_result.err().unwrap());
         } else {
-            println!("Secret '{name}' at '{}' is correct.", secret.path);
+            println!("Secret '{name}' at '{}' is correct.", secret.path.display());
         }
 
         if is_err {
