@@ -1,10 +1,10 @@
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use std::env;
 use std::fs;
-use std::process;
-use std::collections::HashMap;
-use std::path::Path;
 use std::os::unix::fs::MetadataExt;
+use std::path::Path;
+use std::process;
 use thiserror::Error;
 // use std::fs::File;
 
@@ -17,27 +17,19 @@ struct Secret {
 }
 
 #[derive(Error, Debug)]
-enum VerificationError {
-    #[error("Secret does not exist")]
-    DoesNotExist(),
-    #[error("found {found:o}, expected {expected:o}")]
-    ModeMismatch{
-        expected: u32,
-        found: u32,
-    },
+#[error("found {found:o}, expected {expected:o}")]
+struct ModeMismatch {
+    expected: u32,
+    found: u32,
 }
-fn verify(secret: &Secret) -> Result<(), VerificationError> {
+fn verify_mode(secret: &Secret) -> Result<(), ModeMismatch> {
     let path = Path::new(&secret.path);
-
-    if !path.exists() {
-        return Err(VerificationError::DoesNotExist());
-    }
 
     let spec_mode = u32::from_str_radix(&secret.mode, 8).unwrap();
     let metadata = fs::metadata(path).unwrap(); // Don't care about permission issues, this is supposed to be run as root
     let mode = metadata.mode() & 0o777;
     if mode != spec_mode {
-        return Err(VerificationError::ModeMismatch{
+        return Err(ModeMismatch {
             expected: spec_mode,
             found: mode,
         });
@@ -50,15 +42,18 @@ fn main() {
     let args: Vec<String> = env::args().collect();
     let spec_file = &args[1];
 
-    let contents = fs::read_to_string(spec_file)
-        .expect("Should have been able to read the file");
+    let contents = fs::read_to_string(spec_file).expect("Should have been able to read the file");
     let spec: HashMap<String, Secret> = serde_json::from_str(&contents).unwrap();
 
     let mut any_err = false;
     for (name, secret) in spec {
         let mut is_err = false;
 
-        let mode_result = verify(&secret);
+        if !Path::new(&secret.path).exists() {
+            continue;
+        }
+
+        let mode_result = verify_mode(&secret);
         if mode_result.is_err() {
             is_err = true;
             print!("Secret '{name}' at '{}' has wrong mode: ", secret.path);
