@@ -178,6 +178,7 @@ let
       pavucontrol
       protonvpn-gui
       python3
+      rust-analyzer
       scrcpy
       shellcheck
       signal-desktop
