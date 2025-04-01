@@ -20,7 +20,7 @@ struct Secret {
 enum VerificationError {
     #[error("Secret does not exist")]
     DoesNotExist(),
-    #[error("found {found}, expected {expected}")]
+    #[error("found {found:o}, expected {expected:o}")]
     ModeMismatch{
         expected: u32,
         found: u32,
