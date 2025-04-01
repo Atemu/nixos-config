@@ -8,6 +8,7 @@ use std::process;
 use thiserror::Error;
 mod mode;
 use mode::Mode;
+use users::get_user_by_uid;
 
 #[derive(Deserialize, Debug)]
 struct Secret {
@@ -31,6 +32,34 @@ fn verify_mode(secret: &Secret) -> Result<(), ModeMismatchError> {
         return Err(ModeMismatchError {
             expected: *spec_mode,
             found: mode,
+        });
+    }
+
+    Ok(())
+}
+
+#[derive(Error, Debug)]
+#[error("found {found}, expected {expected}")]
+struct OwnerMismatchError {
+    expected: String,
+    found: String,
+}
+fn verify_owner(secret: &Secret) -> Result<(), OwnerMismatchError> {
+    let metadata = fs::metadata(&secret.path).unwrap(); // Don't care about permission issues, this is supposed to be run as root
+    let uid = metadata.uid();
+    let owner_name = match get_user_by_uid(uid) {
+        Some(o) => o.name().to_str().unwrap().to_owned(), // Great code. Best code I've written in a while. Such saftey. Much wow.
+        None => {
+            return Err(OwnerMismatchError {
+                expected: secret.user.clone(),
+                found: uid.to_string(),
+            });
+        }
+    };
+    if owner_name != secret.user {
+        return Err(OwnerMismatchError {
+            expected: secret.user.clone(),
+            found: owner_name,
         });
     }
 
@@ -65,12 +94,22 @@ fn main() {
                 secret.path.display()
             );
             println!("{}.", mode_result.err().unwrap());
-        } else {
-            println!("Secret '{name}' at '{}' is correct.", secret.path.display());
+        }
+
+        let owner_result = verify_owner(&secret);
+        if owner_result.is_err() {
+            is_err = true;
+            print!(
+                "Secret '{name}' at '{}' has wrong owner: ",
+                secret.path.display()
+            );
+            println!("{}.", owner_result.err().unwrap());
         }
 
         if is_err {
             any_err = true;
+        } else {
+            println!("Secret '{name}' at '{}' is correct.", secret.path.display());
         }
     }
 
