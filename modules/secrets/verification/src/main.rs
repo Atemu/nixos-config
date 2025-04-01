@@ -18,18 +18,18 @@ struct Secret {
 
 #[derive(Error, Debug)]
 #[error("found {found:o}, expected {expected:o}")]
-struct ModeMismatch {
+struct ModeMismatchError {
     expected: u32,
     found: u32,
 }
-fn verify_mode(secret: &Secret) -> Result<(), ModeMismatch> {
+fn verify_mode(secret: &Secret) -> Result<(), ModeMismatchError> {
     let path = Path::new(&secret.path);
 
     let spec_mode = u32::from_str_radix(&secret.mode, 8).unwrap();
     let metadata = fs::metadata(path).unwrap(); // Don't care about permission issues, this is supposed to be run as root
     let mode = metadata.mode() & 0o777;
     if mode != spec_mode {
-        return Err(ModeMismatch {
+        return Err(ModeMismatchError {
             expected: spec_mode,
             found: mode,
         });
