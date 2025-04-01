@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use std::collections::HashMap;
 use std::env;
 use std::fs;
@@ -6,31 +6,32 @@ use std::os::unix::fs::MetadataExt;
 use std::path::Path;
 use std::process;
 use thiserror::Error;
-// use std::fs::File;
+mod mode;
+use mode::Mode;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Deserialize, Debug)]
 struct Secret {
     path: String, // TODO path type
     user: String,
     group: String,
-    mode: String, // TODO more abstract type?
+    mode: Mode, // TODO more abstract type?
 }
 
 #[derive(Error, Debug)]
-#[error("found {found:o}, expected {expected:o}")]
+#[error("found {found}, expected {expected}")]
 struct ModeMismatchError {
-    expected: u32,
-    found: u32,
+    expected: Mode,
+    found: Mode,
 }
 fn verify_mode(secret: &Secret) -> Result<(), ModeMismatchError> {
     let path = Path::new(&secret.path);
 
-    let spec_mode = u32::from_str_radix(&secret.mode, 8).unwrap();
+    let spec_mode = &secret.mode;
     let metadata = fs::metadata(path).unwrap(); // Don't care about permission issues, this is supposed to be run as root
-    let mode = metadata.mode() & 0o777;
-    if mode != spec_mode {
+    let mode = Mode::from_u32(metadata.mode());
+    if mode != *spec_mode {
         return Err(ModeMismatchError {
-            expected: spec_mode,
+            expected: *spec_mode,
             found: mode,
         });
     }

@@ -2,6 +2,7 @@
   lib,
   rustPlatform,
   runCommand,
+  rustfmt,
 }:
 
 rustPlatform.buildRustPackage {
@@ -29,6 +30,6 @@ rustPlatform.buildRustPackage {
     runCommand "source" { } script;
 
   nativeBuildInputs = [
-    # rust-analyzer
+    rustfmt
   ];
 }
