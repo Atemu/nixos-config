@@ -51,7 +51,7 @@ fn main() {
 
         if !Path::new(&secret.path).exists() {
             any_err = true;
-            println!("Secret '{name}' does not exist at '{}'", secret.path);
+            println!("Secret '{name}' does not exist at '{}'.", secret.path);
             continue;
         }
 
@@ -59,9 +59,9 @@ fn main() {
         if mode_result.is_err() {
             is_err = true;
             print!("Secret '{name}' at '{}' has wrong mode: ", secret.path);
-            println!("{}", mode_result.err().unwrap());
+            println!("{}.", mode_result.err().unwrap());
         } else {
-            println!("Secret '{name}' at '{}' is correct", secret.path);
+            println!("Secret '{name}' at '{}' is correct.", secret.path);
         }
 
         if is_err {
