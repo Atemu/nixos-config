@@ -50,6 +50,8 @@ fn main() {
         let mut is_err = false;
 
         if !Path::new(&secret.path).exists() {
+            any_err = true;
+            println!("Secret '{name}' does not exist at '{}'", secret.path);
             continue;
         }
 
