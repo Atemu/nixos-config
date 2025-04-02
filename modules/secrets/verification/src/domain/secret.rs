@@ -4,7 +4,7 @@ use users::{get_user_by_uid, Group, User};
 use std::{collections::HashMap, fs, os::unix::fs::MetadataExt, path::PathBuf};
 use super::mode::Mode;
 
-type SecretName = String;
+pub type SecretName = String;
 
 #[derive(Debug)]
 #[derive(AllArgsConstructor)]

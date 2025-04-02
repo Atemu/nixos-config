@@ -13,8 +13,8 @@ fn main() {
     let spec_file = &args[1];
 
     let contents = fs::read_to_string(spec_file).expect("Should have been able to read the file");
-    let data: SpecData = serde_json::from_str(&contents).unwrap();
-    let spec: SecretSpec = data.to_secret_spec();
+    let data: SpecData = serde_json::from_str(&contents).expect("Could not parse JSON");
+    let spec: SecretSpec = data.to_secret_spec().expect("Could not convert data"); // TODO better error message
 
     let mut any_err = false;
     for (name, secret) in spec {

@@ -1,7 +1,4 @@
-use std::{
-    collections::HashMap,
-    path::Path,
-};
+use std::{collections::HashMap, path::Path};
 
 use serde::Deserialize;
 use users::{get_group_by_name, get_user_by_name};
@@ -19,26 +16,28 @@ pub struct SpecItem {
 }
 
 impl SpecItem {
-    pub fn to_secret(&self) -> Secret {
+    pub fn to_secret(&self) -> Option<Secret> {
         // TODO Result
-        Secret::new(
+        Some(Secret::new(
             Path::new(&self.path).to_path_buf(),
-            get_user_by_name(&self.user).unwrap(), // TODO
-            get_group_by_name(&self.group).unwrap(), // TODO
-            Mode::from_string(&self.mode).unwrap(), // TODO
-        )
+            get_user_by_name(&self.user)?,
+            get_group_by_name(&self.group)?,
+            Mode::from_string(&self.mode).ok()?,
+        ))
     }
 }
 
 #[derive(Deserialize, Debug)]
 pub struct SpecData(HashMap<SpecName, SpecItem>);
 impl SpecData {
-    pub fn to_secret_spec(&self) -> crate::domain::secret::SecretSpec {
-        let value = self
+    pub fn to_secret_spec(&self) -> Option<crate::domain::secret::SecretSpec> {
+        let mut value = self
             .0
             .iter()
-            .map(|(n, v)| (n.clone(), v.to_secret()))
-            .collect();
-        value
+            .map(|(n, v)| (n.clone(), v.to_secret()));
+        if value.any(|(_, it)| it.is_none()) {
+            return None;
+        }
+        Some(value.map(|(n, v)| (n, v.unwrap())).collect())
     }
 }
