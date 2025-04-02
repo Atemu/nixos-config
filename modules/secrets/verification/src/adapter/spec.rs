@@ -1,10 +1,10 @@
 use std::{
     collections::HashMap,
-    path::{Path, PathBuf},
+    path::Path,
 };
 
 use serde::Deserialize;
-use users::{get_group_by_name, get_user_by_name, Group};
+use users::{get_group_by_name, get_user_by_name};
 
 use crate::domain::{mode::Mode, secret::Secret};
 
