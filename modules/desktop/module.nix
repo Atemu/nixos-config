@@ -298,7 +298,6 @@ in
       };
 
       programs.direnv.enable = true;
-      services.lorri.enable = true;
 
       programs.localsend.enable = true;
       programs.localsend.openFirewall = true;
