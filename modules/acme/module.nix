@@ -43,7 +43,10 @@ in
   };
 
   config = lib.mkIf this.enable {
-    custom.secrets.acme = { };
+    custom.secrets.acme = {
+      user = "acme";
+      group = "acme";
+    };
     security.acme.acceptTerms = true;
     security.acme.defaults = {
       # Use staging server if test values are used
