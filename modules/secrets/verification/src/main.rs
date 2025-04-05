@@ -3,6 +3,7 @@ use std::fs;
 use std::process;
 mod domain;
 use adapter::spec::SpecData;
+use domain::secret::verify_group;
 use domain::secret::verify_mode;
 use domain::secret::verify_owner;
 mod adapter;
@@ -47,6 +48,16 @@ fn main() {
                 secret.path.display()
             );
             println!("{}.", owner_result.err().unwrap());
+        }
+
+        let group_result = verify_group(&secret);
+        if group_result.is_err() {
+            is_err = true;
+            print!(
+                "Secret '{name}' at '{}' has wrong group: ",
+                secret.path.display()
+            );
+            println!("{}.", group_result.err().unwrap());
         }
 
         if is_err {

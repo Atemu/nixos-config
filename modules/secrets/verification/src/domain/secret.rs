@@ -1,6 +1,6 @@
 use lombok::AllArgsConstructor;
 use thiserror::Error;
-use users::{get_user_by_uid, Group, User};
+use users::{get_group_by_gid, get_user_by_uid, Group, User};
 use std::{collections::HashMap, fs, os::unix::fs::MetadataExt, path::PathBuf};
 use super::mode::Mode;
 
@@ -62,6 +62,39 @@ pub fn verify_owner(secret: &Secret) -> Result<(), OwnerMismatchError> {
         return Err(OwnerMismatchError {
             expected: get_name(&secret.user),
             found: get_name(&file_owner),
+        });
+    }
+
+    Ok(())
+}
+
+fn get_group(user: &Group) -> String {
+    user.name().to_str().unwrap_or("unknown").to_owned()
+}
+
+#[derive(Error, Debug)]
+#[error("found {found}, expected {expected}")]
+pub struct GroupMismatchError {
+    expected: String,
+    found: String,
+}
+// TODO unify with above function
+pub fn verify_group(secret: &Secret) -> Result<(), OwnerMismatchError> {
+    let metadata = fs::metadata(&secret.path).unwrap(); // Don't care about permission issues, this is supposed to be run as root
+    let gid = metadata.gid();
+    let file_group = match get_group_by_gid(gid) {
+        Some(o) => o,
+        None => {
+            return Err(OwnerMismatchError {
+                expected: get_group(&secret.group),
+                found: gid.to_string(),
+            });
+        }
+    };
+    if file_group.gid() != secret.group.gid() {
+        return Err(OwnerMismatchError {
+            expected: get_name(&secret.user),
+            found: get_group(&file_group),
         });
     }
 
