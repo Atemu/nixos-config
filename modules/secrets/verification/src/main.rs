@@ -27,6 +27,7 @@ fn main() {
                 "Secret '{name}' does not exist at '{}'.",
                 secret.path.display()
             );
+            // We can't do any of the other checks if it doesn't exist
             continue;
         }
 
