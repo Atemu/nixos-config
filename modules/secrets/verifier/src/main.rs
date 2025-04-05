@@ -1,5 +1,5 @@
-use std::env;
 use std::fs;
+use std::path::PathBuf;
 use std::process;
 mod domain;
 use adapter::spec::SpecData;
@@ -7,15 +7,35 @@ use domain::secret::verify_group;
 use domain::secret::verify_mode;
 use domain::secret::verify_owner;
 mod adapter;
+use clap::Parser;
 use domain::secret::SecretSpec;
 
-fn main() {
-    let args: Vec<String> = env::args().collect();
-    let spec_file = &args[1];
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
+struct Args {
+    #[arg(
+        help = "The path to the JSON specification of the secrets to be verified"
+    )]
+    spec_path: PathBuf,
 
-    let contents = fs::read_to_string(spec_file).expect("Should have been able to read the file");
-    let data: SpecData = serde_json::from_str(&contents).expect("Could not parse JSON");
-    let spec: SecretSpec = data.to_secret_spec().expect("Could not convert data"); // TODO better error message
+    // Whether to print good files too
+    #[arg(
+        short,
+        long,
+        default_value_t = false,
+        help = "Whether to print secrets that verified successfully rather than only the errors"
+    )]
+    print_good: bool,
+}
+
+fn main() {
+    let args = Args::parse();
+    let contents =
+        fs::read_to_string(args.spec_path).expect("Should have been able to read the spec file");
+    let data: SpecData = serde_json::from_str(&contents).expect("Could not parse spec file JSON");
+    let spec: SecretSpec = data
+        .to_secret_spec()
+        .expect("Could not convert data, do the users and groups actually exist?");
 
     let mut any_err = false;
     for (name, secret) in spec {
@@ -64,7 +84,9 @@ fn main() {
         if is_err {
             any_err = true;
         } else {
-            println!("Secret '{name}' at '{}' is correct.", secret.path.display());
+            if args.print_good {
+                println!("Secret '{name}' at '{}' is correct.", secret.path.display());
+            }
         }
     }
 
