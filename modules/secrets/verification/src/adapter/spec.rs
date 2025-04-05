@@ -3,10 +3,8 @@ use std::{collections::HashMap, path::Path};
 use serde::Deserialize;
 use users::{get_group_by_name, get_user_by_name};
 
-use crate::domain::{
-    mode::Mode,
-    secret::{Secret, SecretName},
-};
+use crate::domain::mode::Mode;
+use crate::domain::secret::Secret;
 
 pub type SpecName = String;
 
