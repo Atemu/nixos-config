@@ -32,4 +32,8 @@ rustPlatform.buildRustPackage {
   nativeBuildInputs = [
     rustfmt
   ];
+
+  meta = {
+    mainProgram = "verification";
+  };
 }
