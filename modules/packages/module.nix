@@ -179,6 +179,7 @@ let
       protonvpn-gui
       python3
       rust-analyzer
+      cargo
       scrcpy
       shellcheck
       signal-desktop
