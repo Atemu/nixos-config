@@ -1,14 +1,14 @@
+use super::mode::Mode;
 use lombok::AllArgsConstructor;
+use std::{collections::HashMap, fs, os::unix::fs::MetadataExt, path::PathBuf};
 use thiserror::Error;
 use users::{get_group_by_gid, get_user_by_uid, Group, User};
-use std::{collections::HashMap, fs, os::unix::fs::MetadataExt, path::PathBuf};
-use super::mode::Mode;
 
 pub type SecretName = String;
 
-#[derive(Debug)]
-#[derive(AllArgsConstructor)]
-pub struct Secret { // TODO rename SecretSpec
+#[derive(Debug, AllArgsConstructor)]
+pub struct Secret {
+    // TODO rename SecretSpec
     pub path: PathBuf, // TODO implement exists() as pub method
     user: User,
     group: Group,
