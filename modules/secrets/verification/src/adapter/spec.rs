@@ -3,7 +3,10 @@ use std::{collections::HashMap, path::Path};
 use serde::Deserialize;
 use users::{get_group_by_name, get_user_by_name};
 
-use crate::domain::{mode::Mode, secret::Secret};
+use crate::domain::{
+    mode::Mode,
+    secret::{Secret, SecretName},
+};
 
 pub type SpecName = String;
 
@@ -31,13 +34,21 @@ impl SpecItem {
 pub struct SpecData(HashMap<SpecName, SpecItem>);
 impl SpecData {
     pub fn to_secret_spec(&self) -> Option<crate::domain::secret::SecretSpec> {
-        let mut value = self
+        let secrets: HashMap<SecretName, Option<Secret>> = self
             .0
             .iter()
-            .map(|(n, v)| (n.clone(), v.to_secret()));
-        if value.any(|(_, it)| it.is_none()) {
+            .map(|(k, v)| (k.clone(), v.to_secret()))
+            .collect();
+
+        if secrets.iter().any(|(_, it)| it.is_none()) {
             return None;
         }
-        Some(value.map(|(n, v)| (n, v.unwrap())).collect())
+
+        secrets
+            .into_iter()
+            // We must map the inner value of the option for it to be
+            // collectible into an optional collection
+            .map(|(k, v)| v.map(|o| (k.clone(), o)))
+            .collect()
     }
 }
