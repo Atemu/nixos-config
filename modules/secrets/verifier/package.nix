@@ -6,7 +6,7 @@
 }:
 
 rustPlatform.buildRustPackage {
-  name = "secrets-verification";
+  name = "nixos-secrets-verifier";
 
   cargoLock = {
     lockFile = ./Cargo.lock;

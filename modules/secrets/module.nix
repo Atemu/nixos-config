@@ -9,7 +9,7 @@
 # stands, by putting the files into the correct places manually.
 let
   this = config.custom.secrets;
-  verifier = pkgs.callPackage ./verification/package.nix { };
+  verifier = pkgs.callPackage ./verifier/package.nix { };
 in
 
 {
