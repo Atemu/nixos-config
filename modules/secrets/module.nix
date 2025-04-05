@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  utils,
   ...
 }:
 # This is an abstract interface to interact with secrets. It does not implement
@@ -55,9 +56,16 @@ in
 
   config = lib.mkIf (this != { }) {
     # TODO one service for each secret
-    systemd.services.secrets-verifier = {
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig.ExecStart = "${lib.getExe verifier} ${pkgs.writers.writeJSON "secrets.json" this}";
-    };
+    systemd.services =
+      this
+      |> lib.mapAttrs' (
+        name: secret:
+        lib.nameValuePair "secrets-verifier-${utils.escapeSystemdPath name}" {
+          wantedBy = [ "multi-user.target" ];
+          serviceConfig = {
+            ExecStart = "${lib.getExe verifier} ${pkgs.writers.writeJSON "secrets.json" { ${name} = secret; }}";
+          };
+        }
+      );
   };
 }
