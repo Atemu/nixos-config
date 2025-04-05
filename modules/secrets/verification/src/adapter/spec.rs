@@ -34,18 +34,9 @@ impl SpecItem {
 pub struct SpecData(HashMap<SpecName, SpecItem>);
 impl SpecData {
     pub fn to_secret_spec(&self) -> Option<crate::domain::secret::SecretSpec> {
-        let secrets: HashMap<SecretName, Option<Secret>> = self
-            .0
+        self.0
             .iter()
             .map(|(k, v)| (k.clone(), v.to_secret()))
-            .collect();
-
-        if secrets.iter().any(|(_, it)| it.is_none()) {
-            return None;
-        }
-
-        secrets
-            .into_iter()
             // We must map the inner value of the option for it to be
             // collectible into an optional collection
             .map(|(k, v)| v.map(|o| (k.clone(), o)))
