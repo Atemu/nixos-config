@@ -64,6 +64,8 @@ in
           wantedBy = [ "multi-user.target" ];
           serviceConfig = {
             ExecStart = "${lib.getExe verifier} ${pkgs.writers.writeJSON "secrets.json" { ${name} = secret; }}";
+            Type = "oneshot";
+            RemainAfterExit = true;
           };
         }
       );
