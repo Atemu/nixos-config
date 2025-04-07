@@ -10,8 +10,8 @@ pub type SecretName = String;
 pub struct Secret {
     // TODO rename SecretSpec
     pub path: PathBuf, // TODO implement exists() as pub method
-    user: User,
-    group: Group,
+    user: String,
+    group: String,
     mode: Mode,
 }
 
@@ -53,14 +53,14 @@ pub fn verify_owner(secret: &Secret) -> Result<(), OwnerMismatchError> {
         Some(o) => o,
         None => {
             return Err(OwnerMismatchError {
-                expected: get_name(&secret.user),
+                expected: secret.user.clone(),
                 found: uid.to_string(),
             });
         }
     };
-    if file_owner.uid() != secret.user.uid() {
+    if get_name(&file_owner) != secret.user {
         return Err(OwnerMismatchError {
-            expected: get_name(&secret.user),
+            expected: secret.user.clone(),
             found: get_name(&file_owner),
         });
     }
@@ -86,14 +86,14 @@ pub fn verify_group(secret: &Secret) -> Result<(), OwnerMismatchError> {
         Some(o) => o,
         None => {
             return Err(OwnerMismatchError {
-                expected: get_group(&secret.group),
+                expected: secret.group.clone(),
                 found: gid.to_string(),
             });
         }
     };
-    if file_group.gid() != secret.group.gid() {
+    if get_group(&file_group) != secret.group {
         return Err(OwnerMismatchError {
-            expected: get_name(&secret.user),
+            expected: secret.user.clone(),
             found: get_group(&file_group),
         });
     }

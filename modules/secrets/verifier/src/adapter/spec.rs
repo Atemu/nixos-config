@@ -21,8 +21,8 @@ impl SpecItem {
         // TODO Result
         Some(Secret::new(
             Path::new(&self.path).to_path_buf(),
-            get_user_by_name(&self.user)?,
-            get_group_by_name(&self.group)?,
+            self.user.clone(),
+            self.group.clone(),
             Mode::from_string(&self.mode).ok()?,
         ))
     }
