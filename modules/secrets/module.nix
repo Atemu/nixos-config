@@ -55,7 +55,6 @@ in
   };
 
   config = lib.mkIf (this != { }) {
-    # TODO one service for each secret
     systemd.services =
       this
       |> lib.mapAttrs' (
