@@ -169,6 +169,7 @@ let
       anki
       bluetuith
       calibre
+      cargo
       customFirefox
       direnv
       fractal
@@ -179,7 +180,8 @@ let
       protonvpn-gui
       python3
       rust-analyzer
-      cargo
+      rustc
+      rustfmt
       scrcpy
       shellcheck
       signal-desktop
