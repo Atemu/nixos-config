@@ -172,6 +172,7 @@ let
       cargo
       customFirefox
       direnv
+      element-desktop
       fractal
       lxrandr
       mlterm
