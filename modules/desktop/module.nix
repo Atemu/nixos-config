@@ -276,6 +276,9 @@ in
         kochi-substitute
         source-code-pro
         ttf_bitstream_vera
+
+        # For icons and such
+        font-awesome
       ];
       fonts.fontconfig.defaultFonts = {
         monospace = [
