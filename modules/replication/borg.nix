@@ -63,6 +63,8 @@ in
 
           encryption.mode = "none";
 
+          startAt = "*-*-* 07:00:00";
+
           prune.keep = {
             within = "1d"; # In case I make multiple in one day, keep them
             daily = 7;
