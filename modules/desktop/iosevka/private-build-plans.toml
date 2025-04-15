@@ -22,7 +22,14 @@ at = "fourfold"
 percent = "rings-segmented-slash"
 
 [buildPlans.IosevkaCustom.ligations]
-inherits = "haskell"
+# This set contains most of them
+inherits = "dlig"
+# These are missing
+enables = [
+  "slasheq",
+  "tildeeq",
+  "eqexeq",
+]
 
 [buildPlans.IosevkaCustom.widths.Normal]
 shape = 500
