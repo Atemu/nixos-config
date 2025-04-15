@@ -266,7 +266,7 @@ in
 
       fonts.packages = with pkgs; [
         # My preferred monospace font
-        hasklig # source-code-pro with ligatures
+        (callPackage ./iosevka { })
 
         # Japanese fonts
         # Recommended by https://functor.tokyo/blog/2018-10-01-japanese-on-nixos
