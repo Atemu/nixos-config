@@ -29,16 +29,6 @@ shape = 500
 menu = 5
 css = "normal"
 
-[buildPlans.IosevkaCustom.widths.SemiExtended]
-shape = 548
-menu = 6
-css = "semi-expanded"
-
-[buildPlans.IosevkaCustom.widths.Extended]
-shape = 600
-menu = 7
-css = "expanded"
-
 [buildPlans.IosevkaCustom.slopes.Upright]
 angle = 0
 shape = "upright"
@@ -50,3 +40,9 @@ angle = 9.4
 shape = "oblique"
 menu = "oblique"
 css = "oblique"
+
+# Only build one weight please, not 9 of them
+[buildPlans.IosevkaCustom.weights.Regular]
+shape = 400  # Weight for glyph shapes.
+menu  = 400  # Weight for the font's names.
+css   = 400  # Weight for webfont CSS.
