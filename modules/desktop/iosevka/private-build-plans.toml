@@ -32,6 +32,9 @@ enables = [
   "exeq", # !=
   "minus-minus",
 ]
+disables = [
+  "ltgt-slash-tag", # HTML tags
+]
 
 [buildPlans.IosevkaCustom.widths.Normal]
 shape = 600
