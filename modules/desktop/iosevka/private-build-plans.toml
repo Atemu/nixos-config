@@ -32,7 +32,7 @@ enables = [
 ]
 
 [buildPlans.IosevkaCustom.widths.Normal]
-shape = 500
+shape = 600
 menu = 5
 css = "normal"
 
