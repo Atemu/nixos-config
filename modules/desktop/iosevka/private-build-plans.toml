@@ -28,7 +28,9 @@ inherits = "dlig"
 enables = [
   "slasheq",
   "tildeeq",
-  "eqexeq",
+  "eqexeq", # =!=
+  "exeq", # !=
+  "minus-minus",
 ]
 
 [buildPlans.IosevkaCustom.widths.Normal]
