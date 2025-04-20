@@ -14,8 +14,7 @@
       if builtins.pathExists ./private.nix then
         [ ./private.nix ]
       else
-        builtins.trace "Warning: Private data not present. Private options will use test values."
-          [ ]
+        builtins.trace "Warning: Private data not present. Private options will use test values." [ ]
     );
 
   # Enable my custom modules.
