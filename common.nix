@@ -69,6 +69,23 @@
       })
     ];
   });
+  # tailscale writes verbose logs to its own logfiles and then truncates them
+  # all the time. This, however, causes those writes to still be committed to
+  # disk every time tailscale verbosely logs something which happens every few
+  # seconds. Any of these writes comes with all the overhead of bringing file
+  # writes to disk while the system is supposedly idle.
+  # https://github.com/tailscale/tailscale/issues/14819
+  systemd.tmpfiles.settings."10-tailscaled-logspam" =
+    lib.genAttrs
+      [
+        "/var/lib/tailscale/tailscaled.log1.txt"
+        "/var/lib/tailscale/tailscaled.log2.txt"
+      ]
+      (n: {
+        "L+" = {
+          argument = "/dev/null";
+        };
+      });
 
   networking.networkmanager.unmanaged = lib.mkIf config.networking.networkmanager.enable [
     "tailscale0"
