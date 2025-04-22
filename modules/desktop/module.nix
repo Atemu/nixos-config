@@ -124,10 +124,13 @@ in
 
       programs.hyprland.enable = this.hypr.enable;
 
-      programs.uwsm.enable = true;
-      programs.uwsm.waylandCompositors.Hyprland = {
-        binPath = lib.getExe config.programs.hyprland.package;
-        prettyName = "Hyprland";
+      # TODO make hypr a sub-module
+      programs.uwsm = lib.mkIf this.hypr.enable {
+        enable = true;
+        waylandCompositors.Hyprland = {
+          binPath = lib.getExe config.programs.hyprland.package;
+          prettyName = "Hyprland";
+        };
       };
 
       systemd.user.services.hypridle = lib.mkIf this.hypr.enable (mkHyprSessionService {
