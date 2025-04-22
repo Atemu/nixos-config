@@ -174,6 +174,18 @@ in
         ];
       };
 
+      systemd.user.services."i3bar-river" =
+        lib.mkIf this.hypr.enable
+        <| mkHyprSessionService {
+          serviceConfig = {
+            ExecStart = lib.getExe pkgs.i3bar-river;
+          };
+          path = with pkgs; [
+            i3status-rust
+            runtimeShellPackage # needs to exec sh
+          ];
+        };
+
       services.xserver.desktopManager.gnome.enable = this.tablet;
       environment.gnome.excludePackages = with pkgs; [
         orca
