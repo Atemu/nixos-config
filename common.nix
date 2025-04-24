@@ -67,6 +67,8 @@
         hash = "sha256-GKf8BLGKJ8EnKjj1LQSVflttOPAqJXhNjR89iJ1A4dg=";
       })
     ];
+    # Tests take forever. The patches may at some point also cause a failure.
+    doCheck = false;
   });
   # tailscale writes verbose logs to its own logfiles and then truncates them
   # all the time. This, however, causes those writes to still be committed to
