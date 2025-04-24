@@ -64,7 +64,7 @@ in
       environment.systemPackages =
         let
           general = with pkgs; [
-            BeatSaberModManager
+            bs-manager
             discord
             mangohud
             piper
@@ -97,18 +97,6 @@ in
         "steam-unwrapped"
         "discord"
         "teamspeak3"
-      ];
-      # BSMM depends on old SDKs...
-      # https://github.com/NixOS/nixpkgs/pull/339370
-      nixpkgs.config.permittedInsecurePackages = [
-        "dotnet-runtime-wrapped-6.0.36"
-        "dotnet-runtime-wrapped-7.0.20"
-        "dotnet-runtime-7.0.20"
-        "dotnet-core-combined"
-        "dotnet-sdk-6.0.428"
-        "dotnet-sdk-7.0.410"
-        "dotnet-sdk-wrapped-6.0.428"
-        "dotnet-sdk-wrapped-7.0.410"
       ];
       programs.obs-studio.enable = true;
       programs.obs-studio.plugins = with pkgs.obs-studio-plugins; [
