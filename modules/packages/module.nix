@@ -175,6 +175,7 @@ let
       element-desktop
       fractal
       lxrandr
+      lyto
       mlterm
       mpv
       pavucontrol
