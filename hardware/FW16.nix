@@ -35,21 +35,7 @@
   services.power-profiles-daemon.enable = true;
   custom.desktop.hypr.hypridle-power = true;
 
-  hardware.graphics.package =
-    (pkgs.mesa.overrideAttrs (
-      {
-        patches ? [ ],
-        ...
-      }:
-      {
-        patches = patches ++ [
-          (pkgs.fetchpatch2 {
-            url = "https://gitlab.freedesktop.org/pepp/mesa/-/commit/555821ff93118d4a6ea441127cd0427a95743d47.patch";
-            hash = "sha256-Gk/arvL5frsNOTHfHXvqWet3cD1U99GKDZ+7LPCedCA=";
-          })
-        ];
-      }
-    ));
+  hardware.graphics.package = (pkgs.callPackage ./mesa_24 { }).drivers;
 
   hardware.bluetooth.enable = true;
 
