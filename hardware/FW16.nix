@@ -35,8 +35,6 @@
   services.power-profiles-daemon.enable = true;
   custom.desktop.hypr.hypridle-power = true;
 
-  hardware.graphics.package = (pkgs.callPackage ./mesa_24 { }).drivers;
-
   hardware.bluetooth.enable = true;
 
   environment.systemPackages = with pkgs; [
