@@ -174,6 +174,7 @@ let
       direnv
       element-desktop
       fractal
+      kotlin-language-server
       lxrandr
       lyto
       mlterm
