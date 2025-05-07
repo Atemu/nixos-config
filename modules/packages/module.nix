@@ -174,6 +174,7 @@ let
       direnv
       element-desktop
       fractal
+      gcc # For rust
       kotlin-language-server
       lxrandr
       lyto
