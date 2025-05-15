@@ -1,4 +1,8 @@
-{ ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -102,6 +106,8 @@
 
   # Acts as a server for my clients to replicate to
   custom.replication.enable = true;
+
+  services.postgresql.package = pkgs.postgresql_17;
 
   system.stateVersion = "19.09"; # Did you read the comment?
 }
