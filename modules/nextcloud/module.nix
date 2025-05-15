@@ -39,7 +39,9 @@ in
       https = true;
       config = {
         adminpassFile = toString (pkgs.writeText "password" "none");
+        dbtype = "pgsql";
       };
+      database.createLocally = true;
       maxUploadSize = "0"; # Don't limit it.
       phpOptions = {
         # This is set to maxUploadSize but if it's 0, well....
