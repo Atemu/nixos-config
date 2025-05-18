@@ -180,6 +180,7 @@ let
       lyto
       mlterm
       mpv
+      openswitcher
       pavucontrol
       protonvpn-gui
       python3
