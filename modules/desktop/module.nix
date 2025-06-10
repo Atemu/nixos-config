@@ -341,7 +341,7 @@ in
       systemd.user.services.emacs.serviceConfig.TimeoutStopSec = "10s";
 
       # No friggin 600MB mbrola!
-      services.speechd.enable = false;
+      services.speechd.enable = lib.mkForce false;
 
       # https://github.com/flatpak/xdg-desktop-portal-gtk/pull/504
       systemd.user.services.xdg-desktop-portal-gtk = {

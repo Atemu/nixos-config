@@ -19,6 +19,8 @@
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
+  services.desktopManager.plasma6.enable = true;
+
   boot.initrd.systemd.enable = true;
 
   # Scanner
