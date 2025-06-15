@@ -243,10 +243,11 @@ in
         ];
       };
 
-      services.xserver.xkb.layout = "us";
-      services.xserver.xkb.variant = "altgr-intl";
+      services.xserver.xkb.layout = "de";
+      services.xserver.xkb.variant = "neo_qwerty";
 
-      services.xserver.xkb.options = "caps:escape";
+      # Some keyboards have the right super where I'd like to have control
+      services.xserver.xkb.options = "altwin:ctrl_rwin";
 
       services.xserver.autoRepeatDelay = 224;
       services.xserver.autoRepeatInterval = 24;
