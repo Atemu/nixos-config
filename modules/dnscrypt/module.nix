@@ -38,8 +38,6 @@ in
           require_nofilter = true;
           lb_strategy = "p2";
           lb_estimator = true;
-          dnscrypt_ephemeral_keys = true;
-          tls_disable_session_tickets = true;
 
           cache = false;
         };
