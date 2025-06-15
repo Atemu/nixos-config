@@ -56,14 +56,6 @@ in
           contacts
           tasks
           ;
-
-        # TODO upstream this into nextcloudPackages when it's a bit more mature
-        dav_push = pkgs.fetchFromGitHub {
-          owner = "bitfireAT";
-          repo = "nc_ext_dav_push";
-          tag = "v0.0.2";
-          hash = "sha256-W/WWl8dYdkq0gUEJ/IZXAc25xXbemxllJjYtU1LmJpo=";
-        };
       };
     };
 
