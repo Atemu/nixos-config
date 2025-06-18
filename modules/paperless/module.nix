@@ -81,7 +81,7 @@ in
 
         # Run the exporter
         cmd=(
-          ${cfg.dataDir}/paperless-manage document_exporter
+          ${lib.getExe cfg.manage} document_exporter
           --compare-checksums
           --delete
           --no-archive
