@@ -210,6 +210,7 @@ in
       services.dbus.enable = true;
 
       services.gnome.gnome-keyring.enable = true;
+      services.gnome.gcr-ssh-agent.enable = false; # No, I don't want your ssh-agent
       nixpkgs.overlays = [
         (final: prev: {
           # As is tradition, gnome-keyring is annoying and the only
