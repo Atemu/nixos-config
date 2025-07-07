@@ -38,7 +38,7 @@ in
   };
 
   config = lib.mkIf this.enable (
-    lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "25.05") {
+    lib.optionalAttrs (lib.versionAtLeast lib.trivial.release "25.11") {
       boot.kernel.sysctl = {
         "kernel.sysrq" = 1;
       };
