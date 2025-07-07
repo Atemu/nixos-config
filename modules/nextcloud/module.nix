@@ -54,6 +54,7 @@ in
           richdocuments
           calendar
           contacts
+          dav_push
           tasks
           ;
       };
