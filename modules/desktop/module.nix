@@ -281,6 +281,8 @@ in
 
       programs.adb.enable = true;
 
+      hardware.keyboard.qmk.enable = true;
+
       fonts.packages = with pkgs; [
         # My preferred monospace font
         (callPackage ./iosevka { })
