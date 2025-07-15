@@ -265,10 +265,6 @@ in
 
       services.xserver.wacom.enable = this.tablet;
 
-      services.ddccontrol.enable = true;
-      hardware.i2c.enable = true;
-      hardware.i2c.group = "users";
-
       environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
       services.printing.enable = true;
