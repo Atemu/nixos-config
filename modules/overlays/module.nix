@@ -82,6 +82,12 @@ in
           ];
         });
       };
+
+      # Pulls in texliveMedium into the build closure for docs that I don't care
+      # about. It wasn't cached for some reason and I was suddenly pulling in
+      # texlive. It and qmk which depends on it are quick builds, so just always
+      # build without docs so that this never happens.
+      avrdude = prev.avrdude.override { docSupport = false; };
     })
   ];
 }
