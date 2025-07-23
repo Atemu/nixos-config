@@ -42,6 +42,7 @@ enables = [
 ]
 disables = [
   "ltgt-slash-tag", # HTML tags
+  "brace-bar" # used in squiggle as {|x| ...}
 ]
 
 [buildPlans.IosevkaCustom.widths.Normal]
