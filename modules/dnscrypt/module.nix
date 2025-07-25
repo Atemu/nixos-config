@@ -30,8 +30,7 @@ in
           listen_addresses = if this.listen then [ "0.0.0.0:53" ] else [ "127.0.0.1:53" ];
           ipv6_servers = true;
           server_names = [
-            "cloudflare-ipv6"
-            "cloudflare"
+            "mullvad-doh"
           ];
           require_dnssec = true;
           require_nolog = true;
