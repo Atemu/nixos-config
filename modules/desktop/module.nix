@@ -92,7 +92,7 @@ in
       programs.ssh.askPassword = "";
 
       services.xserver.enable = true;
-      services.xserver.displayManager.gdm.enable = true;
+      services.displayManager.gdm.enable = true;
 
       services.displayManager.defaultSession =
         if this.hypr.enable then
@@ -186,7 +186,7 @@ in
           ];
         };
 
-      services.xserver.desktopManager.gnome.enable = this.tablet;
+      services.desktopManager.gnome.enable = this.tablet;
       environment.gnome.excludePackages = with pkgs; [
         orca
       ];
@@ -236,7 +236,7 @@ in
         # Hyprland doesn't like wlr being present
         wlr.enable = if this.hypr.enable then lib.mkForce false else true;
         # GNOME adds xdg-desktop-portal-gtk on its own which causes a collision
-        extraPortals = lib.mkIf (!config.services.xserver.desktopManager.gnome.enable) [
+        extraPortals = lib.mkIf (!config.services.desktopManager.gnome.enable) [
           # TODO I'd prefer to use `pkgs.xdg-desktop-portal-kde'. This currently
           # causes Firefox to go into a sort of QT compatibility mode which
           # disables my Emacs gtk key-theme however, so not an option
