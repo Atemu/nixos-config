@@ -10,16 +10,13 @@ let
 
   customEmacs = config.services.emacs.package;
 
-  customHunspell = pkgs.hunspellWithDicts (
-    with pkgs.hunspellDicts;
-    [
+  customHunspell = pkgs.hunspell.withDicts (
+    dicts: with dicts; [
       (en_GB-large.overrideAttrs (prev: {
         # Make dict able to detect contractions (I've, doesn't etc.) as words
-        postInstall =
-          prev.postInstall or ""
-          + ''
-            substituteInPlace $out/share/hunspell/en_GB.aff --replace-fail "WORDCHARS 0123456789" "WORDCHARS 0123456789'"
-          '';
+        postInstall = prev.postInstall or "" + ''
+          substituteInPlace $out/share/hunspell/en_GB.aff --replace-fail "WORDCHARS 0123456789" "WORDCHARS 0123456789'"
+        '';
       }))
       de_DE
     ]
