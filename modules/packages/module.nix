@@ -10,17 +10,25 @@ let
 
   customEmacs = config.services.emacs.package;
 
-  customHunspell = pkgs.hunspell.withDicts (
-    dicts: with dicts; [
-      (en_GB-large.overrideAttrs (prev: {
-        # Make dict able to detect contractions (I've, doesn't etc.) as words
-        postInstall = prev.postInstall or "" + ''
-          substituteInPlace $out/share/hunspell/en_GB.aff --replace-fail "WORDCHARS 0123456789" "WORDCHARS 0123456789'"
-        '';
-      }))
-      de_DE
-    ]
-  );
+  customHunspell =
+    let
+      withDicts =
+        if lib.versionAtLeast lib.trivial.release "25.11" then
+          pkgs.hunspell.withDicts
+        else
+          fun: pkgs.hunspellWithDicts (fun pkgs.hunspellDicts);
+    in
+    withDicts (
+      dicts: with dicts; [
+        (en_GB-large.overrideAttrs (prev: {
+          # Make dict able to detect contractions (I've, doesn't etc.) as words
+          postInstall = prev.postInstall or "" + ''
+            substituteInPlace $out/share/hunspell/en_GB.aff --replace-fail "WORDCHARS 0123456789" "WORDCHARS 0123456789'"
+          '';
+        }))
+        de_DE
+      ]
+    );
 
   cyme-lsusb = pkgs.writeShellApplication {
     name = "lsusb";
