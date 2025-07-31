@@ -185,6 +185,7 @@ let
       lyto
       mlterm
       mpv
+      mumble
       openswitcher
       pavucontrol
       protonvpn-gui
