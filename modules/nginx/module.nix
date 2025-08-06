@@ -111,7 +111,6 @@ in
       services.nginx.recommendedOptimisation = true;
       services.nginx.recommendedGzipSettings = true;
       services.nginx.recommendedBrotliSettings = true;
-      services.nginx.recommendedZstdSettings = true;
       # Reload rather than restart. Don't see why not and it exposes the config
       # file under /etc as a bonus which is great for introspection.
       services.nginx.enableReload = true;
