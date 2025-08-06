@@ -5,6 +5,10 @@
   ...
 }:
 
+let
+  is2511 = lib.versionAtLeast lib.version "25.11";
+in
+
 {
   imports =
     [
@@ -209,9 +213,17 @@
   # This configures the time after which SIGTERM will be sent aswell as the time
   # after that before SIGKILL will be sent.
   # I don't have any sort of service that needs to stop for longer than a few seconds.
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=30s
-  '';
+  systemd.${if is2511 then "settings" else "extraConfig"} =
+    if is2511 then
+      {
+        Manager = {
+          DefaultTimeoutStopSec = "30s";
+        };
+      }
+    else
+      ''
+        DefaultTimeoutStopSec=30s
+      '';
   # This overrides the default with 120s by default. Stop it.
   systemd.services."user@".serviceConfig.TimeoutStopSec = "30s";
 
