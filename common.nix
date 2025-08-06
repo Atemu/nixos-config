@@ -6,7 +6,7 @@
 }:
 
 let
-  is2511 = lib.versionAtLeast lib.version "25.11";
+  is2511 = lib.versionAtLeast lib.trivial.release "25.11";
 in
 
 {
