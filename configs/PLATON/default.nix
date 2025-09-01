@@ -13,6 +13,7 @@
 
   custom.desktop.enable = true;
   custom.desktop.tablet = true;
+  custom.desktop.hypr.enable = true;
 
   hardware.bluetooth.powerOnBoot = false;
 
