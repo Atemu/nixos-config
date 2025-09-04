@@ -229,7 +229,9 @@ in
         })
       ];
 
-      services.logind.extraConfig = "HandlePowerKey=suspend";
+      services.logind.settings.Login = {
+        HandlePowerKey = "suspend";
+      };
 
       xdg.portal = {
         enable = true;
