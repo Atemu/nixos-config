@@ -54,6 +54,13 @@ in
       PAPERLESS_THREADS_PER_WORKER = 1;
       PAPERLESS_TASK_WORKERS = 4;
 
+      # Don't log me out every two weeks, wtf.
+      PAPERLESS_SESSION_COOKIE_AGE = 365 * 24 * 60 * 60; # 1 year
+      # Ideally I'd be able to set SESSION_SAVE_EVERY_REQUEST such that it
+      # refreshes session cookies whenever you use it but there does not appear
+      # to be a mechanism for this short of patching paperless. Ugh; terrible
+      # architecture if you ask me.
+
       PAPERLESS_URL = "https://${config.custom.virtualHosts.paperless.domain}";
     };
 
