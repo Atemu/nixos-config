@@ -24,6 +24,19 @@ let
         };
       }
     ];
+
+  xkb_patched = pkgs.xorg.xkeyboardconfig.overrideAttrs (
+    {
+      patches ? [ ],
+      ...
+    }:
+    {
+      patches = patches ++ [
+        # I only use - on L3 and ß is kinda hard to reach. Swap them.
+        ./neo_qwertz_eszet.patch
+      ];
+    }
+  );
 in
 
 {
@@ -123,6 +136,12 @@ in
       '';
 
       programs.hyprland.enable = this.hypr.enable;
+
+      services.xserver.xkb.dir = "${xkb_patched}/etc/X11/xkb";
+
+      programs.hyprland.package = pkgs.hyprland.override {
+        libxkbcommon = pkgs.libxkbcommon.override { xkeyboard_config = xkb_patched; };
+      };
 
       # TODO make hypr a sub-module
       programs.uwsm = lib.mkIf this.hypr.enable {

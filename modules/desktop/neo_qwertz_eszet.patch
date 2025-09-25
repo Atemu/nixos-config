@@ -1,0 +1,17 @@
+diff --git a/symbols/de b/symbols/de
+index 7eab1641..df3ab613 100644
+--- a/symbols/de
++++ b/symbols/de
+@@ -1115,10 +1115,10 @@ xkb_symbols "neo_qwertz_base" {
+     key.type[Group1] = "EIGHT_LEVEL_WITH_LEVEL5_LOCK";
+     key <AB08> { [ comma,                   endash,                  NoSymbol,                U03F1,                   NoSymbol,                NoSymbol,                U21D2,                   NoSymbol                 ] };
+     key <AB09> { [ period,                  enfilledcircbullet,      NoSymbol,                U03D1,                   NoSymbol,                NoSymbol,                U21A6,                   NoSymbol                 ] };
+-    key <AB10> { [ minus,                   emdash,                  NoSymbol,                U2011,                   NoSymbol,                NoSymbol,                hyphen,                  NoSymbol                 ] };
++    key <AB10> { [ ssharp,                  U1E9E,                   NoSymbol,                Greek_finalsmallsigma,   NoSymbol,                NoSymbol,                jot,                     NoSymbol                 ] };
+ 
+     key.type[Group1] = "EIGHT_LEVEL_ALPHABETIC_WITH_LEVEL5_LOCK";
+-    key <AE11> { [ ssharp,                  U1E9E,                   NoSymbol,                Greek_finalsmallsigma,   NoSymbol,                NoSymbol,                jot,                     NoSymbol                 ] };
++    key <AE11> { [ minus,                   emdash,                  NoSymbol,                U2011,                   NoSymbol,                NoSymbol,                hyphen,                  NoSymbol                 ] };
+     key <AD01> { [ q,                       Q,                       NoSymbol,                U03D5,                   NoSymbol,                NoSymbol,                U211A,                   NoSymbol                 ] };
+     key <AD02> { [ w,                       W,                       NoSymbol,                Greek_omega,             NoSymbol,                NoSymbol,                Greek_OMEGA,             NoSymbol                 ] };
+     key <AD03> { [ e,                       E,                       NoSymbol,                Greek_epsilon,           NoSymbol,                NoSymbol,                U2203,                   NoSymbol                 ] };
