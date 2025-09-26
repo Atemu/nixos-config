@@ -1,0 +1,13 @@
+diff --git a/symbols/de b/symbols/de
+index 7eab1641..9eaff5da 100644
+--- a/symbols/de
++++ b/symbols/de
+@@ -436,7 +436,7 @@ xkb_symbols "neo_base" {
+     key <AD09> { [ f,                       F,                       equal,                   Greek_phi,               KP_9,                    KP_9,                    Greek_PHI,               NoSymbol                 ] };
+     key <AD10> { [ q,                       Q,                       ampersand,               U03D5,                   KP_Add,                  KP_Add,                  U211A,                   NoSymbol                 ] };
+ 
+-    key <AD11> { [ ssharp,                  U1E9E,                   U017F,                   Greek_finalsmallsigma,   U2212,                   NoSymbol,                jot,                     NoSymbol                 ] };
++    key <AD11> { [ ssharp,                  U1E9E,                   U017F,                   Greek_finalsmallsigma,   KP_Subtract,             U2212,                   jot,                     NoSymbol                 ] };
+ 
+     key.type[Group1] = "EIGHT_LEVEL_WITH_LEVEL5_LOCK";
+     key <AD12> { [ dead_acute,              dead_tilde,              dead_stroke,             dead_psili,              dead_doubleacute,        NoSymbol,                dead_breve,              NoSymbol                 ] };

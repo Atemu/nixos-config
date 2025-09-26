@@ -34,6 +34,9 @@ let
       patches = patches ++ [
         # I only use - on L3 and ß is kinda hard to reach. Swap them.
         ./neo_qwertz_eszet.patch
+        # The "-" button easily accessible from the numpad is actually a
+        # different minus and that breaks things. Make it KP_Add instead.
+        ./neo_minus_hyphen.patch
       ];
     }
   );
