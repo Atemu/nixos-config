@@ -218,7 +218,7 @@ in
       environment.systemPackages = lib.mkMerge [
         (with pkgs; [
           brightnessctl
-          rofi-wayland-custom
+          rofi
           wev
         ])
         (lib.mkIf this.tablet (

@@ -63,26 +63,6 @@ in
         networkManagerPlugin = "openconnect";
       };
 
-      # Patched for half-way sane systemd-run usage
-      rofi-wayland-custom = pkgs.rofi-wayland.override {
-        rofi-unwrapped = pkgs.rofi-wayland-unwrapped.overrideAttrs (old: rec {
-          version = "1.7.5+wayland3";
-          src = pkgs.fetchFromGitHub {
-            owner = "lbonn";
-            repo = "rofi";
-            tag = version;
-            fetchSubmodules = true;
-            hash = "sha256-pKxraG3fhBh53m+bLPzCigRr6dBcH/A9vbdf67CO2d8=";
-          };
-          mesonFlags = lib.remove "-Dimdkit=true" old.mesonFlags;
-          patches = old.patches or [ ] ++ [
-            # Makes {app_id} available in -run-command.
-            # https://github.com/davatorium/rofi/pull/2048#issuecomment-2466841262
-            ./rofi-desktop-app-id.patch
-          ];
-        });
-      };
-
       # Pulls in texliveMedium into the build closure for docs that I don't care
       # about. It wasn't cached for some reason and I was suddenly pulling in
       # texlive. It and qmk which depends on it are quick builds, so just always
