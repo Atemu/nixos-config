@@ -37,6 +37,9 @@ let
         # The "-" button easily accessible from the numpad is actually a
         # different minus and that breaks things. Make it KP_Add instead.
         ./neo_minus_hyphen.patch
+        # Put keypad divide and multiply on accessible keys. The upside down
+        # marks get pushed one layer higher.
+        ./neo_KP_Multiply_Divide_L4.patch
       ];
     }
   );
