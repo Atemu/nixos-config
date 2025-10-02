@@ -1,0 +1,13 @@
+diff --git a/symbols/de b/symbols/de
+index 7eab1641..7367e763 100644
+--- a/symbols/de
++++ b/symbols/de
+@@ -472,7 +472,7 @@ xkb_symbols "neo_base" {
+     key <AB08> { [ comma,                   endash,                  quotedbl,                U03F1,                   KP_2,                    KP_2,                    U21D2,                   NoSymbol                 ] };
+     key <AB09> { [ period,                  enfilledcircbullet,      apostrophe,              U03D1,                   KP_3,                    KP_3,                    U21A6,                   NoSymbol                 ] };
+     key.type[Group1] = "EIGHT_LEVEL_ALPHABETIC_WITH_LEVEL5_LOCK";
+-    key <AB10> { [ j,                       J,                       semicolon,               Greek_theta,             semicolon,               NoSymbol,                Greek_THETA,             NoSymbol                 ] };
++    key <AB10> { [ j,                       J,                       semicolon,               Greek_theta,             percent,                 NoSymbol,                Greek_THETA,             NoSymbol                 ] };
+ 
+     // Space key
+     // --------------------------------------------------------------

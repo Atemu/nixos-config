@@ -42,6 +42,8 @@ let
         ./neo_KP_Multiply_Divide_L4.patch
         # Have parens accessible L4
         ./neo_L4_parens.patch
+        # Replace semicolon with something useful on L4
+        ./neo_L4_percent.patch
       ];
     }
   );
