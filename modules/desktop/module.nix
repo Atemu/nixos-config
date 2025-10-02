@@ -40,6 +40,8 @@ let
         # Put keypad divide and multiply on accessible keys. The upside down
         # marks get pushed one layer higher.
         ./neo_KP_Multiply_Divide_L4.patch
+        # Have parens accessible L4
+        ./neo_L4_parens.patch
       ];
     }
   );
