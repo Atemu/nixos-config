@@ -198,7 +198,7 @@ let
       shellcheck
       signal-desktop
       spotify
-      tor-browser-bundle-bin
+      tor-browser
       xclip
       xorg.xev
     ];
