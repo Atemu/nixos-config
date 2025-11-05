@@ -69,7 +69,7 @@ in
             mangohud
             piper
             steamtinkerlaunch
-            teamspeak_client
+            teamspeak3
             vulkan-tools
           ];
           amdgpu = with pkgs; [
