@@ -32,7 +32,7 @@ in
         proton-ge-bin
         steamtinkerlaunch
       ];
-      programs.steam.package = pkgs.steam-small.override {
+      programs.steam.package = pkgs.steam.override {
         extraEnv = {
           MANGOHUD = true;
           OBS_VKCAPTURE = true;
