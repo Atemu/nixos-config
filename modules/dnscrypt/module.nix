@@ -7,6 +7,8 @@
 
 let
   this = config.custom.dnscrypt;
+  dnscrypt-proxy =
+    if lib.versionAtLeast lib.trivial.release "25.11" then "dnscrypt-proxy" else "dnscrypt-proxy2";
 in
 
 {
@@ -14,7 +16,7 @@ in
     enable = lib.mkEnableOption "my custom dnscrypt-proxy config";
 
     passthru = lib.mkOption {
-      description = "options to pass through to the regular services.dnscrypt-proxy2";
+      description = "options to pass through to the regular services.${dnscrypt-proxy}";
       default = { };
     };
 
@@ -22,7 +24,7 @@ in
   };
 
   config = lib.mkIf this.enable {
-    services.dnscrypt-proxy2 = (
+    services.${dnscrypt-proxy} = (
       lib.recursiveUpdate {
         enable = true;
 
@@ -44,11 +46,11 @@ in
         configFile =
           pkgs.runCommand "dnscrypt-proxy.toml"
             {
-              json = builtins.toJSON config.services.dnscrypt-proxy2.settings;
+              json = builtins.toJSON config.services.${dnscrypt-proxy}.settings;
               passAsFile = [ "json" ];
             }
             ''
-              ${pkgs.remarshal}/bin/toml2json ${pkgs.dnscrypt-proxy2.src}/dnscrypt-proxy/example-dnscrypt-proxy.toml > example.json
+              ${pkgs.remarshal}/bin/toml2json ${pkgs.${dnscrypt-proxy}.src}/dnscrypt-proxy/example-dnscrypt-proxy.toml > example.json
               ${pkgs.jq}/bin/jq --slurp add example.json $jsonPath > config.json # merges the two
               ${pkgs.remarshal}/bin/json2toml < config.json > $out
             '';
