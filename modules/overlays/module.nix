@@ -16,6 +16,20 @@ in
 
   config.nixpkgs.overlays = lib.mkIf this.enable [
     (final: prev: {
+      bs-manager = prev.bs-manager.overrideAttrs (
+        {
+          patches ? [ ],
+          ...
+        }:
+        {
+          patches = patches ++ [
+            (final.fetchpatch {
+              url = "https://patch-diff.githubusercontent.com/raw/Zagrios/bs-manager/pull/943.patch";
+              hash = "sha256-7SUSAS//7BUwWQBzWmf7bko6gsbnUjhBr4xaDmFuIHo=";
+            })
+          ];
+        }
+      );
       colmena =
         if lib.versionAtLeast lib.trivial.version "24.11" then
           (prev.colmena.override {
