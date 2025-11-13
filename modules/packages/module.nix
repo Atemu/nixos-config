@@ -177,7 +177,6 @@ let
       cargo
       customFirefox
       direnv
-      element-desktop
       fractal
       gcc # For rust
       kotlin-language-server
