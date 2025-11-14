@@ -187,6 +187,7 @@ let
       mumble
       openswitcher
       pavucontrol
+      planify
       protonvpn-gui
       python3
       qmk # not included in hardware.keyboard.qmk.enable for some reason‽
