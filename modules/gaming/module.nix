@@ -55,6 +55,7 @@ in
         extraBwrapArgs = [
           "--bind /Volumes/Games/Steam/ $HOME/.local/share/Steam/"
           "--bind /Volumes/Games/ /Volumes/Games/Steam/steamapps/common/"
+          "--bind /Volumes/Games/ $HOME/.local/share/Steam/steamapps/common/"
         ];
       };
       programs.steam.protontricks.enable = true;
