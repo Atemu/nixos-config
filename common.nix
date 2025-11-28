@@ -64,16 +64,18 @@ in
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = lib.mkDefault "client"; # May get overridden for a machine
   systemd.services.tailscaled.serviceConfig.LogLevelMax = 5; # Stop the info spam
-  services.tailscale.package = pkgs.tailscale.overrideAttrs (prevAttrs: {
-    patches = prevAttrs.patches or [ ] ++ [
-      (pkgs.fetchpatch2 {
-        url = "https://github.com/Atemu/tailscale/commit/bbce05e450ec10de80ff16125d5d8428f76ceb3b.patch";
-        hash = "sha256-S71VtEIQ9d4vbOqXJ68w3HN2M/60BCBtK2uWHXVtDqQ=";
-      })
-    ];
-    # Tests take forever. The patches may at some point also cause a failure.
-    doCheck = false;
-  });
+  services.tailscale.package =
+    lib.mkIf is2511
+    <| pkgs.tailscale.overrideAttrs (prevAttrs: {
+      patches = prevAttrs.patches or [ ] ++ [
+        (pkgs.fetchpatch2 {
+          url = "https://github.com/Atemu/tailscale/commit/bbce05e450ec10de80ff16125d5d8428f76ceb3b.patch";
+          hash = "sha256-S71VtEIQ9d4vbOqXJ68w3HN2M/60BCBtK2uWHXVtDqQ=";
+        })
+      ];
+      # Tests take forever. The patches may at some point also cause a failure.
+      doCheck = false;
+    });
   # tailscale writes verbose logs to its own logfiles and then truncates them
   # all the time. This, however, causes those writes to still be committed to
   # disk every time tailscale verbosely logs something which happens every few
