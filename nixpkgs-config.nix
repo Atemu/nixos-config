@@ -2,5 +2,5 @@
 
 {
   SOTERIA = "nixpkgs-25.05";
-  default = "nixpkgs";
+  default = "nixpkgs-25.11";
 }
