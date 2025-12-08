@@ -66,7 +66,6 @@ in
         let
           general = with pkgs; [
             bs-manager
-            discord
             mangohud
             piper
             steamtinkerlaunch
@@ -95,7 +94,6 @@ in
       custom.packages.allowedUnfree = [
         "steam"
         "steam-unwrapped"
-        "discord"
         "teamspeak3"
       ];
       programs.obs-studio.enable = true;
