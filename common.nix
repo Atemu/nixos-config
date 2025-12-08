@@ -163,14 +163,13 @@ in
   systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp/";
 
   nix = {
-    package = pkgs.lix;
+    package = if lib.trivial.release == "25.11" then pkgs.lixPackageSets.lix_2_94.lix else pkgs.lix;
 
     settings = {
       experimental-features = [
         "nix-command"
         "flakes" # Ugh
         "pipe-operator"
-        "no-url-literals" # Bit me in the ass once already
       ];
       # Would complicates copying between hosts.
       # FIXME: Yes this is a security issue
