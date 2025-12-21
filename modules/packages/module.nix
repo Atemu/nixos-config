@@ -65,6 +65,7 @@ let
       ddrescue
       delta
       diceware
+      dmidecode
       dos2unix
       duf
       efibootmgr
