@@ -35,4 +35,6 @@ No.
 
 ## License
 
-This code is licensed under the [MIT license](./LICENSE) unless specified otherwise. Feel free to re-use or bring it into upstream projects.
+Except for the captive-browser module, this code is licensed under the [MIT license](./LICENSE). Feel free to re-use or bring it into upstream projects.
+
+The captive-browser module contains Nix code copied from a GH comment with no license provided that I did not want to write myself and is, therefore, proprietary.

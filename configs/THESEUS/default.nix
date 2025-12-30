@@ -72,5 +72,7 @@
   # Device name must be provided by hardware config for now
   custom.swap.devices.primary.enable = true;
 
+  custom.captive-browser.enable = true;
+
   system.stateVersion = "24.11";
 }
