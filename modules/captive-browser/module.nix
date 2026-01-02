@@ -17,8 +17,8 @@ in
     programs.captive-browser = {
       enable = true;
       # Stolen from https://github.com/FiloSottile/captive-browser/issues/20#issuecomment-1496700943
-      # Slightly adapted for NixOS
-      # No license was provided, so this is proprietary/all rights reserved :/
+      # © @Mynacol MIT
+      # Slightly adapted for NixOS (© @Atemu)
       # FIXME this could be done nicer using NixOS options to configure most of the stuff
       # TODO upstream this
       browser = ''
