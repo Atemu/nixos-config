@@ -201,6 +201,7 @@ let
       spotify
       tor-browser
       xclip
+      xcursor-viewer
       xorg.xev
     ];
 in
