@@ -260,6 +260,7 @@ in
 
       services.logind.settings.Login = {
         HandlePowerKey = "suspend";
+        HandleLidSwitch = "suspend";
       };
 
       xdg.portal = {
