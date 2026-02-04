@@ -21,6 +21,8 @@
     prusa-slicer
   ];
 
+  hardware.sane.enable = true;
+
   custom.bootloader.choice = "systemd-boot";
 
   custom.luks.autoDevices = 1;
