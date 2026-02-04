@@ -22,6 +22,7 @@
   ];
 
   hardware.sane.enable = true;
+  hardware.sane.extraBackends = [ pkgs.sane-airscan ];
 
   custom.bootloader.choice = "systemd-boot";
 
