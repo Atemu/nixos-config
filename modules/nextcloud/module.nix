@@ -67,6 +67,7 @@ in
           contacts
           dav_push
           tasks
+          mail
           ;
       };
     };
