@@ -19,6 +19,7 @@
 
   environment.systemPackages = with pkgs; [
     prusa-slicer
+    img2pdf # TODO module
   ];
 
   hardware.sane.enable = true;
