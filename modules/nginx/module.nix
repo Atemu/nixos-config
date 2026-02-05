@@ -102,7 +102,6 @@ in
     in
     lib.mkIf (validHosts != { }) {
       services.nginx.enable = true;
-      services.nginx.package = pkgs.nginxQuic;
       services.nginx.clientMaxBodySize = "0";
       # Don't see why I shouldn't have these on. If something crops up, I can
       # always disable them individually.
