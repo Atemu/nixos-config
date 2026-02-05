@@ -34,18 +34,7 @@ in
   config = lib.mkIf this.enable {
     services.nextcloud = {
       enable = true;
-      package = pkgs.nextcloud31.overrideAttrs (
-        {
-          postPatch ? "",
-          ...
-        }:
-        {
-          postPatch = postPatch + ''
-            substituteInPlace dist/core-unified-search.js \
-              --replace-fail '"KeyF"===e.code' 'e.key==="f"'
-          '';
-        }
-      );
+      package = pkgs.nextcloud31;
       hostName = ncDomain;
       https = true;
       config = {
