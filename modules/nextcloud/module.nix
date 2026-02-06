@@ -49,23 +49,29 @@ in
       };
 
       extraAppsEnable = true;
-      extraApps = {
-        inherit (config.services.nextcloud.package.packages.apps)
-          richdocuments
-          calendar
-          contacts
-          dav_push
-          tasks
-          mail
-          ;
-      };
+      extraApps = lib.mkMerge [
+        {
+          inherit (config.services.nextcloud.package.packages.apps)
+            calendar
+            contacts
+            dav_push
+            tasks
+            mail
+            ;
+        }
+        (lib.mkIf this.code.enable {
+          inherit (config.services.nextcloud.package.packages.apps)
+            richdocuments
+            ;
+        })
+      ];
     };
 
     custom.virtualHosts.nextcloud = {
       onlyEnableTLS = true;
     };
 
-    virtualisation.oci-containers.containers.collabora = {
+    virtualisation.oci-containers.containers.collabora = lib.mkIf this.code.enable {
       image = "docker.io/collabora/code";
       ports = [ "9980:9980" ];
       autoStart = true;
@@ -77,7 +83,7 @@ in
       };
     };
 
-    custom.virtualHosts.collaboracode = {
+    custom.virtualHosts.collaboracode = lib.mkIf this.code.enable {
       localPort = 9980;
       inherit (config.custom.virtualHosts.nextcloud) onPrimaryDomain;
     };
