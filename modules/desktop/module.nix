@@ -304,6 +304,15 @@ in
       programs.ausweisapp.enable = true;
       programs.ausweisapp.openFirewall = true;
 
+      services.dictd.enable = true;
+      services.dictd.DBs = with pkgs.dictdDBs; [
+        wordnet
+        eng2deu
+        deu2eng
+      ];
+      # Do not print every word I look up to the journal
+      systemd.services.dictd.serviceConfig.LogLevelMax = "notice";
+
       programs.appimage.enable = true;
       programs.appimage.binfmt = true;
 
