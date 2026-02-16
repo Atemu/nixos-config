@@ -96,6 +96,7 @@ let
       mediainfo
       mosh
       ncdu
+      ncpamixer
       neofetch
       netcat-gnu
       nethogs
