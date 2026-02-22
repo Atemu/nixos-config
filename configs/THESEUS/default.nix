@@ -18,8 +18,9 @@
   custom.dnscrypt.enable = true;
 
   environment.systemPackages = with pkgs; [
-    prusa-slicer
     img2pdf # TODO module
+    orca-slicer
+    prusa-slicer # kept for compat with the old files
   ];
 
   hardware.sane.enable = true;
