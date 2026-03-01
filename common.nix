@@ -170,6 +170,7 @@ in
         "nix-command"
         "flakes" # Ugh
         "pipe-operator"
+        "lix-custom-sub-commands"
       ];
       # Would complicates copying between hosts.
       # FIXME: Yes this is a security issue
