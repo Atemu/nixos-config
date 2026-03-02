@@ -234,6 +234,12 @@ in
             styluslabs-write
           ]
         ))
+        (lib.mkIf this.hypr.enable (
+          with pkgs;
+          [
+            hyprsunset
+          ]
+        ))
       ];
 
       services.dbus.enable = true;
