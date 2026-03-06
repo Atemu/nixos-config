@@ -22,6 +22,7 @@ in
   services.nfs.server.exports = ''
     /Volumes/Data/Media/ 192.168.178.0/24(ro,insecure)
     /Volumes/Data/Movies/ 192.168.178.0/24(ro,insecure)
+    /Volumes/Data/Media/ 100.0.0.0/8(rw,insecure)
   '';
   networking.firewall = {
     # It needs one or some of these ports AFAICT
