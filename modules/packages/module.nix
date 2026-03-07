@@ -170,6 +170,11 @@ let
           speechSynthesisSupport = false;
         };
       });
+      customMpv = mpv.override {
+        scripts = [
+          mpvScripts.sponsorblock-minimal
+        ];
+      };
     in
     [
       alacritty
@@ -178,6 +183,7 @@ let
       calibre
       cargo
       customFirefox
+      customMpv
       direnv
       fractal
       gcc # For rust
@@ -185,7 +191,6 @@ let
       lxrandr
       lyto
       mlterm
-      mpv
       mumble
       openswitcher
       pavucontrol
