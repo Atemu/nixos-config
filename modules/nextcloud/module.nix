@@ -48,6 +48,11 @@ in
         memory_limit = lib.mkForce "512M"; # Recommended limit
       };
 
+      settings = {
+        # Remember me for more than 15 days..
+        remember_login_cookie_lifetime = 60 * 60 * 24 * 60;
+      };
+
       extraAppsEnable = true;
       extraApps = lib.mkMerge [
         {
