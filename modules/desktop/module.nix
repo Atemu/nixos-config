@@ -22,6 +22,7 @@ let
         serviceConfig = {
           Slice = [ "session.slice" ];
         };
+        overrideStrategy = "asDropin";
       }
     ];
 
@@ -214,6 +215,8 @@ in
             runtimeShellPackage # needs to exec sh
           ];
         };
+
+      systemd.user.services.hyprsunset = lib.mkIf this.hypr.enable (mkHyprSessionService { });
 
       services.desktopManager.gnome.enable = this.tablet;
       environment.gnome.excludePackages = with pkgs; [
