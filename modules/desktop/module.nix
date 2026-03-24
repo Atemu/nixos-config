@@ -22,7 +22,6 @@ let
         serviceConfig = {
           Slice = [ "session.slice" ];
         };
-        overrideStrategy = "asDropin";
       }
     ];
 
@@ -216,7 +215,9 @@ in
           ];
         };
 
-      systemd.user.services.hyprsunset = lib.mkIf this.hypr.enable (mkHyprSessionService { });
+      systemd.user.services.hyprsunset = lib.mkIf this.hypr.enable (mkHyprSessionService {
+        overrideStrategy = "asDropin";
+      });
 
       services.desktopManager.gnome.enable = this.tablet;
       environment.gnome.excludePackages = with pkgs; [
