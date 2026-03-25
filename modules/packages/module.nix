@@ -127,6 +127,7 @@ let
       stress
       sysstat
       systemctl-tui
+      tio
       tmux # This should be configured via the module instead
       traceroute
       tree
