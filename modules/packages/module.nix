@@ -189,6 +189,7 @@ let
       fractal
       gcc # For rust
       kotlin-language-server
+      libnotify
       lxrandr
       lyto
       mlterm
