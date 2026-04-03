@@ -325,6 +325,8 @@ in
 
       programs.adb.enable = true;
 
+      programs.kdeconnect.enable = true;
+
       hardware.keyboard.qmk.enable = true;
 
       fonts.packages = with pkgs; [
