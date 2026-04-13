@@ -190,6 +190,7 @@ let
       gcc # For rust
       kotlin-language-server
       libnotify
+      libreoffice
       lxrandr
       lyto
       mlterm
