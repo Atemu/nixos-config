@@ -188,7 +188,7 @@ let
       direnv
       fractal
       gcc # For rust
-      kicad
+      kicad-small
       kotlin-language-server
       libnotify
       libreoffice
