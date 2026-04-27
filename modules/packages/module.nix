@@ -176,6 +176,8 @@ let
           mpvScripts.sponsorblock-minimal
         ];
       };
+      # Prefer normal steam-run if it exists
+      steam-run-low-prio = lib.lowPrio steam-run-free;
     in
     [
       alacritty
@@ -209,6 +211,7 @@ let
       shellcheck
       signal-desktop
       spotify
+      steam-run-low-prio
       tor-browser
       xclip
       xcursor-viewer
