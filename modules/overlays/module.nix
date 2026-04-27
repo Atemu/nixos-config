@@ -82,6 +82,21 @@ in
       # texlive. It and qmk which depends on it are quick builds, so just always
       # build without docs so that this never happens.
       avrdude = prev.avrdude.override { docSupport = false; };
+
+      i3bar-river = prev.i3bar-river.overrideAttrs (
+        {
+          patches ? [ ],
+          ...
+        }:
+        {
+          patches = patches ++ [
+            (final.fetchpatch {
+              url = "https://github.com/MaxVerevkin/i3bar-river/commit/47d08ea80afd28c441555a4f46fc7a8d2e53e3ea.patch";
+              hash = "sha256-xxPaqqRhW3a1LKUq41P41+5/fKM+R8ebgXFEShzaDEY=";
+            })
+          ];
+        }
+      );
     })
   ];
 }
