@@ -163,7 +163,7 @@ in
   systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp/";
 
   nix = {
-    package = if lib.trivial.release == "25.11" then pkgs.lixPackageSets.lix_2_94.lix else pkgs.lix;
+    package = if lib.trivial.release == "25.11" then pkgs.lixPackageSets.lix_2_95.lix else pkgs.lix;
 
     settings = {
       experimental-features = [
