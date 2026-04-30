@@ -39,7 +39,11 @@ in
   ];
 
   boot.blacklistedKernelModules = [
-    "algif_aead" # copy.fail and upstream says it's not really maintained well
+    # copy.fail
+    "algif_aead"
+    # Upstream says this entire thing isn't really maintained. Let's not.
+    # https://lore.kernel.org/all/20260430011544.31823-1-ebiggers@kernel.org/
+    "af_alg"
   ];
 
   console.earlySetup = true;
