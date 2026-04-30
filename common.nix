@@ -38,6 +38,10 @@ in
     "transparent_hugepage=always"
   ];
 
+  boot.blacklistedKernelModules = [
+    "algif_aead" # copy.fail and upstream says it's not really maintained well
+  ];
+
   console.earlySetup = true;
 
   i18n.defaultLocale = "en_GB.UTF-8";
