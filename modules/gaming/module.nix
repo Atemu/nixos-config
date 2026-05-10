@@ -132,6 +132,25 @@ in
 
       hardware.steam-hardware.enable = true;
 
+      services.monado.enable = true;
+      services.monado.highPriority = true;
+      services.monado.defaultRuntime = true;
+      systemd.user.services.monado.environment = {
+        # Use SteamVR LH for tracking instead of libsurvive. It's not quite
+        # there yet and this way I at least have a sensible compositor.
+        STEAMVR_LH_ENABLE = lib.boolToString true;
+        # It doesn't discover this on its own because I only bind-mount this in
+        # steam's fhsenv
+        STEAMVR_PATH = "/Volumes/Games/SteamVR/";
+
+        XRT_COMPOSITOR_SCALE_PERCENTAGE="140";
+        XRT_COMPOSITOR_COMPUTE="1";
+
+        # Stop monado after a few seconds of inactivity. (Not
+        # IPC_EXIT_ON_DISCONNECT because that quits immediately.)
+        IPC_EXIT_WHEN_IDLE = lib.boolToString true;
+      };
+
       services.ratbagd.enable = true;
     }
   );
