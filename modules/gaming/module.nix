@@ -39,6 +39,8 @@ in
           RADV_TEX_ANISO = 16;
           DXVK_HUD = "compiler";
           PULSE_SINK = "game_sink"; # For separate capture
+          # Allow steam runtime to use a runtime other than SteamVR
+          PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES = 1;
         };
         extraLibraries =
           p: with p; [
