@@ -165,7 +165,7 @@ let
   x =
     with pkgs;
     let
-      customFirefox = firefox-pgo.override (prev: {
+      customFirefox = firefox.override (prev: {
         cfg = prev.cfg or { } // {
           # No 700MiB mbrola-voices in my closure please
           speechSynthesisSupport = false;
