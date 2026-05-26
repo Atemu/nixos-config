@@ -72,17 +72,6 @@ in
       services.pipewire.alsa.enable = true;
       services.pipewire.alsa.support32Bit = true;
 
-      # ladspa only looks in the lib/ladspa subdir
-      systemd.user.services.pipewire.environment.LADSPA_PATH =
-        lib.makeSearchPathOutput "lib" "lib/ladspa"
-          (
-            with pkgs;
-            [
-              rnnoise-plugin
-              lsp-plugins
-            ]
-          );
-
       services.pipewire.wireplumber.extraConfig.bluetooth-no-hw-volume = {
         "monitor.bluez.properties" = {
           "bluez5.enable-hw-volume" = false;
