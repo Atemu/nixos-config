@@ -187,6 +187,8 @@ in
       warn-dirty = false;
       # Builders should substitute from cache.nixos.org
       builders-use-substitutes = true;
+      # WTF no‽
+      accept-flake-config = false;
     };
 
     daemonCPUSchedPolicy = "batch";
