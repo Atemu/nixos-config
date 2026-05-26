@@ -80,6 +80,7 @@ let
       git-remote-gcrypt
       gnupg
       hdparm
+      hyfetch
       hyperfine
       iftop
       iotop
@@ -97,7 +98,6 @@ let
       mosh
       ncdu
       ncpamixer
-      neofetch
       netcat-gnu
       nethogs
       nix-bash-completions
