@@ -323,8 +323,6 @@ in
       programs.appimage.enable = true;
       programs.appimage.binfmt = true;
 
-      programs.adb.enable = true;
-
       programs.kdeconnect.enable = true;
 
       hardware.keyboard.qmk.enable = true;

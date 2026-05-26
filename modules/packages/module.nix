@@ -181,6 +181,7 @@ let
     in
     [
       alacritty
+      android-tools
       anki
       bluetuith
       calibre
