@@ -189,6 +189,8 @@ in
       builders-use-substitutes = true;
       # WTF no‽
       accept-flake-config = false;
+      # nom-lite
+      log-format = "multiline-with-logs";
     };
 
     daemonCPUSchedPolicy = "batch";
