@@ -228,6 +228,9 @@ in
       {
         Manager = {
           DefaultTimeoutStopSec = "30s";
+          # Why TF would I want to see some free text string rather than a
+          # unique identifier when debugging the system‽‽‽
+          StatusUnitFormat = "name";
         };
       }
     else
