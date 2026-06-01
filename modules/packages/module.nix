@@ -228,6 +228,11 @@ in
       default = [ ];
       type = with lib.types; listOf str;
     };
+
+    lix.packages = lib.mkOption {
+      default = pkgs.lixPackageSets.lix_2_95;
+      type = with lib.types; attrsOf package;
+    };
   };
 
   config = lib.mkIf this.enable {

@@ -167,7 +167,7 @@ in
   systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp/";
 
   nix = {
-    package = pkgs.lixPackageSets.lix_2_95.lix;
+    package = config.custom.packages.lix.packages.lix;
 
     settings = {
       experimental-features = [
