@@ -146,7 +146,7 @@ in
       programs.uwsm = lib.mkIf this.hypr.enable {
         enable = true;
         waylandCompositors.Hyprland = {
-          binPath = lib.getExe' config.programs.hyprland.package "start-hyprland";
+          binPath = lib.getExe config.programs.hyprland.package;
           prettyName = "Hyprland";
         };
       };
