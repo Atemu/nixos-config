@@ -38,7 +38,7 @@ let
 
   runConfig =
     projectDir: command:
-    "${lib.getExe pkgs.docker} compose --project-directory ${projectDir} ${command}";
+    "${lib.getExe config.virtualisation.docker.package} compose --project-directory ${projectDir} ${command}";
 in
 
 {
