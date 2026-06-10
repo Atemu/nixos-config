@@ -402,6 +402,9 @@ in
       systemd.services.docker = lib.mkIf config.virtualisation.docker.enable {
         wantedBy = lib.mkForce [ ];
       };
+
+      # Fuck autostarts.
+      systemd.user.generators.systemd-xdg-autostart-generator = "/dev/null";
     }
   );
 }
