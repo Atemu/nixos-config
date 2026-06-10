@@ -35,8 +35,6 @@
   services.power-profiles-daemon.enable = true;
   custom.desktop.hypr.hypridle-power = true;
 
-  hardware.bluetooth.enable = true;
-
   environment.systemPackages = with pkgs; [
     # Can change things like fan speed and charge limit
     fw-ectool

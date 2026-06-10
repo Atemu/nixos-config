@@ -78,6 +78,8 @@ in
         };
       };
 
+      hardware.bluetooth.enable = lib.mkDefault true;
+
       # Upstream pipewire limits for realtime
       security.pam.loginLimits = [
         {
