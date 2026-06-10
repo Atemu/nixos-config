@@ -44,6 +44,11 @@ let
       customHunspell
       cyme-lsusb
     ]
+    ++ (with this.lix.packages; [
+      nix-direnv
+      nix-init
+      nixpkgs-review
+    ])
     ++ (with pkgs; [
       acpi
       aria2
@@ -101,14 +106,11 @@ let
       netcat-gnu
       nethogs
       nix-bash-completions
-      nix-diff
       nix-index
-      nix-init
       nix-output-monitor
       nix-tree
       nixd
       nixfmt-rfc-style
-      nixpkgs-review
       nmap
       numbat
       nushell
