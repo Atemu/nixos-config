@@ -116,6 +116,7 @@ let
       nushell
       onefetch
       p7zip
+      pandoc
       pciutils
       pstree
       pv
