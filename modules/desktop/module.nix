@@ -50,6 +50,10 @@ let
 in
 
 {
+  imports = [
+    ./river/rhine.nix
+  ];
+
   options.custom.desktop = {
     enable = lib.mkEnableOption "my custom desktop";
     tablet = lib.mkEnableOption "tablet variant";
