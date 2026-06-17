@@ -143,7 +143,9 @@ in
         # steam's fhsenv
         STEAMVR_PATH = "/Volumes/Games/SteamVR/";
 
-        XRT_COMPOSITOR_SCALE_PERCENTAGE="140";
+        # Not 140 as recommended basically everywhere as that's quite expensive, actually.
+        # TODO figure out how to do this per-app
+        XRT_COMPOSITOR_SCALE_PERCENTAGE="120";
         XRT_COMPOSITOR_COMPUTE="1";
 
         # Stop monado after a few seconds of inactivity. (Not
