@@ -43,8 +43,8 @@
       # My 6800 XT
       gpus."1002:73BF-148C:2406-0000:03:00.0" = {
         # Work around https://gitlab.freedesktop.org/drm/amd/-/issues/1500
-        performance_level = "manual";
-        power_profile_mode_index = 4; # VR
+        performance_level = "manual"; # TODO test "high"
+        power_profile_mode_index = 1; # 3D_FULL_SCREEN
 
         # A more moderate fan curve
         fan_control_enabled = true;
