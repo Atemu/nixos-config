@@ -19,7 +19,7 @@ in
       colmena =
         if lib.versionAtLeast lib.trivial.version "24.11" then
           (prev.colmena.override {
-            nix = final.lix;
+            nix = config.custom.packages.lix.packages.lix;
           }).overrideAttrs
             (
               {
