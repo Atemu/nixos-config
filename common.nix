@@ -224,7 +224,7 @@
   # after that before SIGKILL will be sent.
   # I don't have any sort of service that needs to stop for longer than a few seconds.
   systemd.settings.Manager = {
-    DefaultTimeoutStopSec = "30s";
+    DefaultTimeoutStopSec = "10s";
     # Why TF would I want to see some free text string rather than a unique
     # identifier when debugging the system‽‽‽
     StatusUnitFormat = "name";
