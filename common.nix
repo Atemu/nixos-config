@@ -230,7 +230,7 @@
     StatusUnitFormat = "name";
   };
   # This overrides the default with 120s by default. Stop it.
-  systemd.services."user@".serviceConfig.TimeoutStopSec = "30s";
+  systemd.services."user@".serviceConfig.TimeoutStopSec = config.systemd.settings.Manager.DefaultTimeoutStopSec;
 
   # FIXME setting sys values like this should be a module; probably using udev instead
   systemd.tmpfiles.rules = [
