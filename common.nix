@@ -5,10 +5,6 @@
   ...
 }:
 
-let
-  is2511 = lib.versionAtLeast lib.trivial.release "25.11";
-in
-
 {
   imports =
     [
@@ -68,10 +64,13 @@ in
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = lib.mkDefault "client"; # May get overridden for a machine
   systemd.services.tailscaled.serviceConfig.LogLevelMax = 5; # Stop the info spam
-  services.tailscale.package =
-    lib.mkIf is2511
-    <| pkgs.tailscale.overrideAttrs (prevAttrs: {
-      patches = prevAttrs.patches or [ ] ++ [
+  services.tailscale.package = pkgs.tailscale.overrideAttrs (
+    {
+      patches ? [ ],
+      ...
+    }:
+    {
+      patches = patches ++ [
         (pkgs.fetchpatch2 {
           url = "https://github.com/Atemu/tailscale/commit/bbce05e450ec10de80ff16125d5d8428f76ceb3b.patch";
           hash = "sha256-S71VtEIQ9d4vbOqXJ68w3HN2M/60BCBtK2uWHXVtDqQ=";
@@ -79,7 +78,8 @@ in
       ];
       # Tests take forever. The patches may at some point also cause a failure.
       doCheck = false;
-    });
+    }
+  );
   # tailscale writes verbose logs to its own logfiles and then truncates them
   # all the time. This, however, causes those writes to still be committed to
   # disk every time tailscale verbosely logs something which happens every few
@@ -223,20 +223,12 @@ in
   # This configures the time after which SIGTERM will be sent aswell as the time
   # after that before SIGKILL will be sent.
   # I don't have any sort of service that needs to stop for longer than a few seconds.
-  systemd.${if is2511 then "settings" else "extraConfig"} =
-    if is2511 then
-      {
-        Manager = {
-          DefaultTimeoutStopSec = "30s";
-          # Why TF would I want to see some free text string rather than a
-          # unique identifier when debugging the system‽‽‽
-          StatusUnitFormat = "name";
-        };
-      }
-    else
-      ''
-        DefaultTimeoutStopSec=30s
-      '';
+  systemd.settings.Manager = {
+    DefaultTimeoutStopSec = "30s";
+    # Why TF would I want to see some free text string rather than a unique
+    # identifier when debugging the system‽‽‽
+    StatusUnitFormat = "name";
+  };
   # This overrides the default with 120s by default. Stop it.
   systemd.services."user@".serviceConfig.TimeoutStopSec = "30s";
 
