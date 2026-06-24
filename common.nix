@@ -2,8 +2,21 @@
   config,
   lib,
   pkgs,
+  utils,
   ...
 }:
+
+let
+  systemd.common.settings.Manager = {
+    # This configures the time after which SIGTERM will be sent aswell as the
+    # time after that before SIGKILL will be sent. I don't have any sort of
+    # service that needs to stop for longer than a few seconds.
+    DefaultTimeoutStopSec = "10s";
+    # Why TF would I want to see some free text string rather than a unique
+    # identifier when debugging the system‽‽‽
+    StatusUnitFormat = "name";
+  };
+in
 
 {
   imports =
@@ -220,17 +233,13 @@
   # I don't want random systemPackages' autostart units, TYVM.
   xdg.autostart.enable = lib.mkForce false;
 
-  # This configures the time after which SIGTERM will be sent aswell as the time
-  # after that before SIGKILL will be sent.
-  # I don't have any sort of service that needs to stop for longer than a few seconds.
-  systemd.settings.Manager = {
-    DefaultTimeoutStopSec = "10s";
-    # Why TF would I want to see some free text string rather than a unique
-    # identifier when debugging the system‽‽‽
-    StatusUnitFormat = "name";
-  };
+  systemd.settings = systemd.common.settings;
+  # Same for user
+  # TODO in 26.11, this is simply settings too
+  systemd.user.extraConfig = utils.systemdUtils.lib.settingsToSections systemd.common.settings;
   # This overrides the default with 120s by default. Stop it.
-  systemd.services."user@".serviceConfig.TimeoutStopSec = config.systemd.settings.Manager.DefaultTimeoutStopSec;
+  systemd.services."user@".serviceConfig.TimeoutStopSec =
+    config.systemd.settings.Manager.DefaultTimeoutStopSec;
 
   # FIXME setting sys values like this should be a module; probably using udev instead
   systemd.tmpfiles.rules = [
