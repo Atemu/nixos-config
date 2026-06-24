@@ -388,9 +388,8 @@ in
         serviceConfig.Slice = [ "session.slice" ];
       };
       # https://github.com/dunst-project/dunst/pull/1397
-      systemd.user.services.dunst = {
+      systemd.user.services.dunst = mkHyprSessionService {
         overrideStrategy = "asDropin";
-        serviceConfig.Slice = [ "session.slice" ];
       };
       # https://gitlab.gnome.org/GNOME/dconf/-/issues/87
       systemd.user.services.dconf = {
