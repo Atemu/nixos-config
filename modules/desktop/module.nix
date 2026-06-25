@@ -208,6 +208,9 @@ in
 
       systemd.user.services.hyprsunset = lib.mkIf this.hypr.enable (mkHyprSessionService {
         overrideStrategy = "asDropin";
+        # The upstream units wants to be /after/ graphical-session causing a
+        # cycle. I can't be bothered..
+        before = lib.mkForce [ ];
       });
 
       services.desktopManager.gnome.enable = this.tablet;
@@ -390,6 +393,9 @@ in
       # https://github.com/dunst-project/dunst/pull/1397
       systemd.user.services.dunst = mkHyprSessionService {
         overrideStrategy = "asDropin";
+        # The upstream units wants to be /after/ graphical-session causing a
+        # cycle. I can't be bothered..
+        before = lib.mkForce [ ];
       };
       # https://gitlab.gnome.org/GNOME/dconf/-/issues/87
       systemd.user.services.dconf = {
