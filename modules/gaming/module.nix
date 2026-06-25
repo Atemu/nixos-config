@@ -41,6 +41,12 @@ in
           PULSE_SINK = "game_sink"; # For separate capture
           # Allow steam runtime to use a runtime other than SteamVR
           PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES = 1;
+          # Force xrizer to be the default OpenVR runtime. I must do it this way
+          # because Steam overwrites the `openvrpaths.vrpath` file on every
+          # start and I'd need to get the path to xrizer somehow anyway.
+          VR_OVERRIDE = "${pkgs.xrizer}/lib/xrizer/";
+          # For quick access in individual games' launch args
+          VR_OPENCOMPOSITE = "${pkgs.opencomposite}/lib/opencomposite/";
         };
         extraLibraries =
           p: with p; [
