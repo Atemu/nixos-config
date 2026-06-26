@@ -33,7 +33,7 @@ let
   cyme-lsusb = pkgs.writeShellApplication {
     name = "lsusb";
     text = ''
-      exec ${lib.getExe pkgs.cyme} --lsusb "$@"
+      exec ${lib.getExe pkgs.cyme} --lsusb --config <(echo {}) "$@"
     '';
   };
 
