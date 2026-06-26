@@ -390,12 +390,16 @@ in
         overrideStrategy = "asDropin";
         serviceConfig.Slice = [ "session.slice" ];
       };
-      # https://github.com/dunst-project/dunst/pull/1397
+      # The upstream unit would /really/ like to bind to the graphical session
+      # which causes dep cycles.. Just make my own unit with blackjack and
+      # hookers ig.
       systemd.user.services.dunst = mkHyprSessionService {
-        overrideStrategy = "asDropin";
-        # The upstream units wants to be /after/ graphical-session causing a
-        # cycle. I can't be bothered..
-        before = lib.mkForce [ ];
+        serviceConfig = {
+          Type = "dbus";
+          BusName = "org.freedesktop.Notifications";
+          ExecStart = lib.getExe pkgs.dunst;
+          ExecReload = "${lib.getExe pkgs.dunst} reload";
+        };
       };
       # https://gitlab.gnome.org/GNOME/dconf/-/issues/87
       systemd.user.services.dconf = {
