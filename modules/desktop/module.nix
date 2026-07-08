@@ -163,6 +163,10 @@ in
             ExecStartPost = "systemctl --user set-environment DISPLAY=${display}";
             ExecStopPost = "systemctl --user unset-environment DISPLAY"; # Always executed!
           };
+
+        unitConfig = {
+          ConditionEnvironment = "WAYLAND_DISPLAY";
+        };
       });
 
       systemd.user.services.hypridle = lib.mkIf this.hypr.enable (mkHyprSessionService {
