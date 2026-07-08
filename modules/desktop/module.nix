@@ -206,13 +206,6 @@ in
           ];
         };
 
-      systemd.user.services.hyprsunset = lib.mkIf this.hypr.enable (mkHyprSessionService {
-        overrideStrategy = "asDropin";
-        # The upstream units wants to be /after/ graphical-session causing a
-        # cycle. I can't be bothered..
-        before = lib.mkForce [ ];
-      });
-
       services.desktopManager.gnome.enable = this.tablet;
       environment.gnome.excludePackages = with pkgs; [
         orca
@@ -401,6 +394,13 @@ in
           ExecReload = "${lib.getExe pkgs.dunst} reload";
         };
       };
+      # The upstream units wants to be /after/ graphical-session causing a
+      # cycle. I can't be bothered..
+      systemd.user.services.hyprsunset = lib.mkIf this.hypr.enable (mkHyprSessionService {
+        serviceConfig = {
+          ExecStart = lib.getExe pkgs.hyprsunset;
+        };
+      });
       # https://gitlab.gnome.org/GNOME/dconf/-/issues/87
       systemd.user.services.dconf = {
         overrideStrategy = "asDropin";
