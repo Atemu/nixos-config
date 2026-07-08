@@ -33,7 +33,6 @@
   services.fwupd.enable = true;
 
   services.power-profiles-daemon.enable = true;
-  custom.desktop.hypr.hypridle-power = true;
 
   environment.systemPackages = with pkgs; [
     # Can change things like fan speed and charge limit
