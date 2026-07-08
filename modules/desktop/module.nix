@@ -167,6 +167,8 @@ in
         unitConfig = {
           ConditionEnvironment = "WAYLAND_DISPLAY";
         };
+
+        restartIfChanged = false;
       });
 
       systemd.user.services.hypridle = lib.mkIf this.hypr.enable (mkHyprSessionService {
