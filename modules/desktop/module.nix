@@ -130,7 +130,6 @@ in
         qt5.qtwayland
         swaylock
         wl-clipboard
-        xwayland
       ];
       programs.sway.extraSessionCommands = ''
         [ -e ~/.wprofile ] && source ~/.wprofile
@@ -152,6 +151,19 @@ in
           prettyName = "Hyprland";
         };
       };
+
+      systemd.user.services.xwayland-satellite = lib.mkIf this.hypr.enable (mkHyprSessionService {
+        serviceConfig =
+          let
+            display = ":0";
+          in
+          {
+            Type = "notify";
+            ExecStart = "${lib.getExe pkgs.xwayland-satellite} ${display}";
+            ExecStartPost = "systemctl --user set-environment DISPLAY=${display}";
+            ExecStopPost = "systemctl --user unset-environment DISPLAY"; # Always executed!
+          };
+      });
 
       systemd.user.services.hypridle = lib.mkIf this.hypr.enable (mkHyprSessionService {
         serviceConfig = {
