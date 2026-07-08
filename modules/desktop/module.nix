@@ -409,9 +409,7 @@ in
       # The upstream units wants to be /after/ graphical-session causing a
       # cycle. I can't be bothered..
       systemd.user.services.hyprsunset = lib.mkIf this.hypr.enable (mkHyprSessionService {
-        serviceConfig = {
-          ExecStart = lib.getExe pkgs.hyprsunset;
-        };
+          script = "${lib.getExe pkgs.hyprsunset} | grep -v '^\\[TRACE\\]'";
       });
       # https://gitlab.gnome.org/GNOME/dconf/-/issues/87
       systemd.user.services.dconf = {
