@@ -34,18 +34,37 @@ in
         binPath =
           # TODO write an abstraction around this
           pkgs.writeShellScriptBin "rhine" ''
-            exec ${lib.getExe pkgs.river} "$@"
+            exec ${lib.getExe pkgs.river} -c "${lib.getExe config.programs.uwsm.package} finalize WAYLAND_DISPLAY" "-no-xwayland" # handled via xwayland-satellite
           ''
           |> lib.getExe;
-        extraArgs = [
-          "-c"
-          (lib.getExe pkgs.rhine)
-          "-no-xwayland" # handled via xwayland-satellite
-        ];
         prettyName = "river-rhine";
       };
     };
+    systemd.user.services.rhine = mkRhineSessionService {
+      serviceConfig = {
+        ExecStart = lib.getExe pkgs.rhine;
+        Environment = [ "" ]; # Don't override path!
+      };
+    };
 
+    systemd.user.services.xwayland-satellite = mkRhineSessionService {
+      serviceConfig =
+        let
+          display = ":0";
+        in
+        {
+          Type = "notify";
+          ExecStart = "${lib.getExe pkgs.xwayland-satellite} ${display}";
+          ExecStartPost = "systemctl --user set-environment DISPLAY=${display}";
+          ExecStopPost = "systemctl --user unset-environment DISPLAY"; # Always executed!
+        };
+
+      unitConfig = {
+        ConditionEnvironment = "WAYLAND_DISPLAY";
+      };
+
+      restartIfChanged = false;
+    };
     systemd.user.services.river-channel = mkRhineSessionService {
       serviceConfig = {
         ExecStart = lib.getExe pkgs.river-channel;
