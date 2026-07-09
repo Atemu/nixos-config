@@ -39,5 +39,11 @@ in
         prettyName = "river-rhine";
       };
     };
+
+    systemd.user.services.river-channel = mkRhineSessionService {
+      serviceConfig = {
+        ExecStart = lib.getExe pkgs.river-channel;
+      };
+    };
   };
 }
