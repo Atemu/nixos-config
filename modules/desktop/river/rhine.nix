@@ -40,6 +40,7 @@ in
         extraArgs = [
           "-c"
           (lib.getExe pkgs.rhine)
+          "-no-xwayland" # handled via xwayland-satellite
         ];
         prettyName = "river-rhine";
       };
