@@ -12,10 +12,10 @@ let
     lib.mkMerge [
       conf
       {
-        wantedBy = [ "wayland-session@river-rhine.target" ];
-        after = [ "wayland-wm@Hyprland.service" ];
-        before = [ "wayland-session@river-rhine.target" ];
-        partOf = [ "wayland-session@river-rhine.target" ];
+        wantedBy = [ "wayland-session@rhine.target" ];
+        after = [ "wayland-wm@rhine.service" ];
+        before = [ "wayland-session@rhine.target" ];
+        partOf = [ "wayland-session@rhine.target" ];
         serviceConfig = {
           Slice = [ "session.slice" ];
         };
@@ -31,7 +31,12 @@ in
     programs.uwsm = {
       enable = true;
       waylandCompositors.river-rhine = {
-        binPath = lib.getExe pkgs.river;
+        binPath =
+          # TODO write an abstraction around this
+          pkgs.writeShellScriptBin "rhine" ''
+            exec ${lib.getExe pkgs.river} "$@"
+          ''
+          |> lib.getExe;
         extraArgs = [
           "-c"
           (lib.getExe pkgs.rhine)
