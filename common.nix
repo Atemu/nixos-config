@@ -207,6 +207,9 @@ in
       # I have log lines on; I already see the logs. Also, just the last 25 are
       # usually useless. I'd rather just `nix log`.
       log-lines = 0;
+      # It's like 2× with just btrfs zstd compression and at e5 Bytes I'd rather
+      # not have to muck with bzip2
+      build-compress-log = false;
     };
 
     daemonCPUSchedPolicy = "batch";
