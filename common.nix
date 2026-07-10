@@ -204,6 +204,9 @@ in
       accept-flake-config = false;
       # nom-lite
       log-format = "multiline-with-logs";
+      # I have log lines on; I already see the logs. Also, just the last 25 are
+      # usually useless. I'd rather just `nix log`.
+      log-lines = 0;
     };
 
     daemonCPUSchedPolicy = "batch";
