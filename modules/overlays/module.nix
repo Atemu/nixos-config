@@ -73,8 +73,8 @@ in
         {
           patches = patches ++ [
             (final.fetchpatch {
-              url = "https://github.com/MaxVerevkin/i3bar-river/commit/47d08ea80afd28c441555a4f46fc7a8d2e53e3ea.patch";
-              hash = "sha256-xxPaqqRhW3a1LKUq41P41+5/fKM+R8ebgXFEShzaDEY=";
+              url = "https://github.com/MaxVerevkin/i3bar-river/commit/4e5eea31984982b0bdd6553790f9a574abc0577d.patch";
+              hash = "sha256-Cv/zeIrW4RptvwNtDEv6x+TFHjEeXl2l7mVpOtCsHsE=";
             })
           ];
         }
