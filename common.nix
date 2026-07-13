@@ -210,12 +210,16 @@ in
       # It's like 2× with just btrfs zstd compression and at e5 Bytes I'd rather
       # not have to muck with bzip2
       build-compress-log = false;
+
+      # Automatically enables signing of all built store paths
+      secret-key-files = config.custom.secrets.store-path-signing.path;
     };
 
     daemonCPUSchedPolicy = "batch";
     daemonIOSchedClass = "idle";
     # maybe set to batch on non-desktop
   };
+  custom.secrets.store-path-signing = { };
 
   # Use bfq iosched for everything except NVMe and loop devs
   hardware.block = {
