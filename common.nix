@@ -189,9 +189,6 @@ in
         "pipe-operator"
         "lix-custom-sub-commands"
       ];
-      # Would complicates copying between hosts.
-      # FIXME: Yes this is a security issue
-      require-sigs = false;
       # Don't stop debugger on caught exceptions
       ignore-try = true;
       # If you're not receiving anything for 20s, just retry
@@ -213,6 +210,13 @@ in
 
       # Automatically enables signing of all built store paths
       secret-key-files = config.custom.secrets.store-path-signing.path;
+      trusted-public-keys = [
+        # All machines trust each others' build outputs
+        "THESEUS:N571Rz/bXMDWTmRefYb1JGz0r/gAugFAndVIn8/+bc4="
+        "SOTERIA:FPjTyCztUrddjda9eTPyOSetyWxiSOPDDXNRtWMX9v4="
+        # TODO add the missing ones
+      ];
+      require-sigs = true;
     };
 
     daemonCPUSchedPolicy = "batch";
