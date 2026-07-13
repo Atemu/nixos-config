@@ -1,0 +1,83 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+let
+  this = config.custom.desktop.river.rhine;
+  mkRhineSessionService =
+    conf:
+    lib.mkMerge [
+      conf
+      {
+        wantedBy = [ "wayland-session@rhine.target" ];
+        after = [ "wayland-wm@rhine.service" ];
+        before = [ "wayland-session@rhine.target" ];
+        partOf = [ "wayland-session@rhine.target" ];
+        serviceConfig = {
+          Slice = [ "session.slice" ];
+        };
+      }
+    ];
+in
+{
+  options.custom.desktop.river.rhine = {
+    enable = lib.mkEnableOption "";
+    river.package = lib.mkPackageOption pkgs "river" { };
+  };
+
+  config = lib.mkIf this.enable {
+    programs.uwsm = {
+      enable = true;
+      waylandCompositors.river-rhine = {
+        binPath =
+          # TODO write an abstraction around this
+          pkgs.writeShellScriptBin "rhine" ''
+            exec ${lib.getExe this.river.package} -c "${lib.getExe config.programs.uwsm.package} finalize WAYLAND_DISPLAY" "-no-xwayland" # handled via xwayland-satellite
+          ''
+          |> lib.getExe;
+        prettyName = "river-rhine";
+      };
+    };
+    systemd.user.services.rhine = mkRhineSessionService {
+      serviceConfig = {
+        ExecStart = lib.getExe pkgs.rhine;
+        Environment = [ "" ]; # Don't override path!
+      };
+    };
+
+    systemd.user.services.xwayland-satellite = mkRhineSessionService {
+      serviceConfig =
+        let
+          display = ":0";
+        in
+        {
+          Type = "notify";
+          ExecStart = "${lib.getExe pkgs.xwayland-satellite} ${display}";
+          ExecStartPost = "systemctl --user set-environment DISPLAY=${display}";
+          ExecStopPost = "systemctl --user unset-environment DISPLAY"; # Always executed!
+        };
+
+      unitConfig = {
+        ConditionEnvironment = "WAYLAND_DISPLAY";
+      };
+
+      restartIfChanged = false;
+    };
+    systemd.user.services.river-channel = mkRhineSessionService {
+      serviceConfig = {
+        ExecStart = lib.getExe <| pkgs.river-channel.override {
+          inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
+        };
+      };
+    };
+    systemd.user.services.i3bar-river = mkRhineSessionService {
+      # Requires the rhine "hyprland" socket
+      after = [ "rhine.service" ];
+      # Restarting the window manager hangs up on the socket
+      partOf = [ "rhine.service" ];
+    };
+  };
+}

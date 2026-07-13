@@ -12,6 +12,7 @@
 
   custom.desktop.enable = true;
   custom.desktop.hypr.enable = true;
+  custom.desktop.river.rhine.enable = true;
 
   boot.initrd.systemd.enable = true;
 

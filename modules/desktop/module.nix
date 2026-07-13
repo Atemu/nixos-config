@@ -24,32 +24,13 @@ let
         };
       }
     ];
-
-  xkb_patched = pkgs.xorg.xkeyboardconfig.overrideAttrs (
-    {
-      patches ? [ ],
-      ...
-    }:
-    {
-      patches = patches ++ [
-        # I only use - on L3 and ß is kinda hard to reach. Swap them.
-        ./neo_qwertz_eszet.patch
-        # The "-" button easily accessible from the numpad is actually a
-        # different minus and that breaks things. Make it KP_Add instead.
-        ./neo_minus_hyphen.patch
-        # Put keypad divide and multiply on accessible keys. The upside down
-        # marks get pushed one layer higher.
-        ./neo_KP_Multiply_Divide_L4.patch
-        # Have parens accessible L4
-        ./neo_L4_parens.patch
-        # Replace semicolon with something useful on L4
-        ./neo_L4_percent.patch
-      ];
-    }
-  );
 in
 
 {
+  imports = [
+    ./river/rhine.nix
+  ];
+
   options.custom.desktop = {
     enable = lib.mkEnableOption "my custom desktop";
     tablet = lib.mkEnableOption "tablet variant";
@@ -58,6 +39,40 @@ in
       a hypridle daemon that sets the power-profiles-daemon power profile to
       `power-saver` on 2s idle and restores it to `performance` when not idle.
     '';
+
+    keyboard.layout.packages = {
+      xkeyboard_config = lib.mkOption {
+        default = pkgs.xorg.xkeyboardconfig.overrideAttrs (
+          {
+            patches ? [ ],
+            ...
+          }:
+          {
+            patches = patches ++ [
+              # I only use - on L3 and ß is kinda hard to reach. Swap them.
+              ./neo_qwertz_eszet.patch
+              # The "-" button easily accessible from the numpad is actually a
+              # different minus and that breaks things. Make it KP_Add instead.
+              ./neo_minus_hyphen.patch
+              # Put keypad divide and multiply on accessible keys. The upside down
+              # marks get pushed one layer higher.
+              ./neo_KP_Multiply_Divide_L4.patch
+              # Have parens accessible L4
+              ./neo_L4_parens.patch
+              # Replace semicolon with something useful on L4
+              ./neo_L4_percent.patch
+            ];
+          }
+        );
+        readOnly = true;
+        internal = true;
+      };
+      libxkbcommon = lib.mkOption {
+        default = pkgs.libxkbcommon.override { inherit (this.keyboard.layout.packages) xkeyboard_config; };
+        readOnly = true;
+        internal = true;
+      };
+    };
   };
 
   config = lib.mkIf this.enable (
@@ -137,10 +152,10 @@ in
 
       programs.hyprland.enable = this.hypr.enable;
 
-      services.xserver.xkb.dir = "${xkb_patched}/etc/X11/xkb";
+      services.xserver.xkb.dir = "${this.keyboard.layout.packages.xkeyboard_config}/etc/X11/xkb";
 
       programs.hyprland.package = pkgs.hyprland.override {
-        libxkbcommon = pkgs.libxkbcommon.override { xkeyboard_config = xkb_patched; };
+        inherit (this.keyboard.layout.packages) libxkbcommon;
       };
 
       # TODO make hypr a sub-module
@@ -415,7 +430,7 @@ in
       # The upstream units wants to be /after/ graphical-session causing a
       # cycle. I can't be bothered..
       systemd.user.services.hyprsunset = lib.mkIf this.hypr.enable (mkHyprSessionService {
-          script = "${lib.getExe pkgs.hyprsunset} | grep -v '^\\[TRACE\\]'";
+        script = "${lib.getExe pkgs.hyprsunset} | grep -v '^\\[TRACE\\]'";
       });
       # https://gitlab.gnome.org/GNOME/dconf/-/issues/87
       systemd.user.services.dconf = {
