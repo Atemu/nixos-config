@@ -25,24 +25,7 @@ in
 {
   options.custom.desktop.river.rhine = {
     enable = lib.mkEnableOption "";
-    river.package =
-      (lib.mkPackageOption pkgs "river" { })
-      // lib.mkOption {
-        default =
-          (pkgs.river.override (prev: {
-            inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
-            wlroots_0_20 = prev.wlroots_0_20.override {
-              inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
-              # Would draw in xkeyboard_config again and I don't need it.
-              enableXWayland = false;
-            };
-            xwaylandSupport = false;
-          })).overrideAttrs
-            {
-              # Ensure it doesn't sneak in somehow
-              disallowedRequisites = [ pkgs.xkeyboard_config ];
-            };
-      };
+    river.package = lib.mkPackageOption pkgs "river" { };
   };
 
   config = lib.mkIf this.enable {
@@ -85,7 +68,9 @@ in
     };
     systemd.user.services.river-channel = mkRhineSessionService {
       serviceConfig = {
-        ExecStart = lib.getExe pkgs.river-channel;
+        ExecStart = lib.getExe <| pkgs.river-channel.override {
+          inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
+        };
       };
     };
     systemd.user.services.i3bar-river = mkRhineSessionService {
