@@ -77,5 +77,11 @@ in
         ExecStart = lib.getExe pkgs.river-channel;
       };
     };
+    systemd.user.services.i3bar-river = mkRhineSessionService {
+      # Requires the rhine "hyprland" socket
+      after = [ "rhine.service" ];
+      # Restarting the window manager hangs up on the socket
+      bindsTo = [ "rhine.service" ];
+    };
   };
 }
