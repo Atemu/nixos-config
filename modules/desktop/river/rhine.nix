@@ -28,12 +28,20 @@ in
     river.package =
       (lib.mkPackageOption pkgs "river" { })
       // lib.mkOption {
-        default = pkgs.river.override (prev: {
-          inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
-          wlroots_0_20 = prev.wlroots_0_20.override {
+        default =
+          (pkgs.river.override (prev: {
             inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
-          };
-        });
+            wlroots_0_20 = prev.wlroots_0_20.override {
+              inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
+              # Would draw in xkeyboard_config again and I don't need it.
+              enableXWayland = false;
+            };
+            xwaylandSupport = false;
+          })).overrideAttrs
+            {
+              # Ensure it doesn't sneak in somehow
+              disallowedRequisites = [ pkgs.xkeyboard_config ];
+            };
       };
   };
 
