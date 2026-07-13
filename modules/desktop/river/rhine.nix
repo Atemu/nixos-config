@@ -28,9 +28,12 @@ in
     river.package =
       (lib.mkPackageOption pkgs "river" { })
       // lib.mkOption {
-        default = pkgs.river.override {
+        default = pkgs.river.override (prev: {
           inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
-        };
+          wlroots_0_20 = prev.wlroots_0_20.override {
+            inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
+          };
+        });
       };
   };
 
