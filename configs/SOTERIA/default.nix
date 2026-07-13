@@ -69,9 +69,6 @@
 
   services.tailscale.useRoutingFeatures = "server"; # This is an exit node
 
-  custom.remotebuild.enable = true;
-  custom.remotebuild.builders.cccda = true;
-
   custom.hedgedoc.enable = true;
   custom.virtualHosts.hedgedoc.onPrimaryDomain = true;
 
