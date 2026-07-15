@@ -217,6 +217,7 @@ let
       spotify
       steam-run-low-prio
       tor-browser
+      wlr-randr
       xclip
       xcursor-viewer
       xorg.xev
