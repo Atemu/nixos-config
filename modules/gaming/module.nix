@@ -17,6 +17,13 @@ in
   options.custom.gaming = {
     enable = lib.mkEnableOption "my custom gaming setup";
     amdgpu = lib.mkEnableOption "my custom AMDGPU setup";
+    steam = {
+      arguments = lib.mkOption {
+        default = { };
+        type = with lib.types; attrsOf anything;
+        description = "arguments passed to steam override";
+      };
+    };
   };
 
   config = lib.mkIf this.enable (
@@ -26,21 +33,14 @@ in
         proton-ge-bin
         steamtinkerlaunch
       ];
-      programs.steam.package = pkgs.steam.override {
+      programs.steam.package = pkgs.steam.override this.steam.arguments;
+      custom.gaming.steam.arguments = {
         extraEnv = {
           MANGOHUD = true;
           OBS_VKCAPTURE = true;
           RADV_TEX_ANISO = 16;
           DXVK_HUD = "compiler";
           PULSE_SINK = "game_sink"; # For separate capture
-          # Allow steam runtime to use a runtime other than SteamVR
-          PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES = 1;
-          # Force xrizer to be the default OpenVR runtime. I must do it this way
-          # because Steam overwrites the `openvrpaths.vrpath` file on every
-          # start and I'd need to get the path to xrizer somehow anyway.
-          VR_OVERRIDE = "${pkgs.xrizer}/lib/xrizer/";
-          # For quick access in individual games' launch args
-          VR_OPENCOMPOSITE = "${pkgs.opencomposite}/lib/opencomposite/";
         };
         extraLibraries =
           p: with p; [
