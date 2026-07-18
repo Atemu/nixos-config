@@ -67,7 +67,6 @@ in
       environment.systemPackages =
         let
           general = with pkgs; [
-            bs-manager
             mangohud
             piper
             steamtinkerlaunch

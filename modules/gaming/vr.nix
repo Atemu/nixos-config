@@ -29,6 +29,11 @@ in
   config =
     lib.mkIf this.enable
     <| lib.mkMerge [
+      ({
+        environment.systemPackages = with pkgs; [
+          bs-manager
+        ];
+      })
       (lib.mkIf (this.monado.enable) {
         services.monado.enable = true;
         services.monado.highPriority = true;
