@@ -7,6 +7,7 @@
 
 let
   this = config.custom.gaming;
+  statedir = this.steam.bindmounts.directory;
 in
 
 {
@@ -22,6 +23,12 @@ in
         default = { };
         type = with lib.types; attrsOf anything;
         description = "arguments passed to steam override";
+      };
+      bindmounts = {
+        enable = lib.mkEnableOption "bind-mounting a Games volume to Steam's state directory";
+        directory = lib.mkOption {
+          default = "/Volumes/Games";
+        };
       };
     };
   };
@@ -51,13 +58,13 @@ in
         # My games library is mounted at /Volumes/Games/ and Steam's state is also
         # stored there. It stores all of my Games' state too in fact. Ensure the
         # locations exist and bind-mount the real places where Steam expects them.
-        extraPreBwrapCmds = ''
-          mkdir -p $HOME/.local/share/Steam/ /Volumes/Games/Steam/
+        extraPreBwrapCmds = lib.mkIf this.steam.bindmounts.enable ''
+          mkdir -p $HOME/.local/share/Steam/ ${statedir}/Steam/
         '';
-        extraBwrapArgs = [
-          "--bind /Volumes/Games/Steam/ $HOME/.local/share/Steam/"
-          "--bind /Volumes/Games/ /Volumes/Games/Steam/steamapps/common/"
-          "--bind /Volumes/Games/ $HOME/.local/share/Steam/steamapps/common/"
+        extraBwrapArgs = lib.mkIf this.steam.bindmounts.enable [
+          "--bind ${statedir}/Steam/ $HOME/.local/share/Steam/"
+          "--bind ${statedir}/ ${statedir}/Steam/steamapps/common/"
+          "--bind ${statedir}/ $HOME/.local/share/Steam/steamapps/common/"
         ];
       };
       programs.steam.protontricks.enable = true;

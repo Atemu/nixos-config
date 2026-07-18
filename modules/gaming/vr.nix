@@ -44,7 +44,7 @@ in
           STEAMVR_LH_ENABLE = lib.boolToString true;
           # It doesn't discover this on its own because I only bind-mount this
           # in steam's fhsenv
-          STEAMVR_PATH = "/Volumes/Games/SteamVR/";
+          STEAMVR_PATH = "${config.custom.gaming.steam.bindmounts.directory}/SteamVR/";
 
           # Not 140 as recommended basically everywhere as that's quite expensive, actually.
           # TODO figure out how to do this per-app
