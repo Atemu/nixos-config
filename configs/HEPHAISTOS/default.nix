@@ -15,7 +15,10 @@
   custom.desktop.hypr.enable = true;
 
   custom.gaming.enable = true;
-  custom.gaming.steamvr.unprivilegedHighPriorityQueue = true;
+  custom.gaming.steam.bindmounts.enable = true;
+  custom.gaming.vr.enable = true;
+  custom.gaming.vr.steamvr.unprivilegedHighPriorityQueue = true;
+  custom.gaming.vr.monado.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 

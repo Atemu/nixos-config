@@ -7,22 +7,30 @@
 
 let
   this = config.custom.gaming;
+  statedir = this.steam.bindmounts.directory;
 in
 
 {
+  imports = [
+    ./vr.nix
+  ];
+
   options.custom.gaming = {
     enable = lib.mkEnableOption "my custom gaming setup";
     amdgpu = lib.mkEnableOption "my custom AMDGPU setup";
-
-    steamvr.unprivilegedHighPriorityQueue = lib.mkEnableOption ''
-      whether to allow any unprivileged process to create a high priority queue.
-      This is a workaround required for SteamVR's asynchronous projection to
-      function properly within the Nix Steam FHS container.
-
-      Note that enabling this has security implications as it'd allow any
-      process to deny service of the system (DOS). This should however not be
-      a critical vulnerability on a typical single-user desktop machine.
-    '';
+    steam = {
+      arguments = lib.mkOption {
+        default = { };
+        type = with lib.types; attrsOf anything;
+        description = "arguments passed to steam override";
+      };
+      bindmounts = {
+        enable = lib.mkEnableOption "bind-mounting a Games volume to Steam's state directory";
+        directory = lib.mkOption {
+          default = "/Volumes/Games";
+        };
+      };
+    };
   };
 
   config = lib.mkIf this.enable (
@@ -32,21 +40,14 @@ in
         proton-ge-bin
         steamtinkerlaunch
       ];
-      programs.steam.package = pkgs.steam.override {
+      programs.steam.package = pkgs.steam.override this.steam.arguments;
+      custom.gaming.steam.arguments = {
         extraEnv = {
           MANGOHUD = true;
           OBS_VKCAPTURE = true;
           RADV_TEX_ANISO = 16;
           DXVK_HUD = "compiler";
           PULSE_SINK = "game_sink"; # For separate capture
-          # Allow steam runtime to use a runtime other than SteamVR
-          PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES = 1;
-          # Force xrizer to be the default OpenVR runtime. I must do it this way
-          # because Steam overwrites the `openvrpaths.vrpath` file on every
-          # start and I'd need to get the path to xrizer somehow anyway.
-          VR_OVERRIDE = "${pkgs.xrizer}/lib/xrizer/";
-          # For quick access in individual games' launch args
-          VR_OPENCOMPOSITE = "${pkgs.opencomposite}/lib/opencomposite/";
         };
         extraLibraries =
           p: with p; [
@@ -57,13 +58,13 @@ in
         # My games library is mounted at /Volumes/Games/ and Steam's state is also
         # stored there. It stores all of my Games' state too in fact. Ensure the
         # locations exist and bind-mount the real places where Steam expects them.
-        extraPreBwrapCmds = ''
-          mkdir -p $HOME/.local/share/Steam/ /Volumes/Games/Steam/
+        extraPreBwrapCmds = lib.mkIf this.steam.bindmounts.enable ''
+          mkdir -p $HOME/.local/share/Steam/ ${statedir}/Steam/
         '';
-        extraBwrapArgs = [
-          "--bind /Volumes/Games/Steam/ $HOME/.local/share/Steam/"
-          "--bind /Volumes/Games/ /Volumes/Games/Steam/steamapps/common/"
-          "--bind /Volumes/Games/ $HOME/.local/share/Steam/steamapps/common/"
+        extraBwrapArgs = lib.mkIf this.steam.bindmounts.enable [
+          "--bind ${statedir}/Steam/ $HOME/.local/share/Steam/"
+          "--bind ${statedir}/ ${statedir}/Steam/steamapps/common/"
+          "--bind ${statedir}/ $HOME/.local/share/Steam/steamapps/common/"
         ];
       };
       programs.steam.protontricks.enable = true;
@@ -73,7 +74,6 @@ in
       environment.systemPackages =
         let
           general = with pkgs; [
-            bs-manager
             mangohud
             piper
             steamtinkerlaunch
@@ -93,16 +93,11 @@ in
         lib.mkMerge [
           general
           (lib.mkIf this.amdgpu amdgpu)
-          # Was removed upstream but I still have it in my Nixpkgs fork. This is a
-          # little hack for making it possible to at least eval the rest of my
-          # config with nixpkgs trees that do not have yuzu.
-          # (lib.mkIf (pkgs ? yuzu-ea && (builtins.tryEval pkgs.yuzu-ea).success) [ pkgs.yuzu-ea ])
           [ prismlauncher ]
         ];
       custom.packages.allowedUnfree = [
         "steam"
         "steam-unwrapped"
-        "teamspeak3"
       ];
       programs.obs-studio.enable = true;
       programs.obs-studio.plugins = with pkgs.obs-studio-plugins; [
@@ -127,37 +122,9 @@ in
       '';
       boot.initrd.kernelModules = lib.mkIf this.amdgpu [ "amdgpu" ];
 
-      custom.amdgpu.kernelModule.patches = lib.mkIf this.steamvr.unprivilegedHighPriorityQueue [
-        (pkgs.fetchpatch2 {
-          url = "https://github.com/Frogging-Family/community-patches/raw/a6a468420c0df18d51342ac6864ecd3f99f7011e/linux61-tkg/cap_sys_nice_begone.mypatch";
-          hash = "sha256-1wUIeBrUfmRSADH963Ax/kXgm9x7ea6K6hQ+bStniIY=";
-        })
-      ];
-
       custom.lact.enable = this.amdgpu;
 
       hardware.steam-hardware.enable = true;
-
-      services.monado.enable = true;
-      services.monado.highPriority = true;
-      services.monado.defaultRuntime = true;
-      systemd.user.services.monado.environment = {
-        # Use SteamVR LH for tracking instead of libsurvive. It's not quite
-        # there yet and this way I at least have a sensible compositor.
-        STEAMVR_LH_ENABLE = lib.boolToString true;
-        # It doesn't discover this on its own because I only bind-mount this in
-        # steam's fhsenv
-        STEAMVR_PATH = "/Volumes/Games/SteamVR/";
-
-        # Not 140 as recommended basically everywhere as that's quite expensive, actually.
-        # TODO figure out how to do this per-app
-        XRT_COMPOSITOR_SCALE_PERCENTAGE="120";
-        XRT_COMPOSITOR_COMPUTE="1";
-
-        # Stop monado after a few seconds of inactivity. (Not
-        # IPC_EXIT_ON_DISCONNECT because that quits immediately.)
-        IPC_EXIT_WHEN_IDLE = lib.boolToString true;
-      };
 
       services.ratbagd.enable = true;
     }
