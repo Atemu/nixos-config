@@ -63,7 +63,7 @@ in
       # Use deSEC's own DNS server rather than the network's to minimise propagation time
       dnsResolver = "ns1.desec.io:53";
 
-      credentialsFile = config.custom.secrets.acme.path;
+      environmentFile = config.custom.secrets.acme.path;
       reloadServices = [ "nginx" ];
       group = "nginx";
     };

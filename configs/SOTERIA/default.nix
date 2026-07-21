@@ -16,10 +16,6 @@
   networking.hostName = "SOTERIA";
 
   boot.initrd.network.enable = true;
-  boot.initrd.network.udhcpc.extraArgs = [
-    "-t"
-    "20"
-  ];
   boot.initrd.network.ssh.enable = true;
 
   # mkdir /etc/secrets/initrd -p
@@ -39,11 +35,6 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIcU6XG0H5Fs0jl9mHiPWwI3BdHz4Uf9CIAc94eklV9Y atemu@THESEUS"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHK/Gx95TAvE5GmEuLwWgOQpwjkWNaVavprNlFOuCjFI atemu@PLATON"
   ];
-
-  boot.initrd.network.postCommands = ''
-    # Automatically ask for the password on SSH login
-    echo 'cryptsetup-askpass || echo "Unlock was successful; exiting SSH session" && exit 1' >> /root/.profile
-  '';
 
   # Uses systemd-networkd for basic DHCP purposes
   networking.useDHCP = true;

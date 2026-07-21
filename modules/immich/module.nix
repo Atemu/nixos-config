@@ -106,6 +106,7 @@ in
     fileSystems."/var/lib/immich/library" = lib.mkIf (this.libraryDir != null) {
       device = this.libraryDir;
       options = [ "bind" ];
+      fsType = "bind";
     };
   };
 }
