@@ -19,8 +19,7 @@
   ];
   boot.kernelModules = [ "kvm-amd" ];
 
-  # I don't trust newer kernel to not introduce nasty bugs
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
+  boot.kernelPackages = pkgs.linuxPackages;
 
   custom.amdgpu.kernelModule.patches = [
     (pkgs.fetchpatch2 {
