@@ -69,6 +69,9 @@ in
         # Steam and Proton attempt to query OpenVR instance info which wakes up
         # Monado.. Enable the socket manually.
         systemd.user.sockets.monado.wantedBy = lib.mkForce [ ];
+        # Monado gets stuck for some reason and must be killed. FIXME debug why
+        # tf. it's doing that.
+        systemd.user.services.monado.serviceConfig.TimeoutStopSec = 1;
       })
       (lib.mkIf this.steamvr.unprivilegedHighPriorityQueue {
         custom.amdgpu.kernelModule.patches = [
