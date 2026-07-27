@@ -32,6 +32,13 @@
     nct6687d
   ];
 
+  systemd.tmpfiles.rules = [
+    # The SATA SSDs in this machine are very slow and discards slow them down
+    # even further. This results in single-digit usage% which should be okay I
+    # hope.
+    "w /sys/fs/btrfs/*/discard/iops_limit  - - - - 10" # default: 1000
+  ];
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
