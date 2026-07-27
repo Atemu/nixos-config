@@ -65,6 +65,10 @@ in
           # For quick access in individual games' launch args
           VR_OPENCOMPOSITE = "${pkgs.opencomposite}/lib/opencomposite/";
         };
+
+        # Steam and Proton attempt to query OpenVR instance info which wakes up
+        # Monado.. Enable the socket manually.
+        systemd.user.sockets.monado.wantedBy = lib.mkForce [ ];
       })
       (lib.mkIf this.steamvr.unprivilegedHighPriorityQueue {
         custom.amdgpu.kernelModule.patches = [
