@@ -214,7 +214,7 @@ in
         # All machines trust each others' build outputs
         "THESEUS:N571Rz/bXMDWTmRefYb1JGz0r/gAugFAndVIn8/+bc4="
         "SOTERIA:FPjTyCztUrddjda9eTPyOSetyWxiSOPDDXNRtWMX9v4="
-        # TODO add the missing ones
+        "HEPHAISTOS:pYKpKfquHNyFjcslEFmrn1le0wOHTmLZwI2FVx/t7Sw="
       ];
       require-sigs = true;
     };
