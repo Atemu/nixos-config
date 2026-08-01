@@ -21,6 +21,7 @@ let
         partOf = [ "wayland-session@Hyprland.target" ];
         serviceConfig = {
           Slice = [ "session.slice" ];
+          Restart = "on-failure";
         };
       }
     ];

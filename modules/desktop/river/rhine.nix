@@ -18,6 +18,7 @@ let
         partOf = [ "wayland-session@rhine.target" ];
         serviceConfig = {
           Slice = [ "session.slice" ];
+          Restart = "on-failure";
         };
       }
     ];
