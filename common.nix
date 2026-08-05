@@ -277,6 +277,9 @@ in
     THESEUS = {
       key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFgAF6PCcdjAFmimGMZp+qNUTqjYyQK4zY5QJBab1TiR root@THESEUS";
     };
+    HEPHAISTOS = {
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILprJqqJ8uRlDMOSpPt7tpHTalWIsMR9WcmRP+zBfvNd root@HEPHAISTOS";
+    };
   };
 
   networking.hosts."23.137.248.133" = [

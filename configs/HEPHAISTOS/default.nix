@@ -26,6 +26,8 @@
 
   boot.initrd.systemd.enable = true;
 
+  custom.replication.enable = true;
+
   # Scanner
   # TODO refactor into module
   hardware.sane.enable = true;
