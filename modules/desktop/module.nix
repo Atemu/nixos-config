@@ -455,7 +455,14 @@ in
           ".local/share/Steam"
           ".local/share/Trash"
 
+          # Large repos whose state I don't care about
           "Repos/linux"
+          "Repos/android_frameworks_base"
+          "Repos/Proton"
+          "Repos/organicmaps"
+          "Repos/taler"
+          "Repos/emacs-ng"
+
           "Projects/robotnix/avd"
           ".gradle"
           ".emacs.d/.cache"
