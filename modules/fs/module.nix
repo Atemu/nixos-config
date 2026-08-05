@@ -93,6 +93,8 @@ in
       # impact performance but guarantees consistency from the view of
       # applications.
       "flushoncommit"
+      # Users should be able to delete the subvols they own
+      "user_subvol_rm_allowed"
     ];
     custom.btrfs.fileSystems =
       let
