@@ -58,24 +58,6 @@
       "var/tmp"
     ];
   };
-  custom.replication.replications.Users = {
-    enable = true;
-    path = "atemu";
-    exclude = [
-      ".cache"
-      ".local/share/Steam"
-      ".local/share/Trash"
-
-      "Repos/linux"
-      "Projects/robotnix/avd"
-      ".gradle"
-      ".emacs.d/.cache"
-      ".emacs.d/eln-cache"
-      ".cargo"
-      ".npm"
-      "go"
-    ];
-  };
 
   # Device name must be provided by hardware config for now
   custom.swap.devices.primary.enable = true;

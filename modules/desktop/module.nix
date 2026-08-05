@@ -446,6 +446,25 @@ in
 
       # Fuck autostarts.
       systemd.user.generators.systemd-xdg-autostart-generator = "/dev/null";
+
+      custom.replication.replications.Users = {
+        enable = true;
+        path = "atemu";
+        exclude = [
+          ".cache"
+          ".local/share/Steam"
+          ".local/share/Trash"
+
+          "Repos/linux"
+          "Projects/robotnix/avd"
+          ".gradle"
+          ".emacs.d/.cache"
+          ".emacs.d/eln-cache"
+          ".cargo"
+          ".npm"
+          "go"
+        ];
+      };
     }
   );
 }
