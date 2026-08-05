@@ -32,9 +32,8 @@ in
   config = lib.mkIf this.enable {
     services.borgbackup.jobs =
       config.custom.replication.replications
-      |> lib.mapAttrs' (
-        name: replication:
-        lib.nameValuePair name {
+      |> lib.mapAttrs (
+        name: replication: {
           paths = [ "." ];
           preHook = ''
             tmpsnapshot="${snapshotDir}/${name}"
