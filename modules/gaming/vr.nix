@@ -24,6 +24,7 @@ in
     monado = {
       enable = lib.mkEnableOption "my monado compositor setup";
     };
+    fixvr.enable = lib.mkEnableOption "the fixvr hack" // lib.mkOption { default = true; };
   };
 
   config =
@@ -80,6 +81,13 @@ in
             hash = "sha256-1wUIeBrUfmRSADH963Ax/kXgm9x7ea6K6hQ+bStniIY=";
           })
         ];
+      })
+      (lib.mkIf this.fixvr.enable {
+        # https://fixvr.miguvt.com/install
+        # This is written to a private tmp I think? That's fine though I think.
+        services.udev.extraRules = ''
+          KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="28de", ATTRS{idProduct}=="2300", ACTION=="add", RUN+="/bin/sh -c '(sleep 2; test -f /tmp/.valve-index-rebooted || { printf \"\\x16\\x01\" | cat - /dev/zero | head -c 64 > /dev/%k && touch /tmp/.valve-index-rebooted; }) &'"
+        '';
       })
     ];
 
