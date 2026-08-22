@@ -95,6 +95,7 @@
   custom.nextcloud.enable = true;
   custom.nextcloud.code.enable = true;
   custom.nextcloud.virtualHost.onPrimaryDomain = true;
+  services.nextcloud.home = "/Volumes/Data/Nextcloud";
 
   services.iperf3.enable = true;
   services.iperf3.openFirewall = true;

@@ -58,4 +58,12 @@ in
       ];
     };
   };
+  # FIXME refactor fs module to allow snapshots on non-root filesystems
+  custom.btrbk = {
+    enable = true;
+
+    volume."/Volumes/Data".subvolume = {
+      "Nextcloud" = { };
+    };
+  };
 }
