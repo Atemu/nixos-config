@@ -98,7 +98,6 @@ in
       directory = this.piped-docker;
       # Watchtower kills my services. STOP IT.
       override.services.watchtower.deploy.replicas = 0;
-      override.services.piped.image = "logicalkarma/piped"; # Upstream hasn't pulled NPE in quite some time
     };
 
     custom.virtualHosts = lib.genAttrs serviceNames (n: {
