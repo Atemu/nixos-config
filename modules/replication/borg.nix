@@ -64,6 +64,11 @@ in
 
           startAt = "*-*-* 07:00:00";
 
+          extraCreateArgs = [
+            # Exclude CACHEDIR.TAG
+            "--exclude-caches"
+          ];
+
           prune.keep = {
             within = "1d"; # In case I make multiple in one day, keep them
             daily = 7;
