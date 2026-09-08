@@ -125,7 +125,9 @@ in
       services.displayManager.gdm.enable = true;
 
       services.displayManager.defaultSession =
-        if this.hypr.enable then
+        if this.river.rhine.enable then
+          "river-rhine-uwsm"
+        else if this.hypr.enable then
           "Hyprland-uwsm"
         else if this.tablet then
           "gnome"
