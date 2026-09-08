@@ -80,5 +80,18 @@ in
       # Restarting the window manager hangs up on the socket
       partOf = [ "rhine.service" ];
     };
+
+    systemd.user.services.hypridle = mkRhineSessionService {
+      serviceConfig = {
+        ExecStart = lib.getExe config.services.hypridle.package;
+      };
+      path = with pkgs; [
+        bash
+        brightnessctl
+        config.programs.hyprland.package
+        procps
+        swaylock
+      ];
+    };
   };
 }
