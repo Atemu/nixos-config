@@ -13,6 +13,7 @@
 
   custom.desktop.enable = true;
   custom.desktop.hypr.enable = true;
+  custom.desktop.river.rhine.enable = true;
 
   custom.gaming.enable = true;
   custom.gaming.steam.bindmounts.enable = true;
