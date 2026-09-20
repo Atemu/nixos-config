@@ -77,6 +77,7 @@ in
             mangohud
             piper
             steamtinkerlaunch
+            teamspeak6-client
             vulkan-tools
           ];
           amdgpu = with pkgs; [
@@ -98,6 +99,7 @@ in
       custom.packages.allowedUnfree = [
         "steam"
         "steam-unwrapped"
+        "teamspeak6-client"
       ];
       programs.obs-studio.enable = true;
       programs.obs-studio.plugins = with pkgs.obs-studio-plugins; [
