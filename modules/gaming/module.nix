@@ -74,6 +74,7 @@ in
       environment.systemPackages =
         let
           general = with pkgs; [
+            edmarketconnector
             mangohud
             piper
             steamtinkerlaunch
