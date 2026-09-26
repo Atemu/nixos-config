@@ -264,6 +264,10 @@ in
     # If you're handling large chunks, you might as well have a sequential workload.
     # TODO I could not find numbers on this online, benchmark this!
     "w /sys/block/bcache*/bcache/sequential_cutoff - - - - 131071" # 128KiB - 1B, defaults to 4MiB
+
+    # Mitigate free space fragmentation through automatic reclaim/balance
+    "w /sys/fs/btrfs/*/allocation/*/dynamic_reclaim - - - - 1"
+    "w /sys/fs/btrfs/*/allocation/*/periodic_reclaim - - - - 1"
   ];
 
   boot.kernel.sysctl = {
