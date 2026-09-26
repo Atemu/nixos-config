@@ -72,8 +72,8 @@ in
           prune.keep = {
             within = "1d"; # In case I make multiple in one day, keep them
             daily = 7;
-            weekly = 4;
-            monthly = 3;
+            weekly = 8;
+            monthly = 6;
           };
         }
       );
