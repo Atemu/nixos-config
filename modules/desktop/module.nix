@@ -414,6 +414,18 @@ in
       # No friggin 600MB mbrola!
       services.speechd.enable = lib.mkForce false;
 
+      # TODO have an abstraction for graphical services
+      systemd.user.services.aw-server = {
+        serviceConfig = {
+          ExecStart = lib.getExe pkgs.aw-server-rust;
+          Slice = [ "session.slice" ];
+          Restart = "on-failure";
+        };
+        wantedBy = [ "graphical-session.target" ];
+        before = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+      };
+
       # https://github.com/flatpak/xdg-desktop-portal-gtk/pull/504
       systemd.user.services.xdg-desktop-portal-gtk = {
         overrideStrategy = "asDropin";

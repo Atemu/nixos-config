@@ -93,5 +93,13 @@ in
         swaylock
       ];
     };
+
+    systemd.user.services.aw-wayland = mkRhineSessionService {
+      serviceConfig = {
+        ExecStart = lib.getExe pkgs.aw-watcher-window-wayland;
+      };
+      after = [ "aw-server.service" ];
+      partOf = [ "aw-server.service" ];
+    };
   };
 }
