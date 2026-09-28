@@ -99,7 +99,7 @@ in
         ExecStart = lib.getExe pkgs.aw-watcher-window-wayland;
       };
       after = [ "aw-server.service" ];
-      partOf = [ "aw-server.service" ];
+      bindsTo = [ "aw-server.service" ];
     };
   };
 }
