@@ -94,6 +94,14 @@ in
       ];
     };
 
+    # TODO this should start on any session
+    # TODO have an abstraction for graphical services
+    systemd.user.services.aw-server = mkRhineSessionService {
+      serviceConfig = {
+        ExecStart = lib.getExe pkgs.aw-server-rust;
+      };
+    };
+
     systemd.user.services.aw-wayland = mkRhineSessionService {
       serviceConfig = {
         ExecStart = lib.getExe pkgs.aw-watcher-window-wayland;
