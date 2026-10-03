@@ -239,7 +239,7 @@ in
       pkg: builtins.elem (lib.getName pkg) config.custom.packages.allowedUnfree;
 
     # :(
-    custom.packages.allowedUnfree = [
+    custom.packages.allowedUnfree = lib.mkIf config.custom.desktop.enable [
       "spotify"
     ];
 
