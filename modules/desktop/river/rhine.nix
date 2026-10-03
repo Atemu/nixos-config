@@ -69,9 +69,11 @@ in
     };
     systemd.user.services.river-channel = mkRhineSessionService {
       serviceConfig = {
-        ExecStart = lib.getExe <| pkgs.river-channel.override {
-          inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
-        };
+        ExecStart =
+          lib.getExe
+          <| pkgs.river-channel.override {
+            inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
+          };
       };
     };
     systemd.user.services.i3bar-river = mkRhineSessionService {
