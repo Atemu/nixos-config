@@ -168,7 +168,7 @@ let
   x =
     with pkgs;
     let
-      customFirefox = config.programs.firefox.package;
+      customLibrewolf = config.programs.firefox.package;
       customMpv = mpv.override {
         scripts = [
           mpvScripts.sponsorblock-minimal
@@ -184,7 +184,7 @@ let
       bluetuith
       calibre
       cargo
-      customFirefox
+      customLibrewolf
       customMpv
       direnv
       fractal
@@ -243,7 +243,7 @@ in
       "spotify"
     ];
 
-    programs.firefox.package = pkgs.firefox.override (prev: {
+    programs.firefox.package = pkgs.librewolf.override (prev: {
       cfg = prev.cfg or { } // {
         # No 700MiB mbrola-voices in my closure please
         speechSynthesisSupport = false;
