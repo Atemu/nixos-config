@@ -168,12 +168,7 @@ let
   x =
     with pkgs;
     let
-      customFirefox = firefox.override (prev: {
-        cfg = prev.cfg or { } // {
-          # No 700MiB mbrola-voices in my closure please
-          speechSynthesisSupport = false;
-        };
-      });
+      customFirefox = config.programs.firefox.package;
       customMpv = mpv.override {
         scripts = [
           mpvScripts.sponsorblock-minimal
@@ -247,6 +242,13 @@ in
     custom.packages.allowedUnfree = [
       "spotify"
     ];
+
+    programs.firefox.package = pkgs.firefox.override (prev: {
+      cfg = prev.cfg or { } // {
+        # No 700MiB mbrola-voices in my closure please
+        speechSynthesisSupport = false;
+      };
+    });
 
     # List of packages installed in system profile.
     environment.systemPackages = (
