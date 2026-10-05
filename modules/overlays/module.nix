@@ -65,6 +65,8 @@ in
       # build without docs so that this never happens.
       avrdude = prev.avrdude.override { docSupport = false; };
 
+      mbrola = final.empty;
+
       i3bar-river = prev.i3bar-river.overrideAttrs (
         {
           patches ? [ ],
