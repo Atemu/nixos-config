@@ -46,6 +46,7 @@ let
     ]
     ++ (with this.lix.packages; [
       nix-direnv
+      nix-init
       nixpkgs-review
     ])
     ++ (with pkgs; [
@@ -107,7 +108,6 @@ let
       nix-bash-completions
       nix-diff
       nix-index
-      nix-init # Take from lix packages in 26.05
       nix-output-monitor
       nix-tree
       nixd
