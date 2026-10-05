@@ -203,7 +203,6 @@ let
       planify
       protonvpn-gui
       python3
-      qmk # not included in hardware.keyboard.qmk.enable for some reason‽
       rust-analyzer
       rustc
       rustfmt
