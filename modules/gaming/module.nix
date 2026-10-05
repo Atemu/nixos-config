@@ -103,6 +103,9 @@ in
         "teamspeak6-client"
       ];
       programs.obs-studio.enable = true;
+      programs.obs-studio.package = pkgs.obs-studio.override {
+        browserSupport = false;
+      };
       programs.obs-studio.plugins = with pkgs.obs-studio-plugins; [
         obs-vkcapture
         obs-gstreamer
