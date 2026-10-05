@@ -188,7 +188,6 @@ let
       customLibrewolf
       customMpv
       direnv
-      fractal
       gcc # For rust
       kicad-small
       kotlin-language-server
