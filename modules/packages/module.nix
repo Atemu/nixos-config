@@ -98,6 +98,7 @@ let
       lm_sensors
       lsof
       lz4
+      magic-wormhole
       man-pages
       mediainfo
       mosh
