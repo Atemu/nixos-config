@@ -73,6 +73,7 @@ let
       dmidecode
       dos2unix
       duf
+      dumbpipe
       efibootmgr
       ethtool
       exiftool
