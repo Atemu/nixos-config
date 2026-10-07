@@ -100,6 +100,7 @@ let
       lsof
       lz4
       magic-wormhole
+      magic-wormhole-rs
       man-pages
       mediainfo
       mosh
