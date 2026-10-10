@@ -464,6 +464,7 @@ in
           "Repos/organicmaps"
           "Repos/taler"
           "Repos/emacs-ng"
+          "Repos/firefox"
 
           "Projects/robotnix/avd"
           ".gradle"
