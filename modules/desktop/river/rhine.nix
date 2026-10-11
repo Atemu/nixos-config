@@ -2,31 +2,24 @@
   config,
   lib,
   pkgs,
+  utils,
   ...
 }:
 
 let
   this = config.custom.desktop.river.rhine;
-  mkRhineSessionService =
-    conf:
-    lib.mkMerge [
-      conf
-      {
-        wantedBy = [ "wayland-session@rhine.target" ];
-        after = [ "wayland-wm@rhine.service" ];
-        before = [ "wayland-session@rhine.target" ];
-        partOf = [ "wayland-session@rhine.target" ];
-        serviceConfig = {
-          Slice = [ "session.slice" ];
-          Restart = "on-failure";
-        };
-      }
-    ];
 in
 {
   options.custom.desktop.river.rhine = {
     enable = lib.mkEnableOption "";
     river.package = lib.mkPackageOption pkgs "river" { };
+    session.services = lib.mkOption {
+      # This is passed through to `systemd.user.services`, which checks it
+      # properly. If this was the systemd service type, it'd provide a default
+      # value that throws because it's unset.
+      type = with lib.types; attrsOf attrs;
+      default = { };
+    };
   };
 
   config = lib.mkIf this.enable {
@@ -42,74 +35,95 @@ in
         prettyName = "river-rhine";
       };
     };
-    systemd.user.services.rhine = mkRhineSessionService {
-      serviceConfig = {
-        ExecStart = lib.getExe pkgs.rhine;
-        Environment = [ "" ]; # Don't override path!
+    custom.desktop.river.rhine.session.services = {
+      rhine = {
+        serviceConfig = {
+          ExecStart = lib.getExe pkgs.rhine;
+          Environment = [ "" ]; # Don't override path!
+        };
       };
-    };
 
-    systemd.user.services.xwayland-satellite = mkRhineSessionService {
-      serviceConfig =
-        let
-          display = ":0";
-        in
-        {
-          Type = "notify";
-          ExecStart = "${lib.getExe pkgs.xwayland-satellite} ${display}";
-          ExecStartPost = "systemctl --user set-environment DISPLAY=${display}";
-          ExecStopPost = "systemctl --user unset-environment DISPLAY"; # Always executed!
+      xwayland-satellite = {
+        serviceConfig =
+          let
+            display = ":0";
+          in
+          {
+            Type = "notify";
+            ExecStart = "${lib.getExe pkgs.xwayland-satellite} ${display}";
+            ExecStartPost = "systemctl --user set-environment DISPLAY=${display}";
+            ExecStopPost = "systemctl --user unset-environment DISPLAY"; # Always executed!
+          };
+
+        unitConfig = {
+          ConditionEnvironment = "WAYLAND_DISPLAY";
         };
 
-      unitConfig = {
-        ConditionEnvironment = "WAYLAND_DISPLAY";
+        restartIfChanged = false;
+      };
+      river-channel = {
+        serviceConfig = {
+          ExecStart =
+            lib.getExe
+            <| pkgs.river-channel.override {
+              inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
+            };
+        };
+      };
+      i3bar-river = {
+        # Requires the rhine "hyprland" socket
+        after = [ "rhine.service" ];
+        # Restarting the window manager hangs up on the socket
+        partOf = [ "rhine.service" ];
       };
 
-      restartIfChanged = false;
-    };
-    systemd.user.services.river-channel = mkRhineSessionService {
-      serviceConfig = {
-        ExecStart =
-          lib.getExe
-          <| pkgs.river-channel.override {
-            inherit (config.custom.desktop.keyboard.layout.packages) libxkbcommon;
-          };
+      hypridle = {
+        serviceConfig = {
+          ExecStart = lib.getExe config.services.hypridle.package;
+        };
+        path = with pkgs; [
+          bash
+          brightnessctl
+          config.programs.hyprland.package
+          procps
+          swaylock
+        ];
       };
-    };
-    systemd.user.services.i3bar-river = mkRhineSessionService {
-      # Requires the rhine "hyprland" socket
-      after = [ "rhine.service" ];
-      # Restarting the window manager hangs up on the socket
-      partOf = [ "rhine.service" ];
-    };
 
-    systemd.user.services.hypridle = mkRhineSessionService {
-      serviceConfig = {
-        ExecStart = lib.getExe config.services.hypridle.package;
+      # TODO this should start on any session
+      # TODO have an abstraction for graphical services
+      aw-server = {
+        serviceConfig = {
+          ExecStart = lib.getExe pkgs.aw-server-rust;
+        };
       };
-      path = with pkgs; [
-        bash
-        brightnessctl
-        config.programs.hyprland.package
-        procps
-        swaylock
-      ];
-    };
 
-    # TODO this should start on any session
-    # TODO have an abstraction for graphical services
-    systemd.user.services.aw-server = mkRhineSessionService {
-      serviceConfig = {
-        ExecStart = lib.getExe pkgs.aw-server-rust;
+      aw-wayland = {
+        serviceConfig = {
+          ExecStart = lib.getExe pkgs.aw-watcher-window-wayland;
+        };
+        after = [ "aw-server.service" ];
+        partOf = [ "aw-server.service" ];
       };
     };
 
-    systemd.user.services.aw-wayland = mkRhineSessionService {
-      serviceConfig = {
-        ExecStart = lib.getExe pkgs.aw-watcher-window-wayland;
-      };
-      after = [ "aw-server.service" ];
-      partOf = [ "aw-server.service" ];
-    };
+    systemd.user.services =
+      this.session.services
+      |> lib.mapAttrs (
+        name: value:
+        lib.mkMerge [
+          value
+          {
+            wantedBy = [ "wayland-session@rhine.target" ];
+            after = [ "wayland-wm@rhine.service" ];
+            before = [ "wayland-session@rhine.target" ];
+            partOf = [ "wayland-session@rhine.target" ];
+            serviceConfig = {
+              Slice = [ "session.slice" ];
+              Restart = "on-failure";
+            };
+          }
+        ]
+      );
   };
 }
