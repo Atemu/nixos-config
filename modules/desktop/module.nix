@@ -404,7 +404,10 @@ in
 
       # Just utterly broken. See
       # https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1660635001
-      systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
+      systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart = [
+        "" # override
+        "${lib.getExe' pkgs.coreutils "true"}" # Stub
+      ];
 
       services.emacs.enable = true;
       # Emacs likes to get itself stuck waiting on user input or some shit on the
