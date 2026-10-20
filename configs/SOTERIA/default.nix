@@ -84,7 +84,7 @@
   custom.immich.virtualHost.onPrimaryDomain = true;
 
   custom.nextcloud.enable = true;
-  custom.nextcloud.code.enable = true;
+  custom.nextcloud.code.enable = false;
   custom.nextcloud.virtualHost.onPrimaryDomain = true;
   services.nextcloud.home = "/Volumes/Data/Nextcloud";
 
