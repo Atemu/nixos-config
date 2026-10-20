@@ -50,7 +50,7 @@ in
 
       settings = {
         # Remember me for more than 15 days..
-        remember_login_cookie_lifetime = 60 * 60 * 24 * 60;
+        remember_login_cookie_lifetime = 60 * 60 * 24 * 90;
       };
 
       extraAppsEnable = true;
