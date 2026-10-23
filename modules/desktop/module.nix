@@ -20,7 +20,7 @@ let
         before = [ "wayland-session@Hyprland.target" ];
         partOf = [ "wayland-session@Hyprland.target" ];
         serviceConfig = {
-          Slice = [ "session.slice" ];
+          Slice = "session.slice";
           Restart = "on-failure";
         };
       }
@@ -420,7 +420,7 @@ in
       # https://github.com/flatpak/xdg-desktop-portal-gtk/pull/504
       systemd.user.services.xdg-desktop-portal-gtk = {
         overrideStrategy = "asDropin";
-        serviceConfig.Slice = [ "session.slice" ];
+        serviceConfig.Slice = "session.slice";
       };
       # The upstream unit would /really/ like to bind to the graphical session
       # which causes dep cycles.. Just make my own unit with blackjack and
@@ -441,7 +441,7 @@ in
       # https://gitlab.gnome.org/GNOME/dconf/-/issues/87
       systemd.user.services.dconf = {
         overrideStrategy = "asDropin";
-        serviceConfig.Slice = [ "session.slice" ];
+        serviceConfig.Slice = "session.slice";
       };
 
       # Makes Docker socket activated, only starting it after I use it once
