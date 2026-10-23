@@ -149,7 +149,7 @@ in
                 # TODO Remove containers too!
                 ExecStartPre = [
                   (run "down")
-                  (run "create ${with lib; optionalString (versionAtLeast trivial.release "24.05") "--quiet-pull"}")
+                  (run "create --quiet-pull")
                 ];
                 ExecStart = run "up --quiet-pull --abort-on-container-exit";
 
