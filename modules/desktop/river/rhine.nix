@@ -119,7 +119,7 @@ in
             before = [ "wayland-session@rhine.target" ];
             partOf = [ "wayland-session@rhine.target" ];
             serviceConfig = {
-              Slice = [ "session.slice" ];
+              Slice = lib.mkDefault "session.slice";
               Restart = "on-failure";
             };
           }
