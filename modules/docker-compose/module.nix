@@ -164,7 +164,8 @@ in
               };
             path = [ config.virtualisation.docker.package ];
 
-            requires = [ "docker.service" ];
+            # I want docker-compose stuff to restart if docker is restarted
+            bindsTo = [ "docker.service" ];
             after = [ "docker.service" ];
             wantedBy = [ "multi-user.target" ];
           }
