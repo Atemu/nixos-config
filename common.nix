@@ -244,6 +244,14 @@ in
 
   programs.command-not-found.dbPath = "/nix/var/nix/programs.sqlite";
 
+  environment.etc.nixpkgs-ref.text =
+    let
+      nixpkgsCfg = import ./nixpkgs-config.nix;
+      inherit (config.networking) hostName;
+      hostCfg = nixpkgsCfg.${hostName} or nixpkgsCfg.default;
+    in
+    if hostCfg == "nixpkgs" then "master" else hostCfg;
+
   # I don't want random systemPackages' autostart units, TYVM.
   xdg.autostart.enable = lib.mkForce false;
 
