@@ -20,11 +20,10 @@ rustPlatform.buildRustPackage {
         "Cargo.toml"
         "Cargo.lock"
       ];
-      commands =
-        [
-          "mkdir -p $out"
-        ]
-        ++ (map (file: "cp -r ${./${file}} $out/${file}") files);
+      commands = [
+        "mkdir -p $out"
+      ]
+      ++ (map (file: "cp -r ${./${file}} $out/${file}") files);
       script = lib.concatLines commands;
     in
     runCommand "source" { } script;

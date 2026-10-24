@@ -28,12 +28,10 @@ in
               }:
               {
                 # https://github.com/zhaofengli/colmena/pull/268/
-                postPatch =
-                  postPatch
-                  + ''
-                    substituteInPlace src/command/repl.rs \
-                      --replace-fail "--experimental-features" "--extra-experimental-features"
-                  '';
+                postPatch = postPatch + ''
+                  substituteInPlace src/command/repl.rs \
+                    --replace-fail "--experimental-features" "--extra-experimental-features"
+                '';
               }
             )
         else
@@ -44,12 +42,10 @@ in
           mkUnset =
             pkg:
             pkg.overrideAttrs (old: {
-              postFixup =
-                old.postFixup or ""
-                + ''
-                  # Needed for enter nix shell plugin to change the IDE's env fully
-                  wrapProgram $out/bin/${pkg.meta.mainProgram} --unset DESKTOP_STARTUP_ID
-                '';
+              postFixup = old.postFixup or "" + ''
+                # Needed for enter nix shell plugin to change the IDE's env fully
+                wrapProgram $out/bin/${pkg.meta.mainProgram} --unset DESKTOP_STARTUP_ID
+              '';
             });
           isJBIDE = pkg: lib.isDerivation pkg && !lib.hasPrefix "jetbrains-jdk" pkg.name;
         in
