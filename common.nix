@@ -303,10 +303,4 @@ in
     "archive.ph"
     "archive.vn"
   ];
-
-  # Distrust emudhra
-  security.pki.caCertificateBlacklist = [
-    "Comodo AAA Services root"
-    "emSign ECC Root CA - G3"
-  ];
 }
