@@ -52,6 +52,7 @@ let
     ++ (with pkgs; [
       acpi
       aria2
+      b3sum
       bash-completion
       bat
       bc
