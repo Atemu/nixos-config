@@ -31,6 +31,10 @@ in
                 postPatch = postPatch + ''
                   substituteInPlace src/command/repl.rs \
                     --replace-fail "--experimental-features" "--extra-experimental-features"
+
+                  # Use nix3/ssh-ng for copies..
+                  substituteInPlace src/nix/host/ssh.rs \
+                    --replace-fail "use_nix3_copy: false," "use_nix3_copy: true,"
                 '';
               }
             )
