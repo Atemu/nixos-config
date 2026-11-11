@@ -84,8 +84,8 @@ in
     {
       patches = patches ++ [
         (pkgs.fetchpatch2 {
-          url = "https://github.com/Atemu/tailscale/commit/bbce05e450ec10de80ff16125d5d8428f76ceb3b.patch";
-          hash = "sha256-S71VtEIQ9d4vbOqXJ68w3HN2M/60BCBtK2uWHXVtDqQ=";
+          url = "https://github.com/Atemu/tailscale/commit/050b6f8714c47ef7887196233ef3d0723030cc0a.patch";
+          hash = "sha256-BmjWkU93URwCHbpj5hBAXqIiOvJTuwrYDKxsffgVzV8=";
         })
       ];
       # Tests take forever. The patches may at some point also cause a failure.
