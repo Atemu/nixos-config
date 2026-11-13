@@ -123,6 +123,7 @@ let
       p7zip
       pandoc
       pciutils
+      pgformatter
       pstree
       pv
       qrencode
