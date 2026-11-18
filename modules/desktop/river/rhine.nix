@@ -95,14 +95,12 @@ in
       aw-server = {
         serviceConfig = {
           ExecStart = lib.getExe pkgs.aw-server-rust;
-          Slice = "background.slice";
         };
       };
 
       aw-wayland = {
         serviceConfig = {
           ExecStart = lib.getExe pkgs.aw-watcher-window-wayland;
-          Slice = "background-graphical.slice";
         };
         after = [ "aw-server.service" ];
         partOf = [ "aw-server.service" ];
