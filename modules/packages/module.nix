@@ -105,6 +105,7 @@ let
       man-pages
       mediainfo
       mosh
+      mtr
       ncdu
       ncpamixer
       netcat-gnu
