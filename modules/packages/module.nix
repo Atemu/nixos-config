@@ -92,6 +92,7 @@ let
       iftop
       iotop
       iperf
+      iw
       jc
       jq
       killall
