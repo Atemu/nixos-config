@@ -14,8 +14,6 @@
   custom.desktop.hypr.enable = true;
   custom.desktop.river.rhine.enable = true;
 
-  custom.gaming.enable = true;
-
   boot.initrd.systemd.enable = true;
 
   custom.dnscrypt.enable = true;
