@@ -64,6 +64,7 @@ in
                 tree-sitter-nix
               ]
             ))
+            jinx
           ]
         );
   };
